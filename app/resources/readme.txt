@@ -1,0 +1,1 @@
+See http://ionicframework.com/blog/automating-icons-and-splash-screens/

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<widget id="com.yourdomain.appname" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>YourAppName</name>
+  <description>
+        Your App Description
+    </description>
+  <author email="info@yourdomain.com" href="http://yourdomain.com/">
+      Your Name
+    </author>
+  <content src="index.html"/>
+  <access origin="*"/>
+  <preference name="webviewbounce" value="false"/>
+  <preference name="UIWebViewBounce" value="false"/>
+  <preference name="DisallowOverscroll" value="true"/>
+  <preference name="android-minSdkVersion" value="16"/>
+  <preference name="BackupWebStorage" value="none"/>
+  <feature name="StatusBar">
+    <param name="ios-package" value="CDVStatusBar" onload="true"/>
+  </feature>
+
+
+  <!-- The following is the configuration for the cordova-whitelist-plugin -->
+
+  <!-- Allow links to example.com -->
+  <allow-navigation href="http://example.com/*" />
+  <!-- Wildcards are allowed for the protocol, as a prefix to the host, or as a suffix to the path -->
+  <allow-navigation href="*://*.example.com/*" />
+  <!-- A wildcard can be used to whitelist the entire network, over HTTP and HTTPS.
+       NOT RECOMMENDED for production -->
+  <allow-navigation href="*" />
+  <!-- The above is equivalent to these three declarations -->
+  <allow-navigation href="http://*/*" />
+  <allow-navigation href="https://*/*" />
+  <allow-navigation href="data:*" />
+
+  <!-- Allow links to web pages to open in a browser -->
+  <allow-intent href="http://*/*" />
+  <allow-intent href="https://*/*" />
+  <!-- Allow links to example.com to open in a browser -->
+  <allow-intent href="http://example.com/*" />
+  <!-- Wildcards are allowed for the protocol, as a prefix
+       to the host, or as a suffix to the path -->
+  <allow-intent href="*://*.example.com/*" />
+  <!-- Allow SMS links to open messaging app -->
+  <allow-intent href="sms:*" />
+  <!-- Allow tel: links to open the dialer -->
+  <allow-intent href="tel:*" />
+  <!-- Allow geo: links to open maps -->
+  <allow-intent href="geo:*" />
+  <!-- Allow all unrecognized URLs to open installed apps
+       *NOT RECOMMENDED* -->
+  <allow-intent href="*" />
+
+  <!-- Allow images, xhrs, etc. to google.com -->
+  <access origin="http://google.com" />
+  <access origin="https://google.com" />
+  <!-- Access to the subdomain maps.google.com -->
+  <access origin="http://maps.google.com" />
+  <!-- Access to all the subdomains on google.com -->
+  <access origin="http://*.google.com" />
+  <!-- Enable requests to content: URLs -->
+  <access origin="content:///*" />
+  <!-- Don't block any requests -->
+  <access origin="*" />
+
+</widget>

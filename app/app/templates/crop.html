@@ -1,0 +1,15 @@
+<ion-view view-title="{{'CROP_YOUR_PHOTO' | translate}}" cache-view="false">
+  <ion-content has-header="true" padding="true" scroll="false">
+
+  <div class="cropArea">
+      <!-- result-image-size defaults to 200.  300 gives enough quality without making the filesize too large -->
+    <img-crop image="myImage" result-image="croppedImage.data" area-type="square" result-image-size="300" ></img-crop>
+  </div>
+  
+  <section layout="horizontal" layout-sm="horizontal" layout-align="center center">
+      <button class="button button-positive" ng-click="crop()">{{'SAVE' | translate}}</button>
+      <button class="button button-light" ng-click="cancel()">{{'CANCEL' | translate}}</button>
+  </section>
+  
+</ion-content>
+</ion-view>  

@@ -1,0 +1,11 @@
+{
+  "buildEnv": "qa",
+  "facebookAppId": "",
+  "facebookAppName": "",
+  "parseAppId": "",
+  "parseJavascriptKey": "",
+  "parseClientKey": "",
+  "parseServerUrl": "",
+  "linkedInId": "",
+  "linkedInSecret": ""
+}

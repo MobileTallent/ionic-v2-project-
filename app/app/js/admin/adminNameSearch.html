@@ -1,0 +1,17 @@
+<ion-view view-title="Profile search results" ng-controller="AdminNameSearch as vm">
+
+    <ion-content>
+
+        <div ng-show="!vm.profiles.length" style="text-align: center;font-family:'Avenir Next LT Pro Regular';font-size:18px">
+            <br/>
+            {{'No results' | translate}}<br/>
+        </div>
+        <div class="list">
+            <a class="item item-avatar" ng-repeat="profile in vm.profiles track by profile.id" ui-sref="^.userAdmin({userId : profile.uid})">
+                <img ng-src="{{::profile.photoUrl}}">
+                <h2>{{::profile.name}}</h2>
+            </a>
+        </div>
+
+    </ion-content>
+</ion-view>

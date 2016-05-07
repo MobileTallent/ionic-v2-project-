@@ -1,0 +1,60 @@
+<ion-modal-view>
+
+    <ion-header-bar class="bar-positive">
+        <div class="buttons">
+            <i class="button button-icon icon ion-android-arrow-back" ng-click="vm.close()"></i>
+        </div>
+        <h1 class="title">{{vm.report.profile.name}}</h1>
+        <div class="buttons">
+            <i class="button button-icon icon ion-checkmark" ng-click="vm.actionReport()"></i>
+        </div>
+    </ion-header-bar>
+
+    <ion-content>
+
+        <div style="padding: 10px;">
+            <b>{{vm.report.profile.name}}
+
+            <div>
+                {{vm.report.profile.about}}
+            </div>
+        </div>
+
+        <div ng-if="!vm.report.profile.photos">No profile photos</div>
+        <ion-list show-delete="true">
+            <ion-item ng-repeat="photo in vm.report.profile.photos" class="item-thumbnail-left">
+                <img ng-src="{{photo.url()}}">
+                <ion-delete-button class="ion-minus-circled"
+                                   ng-click="vm.deletePhoto(photo.url())">
+                </ion-delete-button>
+            </ion-item>
+        </ion-list>
+
+        <div ng-if="vm.reportDetails.recentMessagesToReporter">
+        Recent sent messages to reporter
+        <ion-list>
+            <ion-item ng-repeat="msg in vm.reportDetails.recentMessagesToReporter" style="padding:5px">
+                {{msg.text}}
+            </ion-item>
+        </ion-list>
+        </div>
+
+        Recent sent messages
+        <ion-list>
+            <ion-item ng-repeat="msg in vm.reportDetails.recentMessages" style="padding:4px">
+                {{msg.text}}
+            </ion-item>
+        </ion-list>
+
+
+        All reports against this user
+        <ion-list>
+            <ion-item ng-repeat="report in vm.reportDetails.allReports">
+                {{report.createdAt | date}}<br/>
+                Reason: {{report.reason}}<br/>
+                Action: {{report.actionTaken}}
+            </ion-item>
+        </ion-list>
+
+    </ion-content>
+</ion-modal-view>

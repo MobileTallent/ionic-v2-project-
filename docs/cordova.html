@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<title>Cordova</title>
+
+<xmp theme="cerulean" style="display:none;">
+[Index](index.html)
+
+# Cordova
+
+Apache Cordova is the open source project that was donated from, and the basis of, Adobe PhoneGap.
+
+It provides the ability to develop 'hybrid mobile apps' where the majority of the UI and logic is 
+coded as a web appication in an embedded web view. Cordova provides the ability to interface with 
+native code via a JavaScript interface.
+
+Generally the project configuration commands you will use are adding/remove platforms (android, ios) and adding/removing plugins.
+
+**cordova platform add ios**
+
+**cordova platform remove ios**
+
+**cordova platform add android**
+
+**cordova platform remove android**
+
+You should not edit anything under **/platforms/ios** or **/platforms/android**
+It should be possible to remove and add the platforms back at any time.
+If you do need to make tweaks, as we have had to in the Cloneder project, it should be done by
+updating the plugins or by the cordova hooks.
+
+
+## Cordova lifecycle hooks
+
+Cordova has hooks which allows scripts to be run at various stages of development cycle, and are found in the folder **/hooks**
+
+The cloneder project has a number of custom hooks to automate the project setup and configuration from common issues. (A number of the other hooks come from ionic-cli)
+
+1. Remove duplicate bolts-android jars ([StackOverflow](http://stackoverflow.com/questions/27694355/unable-to-execute-dex-multiple-dex-files-define-lbolts-aggregateexception?lq=1))
+2. Add the android:name attribute to the application tag in AndroidManifest.xml for the CustomApplication ([Stackoverflow](http://stackoverflow.com/questions/23560414/apache-cordova-app-crashes-after-receiving-parse-com-push-notification/23574678))
+3. Always install the facebook plugin from a local copy so it installs with the required variables ([StackOverflow](http://stackoverflow.com/questions/22355792/cordova-facebook-plugin-missing-variables-app-id-app-name))
+
+These have been tested on OS X (https://issues.apache.org/jira/browse/CB-5905)
+
+
+## Plugins
+
+The ParsePushPlugin used in Cloneder is a fork maintained at my GitHub at https://github.com/campers/parse-push-plugin
+which contains some customisations for opening notifications.
+
+
+</xmp>
+
+<script src="strapdown/v/0.2/strapdown.js"></script>
+</html>

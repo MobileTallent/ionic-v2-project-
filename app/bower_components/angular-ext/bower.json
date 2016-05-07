@@ -1,0 +1,10 @@
+{
+  "name": "angular-ext",
+  "description": "These are the extra additional services in the main angular distribution. Ionic already includes some",
+  "version": "1.4.3",
+  "main": "./angular-cookies.min.js",
+  "ignore": [],
+  "dependencies": {
+    "angular": "1.4.3"
+  }
+}

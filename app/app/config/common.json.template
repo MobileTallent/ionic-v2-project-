@@ -1,0 +1,16 @@
+{
+  "appName": "",
+  "playStoreUrl": "",
+  "itunesUrl": "",
+  "socialShareMessage": "",
+  "adMob": {
+    "android": {
+        "banner": "",
+        "interstitial": ""
+    },
+    "ios": {
+      "banner": "",
+      "interstitial": ""
+    }
+  }
+}

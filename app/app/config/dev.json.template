@@ -1,0 +1,11 @@
+{
+  "buildEnv": "dev",
+  "facebookAppId": "",
+  "facebookAppName": "",
+  "parseAppId": "",
+  "parseJavascriptKey": "",
+  "parseClientKey": "",
+  "parseServerUrl": "http://localhost:1337/parse",
+  "linkedInId": "",
+  "linkedInSecret": ""
+}

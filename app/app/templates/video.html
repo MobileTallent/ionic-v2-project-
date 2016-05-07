@@ -1,0 +1,39 @@
+<ion-modal-view>
+
+    <ion-content padding="true" ng-class="{videoLayout:video.state != video.InCall}">
+
+        <div class="row" ng-show="video.state == video.Inviting" >
+            <div class="col" style="text-align: center">
+                <p>{{'CALLING' | translate}} {{video.profile.name}}</p>
+                <img class="circle" ng-src="{{video.profile.photoUrl}}"/>
+                <p>{{'WAITING_FOR_REPLY' | translate}}...</p>
+                <br/><br/>
+                <a class="button button-assertive" ng-click="video.cancelInvite()">{{'CANCEL' | translate}}</a>
+            </div>
+        </div>
+
+        <div class="row" ng-show="video.state == video.Incoming">
+            <div class="col" style="text-align: center">
+                <p>{{'INCOMING_CALL_FROM'}} {{video.profile.name}}</p>
+
+                <img class="circle" ng-src="{{video.profile.photoUrl}}"/>
+                <br/>
+                <br/>
+                <div class="button-bar">
+                    <a class="button button-positive" ng-click="video.accept()">{{'ACCEPT' | translate}}</a>
+                    <a class="button button-assertive" ng-click="video.reject()">{{'REJECT' | translate}}</a>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="video.state == video.InCall" style="height:100%">
+            remote
+            <div id="video-remote"></div>
+            <br/>
+            local
+            <div id="video-local"></div>
+            <a class="button button-assertive" ng-click="video.disconnect()">{{'HANG_UP' | translate}}</a>
+        </div>
+
+    </ion-content>
+</ion-modal-view>

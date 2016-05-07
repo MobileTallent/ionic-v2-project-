@@ -1,0 +1,59 @@
+<ion-view view-title="{{'PROFILE_SETUP' | translate}}" cache-view="false">
+    <ion-header-bar class="bar-positive">
+        <h1 class="title">{{'PROFILE_SETUP_MSG' | translate}}</h1>
+    </ion-header-bar>
+    <ion-content padding="true">
+
+    <div class="list">
+        <label class="item item-input">
+            <span class="input-label">{{'FIRST_NAME' | translate}}</span>
+            <input type="text" ng-model="user.name">
+        </label>
+        <label class="item item-input item-select">
+            <div class="input-label">
+                {{'BIRTH_DAY' | translate}}
+            </div>
+
+            <input type="number"
+                   min="1"
+                   max="31"
+                   step="1"
+                   ng-model="user.birthDay">
+        </label>
+        <label class="item item-input item-select">
+            <div class="input-label">
+                {{'BIRTH_MONTH' | translate}}
+            </div>
+            <select ng-model="user.birthMonth">
+                <option ng-repeat="month in months" value="{{$index}}">{{month}}</option>
+            </select>
+        </label>
+        <label class="item item-input item-select">
+            <div class="input-label">
+                {{'BIRTH_YEAR' | translate}}
+            </div>
+
+            <input type="number"
+                   min="{{yearFrom}}"
+                   max="{{yearTo}}"
+                   step="1"
+                   ng-model="user.birthYear">
+        </label>
+        <!--
+        <select ng-model="user.year">
+                <option ng-repeat="year in years" value="year">{{year}}</option>
+            </select>
+        -->
+        <div class="item item-divider">
+            {{'GENDER' | translate}}:
+        </div>
+        <ion-radio ng-model="user.gender" name="gender" ng-value="'M'">{{'MALE' | translate}}</ion-radio>
+        <ion-radio ng-model="user.gender" name="gender" ng-value="'F'">{{'FEMALE' | translate}}</ion-radio>
+
+    </div>
+    <button class="button button-block button-positive" ng-click="saveProfile()">{{'SAVE' | translate}}</button>
+    <br/>
+    <button class="button button-block" ng-click="logout()">{{'LOGOUT' | translate}}</button>
+
+    </ion-content>
+</ion-view>

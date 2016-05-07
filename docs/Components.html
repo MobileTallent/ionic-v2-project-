@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<title>Components</title>
+
+<xmp theme="cerulean" style="display:none;">
+[Index](index.html)
+
+Cloneder is built upon many components and plugins.  A large part of the work in creating Cloneder is integrating
+all the various components, testing them and making tweaks and fixes as required.
+
+# Bower component customization notes
+
+### Multi-range slider
+The multi-range slider used for the age and search distance options is from https://github.com/PopSugar/angular-slider
+This particular one was chosen over two others which were tested as it did not have a dependency on jQuery or ngTouch.
+There was a conflict with a CSS name. The slider div class has been modified from *bar* to *slider-bar*
+There are other css changes added to app.css to fix some styles
+The bower.json was updated to include the css file
+
+### Tinder cards
+The line *swipeCards.partial(amt)* was commented out as it was causing a bad flickering issue when the drag speed goes to zero.
+
+### Emoji
+Some additional code was added to support the short forms of smilies.
+
+### ngImgCrop
+If you add jQuery to your project you will have a issue with the touch events. We developed a fix but its no longer
+required as we removed the jQuery dependency, contact us if you need it.
+
+# Cordova plugins
+
+### Parse Push
+
+The Parse Push plugin in the project has some custom changes we have developed to support callbacks when opening a notification.
+
+Cloneder contains a custom Cordova hook (*hooks/after_prepare/010_delete_parse_push_bolt-android-jar.js*) to remove the included bolts-android-1.1.3.jar as it conflicts with the one included by the Facebook plugin.
+
+
+
+</xmp>
+
+<script src="strapdown/v/0.2/strapdown.js"></script>
+</html>

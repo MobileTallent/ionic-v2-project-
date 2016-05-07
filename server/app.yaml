@@ -1,0 +1,13 @@
+# Used to configure Google App Engine
+runtime: nodejs
+vm: true
+
+env_variables:
+  # --REQUIRED--
+  DATABASE_URI: <your-database-url>
+  APP_ID: <your-app-id>
+  MASTER_KEY: <your-master-key>
+  # --OPTIONAL--
+  # FILE_KEY: <your-file-key>
+  # PARSE_MOUNT: /parse
+  # CLOUD_CODE_MAIN:  

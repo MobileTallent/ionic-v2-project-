@@ -1,0 +1,28 @@
+{
+  "name": "cloneder",
+  "private": "true",
+  "devDependencies": {
+    "ionic": "driftyco/ionic-bower#1.2.1",
+    "ionic-contrib-tinder-cards": "1.0.0",
+    "ng-img-crop": "0.3.2",
+    "angular-slider": "~0.2.11",
+    "angular-material": "0.6.0-rc3-master-98c3152",
+    "parse-angular-patch": "0.1.0",
+    "ngCordova": "0.1.23-alpha",
+    "angular-ext": "1.4.3",
+    "angular-translate": "2.8.1",
+    "angular-translate-storage-local": "2.8.1",
+    "angular-translate-storage-cookie": "2.8.1",
+    "angular-emoji": "0.0.2",
+    "angular-imgcache": "0.1.0",
+    "imgcache.js": "1.0rc1",
+    "angular-elastic": "2.4.2",
+    "angulartics": "0.17.2",
+    "ngstorage": "0.3.0",
+    "twilio-common": "~0.1.4",
+    "twilio-conversations": "~0.13.2"
+  },
+  "resolutions": {
+    "ionic": "1.1.0"
+  }
+}

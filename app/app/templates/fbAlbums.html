@@ -1,0 +1,22 @@
+<ion-view view-title="{{'ALBUMS' | translate}}" cache-view="false">
+
+  <ion-content has-header="true" padding="true">
+
+
+      <div ng-show="albums == null">
+          {{'LOADING' | translate}}...
+      </div>
+      <div ng-show="albums.length == 0">
+          {{'NO_FB_ALBUMS' | translate}}
+      </div>
+<div class="list">
+
+    <a class="item item-avatar" ng-repeat="album in albums" ui-sref="^.fb-album({albumId : album.id})" >
+      <img ng-src="https://graph.facebook.com/{{album.id}}/picture?type=album&access_token={{fbAccessToken}}">
+      <h2>{{album.name}}</h2>
+      <p>{{album.count}} photos</p>
+    </a>
+
+</div>
+</ion-content>
+</ion-view>

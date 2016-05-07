@@ -1,0 +1,11 @@
+{
+  "buildEnv": "prod",
+  "facebookAppId": "",
+  "facebookAppName": "",
+  "parseAppId": "",
+  "parseJavascriptKey": "",
+  "parseClientKey": "",
+  "parseServerUrl": "",
+  "linkedInId": "",
+  "linkedInSecret": ""
+}
