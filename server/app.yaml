@@ -4,9 +4,9 @@ vm: true
 
 env_variables:
   # --REQUIRED--
-  DATABASE_URI: <your-database-url>
-  APP_ID: <your-app-id>
-  MASTER_KEY: <your-master-key>
+  # DATABASE_URI: <your-database-url>
+  # APP_ID: <your-app-id>
+  # MASTER_KEY: <your-master-key>
   # --OPTIONAL--
   # FILE_KEY: <your-file-key>
   # PARSE_MOUNT: /parse

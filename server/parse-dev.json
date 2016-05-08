@@ -1,0 +1,29 @@
+{
+  "databaseURI": "mongodb://localhost:27017/mydb",
+  "serverURL": "http://localhost:1337/parse",
+  "appId": "",
+  "masterKey": "",
+  "cloud": "cloud/main.js",
+
+  "pushConfig": {
+    "android": {
+      "senderId": "",
+      "apiKey": ""
+    },
+    "ios": {
+      "pfx": "/file/path/to/XXX.p12",
+      "bundleId": "",
+      "production": false
+    }
+  },
+
+  "oauth": {
+    "facebook": {
+      "appIds": ""
+    }
+  },
+
+  "liveQuery": {
+     "classNames": "[]"
+  }
+}

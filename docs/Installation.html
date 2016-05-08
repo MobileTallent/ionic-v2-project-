@@ -11,7 +11,7 @@ The instructions below will get your own custom version of Cloneder setup for de
 
 If you have any issues with building or running the app then:
 
-* Make sure you have completed ALL the steps. A number of support requests have been due to not uploading the Cloud code or not setting the Facebook app ids
+* Make sure you have completed **ALL** the steps. A number of support requests have been due to not uploading the Cloud code or not setting the Facebook app ids
 
 * First check the [Troubleshooting.html](Troubleshooting.html) page.
 
@@ -22,41 +22,29 @@ If you have any issues with building or running the app then:
 There are additional instructions on the [Publishing_to_app_store.html](Publishing_to_app_store.html) page for when you are ready to do a production release.
 
 There are many steps and many components required to build the app for all three platforms, web, Android and iOS.
-Please read through ALL the documentation provided. Once you've done the initial setup its a good idea to read through it
+Please read through **ALL** the documentation provided. Once you've done the initial setup its a good idea to read through it
 all again, as when you're more familiar with the setup then more tips and steps in the documentation will make more sense.
 
-All the bullet points in the following instructions are actions to be completed, with additional information before/after the point.
+**All the bullet points in the following instructions are actions to be completed**, with additional information before/after the point.
 
 # Code Repository
 
-The Cloneder source code is currently provided as a Mercurial repository on BitBucket.org. Mercurial is a distribution
-version control system, very similar to Git.
+The Cloneder source code is currently provided as a Git repository on BitBucket.org.
 
 * Create your own fork of the code repository in BitBucket.
 
 You may need to click the ... button at the top of the left menu to see the Fork action. More info on forking at https://confluence.atlassian.com/display/BITBUCKET/Forking+a+Repository
 
-To download your fork you will want a Mercurial GUI application. We recommend TortoiseHg
+To download your fork you will want a Git GUI application such as [SourceTree](https://www.sourcetreeapp.com/) or [GitKraken](https://www.gitkraken.com/)
 
-* Install TortoiseHg from http://tortoisehg.bitbucket.org
-
-Installing TortoiseHg should also install Mercurial for you. If at a command prompt, the command *hg* is not recognized
-then you may need to install it separately. On OSX you will need to install homebrew (http://brew.sh/) first, then install Hg
-
-Mercurial has the concept of cloning a repository, which is making a copy of it (and unrelated to 'Cloneder').
-
-* Clone your repository to your computer in TortoiseHg by the menu File -> Clone Repository.
-
-For the Source field open up your fork in BitBucket. You will see a field with the source link (TODO image).
-
-The destination folder will become the root folder for your project.
+* Clone your repository to your computer using the Git command line or a Git GUI
 
 Once you have cloned the project open up a command prompt in the project root folder.
 
-* Run: **hg branch DEV**
+* Run: **git branch dev**
 
-This make a new branch within your fork, and you will do your customisations in the DEV branch and not the default branch.
-It's important to do this to make it easier to merge in new updates from the base Cloneder code.
+This makes a new branch within your fork of the repository, and you will do your customisations in the dev branch and not the master branch.
+It's essential to do this so you can easily merge in new updates from the base Cloneder code.
 
 # Development tools
 
@@ -67,10 +55,14 @@ the new Microsoft Visual Studio. Another lightweight option is the editor Sublim
 
 ### WebStorm setup
 
+We setup two different IDE projects, one for the server folder and another for the app folder.
+
+First for the mobile app project:
+
 * File -> New Project From Existing Files...
 * Select Source files are in a local directory, no Web server is yet configured
-* Select the project folder and select the Project Root button
-* Expand the project folder, highlight the npm_modules, bower_components, platforms, plugin-source and plugins directories, then select the Excluded folder button
+* Select the /app folder and select the Project Root button
+* Expand the project folder, highlight the npm_modules, bower_components, platforms, plugin-source and plugins directories, then right click and select the Excluded folder button
 
 The platforms folder will not exist yet, you can exclude it later by right clicking then Mark Directory As -> Excluded
 
@@ -82,9 +74,18 @@ Once the project is open, go to
 * Preferences... -> Languages and Frameworks -> JavaScript
 * Set JavaScript Language Version to ECMAScript 6
 
+Now create a project for the server code:
+
+* File -> New Project From Existing Files...
+* Select Source files are in a local directory, no Web server is yet configured
+* Select the /server folder and select the Project Root button
+* Expand the project folder, highlight the npm_modules then right click and select the Excluded folder button
+
+
+
 # Javascript
 
-The Cloneder app is primarily developed in JavaScript.  The build tools also uses the node.js ecosystem.
+The Cloneder app is primarily developed in JavaScript and TypeScript.  The build tools also uses the node.js ecosystem.
 
 * Install node.js from http://nodejs.org/
 
@@ -92,7 +93,7 @@ The Cloneder app is primarily developed in JavaScript.  The build tools also use
 
 If you are on Windows, at the command line:
 
-* Run: **npm install -g bower gulp cordova ionic tsd@next karma-cli protractor node-gyp coffee-script js-beautify typescript npm-check**
+* Run: **npm install -g bower gulp cordova ionic tsd@next karma-cli protractor node-gyp coffee-script js-beautify typescript npm-check parse-dashboard mongodb-runner**
 
 If on OSX/linux you shouldn't be logged in as an admin/root user, so you will need to run it with **sudo**.
 
@@ -101,29 +102,50 @@ Next install the webdriver for the integration test tools.
 * Run: **webdriver-manager update**
 
 All the following command line commands should be run in the project root folder, unless specified otherwise.
-Also any file references, e.g. **/CloudCode/** are from the project root folder.
+Also any file references, e.g. /app/app/config are from the project root folder.
 
-* Run: **npm install**
+* Open the command line to the /app fold and run **npm install**
+* Open the command line to the /server fold and run **npm install**
 
-This will install all the dependencies defined in */package.json*
+This will install all the dependencies defined in the package.json files
 
-* Run: **npm install** again as sometimes it doesn't install everything the first time.
+You may need to run **npm install** twice as sometimes it doesn't install everything the first time.
 
 # Configuration file templates
 
 There are a number of files which require project specific configuration. Initially there are copies of these files
 with an extra *.template* extension.
 
-* Run: **gulp init**
+* In the folder /app run: **gulp init**
 
 This will copy these files without the *.template* extension and print to the console the list of files created.
 DO NOT edit or delete the *.template files. In the next steps we will update these configuration files.
 
-# Parse
 
-Parse is the fully managed backend service which Cloneder uses for storing all the data.
 
-* Go to http://www.parse.com and create an account.
+
+
+
+# Parse Server
+
+Parse is the API and node.js server which Cloneder uses. Previously Parse was a fully managed service but now that
+they are shutting down they have release an API compatible node.js server which is at
+[https://github.com/ParsePlatform/parse-server](https://github.com/ParsePlatform/parse-server)
+
+### Mongo production database
+
+This step can be completed later when preparing to deploy a production release
+Parse uses MongoDB for the database. For development use a locally installed MongoDB
+
+#### Option 1 - Managed database
+
+MLab provides fully managed Mongo databases at https://mlab.com. Make sure you select the same cloud provider and
+region where you will be running the Parse node.js server(s).
+
+#### Option 2 - Self-hosted
+
+You can self-host a MongoDB in your cloud. We are running ours on the Google Cloud Platform. The only other option
+we would recommend is AWS if you are already using it.
 
 * Create three apps, one each for development, QA and production. For example ClonederDev, ClonederQa, ClonederProd
 
@@ -133,50 +155,48 @@ Parse is the fully managed backend service which Cloneder uses for storing all t
 Note that Cloneder uses both the Javascript and Android/iOS (Client) SDK's.  The native/client plugin is required for
 the push notifications. The Javascript SDK/API is used for everything else (authentication, data).
 
-Parse allows you to upload code which runs on their servers call Cloud Code.
+The server-side code is also referred to as Cloud Code
 
 * Read the [Cloud code guide](https://www.parse.com/docs/cloud_code_guide)
 
-* Install the Parse command line tool at https://parse.com/docs/cloudcode/guide#command-line-installation
+(Note that this guide is for the old managed service, there are some differences with open-source Parse API server)
 
-The Parse config and server-side Cloud Code used by the Parse command line tool is located in the **/CloudCode** folder
 
-* Update **/CloudCode/config/global.json** with your application keys and master keys for your dev, qa and prod app.
+### Twilio video chat
 
-Note the dev, qa and prod names in global.json are just alias for the command line tool, and don't need to match the application name in Parse.
+Twilio is used for the real-time video chat (and in the future will be used for SMS notifications).
 
-In */CloudCode/config/global.json* you will see the _default.link value, which is dev in the template. This means if you
-don't specify an app alias when running **parse deploy**, it will use that app by default.  So running **parse deploy** would update the dev
-app, and **parse deploy prod** would update the prod app.
+* Create an account at http://www.twilio.com and upgrade to a paid account.
 
-You will need to use the Parse command tool to upload any changes to the sever-side cloud code.
+* Create a set of API keys (Dev Tools -> API Keys)
 
-* In **/CloudCode/** run **parse deploy** to upload the Cloud Code to the dev app.
+* Create a video profile (Programmable Video -> Configuration Profiles)
 
-* If you have setup qa and prod apps then you can run **parse deploy qa** and **parse deploy prod**
+* Enter these Twilio configuration values in /server/config.json
 
-Verify the cloud code has been uploaded by in the Parse web admin going to Core -> Cloud Code
+account_sid is your Twilio account id
+api_key is from https://www.twilio.com/user/account/video/dev-tools/api-keys
+configuration_sid is from https://www.twilio.com/user/account/video/profiles
 
-Remember to change into the CloudCode directory before running the parse command line tool. Most other commands are run from the project root.
 
-Parse has the option of requiring email verification for new accounts. It is disabled by default, you can enable
-it in your Parse web admin under Settings -> Email -> Settings -> Verify user emails.
-For more info see http://blog.parse.com/2012/04/03/introducing-app-email-settings/
+### LinkedIn
 
-The app will detect if this setting has been enabled and if so force users to verify their email before allowing them to proceed into the app.
+If you want to enable the optional LinkedIn authentication then:
 
-**TODO - add mailgun config to cloud config and update the code **
+* Create an app(s) at https://www.linkedin.com/developer/apps
 
-* In the Parse web admin go to Settings -> Hosting -> Web Hosting and set a subdomain (ParseApp Name) for each of your apps.
+* In the app settings check r_basicprofile and r_emailaddress
 
-* Add the subdomain to the parseSubDomain config value in **/app/config/dev.json** (and qa.json, prod.json for each app respectively)
+* Add http://localhost/callback to the OAuth2 callbacks
 
-Note there is nothing for yourself or users to see at http://(your-app-subdomain).parseapp.com. It is used by the mobile app to log errors to the server.
+* Copy the Client Id and Client Secret to the linkedInId and linkedInSecret values in the /server/parse-[dev|prod].json config files
 
-* In **/CloudCode/cloud/config.js** enter a random value for module.exports.passwordPrefix
+
 
 
 # App initial setup
+
+**File paths are relative to the top level /app folder**
 
 Choose a package name for your project. It should follow the Java package naming conventions,
 which is your domain name in reverse and then the project name.
@@ -273,12 +293,12 @@ Package name: Use the one you decided in the previous *App initial setup* sectio
 Default Activity Class Name (add .CordovaAppp to the package name)
 com.engineerstoolbox.cloneder.CordovaApp
 
-To get the release key hash you have two options. 
+To get the release key hash you have two options.
 Run (replacing YOUR_RELEASE_KEY_ALIAS and YOUR_RELEASE_KEY_PATH with the appropriate values):
 keytool -exportcert -alias YOUR_RELEASE_KEY_ALIAS -keystore YOUR_RELEASE_KEY_PATH | openssl sha1 -binary | openssl base64
 (You will have need to completed the android setup and release steps to have this. You can do it later)
 
-or othewise just try and login to Facebook. You will get an error something like "The hash aurhgu3u4gh9a3u4hg= is not found" 
+or othewise just try and login to Facebook. You will get an error something like "The hash aurhgu3u4gh9a3u4hg= is not found"
 Then type that hash into the Facebook Android hash configuration.
 
 The official Facebook Android setup docs are at https://developers.facebook.com/docs/android/getting-started
@@ -292,9 +312,11 @@ It may be advisable to increase the age restriction to 18+
 
 ### Facebook configuration setup
 
-* Open **/package.json** and look for the line "com.phonegap.plugins.facebookconnect --variable APP_ID=\"\" --variable APP_NAME=\"\""
+* Open **/app/package.json** and look for the line "com.phonegap.plugins.facebookconnect --variable APP_ID=\"\" --variable APP_NAME=\"\""
 
 * Update the APP_ID and APP_NAME values with that of your Facebook app (e.g. --variable APP_ID=\"123456789\" --variable APP_NAME=\"My App\"" )
+
+* Update /server/parse-[prod|dev].json with your facebook id for the **oauth.facebook.appIds** value
 
 Before adding a cordova platform, you will need to delete the */plugins/com.phonegap.plugins.facebookconnect* folder.
 This way the script will add it with the APP_ID and APP_NAME variables from */plugin-source/com.phonegap.plugins.facebookconnect*
@@ -310,32 +332,7 @@ What you can do is make another facebook app with the website platform and updat
 Parse doesn't care which Facebook app you are using.
 
 
-# Twilio video chat
-
-Twilio is used for the real-time video chat (and in the future will be used for SMS notifications).
-
-* Create an account at http://www.twilio.com and upgrade to a paid account.
-
-* Create a set of API keys (Dev Tools -> API Keys)
-
-* Create a video profile (Programmable Video -> Configuration Profiles)
-
-* Enter these Twilio configuration values in */CloudCode/cloud/config.js*
-
-
-# LinkedIn
-
-If you want to enable the optional LinkedIn authentication then:
-
-* Create an app(s) at https://www.linkedin.com/developer/apps
-
-* In the app settings check r_basicprofile and r_emailaddress
-
-* Add http://localhost/callback to the OAuth2 callbacks
-
-* Copy the Client Id and Client Secret to the linkedInId and linkedInSecret values in the dev/qa/prod.json config files in **/app/config**
-
-# Google Map key
+### Google Map key
 
 * Get your public API key and add it to the script tag which loads the google maps in **/www/index.html**
 ```
@@ -343,14 +340,13 @@ If you want to enable the optional LinkedIn authentication then:
 ```
 See https://developers.google.com/maps/documentation/javascript/tutorial#api_key for creating your key
 
-
-# AdMob
+### AdMob
 
 AdMob is the Google mobile advertising product. If you want banner and/or then do the following:
 
 * Create and account at https://www.google.com/admob/
 
-* Enter the appropriate ids in /app/config/common.js in the **adMob** section.
+* Enter the appropriate ids in /app/app/config/common.js in the **adMob** section.
 
 * If you enable ads in Android then in the Google Play Store developer console for your app select the option at
 **Pricing & Distribution** > **CONTAINS ADS** >  *Does your application have ads?*
@@ -359,7 +355,7 @@ If you enter the ids for a platform then the default code in Cloneder is to disp
 
 See https://github.com/floatinghotpot/cordova-admob-pro for more details on configuring ads
 
-# Icons
+### Icons
 
 * Read http://ionicframework.com/blog/automating-icons-and-splash-screens/ for creating and setting up your slash screen and icon images
 
@@ -391,13 +387,13 @@ Ignore the 3 TypeScript warnings.
 
 If everything is configured ok you should see the running app.
 
-Any changes to the files under /app and /bower_components will be compiled, joined together and compressed, then copied to the /www folder
+Any changes to the files under app and bower_components will be compiled, joined together and compressed, then copied to the www folder
 (the output files are app.js, app.ts.js, app.css, templates.js, lib.js, lib.css)
 
 As you make JS, CSS and HTML changes you should only need to refresh the browser to get the changes.
 
 The gulp build supports dev, qa and productions build with different configuration parameters. See the *envConfig* task
-in the gulf file and the files in */app/config*. To do a production configured build run:
+in the gulf file and the files in /app/app/config/. To do a production configured build run:
 **gulp --env prod**
 
 # Build/Run with Emulators or Real Devices
@@ -426,7 +422,11 @@ To deploy a debug build to your real iOS device you will need to do it from XCod
 
 The iOS emulator is sufficient for most purposes. The main limitation is it can't receive push notifications.
 
-###
+# Dashboard
+
+The admin dashboard is a separate Parse project
+
+* Follow the instruction at https://github.com/ParsePlatform/parse-dashboard to setup and run the dashboard
 
 # Merging updates
 
@@ -435,24 +435,9 @@ After creating your fork of Cloneder, there will be updates to Cloneder to merge
 In BitBucket you will see a notification if there are new updates in the Cloneder to sync into your fork. You should
 regularly sync the cloneder code.
 
-If you want to sync from the command lines instead of the web interface, then in your local repository's hrgc file
-(path_to_your_repo/.hg/hgrc) in the section **[paths]** add the entry:
-
-upstream = https://username:password@bitbucket.org/daniel_campagnoli/tinderclone
-
-Then on the command line you can run **hg pull upstream** to pull in the latest changes into your fork.
-
-The reason we made the **DEV** branch in your fork is so syncing will pull the new Cloneder changes into
-the **default** branch in your fork. This gives you an opportunity to review each change before merging them into your **DEV** branch.
-
 As you merge the changes in be sure to read the commit messages for each changeset as there may be notes on what you
 need to do to your app or development environment to be compatible with the update. Look for MERGE NOTES in the changeset
 comments. Also briefly look through the changes in the files.
-
-Some changes may require changing the data and running a migration job in Parse. In this case go to your Parse dashboard
-and go to the Jobs menu. Click on 'Schedule a Job'. For the Job Name field select the new migration job and click
-'Schedule Job', which just creates the job definition.  Now run the job. You may want to check the logs (under the Log menu
-item) to check if there was any errors.
 
 
 </xmp>
