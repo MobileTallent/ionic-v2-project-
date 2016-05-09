@@ -132,6 +132,19 @@ Parse is the API and node.js server which Cloneder uses. Previously Parse was a 
 they are shutting down they have release an API compatible node.js server which is at
 [https://github.com/ParsePlatform/parse-server](https://github.com/ParsePlatform/parse-server)
 
+Install MongoDB and follow the Parse setup guide
+
+### MongoDB indexes
+
+You will need to run the script to create the indexes in Mongo.
+
+Either create the dbName var by using the eval argument as per this eample:
+
+**mongo localhost:27017 --eval 'var dbName="mydb"' mongo-indexes.js**
+
+Or edit the mongo-indexs.js file and run
+**mongo localhost:27017  mongo-indexes.js**
+
 ### Mongo production database
 
 This step can be completed later when preparing to deploy a production release
@@ -147,10 +160,13 @@ region where you will be running the Parse node.js server(s).
 You can self-host a MongoDB in your cloud. We are running ours on the Google Cloud Platform. The only other option
 we would recommend is AWS if you are already using it.
 
-* Create three apps, one each for development, QA and production. For example ClonederDev, ClonederQa, ClonederProd
+* Create two app ids, one for development and production.
 
-* For each app go to Settings -> Keys and copy the Application Id, Client key and JavaScript key to **/app/config/dev.json**,
-**/app/config/qa.json** and **/app/config/prod.json** respectively.
+* In /server/parse-config.js enter the appId, masterKey and databaseUri for the dev and prod configurations
+(You can create as many configurations as you need, QA, integration etc.) You probably wont have a production
+database URI just yet.
+
+* Add the appId's to /app/app/config/dev|prod.json
 
 Note that Cloneder uses both the Javascript and Android/iOS (Client) SDK's.  The native/client plugin is required for
 the push notifications. The Javascript SDK/API is used for everything else (authentication, data).
@@ -194,7 +210,7 @@ If you want to enable the optional LinkedIn authentication then:
 
 
 
-# App initial setup
+# Mobile app initial setup
 
 **File paths are relative to the top level /app folder**
 
