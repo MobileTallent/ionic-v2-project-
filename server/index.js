@@ -4,25 +4,10 @@
 var express = require('express')
 var ParseServer = require('parse-server').ParseServer
 var path = require('path')
-var jsonfile = require('jsonfile')
-
-
-var configFileName = 'parse-' + (process.env.CONFIG || 'dev') + '.json'
-console.log('Loading Parse config from ' + configFileName)
-var parseConfig = jsonfile.readFileSync(configFileName)
-
-// If we haven't completed the push config, then ignore it
-if(parseConfig.pushConfig && (!parseConfig.pushConfig.android.senderId || !parseConfig.pushConfig.ios.bundleId)) {
-  console.log('Push notifications not configured')
-  delete parseConfig.pushConfig
-}
+var parseConfig = require('./parse-config.js')
 
 console.log(JSON.stringify(parseConfig))
 var api = new ParseServer(parseConfig)
-
-// Client-keys like the javascript key or the .NET key are not necessary with parse-server
-// If you wish you require them, you can set them as options in parseConfig:
-// javascriptKey, restAPIKey, dotNetKey, clientKey
 
 var app = express()
 
