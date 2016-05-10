@@ -285,10 +285,9 @@ angular.module('service.parse', ['constants', 'parse-angular'])
                 registerPush()
                 return result
             }, function(error){
-                $log.log('signUp error: ' + JSON.stringify(error))
-                // {"code":202,"message":"username campers@gmail.com already taken"}
+                // {"code":202,"message":"username user@domain.com already taken"}
                 // TODO transform to our own app error
-                return error
+                return Parse.Promise.error(error)
             })
         }
 
@@ -305,7 +304,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             }, function(error) {
                 // {"code":101,"message":"invalid login parameters"}
                 // TODO transform to our own app error
-                return error
+                return Parse.Promise.error(error)
             })
         }
 
