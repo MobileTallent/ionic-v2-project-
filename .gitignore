@@ -50,6 +50,8 @@ app/unversioned/**
 
 # SERVER ======================
 
+server/app.yaml
+
 # Logs
 server/logs
 server/*.log

@@ -1,22 +1,27 @@
 {
-  "name": "parse-server-example",
-  "version": "1.4.0",
-  "description": "An example Parse API server using the parse-server module",
+  "name": "my-app-name",
+  "version": "1.0.0",
+  "description": "My app does this",
+  "private": true,
   "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ParsePlatform/parse-server-example"
-  },
-  "license": "MIT",
+  "license": "MIT and commerical",
   "dependencies": {
+    "body-parser": "1.15.1",
     "express": "~4.11.x",
     "jsonfile": "^2.3.0",
     "kerberos": "~0.0.x",
+    "mailgun-js": "0.7.11",
     "parse": "~1.8.0",
-    "parse-server": "~2.2.7"
+    "parse-server": "2.2.9",
+    "underscore": "1.8.3"
   },
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js",
+    "monitor": "nodemon index.js",
+
+
+    "deploy-qa": "cp app-qa.yaml app.yaml && gcloud preview app deploy --project QA_PROJECT_ID",
+    "deploy-prod": "cp app-prod.yaml app.yaml && gcloud preview app deploy --project PROD_PROJECT_ID"
   },
   "engines": {
     "node": ">=4.3"

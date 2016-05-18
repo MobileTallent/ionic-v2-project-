@@ -11,6 +11,10 @@ var api = new ParseServer(parseConfig)
 
 var app = express()
 
+// See HTTPS and forwarding proxies
+// https://cloud.google.com/appengine/docs/flexible/nodejs/runtime
+app.set('trust_proxy', 1);
+
 // Serve static assets from the /public folder
 app.use('/public', express.static(path.join(__dirname, '/public')))
 

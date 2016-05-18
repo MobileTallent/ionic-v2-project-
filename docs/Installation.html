@@ -145,20 +145,7 @@ Either create the dbName var by using the eval argument as per this eample:
 Or edit the mongo-indexs.js file and run
 **mongo localhost:27017  mongo-indexes.js**
 
-### Mongo production database
 
-This step can be completed later when preparing to deploy a production release
-Parse uses MongoDB for the database. For development use a locally installed MongoDB
-
-#### Option 1 - Managed database
-
-MLab provides fully managed Mongo databases at https://mlab.com. Make sure you select the same cloud provider and
-region where you will be running the Parse node.js server(s).
-
-#### Option 2 - Self-hosted
-
-You can self-host a MongoDB in your cloud. We are running ours on the Google Cloud Platform. The only other option
-we would recommend is AWS if you are already using it.
 
 * Create two app ids, one for development and production.
 
@@ -454,6 +441,91 @@ regularly sync the cloneder code.
 As you merge the changes in be sure to read the commit messages for each changeset as there may be notes on what you
 need to do to your app or development environment to be compatible with the update. Look for MERGE NOTES in the changeset
 comments. Also briefly look through the changes in the files.
+
+
+
+# Google Cloud Platform account setup
+
+A Google Cloud account is required for push notifications.
+Create your Google Cloud account at
+
+Go to the projects page at https://console.cloud.google.com/iam-admin/projects
+
+Click Create Project
+
+Expand the advanced options and select the location that is closest to your main userbase. If unsure, or expecting
+global users then leave as the default option.  If you are migrating a live Parse app then choose usa-east1 as that
+will be the closest to the Parse AWS datacenter.
+
+Go the IAM & Admin Settings page and copy your project number. Open up the file /server/parse-config.js and enter the project
+number in the parseConfig object for pushConfig.android.senderId
+
+TODO https://github.com/ParsePlatform/Parse-Server/wiki/Push-Configuring-Clients#configure-broadcast-receiver-and-permissions
+
+## Google Cloud Platform server setup
+
+We run our Cloneder projects with server on the Google Cloud Platform. The following instructions are if you
+    intend to run the database and servers in the Google cloud.
+
+For other hosting options follow the documentation on the Parse wikihttps://github.com/ParsePlatform/parse-server/wiki
+
+* Install the Google Cloud SDK https://cloud.google.com/sdk/docs/
+
+* run: gcloud auth login
+
+* Next go to the Google Cloud console at https://console.cloud.google.com
+
+* Create a billing account (which you will need to enable billing for your projects) https://support.google.com/cloud/answer/6293499?hl=en
+
+* Create a project for each environment you want in the cloud (QA, production etc) with billing enabled
+
+* In /server/package.json update the QA_PROJECT_ID and PROD_PROJECT_ID in the scripts deploy-qa and deploy-prod entries
+
+* In /server/parse-config.json replace the <QA_PROJECT_ID> and <PROD_PROJECT_ID> placeholders with your project ids
+
+## Database setup
+
+### Mongo QA/production databases
+
+#### Option 1 - Managed database
+
+MLab provides fully managed Mongo databases at https://mlab.com.
+Make sure you select the same region as the App Engine region in your project
+
+#### Option 2 - Self-managed
+
+Go to the Cloud Launcher
+
+MongoDB (Google Click to Deploy)
+https://console.cloud.google.com/launcher/config/click-to-deploy-images/mongodb?src=console&project=my-cloneder-app
+
+* Make sure the zone is in your projects App Engine region
+
+For a cheapest setup option (for QA or low traffic prod apps)
+    Select
+    Node count: 1
+    Machine type: f1-micro
+    Data Disk Type: SSD
+    Disk Size in GB: 10GB
+    Arbiter count: 0
+
+Open Compute Engine -> VM Instances
+Copy the internal IP for your mongo database
+Open /server/parse-config.js and update the <QA_DB> or <PROD_DB> with the IP address
+        
+
+Go to versions and stop the old version
+
+For detailed information on the node.js runtime environment on Google App Engine see https://cloud.google.com/appengine/docs/flexible/nodejs/runtime
+
+    Select API Manager from the side menu
+    Enable the
+    Compute Engine API
+    Cloud Storage Service
+    Google Maps JavaScript API
+    Google Cloud Messaging
+    Cloud Monitoring API
+
 
 
 </xmp>
