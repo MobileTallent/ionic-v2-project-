@@ -12,7 +12,17 @@ skip_files:
 
 env_variables:
   PORT: 8080
-  # --REQUIRED--
+
+  # File adapter config https://github.com/ParsePlatform/parse-server/wiki/Configuring-File-Adapters
+  # App Engine has a default storage bucket you can enable with the first 5GB free
+  # PARSE_SERVER_FILES_ADAPTER:
+  # GCP_PROJECT_ID:
+  # GCP_KEYFILE_PATH:
+  # GCS_BUCKET:
+  # GCS_BUCKET_PREFIX:
+  # GCS_DIRECT_ACCESS: false
+
+  # --REQUIRED-- these are already set in parse-config.js
   # DATABASE_URI: <your-database-url>
   # APP_ID: <your-app-id>
   # MASTER_KEY: <your-master-key>

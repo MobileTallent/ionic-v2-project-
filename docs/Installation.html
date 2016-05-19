@@ -46,44 +46,9 @@ Once you have cloned the project open up a command prompt in the project root fo
 This makes a new branch within your fork of the repository, and you will do your customisations in the dev branch and not the master branch.
 It's essential to do this so you can easily merge in new updates from the base Cloneder code.
 
-# Development tools
-
-There are a number of IDE's you can use. We personally use WebStorm by JetBrains (https://www.jetbrains.com/webstorm/). The Ionic team have said they are quite happy using
-the new Microsoft Visual Studio. Another lightweight option is the editor Sublime.
-
-* Install WebStorm, Visual Studio or Sublime
-
-### WebStorm setup
-
-We setup two different IDE projects, one for the server folder and another for the app folder.
-
-First for the mobile app project:
-
-* File -> New Project From Existing Files...
-* Select Source files are in a local directory, no Web server is yet configured
-* Select the /app folder and select the Project Root button
-* Expand the project folder, highlight the npm_modules, bower_components, platforms, plugin-source and plugins directories, then right click and select the Excluded folder button
-
-The platforms folder will not exist yet, you can exclude it later by right clicking then Mark Directory As -> Excluded
-
-Excluding these folders speeds up WebStorm as it does not try to index the files in these folders, and avoids having duplicate
-suggestions in the auto-completion.
-
-Once the project is open, go to
-
-* Preferences... -> Languages and Frameworks -> JavaScript
-* Set JavaScript Language Version to ECMAScript 6
-
-Now create a project for the server code:
-
-* File -> New Project From Existing Files...
-* Select Source files are in a local directory, no Web server is yet configured
-* Select the /server folder and select the Project Root button
-* Expand the project folder, highlight the npm_modules then right click and select the Excluded folder button
 
 
-
-# Javascript
+# Node.js setup
 
 The Cloneder app is primarily developed in JavaScript and TypeScript.  The build tools also uses the node.js ecosystem.
 
@@ -123,12 +88,45 @@ DO NOT edit or delete the *.template files. In the next steps we will update the
 
 
 
+## JavaScript Development tools
 
+There are a number of IDE's you can use. We personally use WebStorm by JetBrains (https://www.jetbrains.com/webstorm/). The Ionic team have said they are quite happy using
+the new Microsoft Visual Studio. Another lightweight option is the editor Sublime.
+
+* Install WebStorm, Visual Studio or Sublime
+
+### WebStorm setup
+
+We setup two different IDE projects, one for the server folder and another for the app folder.
+
+First for the mobile app project:
+
+* File -> New Project From Existing Files...
+* Select Source files are in a local directory, no Web server is yet configured
+* Select the /app folder and select the Project Root button
+* Expand the project folder, highlight the npm_modules, bower_components, platforms, plugin-source and plugins directories, then right click and select the Excluded folder button
+
+The platforms folder will not exist yet, you can exclude it later by right clicking then Mark Directory As -> Excluded
+
+Excluding these folders speeds up WebStorm as it does not try to index the files in these folders, and avoids having duplicate
+suggestions in the auto-completion.
+
+Once the project is open, go to
+
+* Preferences... -> Languages and Frameworks -> JavaScript
+* Set JavaScript Language Version to ECMAScript 6
+
+Now create a project for the server code:
+
+* File -> New Project From Existing Files...
+* Select Source files are in a local directory, no Web server is yet configured
+* Select the /server folder and select the Project Root button
+* Expand the project folder, highlight the npm_modules then right click and select the Excluded folder button
 
 
 # Parse Server
 
-Parse is the API and node.js server which Cloneder uses. Previously Parse was a fully managed service but now that
+Cloneder is developed using the Parse framework. Previously Parse was a fully managed service but now that
 they are shutting down they have release an API compatible node.js server which is at
 [https://github.com/ParsePlatform/parse-server](https://github.com/ParsePlatform/parse-server)
 
@@ -164,6 +162,10 @@ The server-side code is also referred to as Cloud Code
 
 (Note that this guide is for the old managed service, there are some differences with open-source Parse API server)
 
+
+* Configure a file adapter for your QA and Production configuration https://github.com/ParsePlatform/parse-server/wiki/Configuring-File-Adapters
+
+For GCS you can set the environmental variables in /server/app-qa.yaml and /server/app-prod.yaml
 
 ### Twilio video chat
 
@@ -512,7 +514,7 @@ For a cheapest setup option (for QA or low traffic prod apps)
 Open Compute Engine -> VM Instances
 Copy the internal IP for your mongo database
 Open /server/parse-config.js and update the <QA_DB> or <PROD_DB> with the IP address
-        
+
 
 Go to versions and stop the old version
 
