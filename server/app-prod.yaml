@@ -15,7 +15,7 @@ env_variables:
 
   # File adapter config https://github.com/ParsePlatform/parse-server/wiki/Configuring-File-Adapters
   # App Engine has a default storage bucket you can enable with the first 5GB free
-  # PARSE_SERVER_FILES_ADAPTER:
+  # PARSE_SERVER_FILES_ADAPTER: parse-server-gcs-adapter
   # GCP_PROJECT_ID:
   # GCP_KEYFILE_PATH:
   # GCS_BUCKET:
