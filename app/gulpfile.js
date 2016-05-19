@@ -134,7 +134,7 @@ gulp.task('envConfig', function (done) {
     fs.writeFileSync('./app/js/constants.js', constants)
 
     // Copy the custom Android application class with the Parse id's configured
-    var parsePatterns = [{match: 'parseAppId', replacement: config.parseAppId}, {match: 'parseClientKey', replacement: config.parseClientKey}]
+    var parsePatterns = [{match: 'parseAppId', replacement: config.parseAppId}, {match: 'parseServerUrl', replacement: config.parseServerUrl}]
     var java = gulp.src('./app/config/CustomApplication.java')
         .pipe(replace({ patterns: parsePatterns }))
         .pipe(gulp.dest('./platforms/android/src/org/apache/cordova'))

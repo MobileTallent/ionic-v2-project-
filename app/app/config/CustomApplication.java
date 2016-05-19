@@ -36,7 +36,13 @@ public class CustomApplication extends Application {
         registerActivityLifecycleCallbacks(activityCounter);
 
         Log.i(LOGTAG, "Calling Parse.initialize()");
-        Parse.initialize(this, "@@parseAppId", "@@parseClientKey");
+
+        Parse.initialize(new Parse.Configuration.Builder(this)
+            .applicationId("@@parseAppId")
+            .clientKey(null)
+            .server("@@parseServerUrl") // The trailing slash is important.
+            .build()
+        );
         //PushService.setDefaultPushCallback(this, PushClient.class);
         //PushService.subscribe(this, "Channel", PushClient.class);
         ParseInstallation.getCurrentInstallation().saveInBackground();
