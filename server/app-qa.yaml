@@ -21,9 +21,9 @@ env_variables:
   # PARSE_SERVER_FILES_ADAPTER: parse-server-gcs-adapter
   # GCP_PROJECT_ID:
   # GCP_KEYFILE_PATH:
-  # GCS_BUCKET:
-  # GCS_BUCKET_PREFIX:
-  # GCS_DIRECT_ACCESS: false
+  # GCS_BUCKET: <project-id>.appspot.com
+  # GCS_BUCKET_PREFIX: (optional)
+  # GCS_DIRECT_ACCESS: (optional, defaults to false)
 
   # --REQUIRED-- these are already set in parse-config.js
   # DATABASE_URI: <your-database-url>

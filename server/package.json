@@ -20,8 +20,8 @@
     "monitor": "nodemon index.js",
 
 
-    "deploy-qa": "cp app-qa.yaml app.yaml && gcloud preview app deploy --project QA_PROJECT_ID",
-    "deploy-prod": "cp app-prod.yaml app.yaml && gcloud preview app deploy --project PROD_PROJECT_ID"
+    "deploy-qa": "cp app-qa.yaml app.yaml && gcloud preview app deploy --stop-previous-version --project QA_PROJECT_ID",
+    "deploy-prod": "cp app-prod.yaml app.yaml && gcloud preview app deploy --stop-previous-version --project PROD_PROJECT_ID"
   },
   "engines": {
     "node": ">=4.3"

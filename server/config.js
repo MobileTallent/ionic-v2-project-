@@ -1,4 +1,20 @@
+var config =
 {
+
+  
+  googleCloud: {
+    prod: {
+      projectId: '',
+      mongoURI: ''
+    },
+    qa: {
+      projectId: '',
+      mongoURI: ''
+    },
+    
+  },
+
+
   "mailgun": {
     "domain": "",
     "key": "",

@@ -58,7 +58,7 @@ The Cloneder app is primarily developed in JavaScript and TypeScript.  The build
 
 If you are on Windows, at the command line:
 
-* Run: **npm install -g bower gulp cordova ionic tsd@next karma-cli protractor node-gyp coffee-script js-beautify typescript npm-check parse-dashboard mongodb-runner**
+* Run: **npm install -g bower gulp cordova ionic tsd@next karma-cli protractor node-gyp coffee-script js-beautify typescript npm-check parse-dashboard mongodb-runner playup**
 
 If on OSX/linux you shouldn't be logged in as an admin/root user, so you will need to run it with **sudo**.
 
@@ -162,10 +162,13 @@ The server-side code is also referred to as Cloud Code
 
 (Note that this guide is for the old managed service, there are some differences with open-source Parse API server)
 
+* In Cloud Console go to App Engine -> Settings and enable the default Cloud Storage Bucket
 
 * Configure a file adapter for your QA and Production configuration https://github.com/ParsePlatform/parse-server/wiki/Configuring-File-Adapters
 
 For GCS you can set the environmental variables in /server/app-qa.yaml and /server/app-prod.yaml
+
+
 
 ### Twilio video chat
 
@@ -449,18 +452,31 @@ comments. Also briefly look through the changes in the files.
 # Google Cloud Platform account setup
 
 A Google Cloud account is required for push notifications.
-Create your Google Cloud account at
 
-Go to the projects page at https://console.cloud.google.com/iam-admin/projects
+
+Create your Google Cloud account and go to the projects page at https://console.cloud.google.com/iam-admin/projects
 
 Click Create Project
 
-Expand the advanced options and select the location that is closest to your main userbase. If unsure, or expecting
+Expand the advanced options and select the location that is closest to your main user base. If unsure, or expecting
 global users then leave as the default option.  If you are migrating a live Parse app then choose usa-east1 as that
 will be the closest to the Parse AWS datacenter.
 
+https://console.developers.google.com/apis/credentials?project=
+
 Go the IAM & Admin Settings page and copy your project number. Open up the file /server/parse-config.js and enter the project
 number in the parseConfig object for pushConfig.android.senderId
+
+Go to API Manager -> Credentials and create a new service account key in json format.
+
+Download the file then save it as /service-account-key.json
+
+
+Enable Google Play Android Developer API
+
+Go to the Google Play Developer Console, then go to Settings -> API access and link your production project
+and the grant access to the service account you created in the previous step
+
 
 TODO https://github.com/ParsePlatform/Parse-Server/wiki/Push-Configuring-Clients#configure-broadcast-receiver-and-permissions
 
@@ -472,6 +488,8 @@ We run our Cloneder projects with server on the Google Cloud Platform. The follo
 For other hosting options follow the documentation on the Parse wikihttps://github.com/ParsePlatform/parse-server/wiki
 
 * Install the Google Cloud SDK https://cloud.google.com/sdk/docs/
+
+* Install the beta command for the gcloud Google Cloud SDK
 
 * run: gcloud auth login
 
