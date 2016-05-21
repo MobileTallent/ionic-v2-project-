@@ -24,6 +24,10 @@ server/lib-cov
 app/coverage
 server/coverage
 
+# My cloneder demo files
+app/app/config-cloneder
+
+
 # APP ======================
 
 app/app/js/constants.js

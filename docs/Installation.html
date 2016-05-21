@@ -56,36 +56,17 @@ The Cloneder app is primarily developed in JavaScript and TypeScript.  The build
 
 * Make sure you have the pre-requisite installations for node-gyp (See https://www.npmjs.com/package/node-gyp)
 
-If you are on Windows, at the command line:
-
-* Run: **npm install -g bower gulp cordova ionic tsd@next karma-cli protractor node-gyp coffee-script js-beautify typescript npm-check parse-dashboard mongodb-runner playup**
+* Change to /server and run: **npm run installglobals**
 
 If on OSX/linux you shouldn't be logged in as an admin/root user, so you will need to run it with **sudo**.
 
-Next install the webdriver for the integration test tools.
+* Change directory to /app run **npm install**
 
-* Run: **webdriver-manager update**
-
-All the following command line commands should be run in the project root folder, unless specified otherwise.
-Also any file references, e.g. /app/app/config are from the project root folder.
-
-* Open the command line to the /app fold and run **npm install**
-* Open the command line to the /server fold and run **npm install**
-
-This will install all the dependencies defined in the package.json files
+* Change directory to /server fold and run **npm install**
 
 You may need to run **npm install** twice as sometimes it doesn't install everything the first time.
 
-# Configuration file templates
-
-There are a number of files which require project specific configuration. Initially there are copies of these files
-with an extra *.template* extension.
-
-* In the folder /app run: **gulp init**
-
-This will copy these files without the *.template* extension and print to the console the list of files created.
-DO NOT edit or delete the *.template files. In the next steps we will update these configuration files.
-
+The install scripts will perform extra tasks such as installing the webdriver for the integration test tools.
 
 
 ## JavaScript Development tools
@@ -197,7 +178,7 @@ If you want to enable the optional LinkedIn authentication then:
 
 * Add http://localhost/callback to the OAuth2 callbacks
 
-* Copy the Client Id and Client Secret to the linkedInId and linkedInSecret values in the /server/parse-[dev|prod].json config files
+* Copy the Client Id and Client Secret to the linkedInId and linkedInSecret values in /app/app/common.json
 
 
 

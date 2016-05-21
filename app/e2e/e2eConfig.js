@@ -1,46 +1,50 @@
-// !! Copy this file and remove the .template extension before filling in the values !!
 
 var e2e = {
-	parseServerUrl: 'http://localhost:1337/parse',
+    parseServerUrl: 'http://localhost:1337/parse',
 	// Hard code your Parse integration testing application keys so you don't accidentally run this on your production app!
 	app: {
-		'id': 'LGTdfRoDx8fhs0ZGfwSu0i0OqCUT5HQOM2HpbeIK',
-		'jsKey': 'bJuyQTIRlay2ZugTw1G004rakqirSxdJSadKGMQm',
-		'restKey': 'PPI885bFO5hSzgqEok8VHfCcfy0qWpk0QSo85qp1',
-		'masterKey': '8h3ft3jSkPyggxxiO4sehXz8gRirnARKsx1RcPZX'
+		id: '',
+		jsKey: '',
+		restKey: '',
+		masterKey: ''
 	},
+	// Add your Facebook application id and secret
 	fb: {
-		appId: '340785822781848',
-		appSecret: '33627ca7b7f03795a8965f1a47c5c584'
+    		appId: '',
+    		appSecret: ''
+    },
+	user1: {
+		email: '',
+		password: ''
 	},
-	'user1': {
-		'email': 'campers+1@gmail.com',
-		'password': 'asdfasdf'
+	user2: {
+		email: '',
+		password: ''
 	},
-	'user2': {
-		'email': 'campers+2@gmail.com',
-		'password': 'asdfasdf'
-	},
-	'user3': {
-		'email': 'campers+3@gmail.com',
-		'password': 'asdfasdf'
-	},
-	'userNoBirthdayPermission': {
-		'id': '1414705692187958',
-		'email': 'no_qxhfvjr_permission@tfbnw.net',
+
+	// For the following you will need to created test users in your Facebook developer account for the app
+	// (Roles -> Test Users) with the appropriate permissions and profile values to test the conditions
+	// See https://developers.facebook.com/docs/apps/test-users
+
+	// Don't worry about the access_token field, the test script will populate it on each run
+
+	// Don't add the user_birthdate permissions
+	userNoBirthdayPermission: {
+		id: '',
+		email: '',
 		access_token: ''
 	},
 	// Include user_birthdate permission. This user should be able to register successfully
-	'hasBirthday': {
-		'id': '1421303444859656',
-		'email': 'has_dptvscs_birthday@tfbnw.net',
-		'birthday': '08/08/1980',
+	hasBirthday: {
+		id: '',
+		email: '',
+		birthday: '',
 		access_token: ''
 	},
 	// Include user_birthdate permission. Make sure the test user age is less than the MINIMUM_AGE variable in your cloud code
-	'minimumAge': {
-		'id': '1413090789017964',
-		'email': 'too_ytvfyfg_young@tfbnw.net',
+	minimumAge: {
+		id: '',
+		email: '',
 		access_token: ''
 	}
 }

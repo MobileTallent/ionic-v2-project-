@@ -19,6 +19,7 @@
     "start": "node index.js",
     "monitor": "nodemon index.js",
 
+    "installglobals": "npm i -g bower gulp cordova ionic tsd@next karma-cli protractor node-gyp coffee-script js-beautify typescript npm-check parse-dashboard mongodb-runner playup",
 
     "deploy-qa": "cp app-qa.yaml app.yaml && gcloud preview app deploy --stop-previous-version --project QA_PROJECT_ID",
     "deploy-prod": "cp app-prod.yaml app.yaml && gcloud preview app deploy --stop-previous-version --project PROD_PROJECT_ID"

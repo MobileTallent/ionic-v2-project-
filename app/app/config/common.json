@@ -1,12 +1,16 @@
 {
   "appName": "",
+  "parseAppId": "",
+  "facebookAppId": "",
+  "linkedInId": "",
+  "linkedInSecret": "",
   "playStoreUrl": "",
   "itunesUrl": "",
   "socialShareMessage": "",
   "adMob": {
     "android": {
-        "banner": "",
-        "interstitial": ""
+      "banner": "",
+      "interstitial": ""
     },
     "ios": {
       "banner": "",
