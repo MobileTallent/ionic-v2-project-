@@ -67,7 +67,6 @@
     "cordova-plugin-inappbrowser",
     "cordova-plugin-media",
     "ionic-plugin-keyboard",
-    "com.brodysoft.sqlitePlugin",
     "./plugin-source/com.phonegap.plugins.facebookconnect/ --variable APP_ID=\"\" --variable APP_NAME=\"\"",
     "https://github.com/campers/parse-push-plugin.git",
     "android-camera-permission",
@@ -80,7 +79,11 @@
     "cordova-base64-to-gallery",
     "https://github.com/VersoSolutions/CordovaClipboard.git",
     "cordova-plugin-badge",
-    "cordova-plugin-browsersync"
+    "cordova-plugin-browsersync",
+    {
+      "locator": "https://github.com/litehelpers/Cordova-sqlite-storage",
+      "id": "cordova-sqlite-storage"
+    }
   ],
   "cordovaPlatforms": [
     "android",
