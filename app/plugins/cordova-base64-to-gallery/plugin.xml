@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin xmlns:android="http://schemas.android.com/apk/res/android" xmlns="http://www.phonegap.com/ns/plugins/1.0" id="cordova-base64-to-gallery" version="3.0.0">
+<plugin xmlns:android="http://schemas.android.com/apk/res/android" xmlns="http://www.phonegap.com/ns/plugins/1.0" id="cordova-base64-to-gallery" version="4.1.1">
 
   <engines>
     <engine name="cordova-ios" version=">=3.8.0" />
@@ -14,6 +14,9 @@
   <keywords>base64,png,save,canvas,image,photo library</keywords>
 
   <license>MIT</license>
+
+  <js-module name="object.assign-polyfill" src="www/object.assign-polyfill.js">
+  </js-module>
 
   <js-module name="base64ToGallery" src="www/base64ToGallery.js">
     <clobbers target="cordova.base64ToGallery"/>

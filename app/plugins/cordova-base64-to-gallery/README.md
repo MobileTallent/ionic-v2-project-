@@ -17,19 +17,32 @@ So, cordova-base64-to-gallery plugin **from version 3.0.0** has changed the iOS 
 
 If you need to support cordova-ios < 3.8.0 please refer to [cordova-base64-to-gallery@2.0.2](https://github.com/Nexxa/cordova-base64-to-gallery/tree/2.0.2). There is also an "**old**" branch that might have some updates in the future (Android/WP8 fixes or something like that).
 
-
 ## Usage
-Call the `cordova.base64ToGallery()` method using success and error callbacks and the id attribute or the element object of the canvas to save (`prefix` is optional):
+Call the `cordova.base64ToGallery()` method with image's base64 string, success and error callbacks (`options` is optional):
 
 ### Methods
-#### `cordova.base64ToGallery(data, [prefix, success, fail])`
+#### `cordova.base64ToGallery(data, [options, success, fail])`
 
 Param       | Type       | Default           | Description
------------ | ---------- | ----------------- | ------------------
+----------- | ---------- | ----------------- | -----------------------------------------
 **data**    | *string*   |                   | base64 string
-**prefix**  | *string*   | **img_**          | file's name prefix
-**success** | *function* | **console.log**   | success callback
-**fail**    | *function* | **console.error** | fail callback
+**options** | *object*   | \*see below       | options
+**success** | *function* | **console.log**   | success callback (file path as parameter)
+**fail**    | *function* | **console.error** | fail callback (error as parameter)
+
+#### Available options *
+
+##### `prefix`
+Saved file name prefix.
+
+**Default**: "img_"
+
+##### `mediaScanner`
+On Android runs Media Scanner after file creation.
+
+On iOS if true the file will be added to camera roll, otherwise will be saved to a library folder.
+
+**Default**: true
 
 ### Example
 
@@ -38,13 +51,16 @@ function onDeviceReady() {
     cordova.base64ToGallery(
         base64Data,
 
-        'img_',
-
-        function(msg){
-            console.log(msg);
+        {
+            prefix: 'img_',
+            mediaScanner: true
         },
 
-        function(err){
+        function(path) {
+            console.log(path);
+        },
+
+        function(err) {
             console.error(err);
         }
     );
@@ -55,3 +71,4 @@ function onDeviceReady() {
 - [Tommy-Carlos Williams](http://github.com/devgeeks)
 - [Simba Zhang](http://github.com/solderzzc)
 - [StefanoMagrassi](http://github.com/StefanoMagrassi)
+- [Bastian Meier](https://github.com/bastian-meier)
