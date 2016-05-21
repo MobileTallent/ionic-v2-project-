@@ -67,8 +67,6 @@
     "cordova-plugin-inappbrowser",
     "cordova-plugin-media",
     "ionic-plugin-keyboard",
-    "./plugin-source/com.phonegap.plugins.facebookconnect/ --variable APP_ID=\"\" --variable APP_NAME=\"\"",
-    "https://github.com/campers/parse-push-plugin.git",
     "android-camera-permission",
     "cordova-plugin-file-transfer",
     "cordova-plugin-whitelist",
