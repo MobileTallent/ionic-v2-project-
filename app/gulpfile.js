@@ -140,9 +140,15 @@ gulp.task('envConfig', function (done) {
         .pipe(gulp.dest('./platforms/android/src/org/apache/cordova'))
 
 
-    // This next section updates the Facebook plugin configuration so you can have different apps for dev/qa/prod
-    // without having to re-install the plugin
-    // NOTE: this Facebook configuration munging could possibly break on changes to the facebook plugin or Cordova
+    // merge() waits for all sub-tasks to complete
+    return merge(java) // [java].concat(updateFacebookIds())
+});
+
+// This function updates the Facebook plugin configuration so you can have different apps for dev/qa/prod
+// without having to re-install the plugin. This is advanced unsupported functionality.
+// NOTE: this Facebook configuration munging could possibly break on changes to the facebook plugin or Cordova
+function updateFacebookIds() {
+
     var jsonFormat = { 'indent_char': '\t', 'indent_size': 1 }
 
     var facebookAndroid = gulp.src('./plugins/android.json', {base: './'})
@@ -176,10 +182,8 @@ gulp.task('envConfig', function (done) {
         }, jsonFormat))
         .pipe(gulp.dest('.'))
 
-    // merge() waits for all sub-tasks to complete
-    return merge(java, facebookAndroid, facebookIOS)
-});
-
+    return [facebookAndroid, facebookIOS]
+}
 /*
  | --- CSS -----------------------------------------------
  */
