@@ -62,7 +62,7 @@ If on OSX/linux you shouldn't be logged in as an admin/root user, so you will ne
 
 * Change directory to /app run **npm install**
 
-* Change directory to /server fold and run **npm install**
+
 
 You may need to run **npm install** twice as sometimes it doesn't install everything the first time.
 
@@ -105,34 +105,24 @@ Now create a project for the server code:
 * Expand the project folder, highlight the npm_modules then right click and select the Excluded folder button
 
 
-# Parse Server
+# Server setup
 
 Cloneder is developed using the Parse framework. Previously Parse was a fully managed service but now that
 they are shutting down they have release an API compatible node.js server which is at
 [https://github.com/ParsePlatform/parse-server](https://github.com/ParsePlatform/parse-server)
 
-Install MongoDB and follow the Parse setup guide
+* Install MongoDB
 
-### MongoDB indexes
+In development you will need to start the Mongo database yourself. If you want to specify where it put the data the command is in the form
+**mongod --dbpath /path/to/the/mongo-data/**
 
-You will need to run the script to create the indexes in Mongo.
+* Change directory to /server folder and run **npm install**
 
-Either create the dbName var by using the eval argument as per this eample:
-
-**mongo localhost:27017 --eval 'var dbName="mydb"' mongo-indexes.js**
-
-Or edit the mongo-indexs.js file and run
-**mongo localhost:27017  mongo-indexes.js**
-
-
-
-* Create two app ids, one for development and production.
-
-* In /server/parse-config.js enter the appId, masterKey and databaseUri for the dev and prod configurations
+* In /server/parse-config.js enter a appId and masterKey (random numbers and letters, about 16 characters is good)
 (You can create as many configurations as you need, QA, integration etc.) You probably wont have a production
 database URI just yet.
 
-* Add the appId's to /app/app/config/dev|prod.json
+* Add the appId to the dev.json, qa.json and prod.json files in /app/app/config/
 
 Note that Cloneder uses both the Javascript and Android/iOS (Client) SDK's.  The native/client plugin is required for
 the push notifications. The Javascript SDK/API is used for everything else (authentication, data).
@@ -143,15 +133,8 @@ The server-side code is also referred to as Cloud Code
 
 (Note that this guide is for the old managed service, there are some differences with open-source Parse API server)
 
-* In Cloud Console go to App Engine -> Settings and enable the default Cloud Storage Bucket
 
-* Configure a file adapter for your QA and Production configuration https://github.com/ParsePlatform/parse-server/wiki/Configuring-File-Adapters
-
-For GCS you can set the environmental variables in /server/app-qa.yaml and /server/app-prod.yaml
-
-
-
-### Twilio video chat
+### Twilio video chat (optional)
 
 Twilio is used for the real-time video chat (and in the future will be used for SMS notifications).
 
@@ -168,7 +151,7 @@ api_key is from https://www.twilio.com/user/account/video/dev-tools/api-keys
 configuration_sid is from https://www.twilio.com/user/account/video/profiles
 
 
-### LinkedIn
+### LinkedIn (optional)
 
 If you want to enable the optional LinkedIn authentication then:
 
@@ -181,22 +164,9 @@ If you want to enable the optional LinkedIn authentication then:
 * Copy the Client Id and Client Secret to the linkedInId and linkedInSecret values in /app/app/common.json
 
 
-
-
 # Mobile app initial setup
 
-**File paths are relative to the top level /app folder**
-
-Choose a package name for your project. It should follow the Java package naming conventions,
-which is your domain name in reverse and then the project name.
-
-For example we have used com.engineerstoolbox.cloneder
-
-* Open **/config.xml** and update the widget id attribute with your package name.
-* Update all the other appropriate values in **/config.xml** (email, description, app name etc)
-
-
-# Android
+### Install Android SDK
 
 * Install Android studio or the SDK tools from http://developer.android.com/sdk/installing/index.html
 
@@ -204,59 +174,42 @@ You will need to generate a keystore to sign your release builds with.
 
 * Follow the instructions at at http://developer.android.com/tools/publishing/app-signing.html to generate the keystore
 
-Add the Android platform to your project:
+### Base configuration
 
-* Run: **ionic platform add android**
+Choose a package name for your project. It should follow the Java package naming conventions,
+which is your domain name in reverse and then the project name.
 
-Note: **DO NOT** try to build the Android project from the build scripts in the /platform/android/ directory. You must use the **cordova** or **ionic** build commands from the project root folder which are covered later.
+For example we have used com.engineerstoolbox.cloneder
 
-You should not normally need to open the Android project /platform/android in Eclipse/ADT etc. If for some reason you do then use the Google ADT.
+* Open **/app/config.xml** and update the widget id attribute with your package name.
 
-# iOS
+* Update all the other appropriate values in **/app/config.xml** (email, description, app name etc)
+
+* Change directory to /app folder and run **npm install**
+
+The npm post install script will add the ios and android platforms. If you are on a Windows computer then the ios
+platform will fail, so you may wish to remove from /app/package.json the ios entry in cordovaPlatforms.
+
+**DO NOT** check in the files under /app/platforms into Git. You should be able to remove and re-add the platforms at any time.
+The scripts in the /app/hooks directory perform any custom actions required on the platform files.
+
+**DO NOT** try to build the Android project from the build scripts in the /platform/android/ directory.
+You must use the **cordova** or **ionic** build commands from the project root folder which are covered later.
+You should not normally need to open the Android project /platform/android in Eclipse/ADT etc.
+
+## iOS
 
 iOS builds and app submissions can only be done on a Mac with OSX and XCode.
 
-The Ionic framework team are currently building a service to do the iOS builds if you don't have a Mac, but its not available yet.
+Ionic does have an iOS build service at http://docs.ionic.io/docs/package-ios but as we use our own Mac's to build we can't comment on using it
 
-Add the iOS platform to your project:
+* Run ** npm install -g ios-sim** to install the iOS emulator plugin
 
-* Run: **ionic platform add ios**
-
-* Run ** npm install ios-sim** to install the iOS emulator plugin
-
-Follow the instructions to setup push notifications for iOS. This is complicated and you scan delay doing this step until you are ready for a production build.
+Follow the instructions to setup push notifications for iOS. This is complicated and you can delay doing this step until you are ready for a production build.
 https://parse.com/tutorials/ios-push-notifications
 
 Unlike the Android platform, you will need to open /platforms/ios/(project name).xcodeproj with XCode to perform the release builds.
 
-* Open /platforms/ios/[AppName]/[AppName]-Info.plist and add the following within the top level &lt;dict&gt; element
-
-```
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>fbapi</string>
-        <string>fbapi20130214</string>
-        <string>fbapi20130410</string>
-        <string>fbapi20130702</string>
-        <string>fbapi20131010</string>
-        <string>fbapi20131219</string>
-        <string>fbapi20140410</string>
-        <string>fbapi20140116</string>
-        <string>fbapi20150313</string>
-        <string>fbapi20150629</string>
-        <string>fbauth</string>
-        <string>fbauth2</string>
-        <string>fb-messenger-api20140430</string>
-        <string>fb-messenger-platform-20150128</string>
-        <string>fb-messenger-platform-20150218</string>
-        <string>fb-messenger-platform-20150305</string>
-    </array>
-    <key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsArbitraryLoads</key>
-        <true/>
-    </dict>
-```
 # Facebook
 
 Cloneder requires a Facebook app to provide authentication and details from the users Facebook accounts.
@@ -329,7 +282,7 @@ Parse doesn't care which Facebook app you are using.
 ```
 See https://developers.google.com/maps/documentation/javascript/tutorial#api_key for creating your key
 
-### AdMob
+### AdMob (optional)
 
 AdMob is the Google mobile advertising product. If you want banner and/or then do the following:
 
@@ -350,10 +303,10 @@ See https://github.com/floatinghotpot/cordova-admob-pro for more details on conf
 
 # Running the app in Chrome/Safari
 
-DO NOT use the **ionic serve** command which you would know if you are familiar with Ionic. The provided gulp file in
+**DO NOT** use the **ionic serve** command which you would know if you are familiar with Ionic. The provided gulp file in
 this project is more advanced and provides production grade features.
 
-* From the project root run: **gulp**
+* From the /app folder run: **gulp**
 
 This will start a continuous build process which does not exit, and watches for changes to the files to rebuild.
 
@@ -389,21 +342,22 @@ in the gulf file and the files in /app/app/config/. To do a production configure
 
 ### Android
 
-* Run: **ionic run android**
+If you don't have an Android device and are using the emulator then don't use the default emulator which is very slow,
+instead use Genymotion
 
-If you don't have the ios platform installed you can just run **ionic build**
+* Run: **ionic run android**
 
 If an Android device is connected it will deploy the .apk to the device and launch the app. Otherwise it will open it with the emulator.
 
 ### iOS
 
-If you have install ios-sim then
+If you have installed ios-sim then
 
 * Run: **ionic run ios**
 
 To run the emulator. The console log will end with the file path to the logs from the emulator.  Similar to the path below (with username replace to what your Mac username is)
 
-* Run: ** tail -r /Users/username/Cloneder/platforms/ios/cordova/console.log**
+* Run: ** tail -r /Users/username/appname/platforms/ios/cordova/console.log**
 
 to view the logs while you are using the emulator.
 
@@ -464,9 +418,9 @@ TODO https://github.com/ParsePlatform/Parse-Server/wiki/Push-Configuring-Clients
 ## Google Cloud Platform server setup
 
 We run our Cloneder projects with server on the Google Cloud Platform. The following instructions are if you
-    intend to run the database and servers in the Google cloud.
+intend to run the database and servers on the Google Cloud Platform using the Google App Engine.
 
-For other hosting options follow the documentation on the Parse wikihttps://github.com/ParsePlatform/parse-server/wiki
+For other hosting options follow the documentation on the [Parse wiki](https://github.com/ParsePlatform/parse-server/wiki)
 
 * Install the Google Cloud SDK https://cloud.google.com/sdk/docs/
 
