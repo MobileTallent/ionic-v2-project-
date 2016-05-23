@@ -1,17 +1,14 @@
-var config =
 {
+  "googleCloud": {
+  "prod": {
+    "projectId": "",
+        "mongoURI": ""
+    },
+  "qa": {
+    "projectId": "",
+        "mongoURI": ""
+    }
 
-  
-  googleCloud: {
-    prod: {
-      projectId: '',
-      mongoURI: ''
-    },
-    qa: {
-      projectId: '',
-      mongoURI: ''
-    },
-    
   },
 
 

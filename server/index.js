@@ -7,6 +7,10 @@ var path = require('path')
 var parseConfig = require('./parse-config.js')
 
 console.log(JSON.stringify(parseConfig))
+
+// Make sure the Mongo indexes are up to date
+require('./mongo-indexes.js')(parseConfig.databaseURI)
+
 var api = new ParseServer(parseConfig)
 
 var app = express()
