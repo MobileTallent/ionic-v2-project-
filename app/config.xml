@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget android-versionCode="1" id="com.domain.app" ios-CFBundleVersion="0.0.1" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>AppName</name>
+    <description>
+    App description
+  </description>
+    <author email="user@domain.com" href="http://domain.com/">
+    Author name
+  </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <preference name="webviewbounce" value="false" />
+    <preference name="UIWebViewBounce" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="BackupWebStorage" value="none" />
+    <preference name="AndroidLaunchMode" value="singleTask" />
+    <preference name="SplashScreen" value="screen" />
+    <preference name="SplashScreenDelay" value="3000" />
+    <feature name="StatusBar">
+        <param name="ios-package" onload="true" value="CDVStatusBar" />
+    </feature>
+    <feature name="Console">
+        <param name="ios-package" value="CDVLogger" />
+    </feature>
+    <platform name="android">
+        <preference name="android-minSdkVersion" value="17" />
+    </platform>
+    <platform name="ios">
+    </platform>
+
+    <allow-navigation href="*" />
+    <!--
+    <allow-navigation href="http://*/*" />
+    <allow-navigation href="https://*/*" />
+    <allow-navigation href="data:*" />
+    -->
+
+    <allow-intent href="*" />
+    <!--
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="geo:*" />
+    -->
+
+    <access origin="*" />
+    <!--
+    <access origin="http://google.com" />
+    <access origin="https://google.com" />
+    <access origin="http://maps.google.com" />
+    <access origin="http://*.google.com" />
+    <access origin="content:///*" />
+    -->
+
+</widget>
