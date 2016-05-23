@@ -1,4 +1,0 @@
-{
-  "buildEnv": "dev",
-  "parseServerUrl": "http://localhost:1337/parse"
-}

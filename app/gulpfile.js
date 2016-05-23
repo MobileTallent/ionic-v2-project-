@@ -118,27 +118,32 @@ gulp.task('envConfig', function (done) {
         console.log('Disabling uglifying. Do not release dev builds to the app stores')
     }
 
-    var envConfig = JSON.parse(fs.readFileSync('./app/config/' + env + '.json', 'utf8'));
-    var commonConfig = JSON.parse(fs.readFileSync('./app/config/common.json', 'utf8'));
-    var config = commonConfig
-    // Copy the environment specific config on top of the common config
-    for (var prop in envConfig) { config[prop] = envConfig[prop] }
+    var configFile = '../server/' + (process.env.CONFIG_FILE || 'config.json')
+    var config = JSON.parse(fs.readFileSync(configFile))
 
-    // Write out the constants.js file with all the values in the configuration json
+    var envConfig = config[env]
+    
+    if(!envConfig)
+        throw 'No configuration found in ' + configFile + ' for env ' + env
+
+    // Write out the constants.js file with all the required values in the configuration json
+    var properties = ['appName','appId','playStoreUrl','itunesUrl','facebookAppId','linkedInId','linkedInSecret','socialShareMessage','adMob']
+
     var constants = 'angular.module("constants", [])\n'
-    for (var prop in config)
+    properties.forEach(function(prop) {
         constants += '  .constant("' + prop + '", ' + JSON.stringify(config[prop]) + ')\n'
-    constants += ';\n'
-    if(config.facebookAppId)
-        constants += 'var FACEBOOK_APP_ID = "' + config.facebookAppId + '";\n'
+    })
+    constants += '  .constant("parseServerUrl", "' + envConfig.parseServerUrl + '");\n'
+
+    constants += 'var FACEBOOK_APP_ID = "' + config.facebookAppId + '";\n'
+
     fs.writeFileSync('./app/js/constants.js', constants)
 
     // Copy the custom Android application class with the Parse id's configured
-    var parsePatterns = [{match: 'parseAppId', replacement: config.parseAppId}, {match: 'parseServerUrl', replacement: config.parseServerUrl}]
+    var parsePatterns = [{match: 'parseAppId', replacement: config.appId}, {match: 'parseServerUrl', replacement: envConfig.parseServerUrl}]
     var java = gulp.src('./app/config/CustomApplication.java')
         .pipe(replace({ patterns: parsePatterns }))
         .pipe(gulp.dest('./platforms/android/src/org/apache/cordova'))
-
 
     // merge() waits for all sub-tasks to complete
     return merge(java) // [java].concat(updateFacebookIds())

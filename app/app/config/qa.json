@@ -1,4 +1,0 @@
-{
-  "buildEnv": "qa",
-  "parseServerUrl": "https://.appspot.com/parse"
-}

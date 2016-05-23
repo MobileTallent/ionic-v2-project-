@@ -1,4 +1,0 @@
-{
-  "buildEnv": "prod",
-  "parseServerUrl": "https://.appspot.com/parse"
-}

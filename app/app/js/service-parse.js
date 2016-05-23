@@ -194,9 +194,9 @@ Parse.Promise.prototype.catch = function(callback) {
 
 angular.module('service.parse', ['constants', 'parse-angular'])
 
-    .factory('ParseService', function($q, $log, parseAppId, parseClientKey, parseServerUrl) {
+    .factory('ParseService', function($q, $log, appId, parseServerUrl) {
 
-        Parse.initialize(parseAppId,'unused')
+        Parse.initialize(appId,'unused')
         Parse.serverURL = parseServerUrl
 
         var service = {
@@ -361,7 +361,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             if(typeof ParsePushPlugin === 'undefined') return // ignore when developing in the browser
 
             ParsePushPlugin.registerDevice(
-                { appId: parseAppId, clientKey: parseClientKey, ecb:"onNotification", onOpen:"onNotificationOpen"},
+                { appId: parseAppId, ecb:"onNotification", onOpen:"onNotificationOpen"},
                 () => {
                     $log.log('Successfully registered device for Parse Push')
                     ParsePushPlugin.getInstallationId(
