@@ -105,7 +105,7 @@ Now create a project for the server code:
 * Expand the project folder, highlight the npm_modules then right click and select the Excluded folder button
 
 
-# Server setup
+# Server setup (Local development)
 
 Cloneder is developed using the Parse framework. Previously Parse was a fully managed service but now that
 they are shutting down they have release an API compatible node.js server which is at
@@ -118,50 +118,10 @@ In development you will need to start the Mongo database yourself. If you want t
 
 * Change directory to /server folder and run **npm install**
 
-* In /server/parse-config.js enter a appId and masterKey (random numbers and letters, about 16 characters is good)
-(You can create as many configurations as you need, QA, integration etc.) You probably wont have a production
-database URI just yet.
+* In /server/config.json enter your appName,
 
-* Add the appId to the dev.json, qa.json and prod.json files in /app/app/config/
+* In /server/config.json enter an appId and masterKey (random numbers and letters, about 16 characters is good)
 
-Note that Cloneder uses both the Javascript and Android/iOS (Client) SDK's.  The native/client plugin is required for
-the push notifications. The Javascript SDK/API is used for everything else (authentication, data).
-
-The server-side code is also referred to as Cloud Code
-
-* Read the [Cloud code guide](https://www.parse.com/docs/cloud_code_guide)
-
-(Note that this guide is for the old managed service, there are some differences with open-source Parse API server)
-
-
-### Twilio video chat (optional)
-
-Twilio is used for the real-time video chat (and in the future will be used for SMS notifications).
-
-* Create an account at http://www.twilio.com and upgrade to a paid account.
-
-* Create a set of API keys (Dev Tools -> API Keys)
-
-* Create a video profile (Programmable Video -> Configuration Profiles)
-
-* Enter these Twilio configuration values in /server/config.json
-
-account_sid is your Twilio account id
-api_key is from https://www.twilio.com/user/account/video/dev-tools/api-keys
-configuration_sid is from https://www.twilio.com/user/account/video/profiles
-
-
-### LinkedIn (optional)
-
-If you want to enable the optional LinkedIn authentication then:
-
-* Create an app(s) at https://www.linkedin.com/developer/apps
-
-* In the app settings check r_basicprofile and r_emailaddress
-
-* Add http://localhost/callback to the OAuth2 callbacks
-
-* Copy the Client Id and Client Secret to the linkedInId and linkedInSecret values in /app/app/common.json
 
 
 # Mobile app initial setup
@@ -274,6 +234,40 @@ What you can do is make another facebook app with the website platform and updat
 Parse doesn't care which Facebook app you are using.
 
 
+# Google Cloud Platform (GCP) account setup
+
+A Google Cloud account is required as a minimum for push notifications.
+
+* Create your Google Cloud account and go to the projects page at https://console.cloud.google.com/iam-admin/projects
+
+* Click Create Project and name it in the format appname-prod (for example we named ours cloneder-prod)
+
+* In /server/config.json enter the project id for the key prod.gcpProjectId
+
+If you will be hosting your production server on the GCP then open the advanced options and select the location that is closest to your main user base.
+If unsure, or expecting global users then leave as the default option.  If you are migrating a live Parse app then choose usa-east1 as that
+will be the closest to the Parse AWS datacenter.
+
+https://console.developers.google.com/apis/credentials?project=
+
+* Go to the IAM & Admin -> Settings page and copy your project number. In /server/config.json enter the project
+number for the key prod.gcpProjectNumber
+
+* Go to API Manager -> Credentials and create a new service account key in json format.
+
+* Download the file then save it as /server/service-account-key.json
+
+
+#### Enable Google Play Android Developer API
+
+* Go to the [Google Play Developer Console](https://play.google.com/apps/publish/) and create your initial app listing.
+
+* In the Play console go to Settings -> API access and link your production project and the grant access to the service account you created in the previous step.
+
+
+TODO https://github.com/ParsePlatform/Parse-Server/wiki/Push-Configuring-Clients#configure-broadcast-receiver-and-permissions
+
+
 ### Google Map key
 
 * Get your public API key and add it to the script tag which loads the google maps in **/www/index.html**
@@ -282,18 +276,47 @@ Parse doesn't care which Facebook app you are using.
 ```
 See https://developers.google.com/maps/documentation/javascript/tutorial#api_key for creating your key
 
+### Twilio video chat (optional)
+
+Twilio is used for the real-time video chat (and in the future will be used for SMS notifications).
+
+* Create an account at http://www.twilio.com and upgrade to a paid account.
+
+* Create a set of API keys (Dev Tools -> API Keys)
+
+* Create a video profile (Programmable Video -> Configuration Profiles)
+
+* Enter these Twilio configuration values in /server/config.json
+
+account_sid is your Twilio account id
+api_key is from https://www.twilio.com/user/account/video/dev-tools/api-keys
+configuration_sid is from https://www.twilio.com/user/account/video/profiles
+
+
+### LinkedIn (optional)
+
+If you want to enable the optional LinkedIn authentication then:
+
+* Create an app(s) at https://www.linkedin.com/developer/apps
+
+* In the app settings check r_basicprofile and r_emailaddress
+
+* Add http://localhost/callback to the OAuth2 callbacks
+
+* Copy the Client Id and Client Secret to the linkedInId and linkedInSecret values in /server/config.json
+
 ### AdMob (optional)
 
 AdMob is the Google mobile advertising product. If you want banner and/or then do the following:
 
 * Create and account at https://www.google.com/admob/
 
-* Enter the appropriate ids in /app/app/config/common.js in the **adMob** section.
+* Enter the appropriate ids in /server/config.json in the **adMob** section.
 
 * If you enable ads in Android then in the Google Play Store developer console for your app select the option at
 **Pricing & Distribution** > **CONTAINS ADS** >  *Does your application have ads?*
 
-If you enter the ids for a platform then the default code in Cloneder is to display a banner ad which is configured in /app/js/app.js
+If you enter the ids for a platform then the default code is to display a banner ad which is configured in /app/js/app.js
 
 See https://github.com/floatinghotpot/cordova-admob-pro for more details on configuring ads
 
@@ -325,7 +348,7 @@ app/js/controller-profile.ts(156,24): 2339 Property 'cropPhoto' does not exist o
 ```
 Ignore the 3 TypeScript warnings.
 
-* Open up http://localhost:8100 in Chrome or Safari.
+* Open up [http://localhost:8100](http://localhost:8100) in Chrome.
 
 If everything is configured ok you should see the running app.
 
@@ -335,7 +358,7 @@ Any changes to the files under app and bower_components will be compiled, joined
 As you make JS, CSS and HTML changes you should only need to refresh the browser to get the changes.
 
 The gulp build supports dev, qa and productions build with different configuration parameters. See the *envConfig* task
-in the gulf file and the files in /app/app/config/. To do a production configured build run:
+in the gulp file and the main config file /server/config.json. To do a production configured build run:
 **gulp --env prod**
 
 # Build/Run with Emulators or Real Devices
@@ -343,7 +366,7 @@ in the gulf file and the files in /app/app/config/. To do a production configure
 ### Android
 
 If you don't have an Android device and are using the emulator then don't use the default emulator which is very slow,
-instead use Genymotion
+instead use [Genymotion](https://www.genymotion.com/)
 
 * Run: **ionic run android**
 
@@ -384,38 +407,9 @@ comments. Also briefly look through the changes in the files.
 
 
 
-# Google Cloud Platform account setup
-
-A Google Cloud account is required for push notifications.
 
 
-Create your Google Cloud account and go to the projects page at https://console.cloud.google.com/iam-admin/projects
-
-Click Create Project
-
-Expand the advanced options and select the location that is closest to your main user base. If unsure, or expecting
-global users then leave as the default option.  If you are migrating a live Parse app then choose usa-east1 as that
-will be the closest to the Parse AWS datacenter.
-
-https://console.developers.google.com/apis/credentials?project=
-
-Go the IAM & Admin Settings page and copy your project number. Open up the file /server/parse-config.js and enter the project
-number in the parseConfig object for pushConfig.android.senderId
-
-Go to API Manager -> Credentials and create a new service account key in json format.
-
-Download the file then save it as /service-account-key.json
-
-
-Enable Google Play Android Developer API
-
-Go to the Google Play Developer Console, then go to Settings -> API access and link your production project
-and the grant access to the service account you created in the previous step
-
-
-TODO https://github.com/ParsePlatform/Parse-Server/wiki/Push-Configuring-Clients#configure-broadcast-receiver-and-permissions
-
-## Google Cloud Platform server setup
+# Google Cloud Platform QA/Production server setup
 
 We run our Cloneder projects with server on the Google Cloud Platform. The following instructions are if you
 intend to run the database and servers on the Google Cloud Platform using the Google App Engine.
@@ -432,11 +426,11 @@ For other hosting options follow the documentation on the [Parse wiki](https://g
 
 * Create a billing account (which you will need to enable billing for your projects) https://support.google.com/cloud/answer/6293499?hl=en
 
-* Create a project for each environment you want in the cloud (QA, production etc) with billing enabled
+* Create a project for each environment you want in the cloud (QA, production etc) with billing enabled (e.g appname-prod, appname-qa)
 
-* In /server/package.json update the QA_PROJECT_ID and PROD_PROJECT_ID in the scripts deploy-qa and deploy-prod entries
+You should have already created the production project in the previous step.
 
-* In /server/parse-config.json replace the <QA_PROJECT_ID> and <PROD_PROJECT_ID> placeholders with your project ids
+* In /server/config.json update the GCP configuration values in the qa and prod sections.
 
 ## Database setup
 
@@ -445,14 +439,18 @@ For other hosting options follow the documentation on the [Parse wiki](https://g
 #### Option 1 - Managed database
 
 MLab provides fully managed Mongo databases at https://mlab.com.
-Make sure you select the same region as the App Engine region in your project
+
+**Make sure you select the same region as the App Engine region in your project**
+
+* Create the Mongo database with the appropriate specifications
+
+* In /server/config.json update the qa.databaseURI and/or prod.databaseURI with the IP address of the Mongo database
 
 #### Option 2 - Self-managed
 
-Go to the Cloud Launcher
+* Go to the Google Cloud Launcher (https://console.cloud.google.com/launcher?project=PROJECT-NAME)
 
-MongoDB (Google Click to Deploy)
-https://console.cloud.google.com/launcher/config/click-to-deploy-images/mongodb?src=console&project=my-cloneder-app
+* Search for the **MongoDB (Google Click to Deploy)** option
 
 * Make sure the zone is in your projects App Engine region
 
@@ -464,24 +462,11 @@ For a cheapest setup option (for QA or low traffic prod apps)
     Disk Size in GB: 10GB
     Arbiter count: 0
 
-Open Compute Engine -> VM Instances
-Copy the internal IP for your mongo database
-Open /server/parse-config.js and update the <QA_DB> or <PROD_DB> with the IP address
+* Open Compute Engine -> VM Instances and copy the internal IP for your mongo database
 
-
-Go to versions and stop the old version
+* In /server/config.json update the qa.databaseURI and/or prod.databaseURI with the IP address of the Mongo database
 
 For detailed information on the node.js runtime environment on Google App Engine see https://cloud.google.com/appengine/docs/flexible/nodejs/runtime
-
-    Select API Manager from the side menu
-    Enable the
-    Compute Engine API
-    Cloud Storage Service
-    Google Maps JavaScript API
-    Google Cloud Messaging
-    Cloud Monitoring API
-
-
 
 </xmp>
 

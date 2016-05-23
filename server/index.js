@@ -6,7 +6,7 @@ var ParseServer = require('parse-server').ParseServer
 var path = require('path')
 var parseConfig = require('./parse-config.js')
 
-console.log(JSON.stringify(parseConfig))
+console.log('Parse config:', parseConfig)
 
 // Make sure the Mongo indexes are up to date
 require('./mongo-indexes.js')(parseConfig.databaseURI)

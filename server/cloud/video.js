@@ -1,4 +1,4 @@
-var Config = require('./config.js')
+var Config = require('../config.js')
 var AccessToken = require('./AccessToken.js')
 var ConversationsGrant = AccessToken.ConversationsGrant
 

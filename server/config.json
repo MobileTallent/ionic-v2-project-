@@ -1,22 +1,62 @@
 {
-  "googleCloud": {
-  "prod": {
-    "projectId": "",
-        "mongoURI": ""
-    },
-  "qa": {
-    "projectId": "",
-        "mongoURI": ""
-    }
+  "appName": "",
+  "appId": "",
+  "masterKey": "",
 
+  "environments": ["dev", "qa", "prod"],
+
+  "dev": {
+    "parseServerUrl": "http://localhost:1337/parse",
+    "databaseURI": "mongodb://localhost:27017/mydb"
   },
 
+  "prod": {
+    "parseServerUrl": "",
+    "databaseURI": "",
+
+    "gcpProjectId": "",
+    "gcpProjectNumber": "",
+    "gcpKeyFile": "",
+
+    "gcpGcmKey": ""
+  },
+
+  "qa": {
+    "parseServerUrl": "",
+    "databaseURI": "",
+
+    "gcpProjectId": "",
+    "gcpProjectNumber": "",
+    "gcpKeyFile": ""
+  },
+
+  "playStoreUrl": "",
+  "itunesUrl": "",
+
+  "facebookAppId": "",
+  "facebookAppName": "",
+  "linkedInId": "",
+  "linkedInSecret": "",
+
+  "socialShareMessage": "",
+
+  "adMob": {
+    "android": {
+      "banner": "",
+      "interstitial": ""
+    },
+    "ios": {
+      "banner": "",
+      "interstitial": ""
+    }
+  },
 
   "mailgun": {
     "domain": "",
     "key": "",
     "from": ""
   },
+
   "twilio": {
     "account_sid": "",
     "api_key": "",

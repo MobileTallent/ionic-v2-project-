@@ -12,21 +12,3 @@ skip_files:
 
 env_variables:
   PORT: 8080
-
-  # File adapter config https://github.com/ParsePlatform/parse-server/wiki/Configuring-File-Adapters
-  # App Engine has a default storage bucket you can enable with the first 5GB free
-  # PARSE_SERVER_FILES_ADAPTER: parse-server-gcs-adapter
-  # GCP_PROJECT_ID:
-  # GCP_KEYFILE_PATH:
-  # GCS_BUCKET: <project-id>.appspot.com
-  # GCS_BUCKET_PREFIX: (optional)
-  # GCS_DIRECT_ACCESS: (optional, defaults to false)
-
-  # --REQUIRED-- these are already set in parse-config.js
-  # DATABASE_URI: <your-database-url>
-  # APP_ID: <your-app-id>
-  # MASTER_KEY: <your-master-key>
-  # --OPTIONAL--
-  # FILE_KEY: <your-file-key>
-  # PARSE_MOUNT: /parse
-  # CLOUD_CODE_MAIN:  
