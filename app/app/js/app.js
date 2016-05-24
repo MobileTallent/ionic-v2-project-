@@ -3,12 +3,12 @@ var platformReady, fbLoaded
 var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUtil', 'templates', 'controllers', 'controllers.share', 'service.app',
         'ui.slider', 'ngImgCrop', 'ngAnimate', 'pascalprecht.translate', 'emoji', 'ImgCache', 'monospaced.elastic',
         'ngStorage', 'angulartics.parse', 'SocialAuth', 'ngCookies', 'filters'])
-    .run(function ($ionicPlatform, AppService, ImgCache, $rootScope, $log, appName, buildEnv) {
+    .run(function ($ionicPlatform, AppService, ImgCache, $rootScope, $log, appName, env) {
         $rootScope.appName = appName
 
         $ionicPlatform.ready(function () {
             $log.log('ionicPlatform.ready')
-            $log.log('buildEnv: ' + buildEnv)
+            $log.log('env: ' + env)
 
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -36,7 +36,7 @@ var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUt
                 $log.info('cordova.getAppVersion is not available')
 
             // In development mode inject the javascript for Browser Sync
-            if(buildEnv === 'dev') {
+            if(env === 'dev') {
                 var bsScript = document.createElement('script')
                 bsScript.id = '__bs_script__'
                 bsScript.src = 'http://HOST:3000/browser-sync/browser-sync-client.2.12.4.js'.replace('HOST', location.hostname)
@@ -64,9 +64,9 @@ var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUt
             .determinePreferredLanguage()
     }])
 
-    .config(function ($compileProvider, buildEnv) {
+    .config(function ($compileProvider, env) {
         // See https://docs.angularjs.org/guide/production
-        if(buildEnv === 'prod') {
+        if(env === 'prod') {
             console.log('Disabling $compileProvider debug info')
             $compileProvider.debugInfoEnabled(false)
         }

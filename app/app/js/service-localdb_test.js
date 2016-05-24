@@ -12,7 +12,7 @@ describe('service.localdb', function() {
 	beforeEach(function(done) {
 		module('service.localdb', function($provide) {
 			$provide.value('appName', 'test')
-			$provide.value('buildEnv', 'test')
+			$provide.value('env', 'test')
 		})
 
 		inject(function(_$log_, _$q_, _$rootScope_, _LocalDB_) {

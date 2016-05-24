@@ -134,6 +134,7 @@ gulp.task('envConfig', function (done) {
         constants += '  .constant("' + prop + '", ' + JSON.stringify(config[prop]) + ')\n'
     })
     constants += '  .constant("parseServerUrl", "' + envConfig.parseServerUrl + '");\n'
+    constants += '  .constant("env", "' + env + '");\n'
 
     constants += 'var FACEBOOK_APP_ID = "' + config.facebookAppId + '";\n'
 

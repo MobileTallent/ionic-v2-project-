@@ -22,7 +22,7 @@
 	// And https://github.com/litehelpers/Cordova-sqlite-storage for implementation notes
 
 	angular.module('service.localdb', [])
-		.factory('LocalDB', function($q, $log, appName, buildEnv) {
+		.factory('LocalDB', function($q, $log, appName, env) {
 
 			var db
 
@@ -106,7 +106,7 @@
 
 			function init() {
 				// Use the native sqlite plugin if it exists
-				var databaseName = appName + '-' + buildEnv
+				var databaseName = appName + '-' + env
 				db = window.sqlitePlugin ?
 					window.sqlitePlugin.openDatabase({name: databaseName + '.db', location: 2}) :
 					window.openDatabase(databaseName, '', 'LocalDB', 2 * 1024 * 1024)
