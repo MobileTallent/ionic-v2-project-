@@ -20,6 +20,9 @@ config.environments.forEach(e => {
 var envConfig = config[env]
 console.log('Using ' + env + ' configuration')
 
+if(!envConfig.parseServerUrl && gaeId)
+	envConfig.parseServerUrl = 'https://' + gaeId + '.appspot.com/parse/'
+
 // Google App Engine requires port 8080 which is set in the app.yaml
 var port = process.env.PORT || 1337
 
@@ -59,10 +62,10 @@ if(config.facebookAppId)
 	parseConfig.oauth.facebook = { appIds: config.facebookAppId }
 
 // Just use the GCM key from the production project
-if(config.prod && config.prod.gcpProjectNumber && config.prod.gcpGcmKey) {
+if(config.prod && config.prod.gcpProjectNumber && config.gcpServerKey) {
 	parseConfig.push.android = {
 		senderId: config.prod.gcpProjectNumber,
-		apiKey: config.prod.gcpGcmKey
+		apiKey: config.gcpServerKey
 	}
 }
 

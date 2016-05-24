@@ -6,6 +6,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import com.parse.Parse;
+import com.parse.Parse.Configuration;
+import com.parse.Parse.Configuration.Builder;
 import com.parse.ParseInstallation;
 
 /**

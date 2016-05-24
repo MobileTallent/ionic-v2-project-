@@ -126,14 +126,19 @@ gulp.task('envConfig', function (done) {
     if(!envConfig)
         throw 'No configuration found in ' + configFile + ' for env ' + env
 
+    if(!envConfig.parseServerUrl.endsWith('/')) {
+        console.log('parseServerUrl config value should end with /')
+        envConfig.parseServerUrl + '/'
+    }
+
     // Write out the constants.js file with all the required values in the configuration json
-    var properties = ['appName','appId','playStoreUrl','itunesUrl','facebookAppId','linkedInId','linkedInSecret','socialShareMessage','adMob']
+    var properties = ['appName','appId','gcpBrowserKey','playStoreUrl','itunesUrl','facebookAppId','linkedInId','linkedInSecret','socialShareMessage','adMob']
 
     var constants = 'angular.module("constants", [])\n'
     properties.forEach(function(prop) {
         constants += '  .constant("' + prop + '", ' + JSON.stringify(config[prop]) + ')\n'
     })
-    constants += '  .constant("parseServerUrl", "' + envConfig.parseServerUrl + '");\n'
+    constants += '  .constant("parseServerUrl", "' + envConfig.parseServerUrl + '")\n'
     constants += '  .constant("env", "' + env + '");\n'
 
     constants += 'var FACEBOOK_APP_ID = "' + config.facebookAppId + '";\n'
