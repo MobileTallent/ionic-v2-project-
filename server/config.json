@@ -18,7 +18,7 @@
     "databaseURI": "",
     "gcpProjectId": "",
     "gcpProjectNumber": "",
-    "gcpKeyFile": "",
+    "gcpKeyFile": ""
   },
 
   "qa": {
