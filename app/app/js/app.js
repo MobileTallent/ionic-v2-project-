@@ -2,7 +2,10 @@ var platformReady, fbLoaded
 
 var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUtil', 'templates', 'controllers', 'controllers.share', 'service.app',
         'ui.slider', 'ngImgCrop', 'ngAnimate', 'pascalprecht.translate', 'emoji', 'ImgCache', 'monospaced.elastic',
-        'ngStorage', 'angulartics.parse', 'SocialAuth', 'ngCookies', 'filters'])
+        'ngStorage', 'angulartics.parse', 'SocialAuth', 'ngCookies', 'filters'
+        // Add your own extra dependencies on the line below with the comma first to make merging updates easier
+
+        ])
     .run(function ($ionicPlatform, AppService, ImgCache, $rootScope, $log, appName, env, gcpBrowserKey) {
         $rootScope.appName = appName
 
