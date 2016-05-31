@@ -360,22 +360,15 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             // On a successful authentication register the push notifications
             if(typeof ParsePushPlugin === 'undefined') return // ignore when developing in the browser
 
-            ParsePushPlugin.registerDevice(
-                { appId: parseAppId, ecb:"onNotification", onOpen:"onNotificationOpen"},
-                () => {
-                    $log.log('Successfully registered device for Parse Push')
-                    ParsePushPlugin.getInstallationId(
-                            id => $log.log('Parse Push InstallationId ' + id),
-                            error => $log.error('ParsePushPlugin getInstallationId error ' + error)
-                    )
-                    const channel = 'user_' + Parse.User.current().id
-                    ParsePushPlugin.subscribe(
-                        channel,
-                        () => $log.log('Subscribed to parse push channel ' + channel),
-                            error => $log.error('Parse Push subscribe error ' + error)
-                    )
-                },
-                    error => $log.error('ParsePushPlugin error registering device: ' + error)
+            ParsePushPlugin.getInstallationId(
+                id => $log.log('Parse Push InstallationId ' + id),
+                error => $log.error('ParsePushPlugin getInstallationId error ' + error)
+            )
+
+            const channel = 'user_' + Parse.User.current().id
+            ParsePushPlugin.subscribe(channel,
+                () => $log.log('Subscribed to parse push channel ' + channel),
+                error => $log.error('Parse Push subscribe error ' + error)
             )
 
             ParsePushPlugin.on('receivePN', pushNotification => onNotification(pushNotification))
