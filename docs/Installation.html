@@ -307,7 +307,9 @@ See https://github.com/floatinghotpot/cordova-admob-pro for more details on conf
 
 * Read http://ionicframework.com/blog/automating-icons-and-splash-screens/ for creating and setting up your slash screen and icon images
 
-# Running the app in Chrome/Safari
+# Development - Running the app in Chrome/Safari
+
+Start the node.js Parse server. From the /server folder run **npm start**
 
 **DO NOT** use the **ionic serve** command which you would know if you are familiar with Ionic. The provided gulp file in
 this project is more advanced and provides production grade features.
@@ -345,6 +347,11 @@ in the gulp file and the main config file /server/config.json. To do a productio
 **gulp --env prod**
 
 # Build/Run with Emulators or Real Devices
+
+Its possible to test on a device with the local development server. You will need to find the IP address of your
+computer that the phone will be able to find through USB or your local network, then update the dev.parseServerUrl value
+in /server/config.json and restart gulp.  Otherwise deploy the sever app to the cloud and use a qa environment.
+Instructions for Google App Engine, which we recommend, are further below.
 
 ### Android
 
