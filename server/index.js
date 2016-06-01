@@ -17,7 +17,8 @@ var app = express()
 
 // See HTTPS and forwarding proxies
 // https://cloud.google.com/appengine/docs/flexible/nodejs/runtime
-app.set('trust_proxy', 1);
+if(process.env.GAE_LONG_APP_ID)
+    app.set('trust_proxy', 1)
 
 // Serve static assets from the /public folder
 app.use('/public', express.static(path.join(__dirname, '/public')))
@@ -28,7 +29,7 @@ app.use(mountPath, api)
 
 // Parse Server plays nicely with the rest of your web routes
 app.get('/', function(req, res) {
-  res.status(200).send('I dream of being a website.  Please star the parse-server repo on GitHub!')
+  res.status(200).send('Parse server is running')
 })
 
 // There will be a test page available on the /test path of your server url
@@ -40,7 +41,7 @@ app.get('/', function(req, res) {
 var port = process.env.PORT || 1337
 var httpServer = require('http').createServer(app)
 httpServer.listen(port, function() {
-    console.log('parse server running on port ' + port + '.')
+    console.log('Parse server running on port ' + port + '.')
 })
 
 // This will enable the Live Query real-time server
