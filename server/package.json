@@ -22,7 +22,10 @@
     "monitor": "nodemon index.js",
     "installglobals": "npm i -g bower gulp cordova ionic tsd@next karma-cli protractor node-gyp coffee-script js-beautify typescript npm-check parse-dashboard mongodb-runner playup",
     "deploy-qa": "cp app-qa.yaml app.yaml && gcloud preview app deploy --stop-previous-version --project $(json -f config.json qa.gcpProjectId)",
-    "deploy-prod": "cp app-prod.yaml app.yaml && gcloud preview app deploy --stop-previous-version --project $(json -f config.json prod.gcpProjectId)"
+    "deploy-prod": "cp app-prod.yaml app.yaml && gcloud preview app deploy --stop-previous-version --project $(json -f config.json prod.gcpProjectId)",
+    "dashboard-dev": "parse-dashboard --serverURL \"$(json -f config.json dev.parseServerUrl)\" --appId $(json -f config.json appId) --masterKey $(json -f config.json masterKey)",
+    "dashboard-qa": "parse-dashboard --serverURL \"$(json -f config.json qa.parseServerUrl)\" --appId $(json -f config.json appId) --masterKey $(json -f config.json masterKey)",
+    "dashboard-prod": "parse-dashboard --serverURL \"$(json -f config.json prod.parseServerUrl)\" --appId $(json -f config.json appId) --masterKey $(json -f config.json masterKey)"
   },
   "engines": {
     "node": ">=4.3"

@@ -380,9 +380,13 @@ The iOS emulator is sufficient for most purposes. The main limitation is it can'
 
 # Dashboard
 
-The admin dashboard is a separate Parse project
+The admin dashboard is a separate Parse project at https://github.com/ParsePlatform/parse-dashboard
 
-* Follow the instruction at https://github.com/ParsePlatform/parse-dashboard to setup and run the dashboard
+The parse-dashboard should already be installed from the previous server setup step (npm run installglobals)
+
+Npm scripts in /server/package.json are provided to automatically start the dashboard with the correct parameters.
+
+In /server run **npm run dashboard-dev** or **npm run dashboard-qa** or **npm run dashboard-prod**
 
 # Merging updates
 
