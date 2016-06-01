@@ -127,6 +127,8 @@ function onNotificationOpen(pnObj){
 			logout : logout,
 			deleteAccount: deleteAccount,
 
+			testPushNotification: testPushNotification,
+
 			// Admin functions
 			getReportedUsers: getReportedUsers,
 			getReportedUserDetails: getReportedUserDetails,
@@ -1152,7 +1154,11 @@ function onNotificationOpen(pnObj){
 		    img.src = url
 			return q.promise
 		}
+		
 
+		function testPushNotification() {
+			return server.testPushNotification()
+		}
 
 		// Admin user functions
 

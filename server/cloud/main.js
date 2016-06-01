@@ -1123,6 +1123,23 @@ Parse.Cloud.define("DeleteAllData", function(request, response) {
 })
 
 
+/**
+ * Sends a push notification to the current user. Useful for testing if push notifications are configured properly
+ */
+Parse.Cloud.define('TestPushNotification', function(request, response) {
+	console.log('sending push to channel ' + 'user_' + request.user.id)
+	Parse.Push.send({
+		channels: ['user_' + request.user.id],
+		data: {
+			alert: 'Test push notification',
+			// title: 'Test push notification',
+		}
+	}, masterKey).then(
+		success => response.success(null),
+		error => response.error(error)
+	)
+})
+
 
 
 /**

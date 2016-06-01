@@ -238,6 +238,8 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             logout : logout,
             deleteAccount: deleteAccount,
 
+            testPushNotification: testPushNotification,
+
             // admin functions
             getReportedUsers: getReportedUsers,
             getReportedUserDetails: getReportedUserDetails,
@@ -714,6 +716,14 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             }
             return Parse.User.logOut()
         }
+
+
+        // Debug functions
+
+        function testPushNotification() {
+            return Parse.Cloud.run('TestPushNotification').catch(_unwrapError)
+        }
+
 
         // Admin user functions
 
