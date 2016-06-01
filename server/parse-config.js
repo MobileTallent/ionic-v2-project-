@@ -58,8 +58,10 @@ if(gaeId)
 		{directAccess: true}
 	)
 
-if(config.facebookAppId)
-	parseConfig.oauth.facebook = { appIds: config.facebookAppId }
+if(config.facebookAppId) {
+	console.log('Configurating Facebook authentication for app Id', config.facebookAppId)
+	parseConfig.oauth.facebook = { appIds: [config.facebookAppId] }
+}
 
 // Just use the GCM key from the production project
 if(config.prod && config.prod.gcpProjectNumber && config.gcpServerKey) {

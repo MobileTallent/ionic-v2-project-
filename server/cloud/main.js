@@ -219,93 +219,102 @@ Parse.Cloud.define('SetPremium', function(request, response) {
 
 
 Parse.Cloud.define("CopyFacebookProfile", function(request, response) {
-	var user = request.user
 	var profileUpdates = {photos:[]}
 	var profile
 
-	if (Parse.FacebookUtils.isLinked(user)) {
+	new Parse.Query(Parse.User).get(request.user.id, masterKey).then(
+		user => {
+			if (Parse.FacebookUtils.isLinked(user)) {
 
-		var fbAuth = user.get('authData').facebook
+				var fbAuth = user.get('authData').facebook
 
-		var picUrl = "https://graph.facebook.com/" + fbAuth.id + "/picture?width=500&height=500"
-		var imageRequest = Parse.Cloud.httpRequest({
-			url: picUrl,
-			followRedirects: true
-		})
+				var picUrl = "https://graph.facebook.com/" + fbAuth.id + "/picture?width=500&height=500"
+				var imageRequest = Parse.Cloud.httpRequest({
+					url: picUrl,
+					followRedirects: true
+				})
 
-		var profile = user.get('profile')
-		if(!profile) {
-			response.error('User does not have a profile')
-			return
-		}
-		var profileRequest = new Parse.Query(Profile).get(profile.id)
-
-		var fbLikesRequest = Parse.Cloud.httpRequest({url: 'https://graph.facebook.com/me/likes?limit=999&access_token=' + fbAuth.access_token})
-		var fbMeRequest = Parse.Cloud.httpRequest({url: 'https://graph.facebook.com/me?fields=birthday,first_name,last_name,name,gender,email,hometown&access_token=' + fbAuth.access_token})
-
-		Parse.Promise.when(fbLikesRequest, fbMeRequest)
-			.then(function(fbLikesResponse, fbMeResponse) {
-
-				var fbLikesData = fbLikesResponse.data.data
-				var fbMe = fbMeResponse.data
-				var i
-				var fbLikes = []
-
-				for(i=0; i < fbLikesData.length; i++)
-					fbLikes.push(fbLikesData[i].id)
-
-				profileUpdates.fbLikes = fbLikes
-
-				var errorCode = _copyFacebookProfile(fbMe, profileUpdates)
-				if(errorCode) {
-					return Parse.Promise.error({code:errorCode})
+				var profile = user.get('profile')
+				if(!profile) {
+					response.error('User does not have a profile')
+					return
 				}
+				var profileRequest = new Parse.Query(Profile).get(profile.id, masterKey)
 
-				if(fbMe.email) {
-					// Save this asynchronously
-					// TODO log any errors - should be an error if email exists
-					if(!user.getEmail())
-						user.save({'email':fbMe.email})
+				var fbLikesRequest = Parse.Cloud.httpRequest({url: 'https://graph.facebook.com/me/likes?limit=999&access_token=' + fbAuth.access_token})
+				var fbMeRequest = Parse.Cloud.httpRequest({url: 'https://graph.facebook.com/me?fields=birthday,first_name,last_name,name,gender,email,hometown&access_token=' + fbAuth.access_token})
+
+				Parse.Promise.when(fbLikesRequest, fbMeRequest)
+					.then(function(fbLikesResponse, fbMeResponse) {
+
+						var fbLikesData = fbLikesResponse.data.data
+						var fbMe = fbMeResponse.data
+						var i
+						var fbLikes = []
+
+						for(i=0; i < fbLikesData.length; i++)
+							fbLikes.push(fbLikesData[i].id)
+
+						profileUpdates.fbLikes = fbLikes
+
+						var errorCode = _copyFacebookProfile(fbMe, profileUpdates)
+						if(errorCode) {
+							return Parse.Promise.error({code:errorCode})
+						}
+
+						if(fbMe.email) {
+							// Save this asynchronously
+							// TODO log any errors - should be an error if email exists
+							if(!user.getEmail())
+								user.save({'email':fbMe.email})
+							else
+								user.save({'fbEmail':fbMe.email})
+						}
+
+						// Wait for the profile image request to return
+						return imageRequest
+
+					}).then(function(httpResponse) {
+					var file = new Parse.File("profile.png", {base64: httpResponse.buffer.toString('base64', 0, httpResponse.buffer.length)})
+					return file.save()
+
+				}).then(function(file) {
+					// See http://stackoverflow.com/questions/25297590/saving-javascript-object-that-has-an-array-of-parse-files-causes-converting-cir
+					profileUpdates.photos.push({name: file.name, url: file.url(), __type: 'File'})
+
+					return profileRequest
+
+				}).then(function(result) {
+					profile = result
+					// Use the master key to update the potentially restricted properties like birthdate, name
+					return profile.save(profileUpdates, masterKey)
+
+				}).then(function(profile) {
+					response.success(profile)
+				}, function(error) {
+					console.error('Facebook copy error' + JSON.stringify(error))
+					if(profile) {
+						// Try to save the error onto the profile. Ignore success/error
+						var errorMsg = error.code ? error.code : error
+						profile.save({error:errorMsg})
+					}
+					if(error.code)
+						response.error(error)
 					else
-						user.save({'fbEmail':fbMe.email})
-				}
+						response.error({code:'FB_PROFILE_COPY_FAILED', message:'Error getting Facebook profile', source:error})
+				})
 
-				// Wait for the profile image request to return
-				return imageRequest
+			} else {
+				response.error('Account is not linked to Facebook')
+			}
+		}
+		, error => {
+			console.log('Error loading user to copy facebook profile', error)
+			response.error(error)
+		}
+	)
 
-			}).then(function(httpResponse) {
-				var file = new Parse.File("profile.png", {base64: httpResponse.buffer.toString('base64', 0, httpResponse.buffer.length)})
-				return file.save()
 
-			}).then(function(file) {
-				// See http://stackoverflow.com/questions/25297590/saving-javascript-object-that-has-an-array-of-parse-files-causes-converting-cir
-				profileUpdates.photos.push({name: file.name, url: file.url(), __type: 'File'})
-
-				return profileRequest
-
-			}).then(function(result) {
-				profile = result
-				// Use the master key to update the potentially restricted properties like birthdate, name
-				return profile.save(profileUpdates, masterKey)
-
-			}).then(function(profile) {
-				response.success(profile)
-			}, function(error) {
-				console.error('Facebook copy error' + JSON.stringify(error))
-				if(profile) {
-					// Try to save the error onto the profile. Ignore success/error
-					var errorMsg = error.code ? error.code : error
-					profile.save({error:errorMsg})
-				}
-				if(error.code)
-					response.error(error)
-				else
-					response.error({code:'FB_PROFILE_COPY_FAILED', message:'Error getting Facebook profile', source:error})
-			})
-
-	} else {
-		response.error('Account is not linked to Facebook')
-	}
 
 })
 
