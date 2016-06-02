@@ -54,12 +54,14 @@ The Cloneder app is primarily developed in JavaScript and TypeScript.  The build
 
 * Install node.js from http://nodejs.org/
 
-* Make sure you have the pre-requisite installations for node-gyp (See https://www.npmjs.com/package/node-gyp)
+* Make sure you have the pre-requisite installations for node-gyp (See https://www.npmjs.com/package/node-gyp#installation)
+particularly for Windows users (The Visual C++ build tools, Python 2.7 and set msvs_version steps).
 
 * Change to /server and run: **npm run installglobals**
 
 If on OSX/linux you shouldn't be logged in as an admin/root user, so you will need to run it with **sudo**. In Windows you may need to run it as Administrator.
 
+If you get an error installing on Windows then to fix this delete the folder C:\Users\<username>\.node-gyp\<node_version>\include\node\openssl and retry npm install
 
 ## JavaScript Development tools
 
