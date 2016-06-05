@@ -223,7 +223,12 @@ function onNotificationOpen(pnObj){
 						service.twilioAccessToken = result.token
 						$rootScope.$broadcast('twilioAccessToken', result.token)
 					},
-					error => $log.error('error getting twilio token ' + JSON.stringify(error))
+					error => {
+						if(error === 'NOT_CONFIGURED')
+							$log.info('Twilio not configured')
+						else
+							$log.error('Error getting twilio token ' + JSON.stringify(error))
+					}
 			)
 
 			initInAppPurchases()
