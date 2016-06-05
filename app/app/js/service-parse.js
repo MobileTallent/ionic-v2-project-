@@ -194,10 +194,10 @@ Parse.Promise.prototype.catch = function(callback) {
 
 angular.module('service.parse', ['constants', 'parse-angular'])
 
-    .factory('ParseService', function($q, $log, appId, parseServerUrl) {
+    .factory('ParseService', function($q, $log, appId, serverUrl, parseMount) {
 
         Parse.initialize(appId,'unused')
-        Parse.serverURL = parseServerUrl
+        Parse.serverURL = serverUrl + parseMount
 
         var service = {
             // methods

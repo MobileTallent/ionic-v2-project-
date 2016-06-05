@@ -4,7 +4,10 @@ angular.module('constants',[])
 	.constant('parseAppId', e2e.app.id)
 	.constant('parseJavascriptKey', e2e.app.jsKey)
 	.constant('parseClientKey', '')
-	.constant('parseServerUrl', e2e.parseServerUrl)
+	.constant('serverUrl', e2e.serverUrl)
+	.constant('parseMount', e2e.parseMount)
+
+e2e.parseServerUrl = e2e.serverUrl + e2e.parseMount
 
 // Required to bootstrap our own angular app
 var rootElement = angular.element(document)

@@ -42,7 +42,7 @@ public class CustomApplication extends Application {
         Parse.initialize(new Parse.Configuration.Builder(this)
             .applicationId("@@parseAppId")
             .clientKey(null)
-            .server("@@parseServerUrl") // The trailing slash is important.
+            .server("@@serverUrl@@parseMount") // The trailing slash is important.
             .build()
         );
         //PushService.setDefaultPushCallback(this, PushClient.class);

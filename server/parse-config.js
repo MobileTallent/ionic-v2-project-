@@ -20,8 +20,8 @@ config.environments.forEach(e => {
 var envConfig = config[env]
 console.log('Using ' + env + ' configuration')
 
-if(!envConfig.parseServerUrl && gaeId)
-	envConfig.parseServerUrl = 'https://' + gaeId + '.appspot.com/parse/'
+if(!envConfig.serverUrl && gaeId)
+	envConfig.serverUrl = 'https://' + gaeId + '.appspot.com'
 
 // Google App Engine requires port 8080 which is set in the app.yaml
 var port = process.env.PORT || 1337
@@ -31,7 +31,7 @@ var parseConfig = {
 	// Config that is common to all environments
 	appId: config.appId,
 	masterKey: config.masterKey,
-	serverURL: 'http://localhost:' + port + '/parse',
+	serverURL: 'http://localhost:' + port + config.parseMount,
 	cloud: 'cloud/main.js',
 	databaseURI: envConfig.databaseURI,
 
