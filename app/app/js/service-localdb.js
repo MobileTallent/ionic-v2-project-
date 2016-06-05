@@ -105,11 +105,16 @@
 			// Service functions ----------------------
 
 			function init() {
-				// Use the native sqlite plugin if it exists
 				var databaseName = appName + '-' + env
-				db = window.sqlitePlugin ?
-					window.sqlitePlugin.openDatabase({name: databaseName + '.db', location: 2}) :
-					window.openDatabase(databaseName, '', 'LocalDB', 2 * 1024 * 1024)
+				// Use the native sqlite plugin if it exists
+				if(window.sqlitePlugin) {
+					db = window.sqlitePlugin.openDatabase({name: databaseName + '.db', iosDatabaseLocation: 'default'},
+						() => $log.info('Opened sqlite database ' + databaseName),
+						error => $log.error('Error opening sqlite database ' + JSON.stringify(error)))
+				} else {
+					$log.debug('Opening HTML5 database')
+					db = window.openDatabase(databaseName, '', 'LocalDB', 2 * 1024 * 1024)
+				}
 
 				const M = new Migrator(db)
 
