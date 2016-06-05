@@ -117,7 +117,6 @@ gulp.task('envConfig', function (done) {
         uglify = gutil.noop
         console.log('Disabling uglifying. Do not release dev builds to the app stores')
     }
-    uglify = gutil.noop
 
     var configFile = '../server/' + (process.env.CONFIG_FILE || 'config.json')
     var config = JSON.parse(fs.readFileSync(configFile))
