@@ -851,10 +851,6 @@ function onNotificationOpen(pnObj){
 					if(!getMatch(match.id)) {
 						console.log('syncing new match ' + match.id)
 						let profile = match.otherProfile
-						profile.className = 'Profile'
-						profile = Parse.Object.fromJSON(profile)
-						match.className = 'Match'
-						match = Parse.Object.fromJSON(match)
 						match.lastMessage = 'Matched on ' + dateFormat(match.createdAt, 'd mmm')
 						match.read = false
 						matches.unshift(match)
@@ -866,7 +862,7 @@ function onNotificationOpen(pnObj){
 				}
 
 				if(newMatches.length) {
-					$log.debug('broadcasting newMatch')
+					$log.debug('broadcasting newMatch id:' + newMatches[0].id)
 					$rootScope.$broadcast('newMatch', newMatches[0])
 
 					if(service.profile.notifyMatch)

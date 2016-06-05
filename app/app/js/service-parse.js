@@ -557,7 +557,14 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             if(matchIds.length === 0)
                 return $q.when([])
 
-            return Parse.Cloud.run('GetMutualMatches', {matchIds: matchIds}).catch(_unwrapError)
+            return Parse.Cloud.run('GetMutualMatches', {matchIds: matchIds})
+                // Convert the JSON objects into the proper Parse objects
+                .then(matches => _.map(matches, match => {
+                    match = fromJSON(match, 'Match')
+                    match.otherProfile = fromJSON(match.otherProfile, 'Profile')
+                    return match
+                }))
+                .catch(_unwrapError)
         }
 
 
