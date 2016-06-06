@@ -42,7 +42,7 @@ var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUt
             if(env === 'dev') {
                 var bsScript = document.createElement('script')
                 bsScript.id = '__bs_script__'
-                bsScript.src = 'http://HOST:3000/browser-sync/browser-sync-client.2.12.4.js'.replace('HOST', location.hostname)
+                bsScript.src = 'http://HOST:3000/browser-sync/browser-sync-client.2.12.12.js'.replace('HOST', location.hostname)
                 bsScript.async = true
                 document.body.appendChild(bsScript)
             }
