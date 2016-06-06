@@ -196,6 +196,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
     .factory('ParseService', function($q, $log, appId, serverUrl, parseMount) {
 
+        $log.log('Initializing Parse ' + serverUrl + parseMount + ' ' + appId)
         Parse.initialize(appId,'unused')
         Parse.serverURL = serverUrl + parseMount
 
