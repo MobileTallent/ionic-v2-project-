@@ -13,7 +13,6 @@ var config = require('../config.js')
 require('./linkedin.js')
 //require('./migrations.js')
 //require('./jobs.js')
-require('./app.js')
 require('./admin.js')
 require('./video.js')
 
