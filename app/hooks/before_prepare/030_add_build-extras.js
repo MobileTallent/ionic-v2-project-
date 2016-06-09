@@ -11,7 +11,7 @@ var rootDir = process.argv[2]
 
 var androidPlatformDir = rootDir + '/platforms/android/'
 var buildExtrasGradle = androidPlatformDir + 'build-extras.gradle'
-
+/*
 if(fs.existsSync(androidPlatformDir) && !fs.existsSync(buildExtrasGradle)) {
 	console.log('Creating ' + buildExtrasGradle)
 	var fileContents = "configurations { all*.exclude group: 'com.android.support', module: 'support-v4' }\n"
@@ -19,4 +19,4 @@ if(fs.existsSync(androidPlatformDir) && !fs.existsSync(buildExtrasGradle)) {
 
 	fs.writeFileSync(buildExtrasGradle, fileContents, 'utf8')
 	console.log('Created ' + buildExtrasGradle)
-}
+}*/
