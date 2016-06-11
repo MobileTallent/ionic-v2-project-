@@ -33,7 +33,7 @@ app/app/config-cloneder
 app/app/js/constants.js
 app/maps/*
 app/platforms/**
-app/plugins/*.json
+
 
 # For testing installing the plugins
 app/plugin-source/**
@@ -41,6 +41,9 @@ app/plugin-source/**
 app/plugins/cordova-plugin-facebook4/**
 # Ignore the Parse Push plugin as we have to install it with parameters
 app/plugins/com.phonegap.parsepushplugin
+# These keep track of locally installed state so ignore them
+app/plugins/android.json
+app/plugins/ios.json
 
 app/resources/ios/**
 app/resources/android/**
