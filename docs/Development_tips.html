@@ -91,26 +91,6 @@ http://stackoverflow.com/questions/2314886/how-can-i-debug-javascript-on-android
 http://codexpi.com/add-android-adb-path-mac-os-x-yosemite/
 
 
-# Parse
-
-## Deploying Cloud Code
-
-In /CloudCode/config/global.json you can use the application name aliases provided in the template file (i.e. dev, qa, prod)
-instead of your actual Parse application names.
-Then when you want to to deploy your Cloud Code then from the /CloudCode folder you can simply run
-
-**parse deploy dev**
-
-**parse deploy prod**
-
-
-
-To update the version of the Parse SDK your Cloud Code uses then run (replacing 1.4.2 with the latest version)
-**parse jssdk 1.4.2**
-
-To update your Parse command line tool run
-**parse update**
-
 ## Development
 
 When updating an object it is better to pass in a change set to save() and not to modifiy the object first and then call save()
@@ -119,16 +99,13 @@ so if the save fails then the object retains the original values
 **Don't do this**
 
 user.country = 'Australia'
+
 return user.save()
 
 **Do this**
 
 var changeSet = {country : 'Australia'}
 return user.save(changeSet)
-
-http://blog.parse.com/2015/03/25/chart-new-territory-with-parse-explorer/
-
-
 
 
 </xmp>

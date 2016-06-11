@@ -15,13 +15,13 @@ native code via a JavaScript interface.
 
 Generally the project configuration commands you will use are adding/remove platforms (android, ios) and adding/removing plugins.
 
-**cordova platform add ios**
+**ionic platform add ios**
 
-**cordova platform remove ios**
+**ionic platform remove ios**
 
-**cordova platform add android**
+**ionic platform add android**
 
-**cordova platform remove android**
+**ionic platform remove android**
 
 You should not edit anything under **/platforms/ios** or **/platforms/android**
 It should be possible to remove and add the platforms back at any time.
@@ -33,19 +33,12 @@ updating the plugins or by the cordova hooks.
 
 Cordova has hooks which allows scripts to be run at various stages of development cycle, and are found in the folder **/hooks**
 
-The cloneder project has a number of custom hooks to automate the project setup and configuration from common issues. (A number of the other hooks come from ionic-cli)
+The Cloneder project has a number of custom hooks to automate the project setup and configuration from common issues. (A number of the other hooks come from ionic-cli)
 
-1. Remove duplicate bolts-android jars ([StackOverflow](http://stackoverflow.com/questions/27694355/unable-to-execute-dex-multiple-dex-files-define-lbolts-aggregateexception?lq=1))
-2. Add the android:name attribute to the application tag in AndroidManifest.xml for the CustomApplication ([Stackoverflow](http://stackoverflow.com/questions/23560414/apache-cordova-app-crashes-after-receiving-parse-com-push-notification/23574678))
-3. Always install the facebook plugin from a local copy so it installs with the required variables ([StackOverflow](http://stackoverflow.com/questions/22355792/cordova-facebook-plugin-missing-variables-app-id-app-name))
-
-These have been tested on OS X (https://issues.apache.org/jira/browse/CB-5905)
-
-
-## Plugins
-
-The ParsePushPlugin used in Cloneder is a fork maintained at my GitHub at https://github.com/campers/parse-push-plugin
-which contains some customisations for opening notifications.
+1. Add the android:name attribute to the application tag in AndroidManifest.xml for the CustomApplication ([Stackoverflow](http://stackoverflow.com/questions/23560414/apache-cordova-app-crashes-after-receiving-parse-com-push-notification/23574678))
+2. Ensure Gulp has run to copy the CustomApplication class source to in /platforms/android
+3. Add a build-extras.gradle to the android project to fix dependancy conflicts between the Parse and Facebook plugin
+4. Ensure a Gulp production build has been done before running the builds for the phones.
 
 
 </xmp>
