@@ -126,24 +126,32 @@ gulp.task('envConfig', function (done) {
     if(!envConfig)
         throw 'No configuration found in ' + configFile + ' for env ' + env
 
+    if(!config.parseMount.endsWith('/')) {
+        console.log('parseMount config value should end with /')
+        envConfig.parseMount = envConfig.parseMount + '/'
+    }
+
     // Write out the constants.js file with all the required values in the configuration json
-    var properties = ['appName','appId','playStoreUrl','itunesUrl','facebookAppId','linkedInId','linkedInSecret','socialShareMessage','adMob']
+    var properties = ['appName','appId','parseMount','gcpBrowserKey','playStoreUrl','itunesUrl','facebookAppId','linkedInId','linkedInSecret','socialShareMessage','adMob']
 
     var constants = 'angular.module("constants", [])\n'
     properties.forEach(function(prop) {
         constants += '  .constant("' + prop + '", ' + JSON.stringify(config[prop]) + ')\n'
     })
-    constants += '  .constant("parseServerUrl", "' + envConfig.parseServerUrl + '");\n'
+    constants += '  .constant("serverUrl", "' + envConfig.serverUrl + '")\n'
     constants += '  .constant("env", "' + env + '");\n'
 
     constants += 'var FACEBOOK_APP_ID = "' + config.facebookAppId + '";\n'
 
     fs.writeFileSync('./app/js/constants.js', constants)
 
-    // Copy the custom Android application class with the Parse id's configured
-    var parsePatterns = [{match: 'parseAppId', replacement: config.appId}, {match: 'parseServerUrl', replacement: envConfig.parseServerUrl}]
+    // Copy the custom Android application class with the app id and server url configured
+    var replacePatterns = [
+        {match: 'parseAppId', replacement: config.appId},
+        {match: 'serverUrl', replacement: envConfig.serverUrl},
+        {match: 'parseMount', replacement: config.parseMount}]
     var java = gulp.src('./app/config/CustomApplication.java')
-        .pipe(replace({ patterns: parsePatterns }))
+        .pipe(replace({ patterns: replacePatterns }))
         .pipe(gulp.dest('./platforms/android/src/org/apache/cordova'))
 
     // merge() waits for all sub-tasks to complete

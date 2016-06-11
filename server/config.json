@@ -2,29 +2,29 @@
   "appName": "",
   "appId": "",
   "masterKey": "",
+  "parseMount": "/parse/",
+
+  "gcpBrowserKey": "",
+  "gcpServerKey": "",
 
   "environments": ["dev", "qa", "prod"],
 
   "dev": {
-    "parseServerUrl": "http://localhost:1337/parse",
+    "serverUrl": "http://localhost:1337",
     "databaseURI": "mongodb://localhost:27017/mydb"
   },
 
   "prod": {
-    "parseServerUrl": "",
+    "serverUrl": "",
     "databaseURI": "",
-
     "gcpProjectId": "",
     "gcpProjectNumber": "",
-    "gcpKeyFile": "",
-
-    "gcpGcmKey": ""
+    "gcpKeyFile": ""
   },
 
   "qa": {
-    "parseServerUrl": "",
+    "serverUrl": "",
     "databaseURI": "",
-
     "gcpProjectId": "",
     "gcpProjectNumber": "",
     "gcpKeyFile": ""

@@ -17,12 +17,12 @@ var androidPlatform = rootDir + '/platforms/android/';
 // check for the facebook plugin dir as the bolts jar is under a dynamically generated folder containing the app name
 var facebookPlugin = androidPlatform + 'com.phonegap.plugins.facebookconnect/'
 // The parse plugin copies it bolts-android jar to the android/libs folder
-var parsePushBoltsJar = androidPlatform + 'libs/bolts-android-1.1.4.jar'
+var parsePushBoltsJar = androidPlatform + 'libs/bolts-tasks-1.4.0.jar'
 
 if( fs.existsSync(facebookPlugin) && fs.existsSync(parsePushBoltsJar)) {
-    console.log("---------------------------------------------------------")
-    console.log('Detected facebook plugin and parse push bolts-android jar.')
+    console.log("--------------------------------------------------------------")
+    console.log('Detected facebook plugin and parse push bolts-tasks-1.4.0.jar')
     console.log('Deleting ' + parsePushBoltsJar);
     fs.unlinkSync(parsePushBoltsJar);
-    console.log("---------------------------------------------------------")
+    console.log("--------------------------------------------------------------")
 }

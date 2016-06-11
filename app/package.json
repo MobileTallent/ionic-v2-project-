@@ -7,7 +7,7 @@
     "babel-core": "^6.1.21",
     "babel-preset-es2015": "^6.1.18",
     "bower": "^1.6.5",
-    "browser-sync": "2.12.4",
+    "browser-sync": "2.12.12",
     "chai": "^3.4.1",
     "ecstatic": "^1.3.1",
     "google-play-scraper": "^1.0.4",
@@ -91,9 +91,11 @@
     "moment": "^2.10.6"
   },
   "scripts": {
-    "postinstall": "webdriver-manager update & ionic state restore --platforms",
+    "addFacebookPlugin": "ionic plugin add cordova-plugin-facebook4 --save --variable APP_ID=\"$(json -f ../server/config.json facebookAppId)\" --variable APP_NAME=\"'$(json -f ../server/config.json facebookAppName)'\"",
+    "addParsePlugin": "ionic plugin add https://github.com/taivo/parse-push-plugin#a2e696aa27dcc0df7c7a4669caa3d0c0a5ffdaf2 --save --variable GCM_SENDER_ID=\"$(json -f ../server/config.json prod.gcpProjectNumber)\"",
+    "postinstall": "webdriver-manager update && ionic state restore --platforms && ionic state restore --plugins",
     "test": "karma start karma-parse.conf.js",
-    "releasebuild": "gulp --env prod --nowatch & ionic build --release",
+    "releasebuild": "gulp --env prod --nowatch && ionic build --release",
     "deployplay": "playup --track beta --auth ../service-account-key.json --recent-changes \"en-US=`cat changes.txt`\"  ./platforms/android/build/outputs/apk/android-release.apk"
   }
 }

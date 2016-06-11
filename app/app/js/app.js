@@ -2,8 +2,11 @@ var platformReady, fbLoaded
 
 var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUtil', 'templates', 'controllers', 'controllers.share', 'service.app',
         'ui.slider', 'ngImgCrop', 'ngAnimate', 'pascalprecht.translate', 'emoji', 'ImgCache', 'monospaced.elastic',
-        'ngStorage', 'angulartics.parse', 'SocialAuth', 'ngCookies', 'filters'])
-    .run(function ($ionicPlatform, AppService, ImgCache, $rootScope, $log, appName, env) {
+        'ngStorage', 'angulartics.parse', 'SocialAuth', 'ngCookies', 'filters'
+        // Add your own extra dependencies on the line below with the comma first to make merging updates easier
+
+        ])
+    .run(function ($ionicPlatform, AppService, ImgCache, $rootScope, $log, appName, env, gcpBrowserKey) {
         $rootScope.appName = appName
 
         $ionicPlatform.ready(function () {
@@ -39,10 +42,15 @@ var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUt
             if(env === 'dev') {
                 var bsScript = document.createElement('script')
                 bsScript.id = '__bs_script__'
-                bsScript.src = 'http://HOST:3000/browser-sync/browser-sync-client.2.12.4.js'.replace('HOST', location.hostname)
+                bsScript.src = 'http://HOST:3000/browser-sync/browser-sync-client.2.12.12.js'.replace('HOST', location.hostname)
                 bsScript.async = true
                 document.body.appendChild(bsScript)
             }
+
+            var googleMapsScript = document.createElement('script')
+            googleMapsScript.src = 'https://maps.googleapis.com/maps/api/js?key=' + gcpBrowserKey
+            googleMapsScript.async = true
+            document.body.appendChild(googleMapsScript)
 
             AppService.init()
             platformReady = 'true'

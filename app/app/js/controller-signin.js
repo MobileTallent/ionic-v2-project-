@@ -1,5 +1,5 @@
 
-angular.module('controllers', ['service.app', 'ngMaterial', 'ngAnimate', 'ngCordova', 'ionic.contrib.ui.tinderCards'])
+angular.module('controllers', ['service.app', 'ngAnimate', 'ngCordova', 'ionic.contrib.ui.tinderCards'])
 
     .controller('SignInCtrl', function ($scope, $log, $rootScope, $state, $http, $timeout, $cordovaFacebook, $q, $ionicPopup,
                                         $ionicModal, $ionicLoading, $ionicHistory, AppService, AppUtil, SocialAuth,

@@ -34,7 +34,14 @@ app/app/js/constants.js
 app/maps/*
 app/platforms/**
 app/plugins/*.json
-app/plugins/com.phonegap.plugins.facebookconnect/**
+
+# For testing installing the plugins
+app/plugin-source/**
+# Ignore the Facebook plugin as we have to install it with parameters
+app/plugins/cordova-plugin-facebook4/**
+# Ignore the Parse Push plugin as we have to install it with parameters
+app/plugins/com.phonegap.parsepushplugin
+
 app/resources/ios/**
 app/resources/android/**
 app/tools/typings/typescriptApp.d.ts

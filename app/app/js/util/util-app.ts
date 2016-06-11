@@ -8,15 +8,15 @@ module app {
 
 		private $q:ng.IQService
 		private $ionicLoading
-		private $mdToast
+		private ionicToast
 		private $log:ng.ILogService
 		private $translate
 		private translations
 
-		constructor($q:ng.IQService, $ionicLoading, $mdToast, $translate, $log:ng.ILogService) {
+		constructor($q:ng.IQService, $ionicLoading, ionicToast, $translate, $log:ng.ILogService) {
 			this.$q = $q
 			this.$ionicLoading = $ionicLoading
-			this.$mdToast = $mdToast
+			this.ionicToast = ionicToast
 			this.$log = $log
 			this.$translate = $translate
 
@@ -28,7 +28,7 @@ module app {
 		 * @param message
 		 */
 		toastSimple(message:string) {
-			this.$mdToast.show(this.$mdToast.simple().content(message).hideDelay(2000))
+			this.ionicToast.show(message, 'bottom', false, 3000)
 		}
 
 		/**
@@ -120,13 +120,13 @@ module app {
 		}
 
 
-		static appUtilFactory($q, $ionicLoading, $mdToast, $translate, $log) {
-			return new AppUtil($q, $ionicLoading, $mdToast, $translate, $log)
+		static appUtilFactory($q, $ionicLoading, ionicToast, $translate, $log) {
+			return new AppUtil($q, $ionicLoading, ionicToast, $translate, $log)
 		}
 	}
 
-	AppUtil.appUtilFactory.$inject = ['$q', '$ionicLoading', '$mdToast', '$translate', '$log']
+	AppUtil.appUtilFactory.$inject = ['$q', '$ionicLoading', 'ionicToast', '$translate', '$log']
 
-	angular.module('AppUtil', ['ionic', 'pascalprecht.translate', 'ngMaterial'])
+	angular.module('AppUtil', ['ionic', 'pascalprecht.translate', 'ionic-toast'])
 		.factory('AppUtil', AppUtil.appUtilFactory);
 }

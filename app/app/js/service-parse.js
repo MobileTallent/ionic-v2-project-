@@ -194,10 +194,11 @@ Parse.Promise.prototype.catch = function(callback) {
 
 angular.module('service.parse', ['constants', 'parse-angular'])
 
-    .factory('ParseService', function($q, $log, appId, parseServerUrl) {
+    .factory('ParseService', function($q, $log, appId, serverUrl, parseMount) {
 
+        $log.log('Initializing Parse ' + serverUrl + parseMount + ' ' + appId)
         Parse.initialize(appId,'unused')
-        Parse.serverURL = parseServerUrl
+        Parse.serverURL = serverUrl + parseMount
 
         var service = {
             // methods
@@ -237,6 +238,8 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             resetBadge: resetBadge,
             logout : logout,
             deleteAccount: deleteAccount,
+
+            testPushNotification: testPushNotification,
 
             // admin functions
             getReportedUsers: getReportedUsers,
@@ -360,22 +363,15 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             // On a successful authentication register the push notifications
             if(typeof ParsePushPlugin === 'undefined') return // ignore when developing in the browser
 
-            ParsePushPlugin.registerDevice(
-                { appId: parseAppId, ecb:"onNotification", onOpen:"onNotificationOpen"},
-                () => {
-                    $log.log('Successfully registered device for Parse Push')
-                    ParsePushPlugin.getInstallationId(
-                            id => $log.log('Parse Push InstallationId ' + id),
-                            error => $log.error('ParsePushPlugin getInstallationId error ' + error)
-                    )
-                    const channel = 'user_' + Parse.User.current().id
-                    ParsePushPlugin.subscribe(
-                        channel,
-                        () => $log.log('Subscribed to parse push channel ' + channel),
-                            error => $log.error('Parse Push subscribe error ' + error)
-                    )
-                },
-                    error => $log.error('ParsePushPlugin error registering device: ' + error)
+            ParsePushPlugin.getInstallationId(
+                id => $log.log('Parse Push InstallationId ' + id),
+                error => $log.error('ParsePushPlugin getInstallationId error ' + error)
+            )
+
+            const channel = 'user_' + Parse.User.current().id
+            ParsePushPlugin.subscribe(channel,
+                () => $log.log('Subscribed to parse push channel ' + channel),
+                error => $log.error('Parse Push subscribe error ' + error)
             )
 
             ParsePushPlugin.on('receivePN', pushNotification => onNotification(pushNotification))
@@ -562,7 +558,14 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             if(matchIds.length === 0)
                 return $q.when([])
 
-            return Parse.Cloud.run('GetMutualMatches', {matchIds: matchIds}).catch(_unwrapError)
+            return Parse.Cloud.run('GetMutualMatches', {matchIds: matchIds})
+                // Convert the JSON objects into the proper Parse objects
+                .then(matches => _.map(matches, match => {
+                    match = fromJSON(match, 'Match')
+                    match.otherProfile = fromJSON(match.otherProfile, 'Profile')
+                    return match
+                }))
+                .catch(_unwrapError)
         }
 
 
@@ -721,6 +724,14 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             }
             return Parse.User.logOut()
         }
+
+
+        // Debug functions
+
+        function testPushNotification() {
+            return Parse.Cloud.run('TestPushNotification').catch(_unwrapError)
+        }
+
 
         // Admin user functions
 

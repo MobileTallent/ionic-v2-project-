@@ -355,6 +355,12 @@ angular.module('controllers')
         $scope.buySubscription = () => store.order("subscription")
 
 
+        $scope.testPushNotification = () => AppService.testPushNotification().then(
+            success => AppUtil.toastSimple('Sent'),
+            error => AppUtil.toastSimple(JSON.stringify(error))
+        )
+
+
         $scope.deleteUnmatchedSwipes = () => AppUtil.blockingCall(
             AppService.deleteUnmatched(),
             success => $log.log(success),

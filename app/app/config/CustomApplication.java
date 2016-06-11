@@ -6,6 +6,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import com.parse.Parse;
+import com.parse.Parse.Configuration;
+import com.parse.Parse.Configuration.Builder;
 import com.parse.ParseInstallation;
 
 /**
@@ -40,7 +42,7 @@ public class CustomApplication extends Application {
         Parse.initialize(new Parse.Configuration.Builder(this)
             .applicationId("@@parseAppId")
             .clientKey(null)
-            .server("@@parseServerUrl") // The trailing slash is important.
+            .server("@@serverUrl@@parseMount") // The trailing slash is important.
             .build()
         );
         //PushService.setDefaultPushCallback(this, PushClient.class);

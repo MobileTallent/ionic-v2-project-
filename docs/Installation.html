@@ -54,20 +54,14 @@ The Cloneder app is primarily developed in JavaScript and TypeScript.  The build
 
 * Install node.js from http://nodejs.org/
 
-* Make sure you have the pre-requisite installations for node-gyp (See https://www.npmjs.com/package/node-gyp)
+* Make sure you have the pre-requisite installations for node-gyp (See https://www.npmjs.com/package/node-gyp#installation)
+particularly for Windows users (The Visual C++ build tools, Python 2.7 and set msvs_version steps).
 
 * Change to /server and run: **npm run installglobals**
 
-If on OSX/linux you shouldn't be logged in as an admin/root user, so you will need to run it with **sudo**.
+If on OSX/linux you shouldn't be logged in as an admin/root user, so you will need to run it with **sudo**. In Windows you may need to run it as Administrator.
 
-* Change directory to /app run **npm install**
-
-
-
-You may need to run **npm install** twice as sometimes it doesn't install everything the first time.
-
-The install scripts will perform extra tasks such as installing the webdriver for the integration test tools.
-
+If you get an error installing on Windows then to fix this delete the folder C:\Users\<username>\.node-gyp\<node_version>\include\node\openssl and retry npm install
 
 ## JavaScript Development tools
 
@@ -214,18 +208,9 @@ It may be advisable to increase the age restriction to 18+
 
 ### Facebook configuration setup
 
-* Open **/app/package.json** and look for the line "com.phonegap.plugins.facebookconnect --variable APP_ID=\"\" --variable APP_NAME=\"\""
+* In /server/config.json update the facebookAppId and facebookAppName with your Facebook app id and name.
 
-* Update the APP_ID and APP_NAME values with that of your Facebook app (e.g. --variable APP_ID=\"123456789\" --variable APP_NAME=\"My App\"" )
-
-* Update /server/parse-[prod|dev].json with your facebook id for the **oauth.facebook.appIds** value
-
-Before adding a cordova platform, you will need to delete the */plugins/com.phonegap.plugins.facebookconnect* folder.
-This way the script will add it with the APP_ID and APP_NAME variables from */plugin-source/com.phonegap.plugins.facebookconnect*
-
-(Note that now the gulp build script envConfig task will update the APP_ID and APP_NAME per build environment i.e. dev/qa/prod at build time)
-
-The other reason we install the facebook plugin from a local clone is because there is an issue with the symbolic links breaking for the iOS platform when cloning it from Github
+* In the /app folder run: **npm run addFacebookPlugin**
 
 At some point you will need to submit your Facebook application for review so the app use the extended permissions to get the birthdate, likes and photos from the users facebook account.
 Note: You will need to remove the website platform when you submit your application for review to enable the extended permissions
@@ -233,29 +218,38 @@ The estimated review time is 7 days an in that time you can't re-add the website
 What you can do is make another facebook app with the website platform and update the var FACEBOOK_APP_ID in /app/js/app.js
 Parse doesn't care which Facebook app you are using.
 
+### Install Parse Push plugin
+
+* In the /app folder run: **npm run addParsePlugin**
+
+This requires the prod.gcpProjectNumber value to have been set in /server/config.json
 
 # Google Cloud Platform (GCP) account setup
 
-A Google Cloud account is required as a minimum for push notifications.
+A Google Cloud account is required as a minimum for push notifications and maps.
 
 * Create your Google Cloud account and go to the projects page at https://console.cloud.google.com/iam-admin/projects
 
 * Click Create Project and name it in the format appname-prod (for example we named ours cloneder-prod)
 
-* In /server/config.json enter the project id for the key prod.gcpProjectId
+The project naming convention is used in the configuration is appName-environment, e.g. appName-prod, appName-qa
 
 If you will be hosting your production server on the GCP then open the advanced options and select the location that is closest to your main user base.
 If unsure, or expecting global users then leave as the default option.  If you are migrating a live Parse app then choose usa-east1 as that
 will be the closest to the Parse AWS datacenter.
 
-https://console.developers.google.com/apis/credentials?project=
-
-* Go to the IAM & Admin -> Settings page and copy your project number. In /server/config.json enter the project
-number for the key prod.gcpProjectNumber
+* Go to the IAM & Admin -> Settings page. In /server/config.json copy the Project ID and Project number to the values for prod.gcpProjectId and prod.gcpProjectNumber
 
 * Go to API Manager -> Credentials and create a new service account key in json format.
 
-* Download the file then save it as /server/service-account-key.json
+* Download the file then save it as /server/service-account-key-prod.json
+
+* In API Manager -> Credentials chose Create credentials -> Browser key and enter the value in /server/config.json for gcpBrowserKey
+
+* In API Manager -> Credentials chose Create credentials -> Server key and enter the value in /server/config.json for gcpServerKey
+
+* In API Manager -> Overview go to Google Maps JavaScript API and enable the API
+
 
 
 #### Enable Google Play Android Developer API
@@ -264,17 +258,8 @@ number for the key prod.gcpProjectNumber
 
 * In the Play console go to Settings -> API access and link your production project and the grant access to the service account you created in the previous step.
 
-
 TODO https://github.com/ParsePlatform/Parse-Server/wiki/Push-Configuring-Clients#configure-broadcast-receiver-and-permissions
 
-
-### Google Map key
-
-* Get your public API key and add it to the script tag which loads the google maps in **/www/index.html**
-```
-<script src="http://maps.googleapis.com/maps/api/js?key=[Your API key here]"></script>
-```
-See https://developers.google.com/maps/documentation/javascript/tutorial#api_key for creating your key
 
 ### Twilio video chat (optional)
 
@@ -324,7 +309,9 @@ See https://github.com/floatinghotpot/cordova-admob-pro for more details on conf
 
 * Read http://ionicframework.com/blog/automating-icons-and-splash-screens/ for creating and setting up your slash screen and icon images
 
-# Running the app in Chrome/Safari
+# Development - Running the app in Chrome/Safari
+
+Start the node.js Parse server. From the /server folder run **npm start**
 
 **DO NOT** use the **ionic serve** command which you would know if you are familiar with Ionic. The provided gulp file in
 this project is more advanced and provides production grade features.
@@ -363,6 +350,11 @@ in the gulp file and the main config file /server/config.json. To do a productio
 
 # Build/Run with Emulators or Real Devices
 
+Its possible to test on a device with the local development server. You will need to find the IP address of your
+computer that the phone will be able to find through USB or your local network, then update the dev.parseServerUrl value
+in /server/config.json and restart gulp.  Otherwise deploy the sever app to the cloud and use a qa environment.
+Instructions for Google App Engine, which we recommend, are further below.
+
 ### Android
 
 If you don't have an Android device and are using the emulator then don't use the default emulator which is very slow,
@@ -390,9 +382,13 @@ The iOS emulator is sufficient for most purposes. The main limitation is it can'
 
 # Dashboard
 
-The admin dashboard is a separate Parse project
+The admin dashboard is a separate Parse project at https://github.com/ParsePlatform/parse-dashboard
 
-* Follow the instruction at https://github.com/ParsePlatform/parse-dashboard to setup and run the dashboard
+The parse-dashboard should already be installed from the previous server setup step (npm run installglobals)
+
+Npm scripts in /server/package.json are provided to automatically start the dashboard with the correct parameters.
+
+In /server run **npm run dashboard-dev** or **npm run dashboard-qa** or **npm run dashboard-prod**
 
 # Merging updates
 
@@ -411,7 +407,7 @@ comments. Also briefly look through the changes in the files.
 
 # Google Cloud Platform QA/Production server setup
 
-We run our Cloneder projects with server on the Google Cloud Platform. The following instructions are if you
+We run our Cloneder projects on the Google Cloud Platform. The following instructions are if you
 intend to run the database and servers on the Google Cloud Platform using the Google App Engine.
 
 For other hosting options follow the documentation on the [Parse wiki](https://github.com/ParsePlatform/parse-server/wiki)
@@ -426,11 +422,9 @@ For other hosting options follow the documentation on the [Parse wiki](https://g
 
 * Create a billing account (which you will need to enable billing for your projects) https://support.google.com/cloud/answer/6293499?hl=en
 
-* Create a project for each environment you want in the cloud (QA, production etc) with billing enabled (e.g appname-prod, appname-qa)
+* Create a project for each environment you want in the cloud (QA, production etc) with billing enabled (e.g appname-prod, appname-qa). You should have already created the production project in the previous step.
 
-You should have already created the production project in the previous step.
-
-* In /server/config.json update the GCP configuration values in the qa and prod sections.
+* In /server/config.json update the GCP configuration values in the qa and prod sections.  You can leave the parseServerUrl blank, it will be automatically configured when running in Google App Engine.
 
 ## Database setup
 
@@ -462,11 +456,15 @@ For a cheapest setup option (for QA or low traffic prod apps)
     Disk Size in GB: 10GB
     Arbiter count: 0
 
-* Open Compute Engine -> VM Instances and copy the internal IP for your mongo database
+* Open Compute Engine -> VM Instances and copy the internal IP for your Mongo database
 
 * In /server/config.json update the qa.databaseURI and/or prod.databaseURI with the IP address of the Mongo database
 
 For detailed information on the node.js runtime environment on Google App Engine see https://cloud.google.com/appengine/docs/flexible/nodejs/runtime
+
+To deploy the server app go to /serve and run **npm run deploy-prod**
+
+There is also **npm run deploy-qa** command configured in the /server/package.json
 
 </xmp>
 

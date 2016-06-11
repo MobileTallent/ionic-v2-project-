@@ -51,7 +51,7 @@
 			 * JSON.stringify(error) outputs {}. So extract the fields to a plain new object for nice logging
 			 */
 			function convertError(e) {
-				return {code:e.code, message:e.message}
+				return JSON.stringify({code:e.code, message:e.message})
 			}
 
 
@@ -105,11 +105,16 @@
 			// Service functions ----------------------
 
 			function init() {
-				// Use the native sqlite plugin if it exists
 				var databaseName = appName + '-' + env
-				db = window.sqlitePlugin ?
-					window.sqlitePlugin.openDatabase({name: databaseName + '.db', location: 2}) :
-					window.openDatabase(databaseName, '', 'LocalDB', 2 * 1024 * 1024)
+				// Use the native sqlite plugin if it exists
+				if(window.sqlitePlugin) {
+					db = window.sqlitePlugin.openDatabase({name: databaseName + '.db', iosDatabaseLocation: 'default'},
+						() => $log.info('Opened sqlite database ' + databaseName),
+						error => $log.error('Error opening sqlite database ' + JSON.stringify(error)))
+				} else {
+					$log.debug('Opening HTML5 database')
+					db = window.openDatabase(databaseName, '', 'LocalDB', 2 * 1024 * 1024)
+				}
 
 				const M = new Migrator(db)
 
@@ -361,7 +366,6 @@
 			}
 
 
-			// Modified from https://github.com/llamaluvr/JS-Migrator_Promise
 			function Migrator(db) {
 				// Pending migrations to run
 				var migrations = []
@@ -418,40 +422,54 @@
 					return deferred.promise
 				}
 
-				this.execute = function() {
-					const deferred = $q.defer()
-					if(state > 0) {
-						throw 'Migrator is only valid once -- create a new one if you want to do another migration.'
-					}
-					db.transaction(t => {
-						t.executeSql('select version from ' + MIGRATOR_TABLE, [], (t, res) => {
-							var rows = res.rows
-							var version = rows.item(0).version
-							$log.info('Existing database present, migrating from ' + version)
-							migrateStartingWith(version).then(() => deferred.resolve())
-						}, (t, err) => {
-							if(err.message.match(/no such table/i)) {
-								t.executeSql('create table ' + MIGRATOR_TABLE + '(version integer)', [], () => {
-									t.executeSql('insert into ' + MIGRATOR_TABLE + ' values(0)', [], () => {
-										$log.info('New migration database created...')
-										migrateStartingWith(0).then(() => deferred.resolve())
-									}, (t, err) => {
-										$log.error('Unrecoverable error inserting initial version into db: %o', err.message)
-										deferred.reject(convertError(e))
-									})
-								}, (t, err) => {
-									$log.error('Unrecoverable error creating version table: %o', err.message)
-									deferred.reject(convertError(e))
-								})
-							} else {
-								$log.error('Unrecoverable error resolving schema version: %o', err.message)
-								deferred.reject(convertError(e))
-							}
-						})
-					})
 
+				function ensureMigrationTable() {
+					const deferred = $q.defer()
+					$log.log('Ensuring migration table exists')
+					db.transaction(t => {
+						t.executeSql('create table if not exists ' + MIGRATOR_TABLE + ' (version integer)', [],
+							(tx, sqlResultSet) => deferred.resolve(),
+							(t, err) => deferred.reject('Error creating version table' + convertError(e))
+						)
+					})
 					return deferred.promise
 				}
+
+				function getCurrentVersion() {
+					const deferred = $q.defer()
+					$log.log('Checking for existing migration version')
+					db.transaction(t => {
+						t.executeSql('SELECT VERSION FROM ' + MIGRATOR_TABLE, [],
+							(tx, sqlResultSet) => {
+
+								if(sqlResultSet.rows.length > 0)
+									return deferred.resolve(sqlResultSet.rows.item(0).version)
+
+								$log.log('Inserting default migration version')
+								t.executeSql('INSERT INTO ' + MIGRATOR_TABLE + ' values(0)', [],
+									(tx, sqlResultSet) => {
+										deferred.resolve(0)
+									},
+									(t, error) => deferred.reject('Error ensuring default version ' + convertError(error))
+								)
+							},
+							(t, error) => deferred.reject('Error selecting version ' + convertError(error))
+						)
+					})
+					return deferred.promise
+				}
+
+
+				this.execute = function() {
+					if(state > 0)
+						throw 'Migrator is only valid once -- create a new one if you want to do another migration.'
+
+					return ensureMigrationTable()
+						.then(() => getCurrentVersion())
+						.then(version => migrateStartingWith(version))
+						.catch(error => $log.error('SQL DB init error:', error))
+				}
+
 			}
 
 		}
