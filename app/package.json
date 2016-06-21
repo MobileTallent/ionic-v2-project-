@@ -95,6 +95,7 @@
     "addParsePlugin": "ionic plugin add https://github.com/taivo/parse-push-plugin#a2e696aa27dcc0df7c7a4669caa3d0c0a5ffdaf2 --save --variable GCM_SENDER_ID=\"$(json -f ../server/config.json prod.gcpProjectNumber)\"",
     "postinstall": "webdriver-manager update",
     "test": "karma start karma-parse.conf.js",
+    "updateTypings": "tsd update -os",
     "releasebuild": "gulp --env prod --nowatch && ionic build --release",
     "deployplay": "playup --track beta --auth ../service-account-key.json --recent-changes \"en-US=`cat changes.txt`\"  ./platforms/android/build/outputs/apk/android-release.apk"
   }
