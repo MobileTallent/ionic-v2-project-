@@ -124,7 +124,14 @@ In development you will need to start the Mongo database yourself. If you want t
 
 * Install Android studio or the SDK tools from http://developer.android.com/sdk/installing/index.html
 
-You will need to generate a keystore to sign your release builds with.
+See the Ionic tips on setting up the Android SDK at http://ionicframework.com/docs/ionic-cli-faq/#android-sdk
+
+If you have an existing SDK installation open the SDK Manager and in the Extras section make sure the following are up to date:
+
+Local Maven repository for Support Libraries<br/>
+Android Support Library<br/>
+Android Support Repository<br/>
+
 
 * Follow the instructions at at http://developer.android.com/tools/publishing/app-signing.html to generate the keystore
 
@@ -141,23 +148,25 @@ For example we have used com.engineerstoolbox.cloneder
 
 * Change directory to /app folder and run **npm install**
 
-The npm post install script will add the ios and android platforms. If you are on a Windows computer then the ios
-platform will fail, so you may wish to remove from /app/package.json the ios entry in cordovaPlatforms.
+* In /app run **ionic platform add android**
 
 **DO NOT** check in the files under /app/platforms into Git. You should be able to remove and re-add the platforms at any time.
-The scripts in the /app/hooks directory perform any custom actions required on the platform files.
+The scripts in the /app/hooks directory perform any custom actions required on the platform files. The .gitignore file
+is setup to ignore the files under /platforms/android|ios by default.
 
 **DO NOT** try to build the Android project from the build scripts in the /platform/android/ directory.
-You must use the **cordova** or **ionic** build commands from the project root folder which are covered later.
+You must use the **cordova** or **ionic** build commands from the /app folder which are covered later.
 You should not normally need to open the Android project /platform/android in Eclipse/ADT etc.
 
 ## iOS
 
 iOS builds and app submissions can only be done on a Mac with OSX and XCode.
 
-Ionic does have an iOS build service at http://docs.ionic.io/docs/package-ios but as we use our own Mac's to build we can't comment on using it
+Ionic does have an iOS build service at http://docs.ionic.io/docs/package-ios but as we use our own Mac's to build we can't comment on using it.
 
 * Run ** npm install -g ios-sim** to install the iOS emulator plugin
+
+* In /app run **ionic platform add ios**
 
 Follow the instructions to setup push notifications for iOS. This is complicated and you can delay doing this step until you are ready for a production build.
 https://parse.com/tutorials/ios-push-notifications
@@ -305,6 +314,10 @@ If you enter the ids for a platform then the default code is to display a banner
 
 See https://github.com/floatinghotpot/cordova-admob-pro for more details on configuring ads
 
+For the Android build you will need some extras installed in the Android SDK Manager otherwise you will get build errors.
+
+![alt text](./img/admobpro.png "AdMobPro")
+
 ### Icons
 
 * Read http://ionicframework.com/blog/automating-icons-and-splash-screens/ for creating and setting up your slash screen and icon images
@@ -354,6 +367,12 @@ Its possible to test on a device with the local development server. You will nee
 computer that the phone will be able to find through USB or your local network, then update the dev.parseServerUrl value
 in /server/config.json and restart gulp.  Otherwise deploy the sever app to the cloud and use a qa environment.
 Instructions for Google App Engine, which we recommend, are further below.
+
+
+**NOTE:** We have noticed when adding the android platform not all the plugins are installed/configured,
+(in particular ionic-plugin-keyboard, cordova-plugin-file, cordova-plugin-device and the parse push plugin)
+hence in the initial install script the **ionic state restore --plugins** command is run.
+If you are re-adding a platform you may need to run this manually.
 
 ### Android
 
