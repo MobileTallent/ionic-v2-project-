@@ -124,6 +124,7 @@
 					tx.executeSql('CREATE TABLE profile (id varchar primary key, profile text, user_id varchar)')
 					tx.executeSql('CREATE TABLE match (id varchar primary key, match text, other_user_id varchar, other_profile_id varchar, updated_at integer, last_message varchar, read integer)')
 					tx.executeSql('CREATE TABLE chat_message (id varchar primary key, chat_message text, chat_id varchar, created_at integer)')
+					tx.executeSql('CREATE INDEX chat_message_chat_id ON chat_message (chat_id)')
 				})
 
 				// Execute will do all the migrations required for the particular user (e.g., if they're at v1 take them to v2 and then v3)
