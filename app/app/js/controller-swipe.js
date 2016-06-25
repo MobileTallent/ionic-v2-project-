@@ -89,7 +89,7 @@ angular.module('controllers')
             AppUtil.blockingCall(
                 AppService.enableDiscovery(),
                 () => {
-                    $log.log('discovery enabled. updating matches...')
+                    $log.log('discovery enabled. updating search results...')
                     updateProfileSearchResults()
                 }
             )
@@ -102,19 +102,17 @@ angular.module('controllers')
 
         $scope.accept = () => {
             $log.log('accept button')
-            var matchLength = $scope.profiles.length
-            var topMatch = $scope.profiles[matchLength-1]
-            AppService.processMatch(topMatch, true)
-            topMatch.accepted = true // this triggers the animation out
+            var topProfile = $scope.profiles[$scope.profiles.length-1]
+            AppService.processMatch(topProfile, true)
+            topProfile.accepted = true // this triggers the animation out
             $timeout(() => $scope.profiles.pop(), 340)
         }
 
         $scope.reject = () => {
             $log.log('reject button')
-            var matchLength = $scope.profiles.length
-            var topMatch = $scope.profiles[matchLength-1]
-            AppService.processMatch(topMatch, false)
-            topMatch.rejected = true // this triggers the animation out
+            var topProfile = $scope.profiles[$scope.profiles.length-1]
+            AppService.processMatch(topProfile, false)
+            topProfile.rejected = true // this triggers the animation out
             $timeout(() => $scope.profiles.pop(), 340)
         }
 
@@ -122,14 +120,14 @@ angular.module('controllers')
 
         $scope.cardDestroyed = (index) => $scope.profiles.splice(index, 1)
 
-        $scope.cardTransitionLeft = (match) => {
-            AppService.processMatch(match, false)
+        $scope.cardTransitionLeft = (profile) => {
+            AppService.processMatch(profile, false)
             if($scope.profiles.length == 0) {
                 // TODO auto-load more?
             }
         }
-        $scope.cardTransitionRight = (match) => {
-            AppService.processMatch(match, true)
+        $scope.cardTransitionRight = (profile) => {
+            AppService.processMatch(profile, true)
             if($scope.profiles.length == 0) {
                 // TODO auto-load more?
             }

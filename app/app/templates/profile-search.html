@@ -99,7 +99,7 @@
         <td-cards>
           <!-- ng-if="$index >= profiles.length -2" is to display only the top 2 cards in the DOM for performance -->
           <!-- The profiles array is used like a stack, where the last item shows first -->
-          <td-card ng-if="$index >= profiles.length - 2" ng-show="profiles" ng-repeat="profile in profiles track by $index" on-destroy="cardDestroyed($index)" on-transition-left="cardTransitionLeft(match)" on-transition-right="cardTransitionRight(match)"  class="card-{{$index}}" ng-class="{'accepted-transform': match.accepted, 'rejected-transform': match.rejected}">
+          <td-card ng-if="$index >= profiles.length - 2" ng-show="profiles" ng-repeat="profile in profiles track by $index" on-destroy="cardDestroyed($index)" on-transition-left="cardTransitionLeft(profile)" on-transition-right="cardTransitionRight(profile)"  class="card-{{$index}}" ng-class="{'accepted-transform': profile.accepted, 'rejected-transform': profile.rejected}">
             <div class="image" ng-click="viewDetails(profile)">
               <div class="yes-text" ng-style="leftTextOpacity">{{'LIKE' | translate}}</div>
               <img style="width:100%" ng-src="{{::profile.image}}">
@@ -108,9 +108,9 @@
             <div >
               {{profile.name}}
               <!--
-              <div class="button-bar" style="{{match.hideButtons ? 'display:none' : ''}}">
-                <button class="button button-clear button-positive icon ion-ios7-close-empty" ng-click="reject(match)"></button>
-                <button class="button button-clear button-positive icon ion-ios7-heart-outline" ng-click="accept(match)"></button>
+              <div class="button-bar" style="{{profile.hideButtons ? 'display:none' : ''}}">
+                <button class="button button-clear button-positive icon ion-ios7-close-empty" ng-click="reject(profile)"></button>
+                <button class="button button-clear button-positive icon ion-ios7-heart-outline" ng-click="accept(profile)"></button>
               </div>
               -->
             </div>
@@ -125,7 +125,7 @@
 
         <!-- For list layout examples see http://ionicframework.com/docs/components/#item-thumbnails -->
         <div class="list" ng-if="searchLayout == 'list'">
-            <a class="item item-thumbnail-left" style="text-align: left" ng-repeat="profile in profiles track by $index" ng-click="viewDetails(match)">
+            <a class="item item-thumbnail-left" style="text-align: left" ng-repeat="profile in profiles track by $index" ng-click="viewDetails(profile)">
                 <img ng-src="{{::profile.image}}" img-cache>
                 <h2>{{::profile.name}}, {{::profile.age}}</h2>
                 <p>
@@ -138,7 +138,7 @@
         <!-- 2xN Grid layout There's a few different way to iterate when fixed columns. Using the approach at http://stackoverflow.com/a/30259461/1052084 -->
         <div class="row" ng-repeat="profile in profiles track by $index" ng-if="searchLayout == 'grid' && $index % 2 == 0">
             <div class="col" >
-                <div class="list card" ng-click="viewDetails(match)">
+                <div class="list card" ng-click="viewDetails(profile)">
                     <div class="item item-image"><img ng-src="{{::profile.image}}"></div>
                     <a class="item item-icon-left item-icon-right">{{::profile.name}}</a>
                 </div>
