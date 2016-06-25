@@ -264,7 +264,7 @@ angular.module('controllers')
         $scope.save = () => AppUtil.blockingCall(
             AppService.saveProfile(_.pick($scope.profile, fields)),
             () => {
-                AppService.clearPotentialMatches()
+                AppService.clearProfileSearchResults()
                 $ionicHistory.nextViewOptions({
                     historyRoot: true,
                     disableBack: true

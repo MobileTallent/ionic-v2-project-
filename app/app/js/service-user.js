@@ -78,7 +78,7 @@ function onNotificationOpen(pnObj){
 			userId : '',
 			fbId : '',
 			profile : null,
-			potentialMatches : null,
+			profileSearchResults : null,
 			twilioAccessToken : null,
 			// methods
 			init : init,
@@ -105,10 +105,10 @@ function onNotificationOpen(pnObj){
 			getCurrentPosition : getCurrentPosition,
 			copyFacebookProfile : copyFacebookProfile,
 			setPhoto : setPhoto,
-			getPotentialMatches: getPotentialMatches,
-			updatePotentialMatches: updatePotentialMatches,
+			getProfileSearchResults: getProfileSearchResults,
+			updateProfileSearchResults: updateProfileSearchResults,
 			getProfilesWhoLikeMe: getProfilesWhoLikeMe,
-			clearPotentialMatches: clearPotentialMatches,
+			clearProfileSearchResults: clearProfileSearchResults,
 			removeMatchNotification : removeMatchNotification,
             deleteUnmatched : deleteUnmatched,
 			processMatch : processMatch,
@@ -784,16 +784,16 @@ function onNotificationOpen(pnObj){
 		}
 
 
-		function getPotentialMatches() {
-			return service.potentialMatches
+		function getProfileSearchResults() {
+			return service.profileSearchResults
 		}
 
-		function updatePotentialMatches() {
+		function updateProfileSearchResults() {
 			$analytics.eventTrack('searchProfiles')
 			return server.searchProfiles(service.profile).then(function(profiles) {
-				service.potentialMatches = profiles
-				$rootScope.$broadcast('newPotentialMatches')
-				return service.potentialMatches
+				service.profileSearchResults = profiles
+				$rootScope.$broadcast('newProfileSearchResults')
+				return service.profileSearchResults
 			})
 		}
 
@@ -808,8 +808,8 @@ function onNotificationOpen(pnObj){
 		/**
 		 * Clear the existing search results, e.g. when changing the search settings
 		 */
-		function clearPotentialMatches() {
-			service.potentialMatches = null
+		function clearProfileSearchResults() {
+			service.profileSearchResults = null
 		}
 
 

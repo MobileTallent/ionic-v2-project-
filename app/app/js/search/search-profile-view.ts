@@ -23,13 +23,13 @@ module app {
 		}
 
 		like() {
-			let match = this.AppService.getPotentialMatches().pop()
+			let match = this.AppService.getProfileSearchResults().pop()
 			this.AppService.processMatch(match, true)
 			this.$ionicHistory.goBack()
 		}
 
 		reject() {
-			let match = this.AppService.getPotentialMatches().pop()
+			let match = this.AppService.getProfileSearchResults().pop()
 			this.AppService.processMatch(match, false)
 			this.$ionicHistory.goBack()
 		}
@@ -48,7 +48,7 @@ module app {
 		}
 
 		report() {
-			let profile = this.AppService.getPotentialMatches().pop()
+			let profile = this.AppService.getProfileSearchResults().pop()
 
 			this.AppUtil.blockingCall(
 				this.AppService.reportProfile('profile', profile),

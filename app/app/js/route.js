@@ -38,8 +38,8 @@ angular.module('ionicApp').config(function ($stateProvider, $urlRouterProvider) 
             url: "/home",
             views: {
                 'menuContent': {
-                    templateUrl: "swipe.html",
-                    controller: "CardsCtrl"
+                    templateUrl: "profile-search.html",
+                    controller: "ProfileSearch"
                 }
             }
         })

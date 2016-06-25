@@ -1,6 +1,6 @@
 angular.module('controllers')
 
-    .controller('CardsCtrl', function($log, $scope, $state, $timeout, $translate, $ionicSideMenuDelegate,
+    .controller('ProfileSearch', function($log, $scope, $state, $timeout, $translate, $ionicSideMenuDelegate,
                                       TDCardDelegate, AppService, AppUtil, $ionicModal) {
 
         var translations
@@ -8,10 +8,9 @@ angular.module('controllers')
             translations = translationsResult
         })
 
-        // when $scope.matches is null then we haven't done a search
-        // when $scope.matches is an empty array then there are no new matches
-        // TODO rename this to profiles as its IProfile and not IMatch objects
-        $scope.matches = null
+        // when $scope.profiles is null then we haven't done a search
+        // when $scope.profiles is an empty array then there are no new matches
+        $scope.profiles = null
 
         var profile = $scope.profile = AppService.getProfile()
         $scope.profilePhoto = profile.photoUrl
@@ -22,39 +21,39 @@ angular.module('controllers')
 
         $scope.$on('$ionicView.enter', () => {
             if(profile.enabled) {
-                // Check for any previously loaded matches
-                $scope.matches = AppService.getPotentialMatches()
+                // Check for any previously search results
+                $scope.profiles = AppService.getProfileSearchResults()
                 // If we haven't searched yet or we are coming back to the screen and there isn't any results then search for more
-                if(!$scope.matches || $scope.matches.length === 0)
+                if(!$scope.profiles || $scope.profiles.length === 0)
                     $scope.searchAgain()
             }
         })
 
-        $scope.$on('newPotentialMatches', () => $scope.matches = AppService.getPotentialMatches())
+        $scope.$on('newProfileSearchResults', () => $scope.profiles = AppService.getProfileSearchResults())
 
         $scope.searchAgain = () => {
-            $scope.matches = null
-            updatePotentialMatches()
+            $scope.profiles = null
+            updateProfileSearchResults()
         }
 
 
         var MIN_SEARCH_TIME = 2000
-        function updatePotentialMatches() {
+        function updateProfileSearchResults() {
 
             var startTime = Date.now()
-            AppService.updatePotentialMatches()
+            AppService.updateProfileSearchResults()
                 .then(result => {
-                    $log.log('CardsCtrl: found ' + result.length + ' potential matches')
+                    $log.log('CardsCtrl: found ' + result.length + ' profiles')
                     result.map(profile => profile.image = profile.photoUrl)
                     // Make the search screen show for at least a certain time so it doesn't flash quickly
                     var elapsed = Date.now() - startTime
                     if(elapsed < MIN_SEARCH_TIME)
-                        $timeout(() => $scope.matches = result, MIN_SEARCH_TIME - elapsed)
+                        $timeout(() => $scope.profiles = result, MIN_SEARCH_TIME - elapsed)
                     else
-                        $scope.matches = result
+                        $scope.profiles = result
                 }, error => {
-                    $log.log('updatePotentialMatches error ' + JSON.stringify(error))
-                    $scope.matches = []
+                    $log.log('updateProfileSearchResults error ' + JSON.stringify(error))
+                    $scope.profiles = []
                     AppUtil.toastSimple(translations.MATCHES_LOAD_ERROR)
                 }
             )
@@ -91,7 +90,7 @@ angular.module('controllers')
                 AppService.enableDiscovery(),
                 () => {
                     $log.log('discovery enabled. updating matches...')
-                    updatePotentialMatches()
+                    updateProfileSearchResults()
                 }
             )
         }
@@ -103,35 +102,35 @@ angular.module('controllers')
 
         $scope.accept = () => {
             $log.log('accept button')
-            var matchLength = $scope.matches.length
-            var topMatch = $scope.matches[matchLength-1]
+            var matchLength = $scope.profiles.length
+            var topMatch = $scope.profiles[matchLength-1]
             AppService.processMatch(topMatch, true)
             topMatch.accepted = true // this triggers the animation out
-            $timeout(() => $scope.matches.pop(), 340)
+            $timeout(() => $scope.profiles.pop(), 340)
         }
 
         $scope.reject = () => {
             $log.log('reject button')
-            var matchLength = $scope.matches.length
-            var topMatch = $scope.matches[matchLength-1]
+            var matchLength = $scope.profiles.length
+            var topMatch = $scope.profiles[matchLength-1]
             AppService.processMatch(topMatch, false)
             topMatch.rejected = true // this triggers the animation out
-            $timeout(() => $scope.matches.pop(), 340)
+            $timeout(() => $scope.profiles.pop(), 340)
         }
 
-        // matches are swiped off from the end of the $scope.matches array (i.e. popped)
+        // matches are swiped off from the end of the $scope.profiles array (i.e. popped)
 
-        $scope.cardDestroyed = (index) => $scope.matches.splice(index, 1)
+        $scope.cardDestroyed = (index) => $scope.profiles.splice(index, 1)
 
         $scope.cardTransitionLeft = (match) => {
             AppService.processMatch(match, false)
-            if($scope.matches.length == 0) {
+            if($scope.profiles.length == 0) {
                 // TODO auto-load more?
             }
         }
         $scope.cardTransitionRight = (match) => {
             AppService.processMatch(match, true)
-            if($scope.matches.length == 0) {
+            if($scope.profiles.length == 0) {
                 // TODO auto-load more?
             }
         }
