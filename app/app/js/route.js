@@ -109,7 +109,7 @@ angular.module('ionicApp').config(function ($stateProvider, $urlRouterProvider) 
             url: "/profile-edit",
             views: {
                 'menuContent': {
-                    templateUrl: "profileEdit.html"
+                    templateUrl: "profile/profile-edit.html"
                 }
             }
         })
