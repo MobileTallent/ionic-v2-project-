@@ -1,7 +1,7 @@
 <ion-view view-title="{{::appName}}">
   <ion-nav-buttons side="right">
     <i class="button button-icon icon ion-ios-chatbubble-outline" ui-sref="menu.chats">
-        <span ng-show="unreadChats > 0" class="badge badge-assertive nav-icon-badge">{{unreadChats}}</span>
+        <unread-chats-badge/>
     </i>
   </ion-nav-buttons>
   <ion-content class="padding" style="padding-top:100px;padding-top:5vw;text-align:center" no-scroll>

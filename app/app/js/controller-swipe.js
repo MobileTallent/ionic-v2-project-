@@ -16,9 +16,6 @@ angular.module('controllers')
         $scope.profilePhoto = profile.photoUrl
 
 
-        $scope.$on('$ionicView.beforeEnter', () => $scope.unreadChats = AppService.getUnreadChatsCount())
-        $scope.$on('unreadChatsCountUpdated', () => $scope.unreadChats = AppService.getUnreadChatsCount())
-
         $scope.$on('$ionicView.enter', () => {
             if(profile.enabled) {
                 // Check for any previously search results

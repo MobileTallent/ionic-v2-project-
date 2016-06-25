@@ -239,11 +239,10 @@ function onNotificationOpen(pnObj){
 
 		function refreshUnreadCount() {
 			LocalDB.getUnreadChats().then(function(result) {
-				console.log('LocalDB.getUnreadChats() ' + JSON.stringify(result) + '   ==========')
+				console.log('LocalDB.getUnreadChats() ' + JSON.stringify(result))
 				unreadChats = result
 				unreadChatsCount = _.keys(unreadChats).length
 				$log.log('unread count ' + unreadChatsCount)
-				$rootScope.unreadChats = unreadChatsCount
 				$rootScope.$broadcast('unreadChatsCountUpdated')
 				if(typeof cordova !== 'undefined')
 					$cordovaBadge.set(unreadChatsCount).then(null, error => $log.info(error))

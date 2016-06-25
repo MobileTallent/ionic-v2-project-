@@ -16,6 +16,8 @@ module app {
 
 		reportProfile(reason:string, profile:IProfile, match:IMatch=null): ng.IPromise<void>
 
+		getUnreadChatsCount():number
+
 		// Admin functions
 		getReportedUsers(): ng.IPromise<IReport[]>
 		getReportedUserDetails(report): ng.IPromise<IReportDetails>
