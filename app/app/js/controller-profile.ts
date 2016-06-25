@@ -160,7 +160,7 @@ module app {
 							this.$rootScope.cropPhoto = dataUrl
 							this.$state.go('^.crop') // , {imageData: 'data:image/jpeg;base64,' + imageData}
 						}, error => {
-							if(error === 'has no access to assets') {
+							if (error === 'has no access to assets') {
 								this.AppUtil.toastSimple('Access to photo gallery denied')
 								this.$log.error('$cordovaCamera.getPicture error ' + JSON.stringify(error))
 							} else {

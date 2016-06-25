@@ -9,7 +9,7 @@
 
 <div style="padding: 10px;">
     <b>{{profile.name}}</b>, {{profile.age}}<br/>
-    <span ng-if="distance" style="color:gray">{{distance}} {{'AWAY' | translate}}</span><br/>
+    <span ng-if="distance && !isCurrentUser" style="color:gray">{{distance}} {{'AWAY' | translate}}</span><br/>
     <!-- TODO Active x hours ago -->
     <div ng-show="profile.about">
         {{profile.about}}

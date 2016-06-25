@@ -394,6 +394,7 @@ function onNotificationOpen(pnObj){
 			if (service.profile) {
 				$log.log('reloading profile')
 				return server.reloadProfile(service.profile).then(function(profile) {
+					initCurrentUserProfile(profile)
 					$log.log('reloaded profile to ' + JSON.stringify(profile))
 					server.profile = profile
 					return server.profile
@@ -401,6 +402,12 @@ function onNotificationOpen(pnObj){
 			}
 		}
 
+		function initCurrentUserProfile(profile) {
+			// When returning search/match profiles the age is calculated server side and returned
+			// For the current user profile we need to calculate the age
+			if(profile.birthdate && !profile.age)
+				profile.age = new Date(new Date - new Date(profile.birthdate)).getFullYear()-1970
+		}
 
         function isEmailVerified() {
             return server.reloadUser().then(function(user) {
@@ -436,7 +443,8 @@ function onNotificationOpen(pnObj){
 					if(!result)
 						return null
 
-					if(_.isUndefined(result.gps)) result.gps = true // migration for the new field. Can be deleted sometime
+					initCurrentUserProfile(result)
+
 					$log.log('AppService server.getProfile returned ' + JSON.stringify(result))
 					service.profile = result
 					return service.profile
