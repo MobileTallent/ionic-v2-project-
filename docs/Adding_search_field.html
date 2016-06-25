@@ -41,9 +41,15 @@ Add something similar to suit your search criteria
 ### Editing the value
 
 To allow the user to edit their value you will need to add the field to */app/templates/profileEdit.html*
-and add code to the angular controller '*ProfileEdit*' in */app/js/controller-profile.ts*
+and add code to the angular controller '*ProfileEdit*' in */app/js/profile/profile-edit.ts*
 
 In ProfileEdit.saveProfile() you will need to add the new attribute to the *profileUpdate* object.
+
+### Profile view
+
+Update /app/app/js/profile/profile-details.html
+
+This fragement is displayed in all the screen where a profile is viewed
 
 ### Updating the search preference
 
@@ -58,25 +64,7 @@ When a user first registers there is a function called *proceed()* in *controlle
 properties are set on the user. If not then the user is send to the *profileSetup.html* view. You may want to also add a check for your
 new user property here if there is not a suitable default value to set.
 
-## Local SQL storage
 
-If you want the user to be able to view the new properties of their matches you will also need to store the value in the local database, which is done in */app/js/service-localdb.js*
-
-This is required because the mutual matches, and the associated profile are saved in the local SQL database and loaded when app is restarted
-
-You will need to make changes to three functions:
-
-Update *function mapMatchResultSet(sqlResultSet)* to map the result set from the database row to the profile object
-
-Update *function init()* to add the new column in the SQL statement which creates the match table. If you have already
-publicly released a version of your app then you will have to add the column as a new migration, so existing users can
-update their local database to have the new field.
-
-Update *function saveMatch(match, profile)* by 1) adding the column name in the columns list, 2) add a *?* to the parameter list, 3) add the property value to the args array
-
-Next you will also want to update the unit tests in */app/js/service-localdb_test.js* to write and read your new property
-
-And that is basically it!
 
 
 </xmp>

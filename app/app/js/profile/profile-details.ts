@@ -4,13 +4,13 @@ import IAppService = app.IAppService
 /**
  * A directive to display the main details of a profile
  */
-angular.module('ionicApp').directive('profileView', function(AppService:IAppService) {
+angular.module('ionicApp').directive('profileDetails', function(AppService:IAppService) {
 	return {
 		restrict: 'E',
 		scope: {
 			profile: '='
 		},
-		templateUrl: 'profile/profile-view.html',
+		templateUrl: 'profile/profile-details.html',
 
 		controller: function($scope) {
 			let currentUserProfile = AppService.getProfile()

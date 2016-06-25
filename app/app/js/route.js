@@ -100,8 +100,8 @@ angular.module('ionicApp').config(function ($stateProvider, $urlRouterProvider) 
             url: "/profile",
             views: {
                 'menuContent': {
-                    templateUrl: "profile.html",
-                    controller: "ProfileCtrl"
+                    templateUrl: "profile/profile-view-current-user.html",
+                    controller: "ProfileViewCurrentUser"
                 }
             }
         })

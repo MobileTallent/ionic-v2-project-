@@ -51,7 +51,7 @@ var paths = {
     initTemplates: ['./*.template', './app/config/*.template', './CloudCode/**/*.template', './e2e/*.template', './tools/**/*.template'],
     config: ['./app/config/*.json'],
     sass: ['./app/scss/**/*.scss'],
-    css: ['./app/css/**/*.css'],
+    css: ['./app/css/**/*.css', './app/js/**/*.css'],
     js: ['./app/js/**/*.js', '!**/*_test.js'], // test scripts are excluded
     ts: './app/js/**/*.ts',
     tsTypings: './tools/typings/',
