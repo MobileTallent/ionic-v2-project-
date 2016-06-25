@@ -321,6 +321,7 @@ gulp.task('compile-ts', function () {
     tsResult.dts.pipe(gulp.dest(paths.tsOutput));
     return tsResult.js
         .pipe(babel({}))
+        .pipe(ngAnnotate())
         .pipe(concat('app.ts.js'))
         .pipe(uglify())
         .pipe(sourcemaps.write('/maps'))
