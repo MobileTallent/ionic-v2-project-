@@ -43,13 +43,16 @@ angular.module('ionicApp').config(function ($stateProvider, $urlRouterProvider) 
                 }
             }
         })
-        .state('menu.card-info', {
-            url: "/card-info",
+        .state('menu.search-profile-view', {
+            url: "/search-profile-view",
             views: {
                 'menuContent': {
-                    templateUrl: "profileView.html",
-                    controller: "CardInfoCtrl"
+                    templateUrl: "search/search-profile-view.html",
+                    controller: "SearchProfileView"
                 }
+            },
+            params: {
+                profile: null
             }
         })
         .state('menu.match-profile', {

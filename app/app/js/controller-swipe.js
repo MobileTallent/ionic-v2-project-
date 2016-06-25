@@ -96,10 +96,9 @@ angular.module('controllers')
             )
         }
 
-        $scope.viewDetails = (card) => {
-            $log.log('view details ' + JSON.stringify(card))
-            $scope.$parent.selectedCard = card
-            $state.go('^.card-info')
+        $scope.viewDetails = (profile) => {
+            $log.log('view details ' + JSON.stringify(profile))
+            $state.go('^.search-profile-view', { profile: profile })
         }
 
         $scope.accept = () => {
@@ -139,69 +138,6 @@ angular.module('controllers')
     })
 
 
-    .controller('CardInfoCtrl', function($log, $scope, $cordovaFacebook, $ionicHistory, $ionicActionSheet, AppUtil, $translate, AppService) {
-
-        //$cordovaFacebook.api()
-        //{user-id}?fields=context.fields%28mutual_friends%29
-        var translations
-        $translate(['REQUEST_FAILED', 'REPORT', 'MATCH_OPTIONS', 'CANCEL']).then(function (translationsResult) {
-            translations = translationsResult
-        })
-
-        $scope.profile = AppService.getProfile()
-        var from = $scope.profile.location
-        var to = $scope.selectedCard.location
-
-        var distance = getDistanceFromLatLonInKm(from.latitude,from.longitude, to.latitude, to.longitude)
-
-        if($scope.profile.distanceType == 'mi')
-            distance *= 1.609344
-
-        distance = distance.toFixed(0)
-
-        $scope.distance = distance == 0 ? 1 : distance
-
-        $scope.like = () => {
-            var match = AppService.getPotentialMatches().pop()
-             AppService.processMatch(match, true)
-             $ionicHistory.goBack()
-        }
-
-        $scope.reject = () => {
-            var match = AppService.getPotentialMatches().pop()
-            AppService.processMatch(match, false)
-            $ionicHistory.goBack()
-        }
-
-
-        $scope.profileOptions = () => {
-            $ionicActionSheet.show({
-                destructiveText: translations.REPORT,
-                titleText: translations.MATCH_OPTIONS,
-                cancelText: translations.CANCEL,
-                cancel: function() {},
-                destructiveButtonClicked: function(index) {
-                    report()
-                    return true
-                }
-            })
-        }
-
-        function report() {
-            var profile = AppService.getPotentialMatches().pop()
-
-            AppUtil.blockingCall(
-                AppService.reportProfile('profile', profile),
-                () => {
-                    AppService.processMatch(profile, false)
-                    $ionicHistory.goBack()
-                }
-            )
-        }
-
-    })
-
-
     .controller('MatchProfileCtrl', function($scope, $translate, AppService, AppUtil,
                                              $state, $stateParams, $ionicHistory, $ionicActionSheet, $ionicPopup,
                                              matchProfile) {
@@ -213,20 +149,7 @@ angular.module('controllers')
             translations = translationsResult
         })
 
-        $scope.profile = AppService.getProfile()
         $scope.matchProfile = matchProfile
-
-        var from = $scope.profile.location
-        var to = matchProfile.location
-
-        var distance = getDistanceFromLatLonInKm(from.latitude,from.longitude, to.latitude, to.longitude)
-
-        if($scope.profile.distanceType == 'mi')
-            distance *= 1.609344
-
-        distance = distance.toFixed(0)
-        $scope.distance = distance == 0 ? 1 : distance
-
 
         $scope.profileOptions = () => {
             $ionicActionSheet.show({
@@ -243,7 +166,7 @@ angular.module('controllers')
 
         function report() {
             AppUtil.blockingCall(
-                AppService.reportProfile('profile', $scope.profile), // should pass in the match too
+                AppService.reportProfile('profile', $scope.matchProfile), // should pass in the match too
                 () => {
                     $ionicPopup.confirm({
                         title: translations.MATCH_REPORTED,
@@ -273,21 +196,3 @@ angular.module('controllers')
 
     })
 ;
-
-// from http://stackoverflow.com/questions/27928/how-do-i-calculate-distance-between-two-latitude-longitude-points
-function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
-    var R = 6371 // Radius of the earth in km
-    var dLat = deg2rad(lat2-lat1)
-    var dLon = deg2rad(lon2-lon1)
-    var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-        Math.sin(dLon/2) * Math.sin(dLon/2);
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
-    var d = R * c // Distance in km
-    return d
-}
-
-function deg2rad(deg) {
-    return deg * (Math.PI/180)
-}
-

@@ -12,6 +12,9 @@ module app {
 		getProfileByUserId(id:string): IProfile
 		getProfilesWhoLikeMe(): ng.IPromise<IProfile[]>
 		processMatch(profile:IProfile, liked:boolean): ng.IPromise<IMatch>
+		getPotentialMatches():IProfile[]
+
+		reportProfile(reason:string, profile:IProfile, match:IMatch=null): ng.IPromise<void>
 
 		// Admin functions
 		getReportedUsers(): ng.IPromise<IReport[]>
