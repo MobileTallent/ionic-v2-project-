@@ -38,18 +38,21 @@ angular.module('ionicApp').config(function ($stateProvider, $urlRouterProvider) 
             url: "/home",
             views: {
                 'menuContent': {
-                    templateUrl: "swipe.html",
-                    controller: "CardsCtrl"
+                    templateUrl: "profile-search.html",
+                    controller: "ProfileSearch"
                 }
             }
         })
-        .state('menu.card-info', {
-            url: "/card-info",
+        .state('menu.search-profile-view', {
+            url: "/search-profile-view",
             views: {
                 'menuContent': {
-                    templateUrl: "profileView.html",
-                    controller: "CardInfoCtrl"
+                    templateUrl: "search/search-profile-view.html",
+                    controller: "SearchProfileView"
                 }
+            },
+            params: {
+                profile: null
             }
         })
         .state('menu.match-profile', {
@@ -100,8 +103,8 @@ angular.module('ionicApp').config(function ($stateProvider, $urlRouterProvider) 
             url: "/profile",
             views: {
                 'menuContent': {
-                    templateUrl: "profile.html",
-                    controller: "ProfileCtrl"
+                    templateUrl: "profile/profile-view-current-user.html",
+                    controller: "ProfileViewCurrentUser"
                 }
             }
         })
@@ -109,7 +112,7 @@ angular.module('ionicApp').config(function ($stateProvider, $urlRouterProvider) 
             url: "/profile-edit",
             views: {
                 'menuContent': {
-                    templateUrl: "profileEdit.html"
+                    templateUrl: "profile/profile-edit.html"
                 }
             }
         })

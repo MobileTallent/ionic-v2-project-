@@ -150,46 +150,6 @@ angular.module('controllers')
         $scope.logout = () => AppService.logout()
     })
 
-
-    .controller('ProfileCtrl', function($scope, $log, $rootScope, $state, $cordovaFacebook, AppService) {
-
-        $scope.$on('$ionicView.beforeEnter', function(event) {
-
-            $scope.profile = AppService.getProfile()
-            $scope.photos = $scope.profile.photos
-            $scope.age = new Date(new Date - new Date($scope.profile.birthdate)).getFullYear()-1970
-
-            if($rootScope.facebookConnected) {
-                // load the cached values first for quick update on the UI
-                var likes = localStorage.getItem('facebookLikes')
-                if(likes) {
-                    $scope.likes = JSON.parse(likes)
-                }
-                var friends = localStorage.getItem('facebookFriends')
-                if(friends) {
-                    $scope.friends = JSON.parse(friends)
-                }
-
-                // update asynchronously
-                // Only friends registered with your app will be returned
-                // See http://stackoverflow.com/questions/23417356/facebook-graph-api-v2-0-me-friends-returns-empty-or-only-friends-who-also-u
-                $cordovaFacebook.api('/me/friends').then(function(result){
-                    $scope.friends = result.data
-                    localStorage.setItem('facebookFriends', JSON.stringify(result.data))
-
-                    $cordovaFacebook.api('/me/likes').then(function(result){
-                        $scope.likes = result.data
-                        localStorage.setItem('facebookLikes', JSON.stringify(result.data))
-                    })
-                })
-            }
-        })
-
-        $scope.edit = function() {
-            $state.go('menu.profile-edit')
-        }
-    })
-
     .controller('FbAlbumsCtrl', function($scope, $log, $cordovaFacebook) {
         $scope.albums = null
 
@@ -304,7 +264,7 @@ angular.module('controllers')
         $scope.save = () => AppUtil.blockingCall(
             AppService.saveProfile(_.pick($scope.profile, fields)),
             () => {
-                AppService.clearPotentialMatches()
+                AppService.clearProfileSearchResults()
                 $ionicHistory.nextViewOptions({
                     historyRoot: true,
                     disableBack: true

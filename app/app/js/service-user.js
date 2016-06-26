@@ -78,7 +78,7 @@ function onNotificationOpen(pnObj){
 			userId : '',
 			fbId : '',
 			profile : null,
-			potentialMatches : null,
+			profileSearchResults : null,
 			twilioAccessToken : null,
 			// methods
 			init : init,
@@ -105,10 +105,10 @@ function onNotificationOpen(pnObj){
 			getCurrentPosition : getCurrentPosition,
 			copyFacebookProfile : copyFacebookProfile,
 			setPhoto : setPhoto,
-			getPotentialMatches: getPotentialMatches,
-			updatePotentialMatches: updatePotentialMatches,
+			getProfileSearchResults: getProfileSearchResults,
+			updateProfileSearchResults: updateProfileSearchResults,
 			getProfilesWhoLikeMe: getProfilesWhoLikeMe,
-			clearPotentialMatches: clearPotentialMatches,
+			clearProfileSearchResults: clearProfileSearchResults,
 			removeMatchNotification : removeMatchNotification,
             deleteUnmatched : deleteUnmatched,
 			processMatch : processMatch,
@@ -239,11 +239,10 @@ function onNotificationOpen(pnObj){
 
 		function refreshUnreadCount() {
 			LocalDB.getUnreadChats().then(function(result) {
-				console.log('LocalDB.getUnreadChats() ' + JSON.stringify(result) + '   ==========')
+				console.log('LocalDB.getUnreadChats() ' + JSON.stringify(result))
 				unreadChats = result
 				unreadChatsCount = _.keys(unreadChats).length
 				$log.log('unread count ' + unreadChatsCount)
-				$rootScope.unreadChats = unreadChatsCount
 				$rootScope.$broadcast('unreadChatsCountUpdated')
 				if(typeof cordova !== 'undefined')
 					$cordovaBadge.set(unreadChatsCount).then(null, error => $log.info(error))
@@ -394,6 +393,7 @@ function onNotificationOpen(pnObj){
 			if (service.profile) {
 				$log.log('reloading profile')
 				return server.reloadProfile(service.profile).then(function(profile) {
+					initCurrentUserProfile(profile)
 					$log.log('reloaded profile to ' + JSON.stringify(profile))
 					server.profile = profile
 					return server.profile
@@ -401,6 +401,12 @@ function onNotificationOpen(pnObj){
 			}
 		}
 
+		function initCurrentUserProfile(profile) {
+			// When returning search/match profiles the age is calculated server side and returned
+			// For the current user profile we need to calculate the age
+			if(profile.birthdate && !profile.age)
+				profile.age = new Date(new Date - new Date(profile.birthdate)).getFullYear()-1970
+		}
 
         function isEmailVerified() {
             return server.reloadUser().then(function(user) {
@@ -436,7 +442,8 @@ function onNotificationOpen(pnObj){
 					if(!result)
 						return null
 
-					if(_.isUndefined(result.gps)) result.gps = true // migration for the new field. Can be deleted sometime
+					initCurrentUserProfile(result)
+
 					$log.log('AppService server.getProfile returned ' + JSON.stringify(result))
 					service.profile = result
 					return service.profile
@@ -776,16 +783,16 @@ function onNotificationOpen(pnObj){
 		}
 
 
-		function getPotentialMatches() {
-			return service.potentialMatches
+		function getProfileSearchResults() {
+			return service.profileSearchResults
 		}
 
-		function updatePotentialMatches() {
+		function updateProfileSearchResults() {
 			$analytics.eventTrack('searchProfiles')
 			return server.searchProfiles(service.profile).then(function(profiles) {
-				service.potentialMatches = profiles
-				$rootScope.$broadcast('newPotentialMatches')
-				return service.potentialMatches
+				service.profileSearchResults = profiles
+				$rootScope.$broadcast('newProfileSearchResults')
+				return service.profileSearchResults
 			})
 		}
 
@@ -800,8 +807,8 @@ function onNotificationOpen(pnObj){
 		/**
 		 * Clear the existing search results, e.g. when changing the search settings
 		 */
-		function clearPotentialMatches() {
-			service.potentialMatches = null
+		function clearProfileSearchResults() {
+			service.profileSearchResults = null
 		}
 
 

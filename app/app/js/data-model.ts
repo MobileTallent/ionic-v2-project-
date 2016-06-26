@@ -90,6 +90,9 @@ module app {
 		/** The birthdate of the user */
 		birthdate: Date
 
+		/** The age of the user in years */
+		age: number
+
 		/** The gender of the user. 'M' or 'F' is supported */
 		gender: string
 
