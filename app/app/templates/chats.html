@@ -1,8 +1,3 @@
-<style>
-    .unread {
-        font-weight: bold;
-    }
-</style>
 <ion-view view-title="Chat">
 
   <ion-nav-buttons side="right">
@@ -27,7 +22,7 @@
       <a class="item item-avatar" ng-repeat="match in matches track by match.id" ui-sref="^.chat({matchId : match.id})">
         <img ng-src="{{::match.profile.photoUrl}}" img-cache>
         <h2>{{::match.profile.name}}</h2>
-        <p ng-class="match.read ? '' : 'unread'" ng-bind-html="match.lastMessage | escapeHTML | emoji" />
+        <p ng-class="match.read ? '' : 'chat-unread'" ng-bind-html="match.lastMessage | escapeHTML | emoji" />
       </a>
     </div>
 
