@@ -861,15 +861,15 @@ function onNotificationOpen(pnObj){
 
 				for(let match of newMatches) {
 					if(!getMatch(match.id)) {
-						console.log('syncing new match ' + match.id)
-						let profile = match.otherProfile
+						console.log('storing new match ' + match.id)
+						let profile = match.profile
 						match.lastMessage = 'Matched on ' + dateFormat(match.createdAt, 'd mmm')
 						match.read = false
 						matches.unshift(match)
 						LocalDB.saveMatch(match, profile)
 						profileCache[profile.id] = profile
 					} else {
-						$log.info('Match ' + match.id + ' already synced')
+						$log.info('Match ' + match.id + ' already stored')
 					}
 				}
 

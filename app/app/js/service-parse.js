@@ -562,7 +562,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
                 // Convert the JSON objects into the proper Parse objects
                 .then(matches => _.map(matches, match => {
                     match = fromJSON(match, 'Match')
-                    match.otherProfile = fromJSON(match.otherProfile, 'Profile')
+                    match.otherProfile = fromJSON(match.profile, 'Profile')
                     return match
                 }))
                 .catch(_unwrapError)
