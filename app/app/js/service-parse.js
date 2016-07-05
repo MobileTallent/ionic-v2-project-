@@ -778,7 +778,10 @@ angular.module('service.parse', ['constants', 'parse-angular'])
          * full Parse object
          */
         function fromJSON(object, className) {
-            if(!object) return null
+            if(!object) {
+                $log.debug('fromJSON object is null for ' + className)
+                return null
+            }
             object.className = className
             return Parse.Object.fromJSON(object)
         }

@@ -881,12 +881,14 @@ function onNotificationOpen(pnObj){
 						playSound('audio/match-notification.mp3')
 				}
 
-				if(matchesChanged)
+				if(matchesChanged) {
+					$rootScope.$broadcast('chatsUpdated')
 					refreshUnreadCount()
+				}
 
 				return newMatches
 
-			}, error => {
+			}).then(newMatches => newMatches, error => {
 				$log.error('Error synching matches ' + JSON.stringify(error))
 				return $q.reject(error)
 			}).finally(() => {
@@ -961,8 +963,11 @@ function onNotificationOpen(pnObj){
 						}
 					}
 					// Notify the chat controller to scroll down
-					if(newActiveMessage)
+					if(newActiveMessage) {
+						$log.debug('broadcasting newMessage')
 						$rootScope.$broadcast('newMessage', newActiveMessage)
+					}
+
 				}
 			).finally(() => {
 				$log.log('Chat sync complete')
