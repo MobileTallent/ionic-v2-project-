@@ -203,7 +203,7 @@ function onNotificationOpen(pnObj){
 			}).then(dbMatches => {
 				for(let match of dbMatches) {
 					// TODO GROUP_CHAT for group chat get the profile of the latest sender
-					match.otherProfile = profileCache[match.profile.id]
+					match.otherProfile = profileCache[match.otherProfileId]
 					if(!getMatch(match.id))
 						matches.push(match)
 					else

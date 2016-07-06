@@ -25,7 +25,7 @@ angular.module('ionicApp').directive('profileDetails', function(AppService:IAppS
 					distance *= 1.609344
 				let distanceString = distance.toFixed(0)
 				// Show 1km/1m as a minimum‰
-				$scope.distance = (distanceString === '0' ? 1 : distance) + currentUserProfile.distanceType
+				$scope.distance = (distanceString === '0' ? 1 : distanceString) + currentUserProfile.distanceType
 			}
 
 			$scope.isCurrentUser = profile.id === currentUserProfile.id

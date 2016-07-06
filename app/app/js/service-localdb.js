@@ -204,7 +204,7 @@
 				// Make a copy so we can remove the profile data which is saved in a different table
 				match.profile = profile
 				var matchJson = match.toJSON()
-				matchJson.otherProfileId = {id:profile.id}
+				matchJson.otherProfileId = profile.id
 				delete matchJson.otherProfile // no need to waste space storing this here as we save it in the profile table. this does break the method Match.profile (cant get id of undefined if you try and call it)
 
 				db.transaction(function(tx) {

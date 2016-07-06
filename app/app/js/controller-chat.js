@@ -8,11 +8,11 @@ angular.module('controllers')
 		})
 
 		$scope.$on('chatsUpdated', () => {
-			$log.debug('ChatsCtrl.on(chatsUpdated)')
 			update()
 		})
 
 		function update() {
+			$log.debug('ChatsCtrl update()')
 			var matches = sort(AppService.getMutualMatches())
 			var length = matches.length
 			// Have noticed some duplicate errors in the matches ng-repeat somehow
@@ -102,8 +102,10 @@ angular.module('controllers')
 
 		$scope.$on('$ionicView.beforeEnter', function () {
 			// TODO if we've come by $stateParams.profileId then $stateParams.matchId will be null
+			$log.log('$stateParams.matchId ' + $stateParams.matchId)
 			$scope.match = AppService.getMatch($stateParams.matchId)
 			AppService.getProfileByMatchId($stateParams.matchId).then((result) => {
+				$log.log('match profile ' + JSON.stringify(result))
 				$scope.matchProfile = result
 			})
 			loadChatDataPromise = AppService.getActiveChat($stateParams.matchId)

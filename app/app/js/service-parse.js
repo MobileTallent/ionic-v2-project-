@@ -158,6 +158,8 @@ Object.defineProperty(Match.prototype, 'profileId', {
     get : function() {
         if(this.otherProfileId != null)
             return this.otherProfileId
+        if(this.otherProfile)
+            return this.otherProfile.id
         if(this.uid1 == Parse.User.current().id)
             return this.profile2.id
         if(this.uid2 == Parse.User.current().id)
@@ -561,8 +563,9 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             return Parse.Cloud.run('GetMutualMatches', {matchIds: matchIds})
                 // Convert the JSON objects into the proper Parse objects
                 .then(matches => _.map(matches, match => {
+                    let profile = fromJSON(match.otherProfile, 'Profile')
                     match = fromJSON(match, 'Match')
-                    match.otherProfile = fromJSON(match.profile, 'Profile')
+                    match.otherProfile = profile
                     return match
                 }))
                 .catch(_unwrapError)
