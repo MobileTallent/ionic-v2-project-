@@ -203,7 +203,7 @@ function onNotificationOpen(pnObj){
 			}).then(dbMatches => {
 				for(let match of dbMatches) {
 					// TODO GROUP_CHAT for group chat get the profile of the latest sender
-					match.otherProfile = profileCache[match.otherProfileId]
+					match.otherProfile = profileCache[match.get('otherProfileId')]
 					if(!getMatch(match.id))
 						matches.push(match)
 					else
@@ -469,7 +469,10 @@ function onNotificationOpen(pnObj){
 
 			let match = _.find(matches, 'id', matchId)
 			if(match) {
-				let profile = profileCache[match.profileId]
+				let profileId = match.get('otherProfileId')
+				if(!profileId)
+					profileId = match.profileId
+				let profile = profileCache[profileId]
 				if(profile) {
 					// Refresh the profile asynchronously every hour at most
 					if(!profile.refreshedAt || profile.refreshedAt < Date.now() - 1000 * 60 * 60) {
