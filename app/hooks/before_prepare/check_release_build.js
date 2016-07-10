@@ -11,7 +11,7 @@ var fs = require('fs')
 var cliCommand   = process.env.CORDOVA_CMDLINE
 var isReleaseBuild = cliCommand.indexOf('--release') > -1
 
-var PROD_STRING_REGEX = /constant\("buildEnv",\s?"prod"\)/
+var PROD_STRING_REGEX = /constant\("env",\s?"prod"\)/
 
 var rootDir = process.argv[2]
 var appJs
@@ -22,9 +22,11 @@ if (isReleaseBuild) {
 	if(!PROD_STRING_REGEX.test(appJs)) {
 		console.log('')
 		console.log('===========================================================')
-		console.log(' Could not find constant("buildEnv", "prod") in app.js')
+		console.log(' Could not find constant("env", "prod") in app.js')
 		console.log(' Attempted to do a release build without prod config. Run:')
 		console.log(' gulp --env prod')
+		console.log(' or')
+		console.log(' gulp prodBuild')
 		console.log('===========================================================')
 		process.exit(1)
 	}

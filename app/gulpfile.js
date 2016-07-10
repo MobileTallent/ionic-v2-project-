@@ -40,7 +40,7 @@ var tsc = require('gulp-typescript')
 var tslint = require('gulp-tslint');
 var browserSync = require('browser-sync').create();
 
-var env = 'dev';
+var env // build/environment which is set as the env angular config value and used to look up environment config in /server/config.json
 
 var bowerConf = {
     paths: './',
