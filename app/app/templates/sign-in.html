@@ -83,7 +83,7 @@
     <div class="row center">
       <div class="col">
         <a ng-show="showForm == true" ng-class="login.class" ng-click="facebookLogin()"><img style="width:100%; max-width: 600px; padding-top: 30px" src="img/facebook.png"/></a>
-        <a ng-show="showForm == true" ng-class="login.class" ng-click="linkedInLogin()"><img style="width:100%; max-width: 600px; padding-top: 30px" src="img/linkedin.png"/></a>
+
       </div>
     </div>
 
@@ -104,9 +104,9 @@
                 <a id="login" class="button" style="width:100px" ng-click="emailLogin()" translate="LOG_IN"></a>
                 <a id="register" class="button" style="width:100px" ng-click="emailRegister()" translate="REGISTER"></a>
             </div>
-            <div class="center" style="padding-top: 20px;">
+            <!--<div class="center" style="padding-top: 20px;">
                 <a id="resetLink" ng-click="showResetPasswordForm()" translate="RESET_PASSWORD"></a>
-            </div>
+            </div>-->
         </div>
 
           <!-- Reset Password -->
@@ -115,9 +115,9 @@
                   <span class="input-label" translate="EMAIL"></span>
                   <input type="email" ng-model="credentials.email">
               </label>
-              <div class="center" style="padding-top: 10px;">
+              <!--<div class="center" style="padding-top: 10px;">
                   <a class="button" style="width:150px" ng-click="resetPassword()" translate="RESET_PASSWORD"></a>
-              </div>
+              </div>-->
               <div class="center" style="padding-top: 20px;">
                   <a ng-click="hideResetPasswordForm()" translate="CANCEL"></a>
               </div>

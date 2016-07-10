@@ -34,7 +34,7 @@
         {{'SEARCH_DISTANCE' | translate}}: {{profile.distance}}{{profile.distanceType}}
       </li>
       <li class="item" style="height: 60px">
-        <slider floor="1" ceiling="200" ng-model-low="profile.distance" ng-model-high="profile.distance"></slider>
+        <slider floor="1" ceiling="6000" ng-model-low="profile.distance" ng-model-high="profile.distance"></slider>
       </li>
       <li class="item item-divider">
         {{'AGED_BETWEEN' | translate}}: {{profile.ageFrom}} to {{profile.ageTo == 55 ? '55+' : profile.ageTo}}

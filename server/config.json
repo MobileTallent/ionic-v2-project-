@@ -1,7 +1,7 @@
 {
-  "appName": "",
-  "appId": "",
-  "masterKey": "",
+  "appName": "Just A Baby",
+  "appId": "11111111122444",
+  "masterKey": "3333333344888",
   "parseMount": "/parse/",
 
   "gcpBrowserKey": "",

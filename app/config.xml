@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="1" id="com.domain.app" ios-CFBundleVersion="0.0.1" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>AppName</name>
+<widget android-versionCode="1" id="com.justababy.app" ios-CFBundleVersion="0.0.1" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Just A Baby</name>
     <description>
-    App description
+    An app for single parents to meet and discover each other.
   </description>
-    <author email="user@domain.com" href="http://domain.com/">
-    Author name
+    <author email="matt@tempestwebdesign.com" href="http://tempestwebdesign.com/">
+    Matt McCullar
   </author>
     <content src="index.html" />
     <access origin="*" />

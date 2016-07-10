@@ -1,7 +1,7 @@
 {
   "name": "my-app-name",
   "version": "1.0.0",
-  "description": "My app does this",
+  "description": "App for Single Parents to connect",
   "private": true,
   "main": "index.js",
   "license": "MIT and commerical",
