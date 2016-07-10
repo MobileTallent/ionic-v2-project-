@@ -25,12 +25,19 @@ var cmd = process.platform === 'win32' ? 'cordova.cmd' : 'cordova';
 
 packageJSON.cordovaPlugins = packageJSON.cordovaPlugins || [];
 packageJSON.cordovaPlugins.forEach(function (plugin) {
-  // Install any plugins we don't have in the /plugins dir. Ignore anything from /plugin-source/
-  var pluginDir = rootDir + '/plugins/' + plugin
-  if(!fs.existsSync(pluginDir) && plugin.indexOf('/plugin-source/') > -1) {
+	// Install any plugins we don't have in the /plugins dir. Ignore anything from /plugin-source/
+	if(typeof plugin === 'object') {
+		if(!plugin.locator) {
+			console.error("Could not add plugin " + JSON.stringify(plugin))
+			return
+		}
+		plugin = plugin.locator
+	}
+	var pluginDir = rootDir + '/plugins/' + plugin
+	if(!fs.existsSync(pluginDir) && plugin.indexOf('/plugin-source/') > -1) {
 
-      exec('cordova plugin add ' + plugin, function (error, stdout, stderr) {
-          sys.puts(stdout);
-      });
-  }
+		exec('cordova plugin add ' + plugin, function(error, stdout, stderr) {
+			sys.puts(stdout);
+		});
+	}
 });
