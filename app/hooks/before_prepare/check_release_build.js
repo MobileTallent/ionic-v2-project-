@@ -11,7 +11,7 @@ var fs = require('fs')
 var cliCommand   = process.env.CORDOVA_CMDLINE
 var isReleaseBuild = cliCommand.indexOf('--release') > -1
 
-var PROD_STRING_REGEX = /constant\("buildEnv",\s?"prod"\)/
+var PROD_STRING_REGEX = /constant\("env",\s?"prod"\)/
 
 var rootDir = process.argv[2]
 var appJs
@@ -22,9 +22,11 @@ if (isReleaseBuild) {
 	if(!PROD_STRING_REGEX.test(appJs)) {
 		console.log('')
 		console.log('===========================================================')
-		console.log(' Could not find constant("buildEnv", "prod") in app.js')
+		console.log(' Could not find constant("env", "prod") in app.js')
 		console.log(' Attempted to do a release build without prod config. Run:')
 		console.log(' gulp --env prod')
+		console.log(' or')
+		console.log(' gulp prodBuild')
 		console.log('===========================================================')
 		process.exit(1)
 	}
@@ -41,8 +43,9 @@ parseString(configXml, function (err, config) {
 	console.log('appId', appId)
 	console.log('version', configVersion)
 
+	// Added process.exit() otherwise the build seems to hang on this script
 	gplay.app({appId: appId})
-		.then(function(app){
+		.then(function(app) {
 			if(configVersion === app.version) {
 				console.log('=============================================================')
 				console.log(' The version attribute in config.xml needs to be incremented')
@@ -50,8 +53,10 @@ parseString(configXml, function (err, config) {
 				console.log('=============================================================')
 				process.exit(1)
 			}
+			process.exit(0)
 		})
 		.catch(function(e){
 			console.log('There was an error fetching the application version from the Play store', e)
+			process.exit(0)
 		})
 })
