@@ -78,7 +78,9 @@ var paths = {
     ]
 };
 
-gulp.task('default', ['watch', 'sass', 'css', 'ts-lint', 'compile-ts', 'gen-ts-refs', 'js', 'lib', 'lib-css', 'templates', 'fonts', 'images', 'http']);
+gulp.task('default', ['watch', 'sass', 'css', 'ts-lint', 'compile-ts', 'gen-ts-refs', 'js', 'lib', 'lib-css', 'templates', 'fonts', 'images', 'http'])
+
+gulp.task('prodBuild', ['setProdEnv', 'sass', 'css', 'ts-lint', 'compile-ts', 'gen-ts-refs', 'js', 'lib', 'lib-css', 'templates', 'fonts', 'images'])
 
 
 /**
@@ -110,7 +112,8 @@ gulp.task('init', function (done) {
 // At the command line, to use the QA config run:
 // gulp --env qa
 gulp.task('envConfig', function (done) {
-    env = args.env || 'dev'
+    if(!env)
+        env = args.env || 'dev'
     console.log('Environment: ' + env)
 
     if(env === 'dev') {
@@ -198,6 +201,17 @@ function updateFacebookIds() {
 
     return [facebookAndroid, facebookIOS]
 }
+
+
+
+gulp.task('setProdEnv', function (done) {
+    console.log('Setting env to prod ')
+    env = 'prod'
+    done()
+})
+
+
+
 /*
  | --- CSS -----------------------------------------------
  */
