@@ -203,7 +203,7 @@ function onNotificationOpen(pnObj){
 			}).then(dbMatches => {
 				for(let match of dbMatches) {
 					// TODO GROUP_CHAT for group chat get the profile of the latest sender
-					match.otherProfile = profileCache[match.profile.id]
+					match.otherProfile = profileCache[match.get('otherProfileId')]
 					if(!getMatch(match.id))
 						matches.push(match)
 					else
@@ -469,7 +469,10 @@ function onNotificationOpen(pnObj){
 
 			let match = _.find(matches, 'id', matchId)
 			if(match) {
-				let profile = profileCache[match.profileId]
+				let profileId = match.get('otherProfileId')
+				if(!profileId)
+					profileId = match.profileId
+				let profile = profileCache[profileId]
 				if(profile) {
 					// Refresh the profile asynchronously every hour at most
 					if(!profile.refreshedAt || profile.refreshedAt < Date.now() - 1000 * 60 * 60) {
@@ -861,15 +864,15 @@ function onNotificationOpen(pnObj){
 
 				for(let match of newMatches) {
 					if(!getMatch(match.id)) {
-						console.log('syncing new match ' + match.id)
-						let profile = match.otherProfile
+						console.log('storing new match ' + match.id)
+						let profile = match.profile
 						match.lastMessage = 'Matched on ' + dateFormat(match.createdAt, 'd mmm')
 						match.read = false
 						matches.unshift(match)
 						LocalDB.saveMatch(match, profile)
 						profileCache[profile.id] = profile
 					} else {
-						$log.info('Match ' + match.id + ' already synced')
+						$log.info('Match ' + match.id + ' already stored')
 					}
 				}
 
@@ -881,12 +884,14 @@ function onNotificationOpen(pnObj){
 						playSound('audio/match-notification.mp3')
 				}
 
-				if(matchesChanged)
+				if(matchesChanged) {
+					$rootScope.$broadcast('chatsUpdated')
 					refreshUnreadCount()
+				}
 
 				return newMatches
 
-			}, error => {
+			}).then(newMatches => newMatches, error => {
 				$log.error('Error synching matches ' + JSON.stringify(error))
 				return $q.reject(error)
 			}).finally(() => {
@@ -961,8 +966,11 @@ function onNotificationOpen(pnObj){
 						}
 					}
 					// Notify the chat controller to scroll down
-					if(newActiveMessage)
+					if(newActiveMessage) {
+						$log.debug('broadcasting newMessage')
 						$rootScope.$broadcast('newMessage', newActiveMessage)
+					}
+
 				}
 			).finally(() => {
 				$log.log('Chat sync complete')

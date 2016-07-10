@@ -282,6 +282,10 @@ td-card img {
 
 /*  Chat styles */
 
+.chat-unread {
+    font-weight: bold;
+}
+
 /* allows the bar-footer to be elastic /*
 /* optionally set a max-height */
 /* maxlength on the textarea will prevent /*

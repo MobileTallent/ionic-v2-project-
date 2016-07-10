@@ -444,17 +444,17 @@ Parse.Cloud.define("GetMutualMatches", function(request, response) {
 				profile2 = match.get('profile2')
 				if(!profile2) {console.error('profile2 not set on match ', match.id);return}
 				matchJSON.otherProfile = _processProfile(profile2)
-				match.unset('profile1')
 			}
 			else if (match.get('uid2') === user.id) {
 				profile1 = match.get('profile1')
 				if(!profile1) {console.error('profile1 not set on match ', match.id);return}
 				matchJSON.otherProfile = _processProfile(profile1)
-				match.unset('profile2')
 			} else {
 				console.error('Attempted to load match ' + match.id + ' which did not belong to user ' + user.id)
 				return
 			}
+			delete matchJSON.profile1
+			delete matchJSON.profile2
 			result.push(matchJSON)
 		})
 		response.success(result)
@@ -475,7 +475,8 @@ function _processProfile(profile) {
 		profile.age = _calculateAge(profile.birthdate)
 		delete profile.birthdate
 	}
-
+	if(profile.location)
+		delete profile.location.__type // &@(& Parse - converts latitude to _latitude otherwise
 	delete profile.notifyMatch
 	delete profile.notifyMessage
 	delete profile.ageFrom

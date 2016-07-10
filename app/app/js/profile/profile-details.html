@@ -1,6 +1,6 @@
 <ion-slide-box show-pager="true" does-continue="true">
     <ion-slide ng-repeat="photo in profile.photos track by $index">
-        <img ng-src="{{photo.url()}}" style="width:100%"/>
+        <img ng-src="{{photo._url ? photo._url : photo.url()}}" style="width:100%"/>
     </ion-slide>
     <ion-slide ng-if="!selectedCard.photos.length">
         <img src="img/generic_avatar.jpg" style="width:100%"/>

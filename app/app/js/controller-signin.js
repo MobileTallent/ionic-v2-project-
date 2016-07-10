@@ -69,7 +69,7 @@ angular.module('controllers', ['service.app', 'ngAnimate', 'ngCordova', 'ionic.c
             }, function(error){
                 resetStyles()
                 $log.error('user signed up error ' + JSON.stringify(error))
-                AppUtil.toastSimple(error.message)
+                setTimeout(()=>AppUtil.toastSimple(error.message), 10)
             })
         }
 
