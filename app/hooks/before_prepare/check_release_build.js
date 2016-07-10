@@ -43,8 +43,9 @@ parseString(configXml, function (err, config) {
 	console.log('appId', appId)
 	console.log('version', configVersion)
 
+	// Added process.exit() otherwise the build seems to hang on this script
 	gplay.app({appId: appId})
-		.then(function(app){
+		.then(function(app) {
 			if(configVersion === app.version) {
 				console.log('=============================================================')
 				console.log(' The version attribute in config.xml needs to be incremented')
@@ -52,8 +53,10 @@ parseString(configXml, function (err, config) {
 				console.log('=============================================================')
 				process.exit(1)
 			}
+			process.exit(0)
 		})
 		.catch(function(e){
 			console.log('There was an error fetching the application version from the Play store', e)
+			process.exit(0)
 		})
 })
