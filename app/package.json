@@ -96,7 +96,8 @@
     "postinstall": "webdriver-manager update",
     "test": "karma start karma-parse.conf.js",
     "updateTypings": "tsd update -os",
-    "releasebuild": "gulp --env prod --nowatch && ionic build --release",
-    "deployplay": "playup --track beta --auth ../service-account-key.json --recent-changes \"en-US=`cat changes.txt`\"  ./platforms/android/build/outputs/apk/android-release.apk"
+    "releasebuild": "gulp prodBuild && ionic build --release",
+    "deploy-play": "playup --track beta --auth ../server/service-account-key-prod.json --recent-changes \"en-US=`cat android-release-changes.txt`\"  ./platforms/android/build/outputs/apk/android-release.apk",
+    "build-deploy": "npm run releasebuild && npm run deploy-play"
   }
 }
