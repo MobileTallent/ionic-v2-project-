@@ -94,10 +94,11 @@
     "addFacebookPlugin": "ionic plugin add cordova-plugin-facebook4 --save --variable APP_ID=\"$(json -f ../server/config.json facebookAppId)\" --variable APP_NAME=\"'$(json -f ../server/config.json facebookAppName)'\"",
     "addParsePlugin": "ionic plugin add https://github.com/taivo/parse-push-plugin#a2e696aa27dcc0df7c7a4669caa3d0c0a5ffdaf2 --save --variable GCM_SENDER_ID=\"$(json -f ../server/config.json prod.gcpProjectNumber)\"",
     "postinstall": "webdriver-manager update",
+    "ios-setup": "sudo npm install -g ios-sim ios-deploy && sudo gem install deliver && xcode-select --install && deliver init",
     "test": "karma start karma-parse.conf.js",
     "updateTypings": "tsd update -os",
     "releasebuild": "gulp prodBuild && ionic build --release",
-    "deploy-play": "playup --track beta --auth ../server/service-account-key-prod.json --recent-changes \"en-US=`cat android-release-changes.txt`\"  ./platforms/android/build/outputs/apk/android-release.apk",
+    "deploy-play": "playup --track beta --auth ../server/service-account-key-prod.json ./platforms/android/build/outputs/apk/android-release.apk",
     "build-deploy": "npm run releasebuild && npm run deploy-play"
   }
 }

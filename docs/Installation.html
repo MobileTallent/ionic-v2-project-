@@ -169,7 +169,14 @@ iOS builds and app submissions can only be done on a Mac with OSX and XCode.
 
 Ionic does have an iOS build service at http://docs.ionic.io/docs/package-ios but as we use our own Mac's to build we can't comment on using it.
 
-* Run ** npm install -g ios-sim** to install the iOS emulator plugin
+* Install the Rugy gems package manager at https://rubygems.org/pages/download
+
+* Run ** npm run ios-setup** to install the iOS emulator plugin, ios-deploy module, and the Fastland deploy tools.
+
+This can take a while to complete and some user input will be required. When the deliver tool asks for your bundle id you
+can enter the package name used in the Android config from the previous step. Use this bundle id when you create your Apple store listing.
+
+If you are having any issues look in /app/package.json at the scripts.ios-setup value and run the commands individually
 
 * In /app run **ionic platform add ios**
 
