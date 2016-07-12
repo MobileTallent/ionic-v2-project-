@@ -72,7 +72,7 @@ var TRANSLATION_EN = {
     'MY_INTERESTS': 'My Interests',
 
     'EDIT_PROFILE_TITLE': 'Edit Profile',
-    'ABOUT_YOU' : 'About You',
+    'ABOUT_YOU' : 'About You (include information on if you are looking to coparent, have limited interation, or full custody of the baby. You can also include details of your current relationship status, health, and sexuality).',
 
     'AWAY' : 'away', // for "5km away"
 

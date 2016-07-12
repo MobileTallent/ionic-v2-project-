@@ -33,8 +33,8 @@
   "playStoreUrl": "",
   "itunesUrl": "",
 
-  "facebookAppId": "",
-  "facebookAppName": "",
+  "facebookAppId": "Justababy",
+  "facebookAppName": "1219040608124053",
   "linkedInId": "",
   "linkedInSecret": "",
 
@@ -52,9 +52,9 @@
   },
 
   "mailgun": {
-    "domain": "",
-    "key": "",
-    "from": ""
+    "domain": "www.justababy.co",
+    "key": "key-c15cc58c98b8dd94bbd1d3b73792f8b9",
+    "from": "justababy@gmail.com"
   },
 
   "twilio": {

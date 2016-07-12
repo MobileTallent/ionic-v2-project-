@@ -76,22 +76,23 @@
 
     <div class="row center">
       <div class="col">
-        <img ng-show="showLogo == true" ng-class="logo.class" style="padding-top: 20px; width: 100%; max-width: 200px;" src="img/fire-small.png" />
+        <img ng-show="showLogo == true" ng-class="logo.class" style="padding-top: 20px; width: 100%; max-width: 200px;" src="img/icon.png" />
       </div>
     </div>
 
     <div class="row center">
       <div class="col">
+      <p>Log in to your Facebook account to connect to Just A Baby</p><br><br><br>
         <a ng-show="showForm == true" ng-class="login.class" ng-click="facebookLogin()"><img style="width:100%; max-width: 600px; padding-top: 30px" src="img/facebook.png"/></a>
 
       </div>
     </div>
 
-    <div class="row">
+    <!----><div class="row">
       <div class="col col-80 col-offset-10">
 
           <!-- Login/Register -->
-        <div ng-show="showForm == true" class="list">
+        <!----><div ng-show="showForm == true" class="list">
             <label class="item item-input">
                 <span class="input-label" translate="EMAIL"></span>
                 <input type="email" ng-model="credentials.email">
@@ -109,7 +110,7 @@
             </div>-->
         </div>
 
-          <!-- Reset Password -->
+          <!-- Reset Password
           <div ng-show="showResetPassword == true" class="list">
               <label class="item item-input">
                   <span class="input-label" translate="EMAIL"></span>
@@ -117,10 +118,10 @@
               </label>
               <!--<div class="center" style="padding-top: 10px;">
                   <a class="button" style="width:150px" ng-click="resetPassword()" translate="RESET_PASSWORD"></a>
-              </div>-->
+              </div>
               <div class="center" style="padding-top: 20px;">
                   <a ng-click="hideResetPasswordForm()" translate="CANCEL"></a>
-              </div>
+              </div>-->
           </div>
       </div>
     </div>
