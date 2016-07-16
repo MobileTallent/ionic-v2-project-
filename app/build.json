@@ -6,5 +6,16 @@
       "alias": "",
       "password" : ""
     }
+  },
+  "ios": {
+    "_docs": "https://cordova.apache.org/docs/en/latest/guide/platforms/ios/",
+    "debug": {
+      "codeSignIdentity": "",
+      "provisioningProfile": ""
+    },
+    "release": {
+      "codeSignIdentity": "",
+      "provisioningProfile": ""
+    }
   }
 }
