@@ -81,7 +81,9 @@
     {
       "locator": "https://github.com/litehelpers/Cordova-sqlite-storage",
       "id": "cordova-sqlite-storage"
-    }
+    },
+    "cordova-plugin-facebook4",
+    "https://github.com/taivo/parse-push-plugin#a2e696aa27dcc0df7c7a4669caa3d0c0a5ffdaf2"
   ],
   "cordovaPlatforms": [
     "android",
