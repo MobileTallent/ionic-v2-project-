@@ -11,6 +11,7 @@ app/*~
 # IDEA
 server/.idea/**
 app/.idea/**
+.idea/**
 
 # node modules
 server/node_modules
