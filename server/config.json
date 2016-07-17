@@ -4,8 +4,8 @@
   "masterKey": "3333333344888",
   "parseMount": "/parse/",
 
-  "gcpBrowserKey": "",
-  "gcpServerKey": "",
+  "gcpBrowserKey": "AIzaSyCUgT951OiYF4TmpR-lcpPd9zJ_NVBpoow",
+  "gcpServerKey": "AIzaSyAejh_rsmEqgCu8mSQ1Y0uiRavvrZIDQf8",
 
   "environments": ["dev", "qa", "prod"],
 
@@ -16,10 +16,10 @@
 
   "prod": {
     "serverUrl": "",
-    "databaseURI": "",
-    "gcpProjectId": "",
-    "gcpProjectNumber": "",
-    "gcpKeyFile": ""
+    "databaseURI": “mongodb://10.128.0.3:27017/prod”,
+    "gcpProjectId": “justababy-prod”,
+    "gcpProjectNumber": "702079786951",
+    "gcpKeyFile": “service-account-key-prod.json”
   },
 
   "qa": {

@@ -101,7 +101,8 @@
     "updateTypings": "tsd update -os",
     "releasebuild": "gulp prodBuild && ionic build --release --device",
     "deploy-play": "echo 'Uploading to the Play store. This may take a few minutes.' && playup --track beta --auth ../server/service-account-key-prod.json ./platforms/android/build/outputs/apk/android-release.apk",
-    "deploy-ios": "deliver --ipa platforms/ios/build/device/AppName.ipa --submit_for_review",
+    "deploy-ios": "deliver --ipa \"platforms/ios/build/device/Just A Baby.ipa\" --submit_for_review",
+    "deploy-ios-test": "pilot upload --ipa \"platforms/ios/build/device/Just A Baby.ipa\" --distribute_external",
     "build-deploy": "npm run releasebuild && npm run deploy-play"
   }
 
