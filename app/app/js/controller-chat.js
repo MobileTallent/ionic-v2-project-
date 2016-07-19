@@ -577,7 +577,7 @@ angular.module('controllers')
 		function keyboardHideHandler(e) {
 			keyboardHeight = 0
 			$timeout(function() {
-				scroller.style.bottom = footerBar.clientHeight + 'px';
+				scroller.style.bottom = footerBar.clientHeight + 'px'
 			}, 0)
 		}
 
@@ -594,10 +594,10 @@ angular.module('controllers')
 
 			footerBar.style.height = newFooterHeight + 'px'
 
-			if (device.platform.toLowerCase() === 'ios') {
-				scroller.style.bottom = newFooterHeight + keyboardHeight + 'px';
+			if (device && device.platform.toLowerCase() === 'ios') {
+				scroller.style.bottom = newFooterHeight + keyboardHeight + 'px'
 			} else {
-				scroller.style.bottom = newFooterHeight + 'px';
+				scroller.style.bottom = newFooterHeight + 'px'
 			}
 		})
 
