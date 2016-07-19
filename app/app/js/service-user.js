@@ -61,8 +61,8 @@ function onNotificationOpen(pnObj){
 		var activeChatMessages = null
 
 		// Variables for the polling when push notifications haven't been detected
-		const CHAT_SYNC_INTERVAL = 30000
-		const MATCH_SYNC_RATIO = 10 // After how many chat syncs we should also sync the matches
+		const CHAT_SYNC_INTERVAL = 5000
+		const MATCH_SYNC_RATIO = 2 // After how many chat syncs we should also sync the matches
 		var syncCount = 0
 		var synchronizeInterval = null
 
