@@ -647,8 +647,7 @@ Parse.Cloud.define("ProcessMatch", function(request, response) {
 			match.set('uid2', uid2)
 
 			var acl = new Parse.ACL()
-			acl.setReadAccess(uid1, true)
-			acl.setReadAccess(uid2, true)
+			acl.setPublicReadAccess(true)
 			acl.setWriteAccess(uid1, true)
 			acl.setWriteAccess(uid2, true)
 			match.setACL(acl)
