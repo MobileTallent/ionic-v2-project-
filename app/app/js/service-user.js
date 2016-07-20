@@ -219,12 +219,17 @@ function onNotificationOpen(pnObj){
 
 			server.getTwilioToken().then(
 					result => {
-						$log.info('Aquired twilio token')
-						service.twilioAccessToken = result.token
-						$rootScope.$broadcast('twilioAccessToken', result.token)
+						if(result) {
+							$log.info('Aquired twilio token')
+							service.twilioAccessToken = result.token
+							$rootScope.$broadcast('twilioAccessToken', result.token)
+						} else {
+							$log.info('Twilio is not configured. getTwilioToken returned null')
+						}
+
 					},
 					error => {
-						if(error === 'NOT_CONFIGURED')
+						if(error === 'NOT_CONFIGURED') // This is legacy now. Returns successfull empty/null if not configured
 							$log.info('Twilio not configured')
 						else
 							$log.error('Error getting twilio token ' + JSON.stringify(error))
