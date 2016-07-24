@@ -3,7 +3,10 @@ var AccessToken = require('./AccessToken.js')
 var ConversationsGrant = AccessToken.ConversationsGrant
 
 Parse.Cloud.define('GetTwilioToken', function (request, response) {
-	return response.error('NOT_CONFIGURED')
+
+	if(!Config.TWILIO_ACCOUNT_SID || !Config.TWILIO_API_KEY || !Config.TWILIO_API_SECRET)
+		return response.success(null)
+
 	var identity = request.user.id
 
 	// Create an access token which we will sign and return to the client,

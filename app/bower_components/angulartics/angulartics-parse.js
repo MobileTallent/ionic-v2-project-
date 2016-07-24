@@ -7,16 +7,18 @@ angular.module('angulartics.parse', ['angulartics'])
 	.config(['$analyticsProvider', function($analyticsProvider) {
 
 		$analyticsProvider.registerPageTrack(function(path) {
+			/*
 			var dimensions = {}
 			var user = Parse.User.current()
 			if(user)
 				dimensions.user = user.id
 
 			Parse.Analytics.track(path, dimensions)
+			*/
 		})
 
 		$analyticsProvider.registerEventTrack(function(action, properties) {
-
+			/*
 			if(!properties)
 				properties = {}
 
@@ -28,6 +30,7 @@ angular.module('angulartics.parse', ['angulartics'])
 			}
 
 			Parse.Analytics.track(action, properties)
+			*/
 		})
 
 	}
