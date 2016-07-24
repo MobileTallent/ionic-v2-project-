@@ -59,7 +59,6 @@
     "yargs": "^3.30.0"
   },
   "cordovaPlugins": [
-    "cordova-plugin-console",
     "cordova-plugin-device",
     "cordova-plugin-file",
     "cordova-plugin-camera",
@@ -83,40 +82,34 @@
       "id": "cordova-sqlite-storage"
     },
     "cordova-plugin-facebook4",
-    "https://github.com/taivo/parse-push-plugin#a2e696aa27dcc0df7c7a4669caa3d0c0a5ffdaf2"
+    "https://github.com/taivo/parse-push-plugin#a2e696aa27dcc0df7c7a4669caa3d0c0a5ffdaf2",
+    "cordova-plugin-facebook4@~1.7.1"
   ],
   "cordovaPlatforms": [
-    "android",
     "ios"
   ],
   "dependencies": {
-    "moment": "^2.10.6"
+    "cheerio": "^0.20.0",
+    "csp-parse": "0.0.2",
+    "elementtree": "^0.1.6",
+    "glob": "^7.0.5",
+    "moment": "^2.10.6",
+    "plist": "^1.2.0"
   },
   "scripts": {
     "postinstall": "webdriver-manager update",
     "ios-setup": "sudo npm install -g ios-sim ios-deploy && sudo gem install deliver && sudo gem install pilot && xcode-select --install && deliver init",
-
     "addFacebookPlugin": "ionic plugin add cordova-plugin-facebook4 --save --variable APP_ID=\"$(json -f ../server/config.json facebookAppId)\" --variable APP_NAME=\"'$(json -f ../server/config.json facebookAppName)'\"",
     "addParsePlugin": "ionic plugin add https://github.com/taivo/parse-push-plugin#a2e696aa27dcc0df7c7a4669caa3d0c0a5ffdaf2 --save --variable GCM_SENDER_ID=\"$(json -f ../server/config.json prod.gcpProjectNumber)\"",
-
     "test": "karma start karma-parse.conf.js",
     "updateTypings": "tsd update -os",
-<<<<<<< HEAD
     "releasebuild": "gulp prodBuild && ionic build --release --device",
-    "deploy-play": "echo 'Uploading to the Play store. This may take a few minutes.' && playup --track beta --auth ../server/service-account-key-prod.json ./platforms/android/build/outputs/apk/android-release.apk",
-    "deploy-ios": "deliver --ipa \"platforms/ios/build/device/Just A Baby.ipa\" --submit_for_review",
-    "deploy-ios-test": "pilot upload --ipa \"platforms/ios/build/device/Just A Baby.ipa\" --distribute_external",
-    "build-deploy": "npm run releasebuild && npm run deploy-play"
-=======
-
-    "build-release": "gulp prodBuild && ionic build --release --device",
     "deploy-play": "echo 'Uploading to the Play store. This may take a few minutes.' && playup --track production --auth ../server/service-account-key-prod.json ./platforms/android/build/outputs/apk/android-release.apk",
-    "deploy-play-test": "echo 'Uploading to the Play store. This may take a few minutes.' && playup --track beta --auth ../server/service-account-key-prod.json ./platforms/android/build/outputs/apk/android-release.apk",
     "deploy-ios": "deliver --ipa \"platforms/ios/build/device/AppName.ipa\" --submit_for_review",
     "deploy-ios-test": "pilot upload --ipa \"platforms/ios/build/device/AppName.ipa\" --distribute_external --skip_waiting_for_build_processing",
     "build-deploy": "npm run build-release && npm run deploy-play && npm run deploy-ios && echo 'App deployed. Update your version in config.xml'",
+    "build-release": "gulp prodBuild && ionic build --release --device",
+    "deploy-play-test": "echo 'Uploading to the Play store. This may take a few minutes.' && playup --track beta --auth ../server/service-account-key-prod.json ./platforms/android/build/outputs/apk/android-release.apk",
     "build-deploy-test": "npm run build-release && npm run deploy-play-test && npm run deploy-ios-test"
->>>>>>> remotes/daniel_campagnoli/cloneder/master
   }
-
 }
