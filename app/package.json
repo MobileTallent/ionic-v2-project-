@@ -83,7 +83,9 @@
     },
     "cordova-plugin-facebook4",
     "https://github.com/taivo/parse-push-plugin#a2e696aa27dcc0df7c7a4669caa3d0c0a5ffdaf2",
-    "cordova-plugin-facebook4@~1.7.1"
+    "cordova-plugin-facebook4@~1.7.1",
+    "cordova-plugin-console",
+    "cordova-sqlite-storage"
   ],
   "cordovaPlatforms": [
     "ios"

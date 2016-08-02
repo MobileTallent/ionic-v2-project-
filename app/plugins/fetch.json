@@ -19,7 +19,7 @@
         },
         "is_top_level": true,
         "variables": {
-            "GCM_SENDER_ID": ""
+            "GCM_SENDER_ID": "702079786951"
         }
     },
     "cordova-plugin-device": {
@@ -187,6 +187,22 @@
         "source": {
             "type": "registry",
             "id": "cordova-plugin-browsersync"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-console": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-console"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-sqlite-storage": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-sqlite-storage"
         },
         "is_top_level": true,
         "variables": {}
