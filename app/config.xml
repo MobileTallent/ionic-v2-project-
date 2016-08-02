@@ -4,8 +4,8 @@
   <description>
     An app for single parents to meet and discover each other.
   </description>
-  <author email="justababy@gmail.com" href="http://justababy.co/">
-    Matt McCullar
+  <author email="daniel@apporchestra.com" href="http://apporchestra.com/">
+    Daniel Campagnoli
   </author>
   <content src="index.html"/>
   <access origin="*"/>
