@@ -28,6 +28,7 @@ server/coverage
 # My cloneder demo files
 app/app/config-cloneder
 
+unversioned/**
 
 # APP ======================
 
@@ -46,8 +47,6 @@ app/plugins/com.phonegap.parsepushplugin
 app/plugins/android.json
 app/plugins/ios.json
 
-app/resources/ios/**
-app/resources/android/**
 app/tools/typings/typescriptApp.d.ts
 app/www/fonts/*
 app/www/maps/*
