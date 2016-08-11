@@ -280,13 +280,18 @@ angular.module('controllers', ['service.app', 'ngAnimate', 'ngCordova', 'ionic.c
         }
 
 
-        // Waits for the facebook plugin to be ready
+        // Waits for the Facebook plugin to be ready, if required
         function ensureFb(callback) {
-            if ((window.cordova || fbLoaded) && platformReady) {
+            // Continue when the Ionic platform has initialised and:
+            // - Running in a WebView (i.e. using the native Facebook plugin if configured), or
+            // - Facebook authentication is not configured, or
+            // - The Facebook JavaScript SDK has loaded
+            if (platformReady && (window.cordova || !FACEBOOK_APP_ID || fbJsSdkLoaded)) {
                 if(callback) {
                     $timeout(callback, 50)
                 }
             } else {
+                // Otherwise wait for the Facebook JavaScript SDK to load
                 $timeout(function() {ensureFb(callback)}, 50)
             }
         }
@@ -301,21 +306,21 @@ angular.module('controllers', ['service.app', 'ngAnimate', 'ngCordova', 'ionic.c
                     $log.log('Checking facebook user')
                     connectToFacebook().then(function(result) {
                         // TODO check the facebook id matches the cached Parse user, else force logout
-                        checkProfile()
+                        checkProfile(null)
                     }, function(error) {
                         resetStyles()
                         AppUtil.toastSimple('Facebook login error')
                         $log.error('Facebook login error ' + JSON.stringify(error))
                     })
                 } else {
-                    checkProfile()
+                    checkProfile(null)
                 }
             } else {
                 resetStyles()
             }
         }
 
-        // wait for the facebook plugin to initialise and then check for doing an auto-login
+        // Check if we need to wait for the Facebook JS plugin to initialise and then check for doing an auto-login
         ensureFb(autoLogin)
 
     })
