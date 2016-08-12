@@ -20,8 +20,8 @@ config.environments.forEach(e => {
 var envConfig = config[env]
 console.log('Using ' + env + ' configuration')
 
-if(!envConfig.serverUrl && gaeId)
-	envConfig.serverUrl = 'https://' + gaeId + '.appspot.com'
+if(!envConfig.serverUrl)
+	throw 'serverUrl is required in ' + env + ' configuration in config.json'
 
 // Google App Engine requires port 8080 which is set in the app.yaml
 var port = process.env.PORT || 1337

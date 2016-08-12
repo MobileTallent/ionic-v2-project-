@@ -11,10 +11,10 @@
 
         <div class="row">
           <div class="col center" style="min-height: 100px;">
-            <img class="circle" ng-src="{{profile.photoUrl}}"/>
+            <img class="circle" ng-src="{{profile | profileImageUrl}}"/>
             <span style="width:30px"></span>
             <!-- TODO make this image a link to their profile -->
-            <img class="circle" ng-src="{{matchProfile.photoUrl}}"/>
+            <img class="circle" ng-src="{{matchProfile | profileImageUrl}}"/>
           </div>
         </div>
 

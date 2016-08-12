@@ -70,12 +70,18 @@ module app {
 			)
 		}
 
+		private fileUrl(photo) {
+			if(photo.url)
+				return photo.url()
+			return photo._url
+		}
+
 		public deletePhoto(photoUrl) {
 			this.$log.log('deleting photo at ' + photoUrl)
 			this.AppUtil.blockingCall(
 				this.AppService.deletePhoto(this.report.id, photoUrl),
 					// On success remove the photo locally
-				() => _.remove(this.report.profile.photos, photo => photo.url() === photoUrl)
+				() => _.remove(this.report.profile.photos, photo => this.fileUrl(photo) === photoUrl)
 			)
 		}
 

@@ -50,9 +50,9 @@
   <script>
     if(!window.cordova) {
       window.fbAsyncInit = function() {
-        facebookConnectPlugin.browserInit(FACEBOOK_APP_ID);
-        fbLoaded = 'true';
-      };
+        facebookConnectPlugin.browserInit(FACEBOOK_APP_ID)
+        fbJsSdkLoaded = true
+      }
     }
     (function(d){
       var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];

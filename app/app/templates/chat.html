@@ -16,7 +16,7 @@
             <div ng-if="::message.sender != profile.uid">
 
                 <img ng-click="viewProfile(message)" class="profile-pic left"
-                     ng-src="{{::matchProfile.photoUrl}}" onerror="onProfilePicError(this)" />
+                     ng-src="{{::matchProfile | profileImageUrl}}" onerror="onProfilePicError(this)" />
 
                 <div class="chat-bubble left">
                     <div class="message" ng-if="::message.text" ng-bind-html="::message.text | escapeHTML | emoji" autolinker><!--  | nl2br -->
@@ -36,7 +36,7 @@
             <div ng-if="::message.sender == profile.uid">
                 <!-- Change the sytle .chat-bubble.right to have margin-right: 55px if you want to show your own image too
                 <img ng-click="viewProfile(message)" class="profile-pic right"
-                     ng-src="{{::profile.photoUrl}}" onerror="onProfilePicError(this)" />-->
+                     ng-src="{{::profile | profileImageUrl}}" onerror="onProfilePicError(this)" />-->
                 <div class="chat-bubble right">
                     <div class="message" ng-if="::message.text" ng-bind-html="::message.text | escapeHTML | emoji" autolinker><!-- | nl2br -->
                     </div>
@@ -60,7 +60,7 @@
         <div ng-repeat="message in sendingMessages track by message.sentAt" class="message-wrapper">
             <!-- Change the sytle .chat-bubble.right to have margin-right: 55px if you want to show your own image too
             <img ng-click="viewProfile(message)" class="profile-pic right"
-                 ng-src="{{::profile.photoUrl}}" onerror="onProfilePicError(this)" />-->
+                 ng-src="{{::profile | profileImageUrl}}" onerror="onProfilePicError(this)" />-->
             <div class="chat-bubble right">
                 <div class="message" ng-if="::message.text" ng-bind-html="::message.text | escapeHTML | emoji" autolinker><!-- | nl2br -->
                 </div>
@@ -76,7 +76,7 @@
         <div ng-repeat="message in failedMessages track by message.sentAt" class="message-wrapper" on-hold="onFailedMessageHold($event, $index, message)">
             <!-- Change the sytle .chat-bubble.right to have margin-right: 55px if you want to show your own image too
             <img ng-click="viewProfile(message)" class="profile-pic right"
-                 ng-src="{{::profile.photoUrl}}" onerror="onProfilePicError(this)" />-->
+                 ng-src="{{::profile | profileImageUrl}}" onerror="onProfilePicError(this)" />-->
             <div class="chat-bubble right failed">
                 <div class="message" ng-if="::message.text" ng-bind-html="::message.text | escapeHTML | emoji" autolinker><!-- | nl2br -->
                 </div>

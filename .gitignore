@@ -28,6 +28,7 @@ server/coverage
 # My cloneder demo files
 app/app/config-cloneder
 
+unversioned/**
 
 # APP ======================
 

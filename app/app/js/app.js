@@ -1,4 +1,4 @@
-var platformReady, fbLoaded
+var platformReady, fbJsSdkLoaded
 
 var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUtil', 'templates', 'controllers', 'controllers.share', 'service.app',
         'ui.slider', 'ngImgCrop', 'ngAnimate', 'pascalprecht.translate', 'emoji', 'ImgCache', 'monospaced.elastic',
@@ -53,7 +53,7 @@ var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUt
             document.body.appendChild(googleMapsScript)
 
             AppService.init()
-            platformReady = 'true'
+            platformReady = true
         })
     })
 
