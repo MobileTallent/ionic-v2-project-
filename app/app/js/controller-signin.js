@@ -292,7 +292,8 @@ angular.module('controllers', ['service.app', 'ngAnimate', 'ngCordova', 'ionic.c
                 }
             } else {
                 // Otherwise wait for the Facebook JavaScript SDK to load
-                $timeout(function() {ensureFb(callback)}, 50)
+                console.debug('Waiting for Facebook Javascript SDK to load')
+                $timeout(function() {ensureFb(callback)}, 250)
             }
         }
 
