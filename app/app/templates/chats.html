@@ -20,7 +20,7 @@
     </div>
     <div class="list">
       <a class="item item-avatar" ng-repeat="match in matches track by match.id" ui-sref="^.chat({matchId : match.id})">
-        <img ng-src="{{::match.profile.photoUrl}}" img-cache>
+        <img ng-src="{{::match.profile | profileImageUrl}}" img-cache>
         <h2>{{::match.profile.name}}</h2>
         <p ng-class="match.read ? '' : 'chat-unread'" ng-bind-html="match.lastMessage | escapeHTML | emoji" />
       </a>

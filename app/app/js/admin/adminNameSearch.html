@@ -8,7 +8,7 @@
         </div>
         <div class="list">
             <a class="item item-avatar" ng-repeat="profile in vm.profiles track by profile.id" ui-sref="^.userAdmin({userId : profile.uid})">
-                <img ng-src="{{::profile.photoUrl}}">
+                <img ng-src="{{::profile | profileImageUrl}}">
                 <h2>{{::profile.name}}</h2>
             </a>
         </div>

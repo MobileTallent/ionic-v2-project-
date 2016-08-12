@@ -15,8 +15,8 @@
             <ion-item ng-repeat="profile in vm.profiles"
                       class="item-thumbnail-left" ng-click="vm.view($index)">
 
-                <img ng-src="{{profile.photoUrl}}">
-                <h2>{{profile.name}}, {{profile.age}}</h2>
+                <img ng-src="{{profile | profileImageUrl}}">
+                <h2>{{profile.name}}, {{profile | profileAge}}</h2>
                 <p>
                     {{profile.location | distance}} {{'AWAY' | translate}}<br/>
                     {{profile.about}}

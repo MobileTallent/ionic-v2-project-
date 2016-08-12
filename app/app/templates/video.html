@@ -5,7 +5,7 @@
         <div class="row" ng-show="video.state == video.Inviting" >
             <div class="col" style="text-align: center">
                 <p>{{'CALLING' | translate}} {{video.profile.name}}</p>
-                <img class="circle" ng-src="{{video.profile.photoUrl}}"/>
+                <img class="circle" ng-src="{{video.profile | profileImageUrl}}"/>
                 <p>{{'WAITING_FOR_REPLY' | translate}}...</p>
                 <br/><br/>
                 <a class="button button-assertive" ng-click="video.cancelInvite()">{{'CANCEL' | translate}}</a>
@@ -16,7 +16,7 @@
             <div class="col" style="text-align: center">
                 <p>{{'INCOMING_CALL_FROM'}} {{video.profile.name}}</p>
 
-                <img class="circle" ng-src="{{video.profile.photoUrl}}"/>
+                <img class="circle" ng-src="{{video.profile | profileImageUrl}}"/>
                 <br/>
                 <br/>
                 <div class="button-bar">

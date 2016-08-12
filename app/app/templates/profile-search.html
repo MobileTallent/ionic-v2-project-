@@ -106,7 +106,7 @@
                    class="card-{{$index}}" ng-class="{'accepted-transform': profile.accepted, 'rejected-transform': profile.rejected}">
             <div class="image" ng-click="viewDetails(profile)">
               <div class="yes-text" ng-style="leftTextOpacity">{{'LIKE' | translate}}</div>
-              <img style="width:100%" ng-src="{{::profile.image}}">
+              <img style="width:100%" ng-src="{{::profile | profileImageUrl}}">
               <div class="no-text" ng-style="rightTextOpacity">{{'NOT_LIKE' | translate}}</div>
             </div>
             <div >

@@ -1,6 +1,6 @@
 <ion-slide-box show-pager="true" does-continue="true">
     <ion-slide ng-repeat="photo in profile.photos track by $index">
-        <img ng-src="{{photo._url ? photo._url : photo.url()}}" style="width:100%"/>
+        <img ng-src="{{photo | fileUrl}}" style="width:100%"/>
     </ion-slide>
     <ion-slide ng-if="!selectedCard.photos.length">
         <img src="img/generic_avatar.jpg" style="width:100%"/>
@@ -8,7 +8,7 @@
 </ion-slide-box>
 
 <div style="padding: 10px;">
-    <b>{{profile.name}}</b>, {{profile.age}}<br/>
+    <b>{{profile.name}}</b>, {{profile | profileAge}}<br/>
     <span ng-if="distance && !isCurrentUser" style="color:gray">{{distance}} {{'AWAY' | translate}}</span><br/>
     <!-- TODO Active x hours ago -->
     <div ng-show="profile.about">
