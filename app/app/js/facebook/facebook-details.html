@@ -3,7 +3,7 @@
     <ion-scroll direction="x">
         <div ng-style="{width:((70+6) * friends.length + 10)+'px'}">
             <div class="fbItem" ng-repeat="friend in friends track by $index">
-                <img class="fblikeImg" ng-src="http://graph.facebook.com/v2.2/{{friend.id}}/picture"/><br/>
+                <img class="fblikeImg" ng-src="https://graph.facebook.com/v2.2/{{friend.id}}/picture"/><br/>
                 {{friend.name}}
             </div>
         </div>
@@ -14,7 +14,7 @@
     <ion-scroll direction="x">
         <div ng-style="{width:((70+6) * likes.length + 10)+'px'}">
             <div class="fbItem" ng-repeat="like in likes track by $index">
-                <img class="fblikeImg" ng-src="http://graph.facebook.com/v2.2/{{like.id}}/picture"/><br/>
+                <img class="fblikeImg" ng-src="https://graph.facebook.com/v2.2/{{like.id}}/picture"/><br/>
                 {{like.name}}
             </div>
         </div>
