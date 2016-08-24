@@ -207,21 +207,17 @@ Start with Android
 
 Enter your app name
 
-Fill in the section 'Tell us about your Android project"
-Package name: Use the one you decided in the previous *App initial setup* section above
-Default Activity Class Name (add .CordovaAppp to the package name)
-com.engineerstoolbox.cloneder.CordovaApp
+Fill in the section 'Tell us about your Android project"<br/>
+Package name: Use the one you decided in the previous *App initial setup* section above.<br/>
+Default Activity Class Name (add .CordovaAppp to the package name, for example com.engineerstoolbox.cloneder.CordovaApp)
 
 To get the release key hash you have two options.
 Run (replacing YOUR_RELEASE_KEY_ALIAS and YOUR_RELEASE_KEY_PATH with the appropriate values):
 keytool -exportcert -alias YOUR_RELEASE_KEY_ALIAS -keystore YOUR_RELEASE_KEY_PATH | openssl sha1 -binary | openssl base64
 (You will have need to completed the android setup and release steps to have this. You can do it later)
 
-or othewise just try and login to Facebook. You will get an error something like "The hash aurhgu3u4gh9a3u4hg= is not found"
+or otherwise just try and login to Facebook. You will get an error like "The hash aurhgu3u4gh9a3u4hg= is not found"
 Then type that hash into the Facebook Android hash configuration.
-
-The official Facebook Android setup docs are at https://developers.facebook.com/docs/android/getting-started
-
 
 ### Facebook App settings
 
