@@ -2,9 +2,9 @@
   "android": {
     "release": {
       "keystore": "android.keystore",
-      "storePassword": "",
-      "alias": "",
-      "password" : ""
+      "storePassword": "android",
+      "alias": "justababy",
+      "password" : "android"
     }
   },
   "ios": {
