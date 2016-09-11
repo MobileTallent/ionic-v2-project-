@@ -16,7 +16,7 @@
 
   "prod": {
     "serverUrl": "",
-    "databaseURI": "",
+    "databaseURI": "mongodb://HOST:27017/admin",
     "gcpProjectId": "",
     "gcpProjectNumber": "",
     "gcpKeyFile": ""
