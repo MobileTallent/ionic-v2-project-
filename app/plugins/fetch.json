@@ -1,15 +1,4 @@
 {
-    "cordova-plugin-facebook4": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-facebook4@~1.7.1"
-        },
-        "is_top_level": true,
-        "variables": {
-            "APP_ID": "Justababy",
-            "APP_NAME": "1219040608124053"
-        }
-    },
     "com.phonegap.parsepushplugin": {
         "source": {
             "type": "git",
@@ -206,5 +195,16 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "cordova-plugin-facebook4": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-facebook4@1.7.1"
+        },
+        "is_top_level": true,
+        "variables": {
+            "APP_ID": "1219040608124053",
+            "APP_NAME": "Justababy"
+        }
     }
 }
