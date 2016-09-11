@@ -94,7 +94,7 @@
     "postinstall": "webdriver-manager update",
     "ios-setup": "sudo npm install -g ios-sim ios-deploy && sudo gem install deliver && sudo gem install pilot && xcode-select --install && deliver init",
 
-    "addFacebookPlugin": "ionic plugin add cordova-plugin-facebook4 --save --variable APP_ID=\"$(json -f ../server/config.json facebookAppId)\" --variable APP_NAME=\"'$(json -f ../server/config.json facebookAppName)'\"",
+    "addFacebookPlugin": "ionic plugin add cordova-plugin-facebook4@1.7.1 --save --variable APP_ID=\"$(json -f ../server/config.json facebookAppId)\" --variable APP_NAME=\"'$(json -f ../server/config.json facebookAppName)'\"",
     "addParsePlugin": "ionic plugin add https://github.com/taivo/parse-push-plugin#a2e696aa27dcc0df7c7a4669caa3d0c0a5ffdaf2 --save --variable GCM_SENDER_ID=\"$(json -f ../server/config.json prod.gcpProjectNumber)\"",
 
     "test": "karma start karma-parse.conf.js",
