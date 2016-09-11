@@ -39,10 +39,6 @@ app/platforms/**
 
 # For testing installing the plugins
 app/plugin-source/**
-# Ignore the Facebook plugin as we have to install it with parameters
-app/plugins/cordova-plugin-facebook4/**
-# Ignore the Parse Push plugin as we have to install it with parameters
-app/plugins/com.phonegap.parsepushplugin
 # These keep track of locally installed state so ignore them
 app/plugins/android.json
 app/plugins/ios.json
