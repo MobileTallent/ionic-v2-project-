@@ -114,7 +114,7 @@ In development you will need to start the Mongo database yourself. If you want t
 
 * In /server/config.json enter your appName,
 
-* In /server/config.json enter an appId and masterKey (random numbers and letters, about 16 characters is good)
+* In /server/config.json enter a parseAppId and parseMasterKey (random numbers and letters, about 16 characters is good)
 
 
 
@@ -144,9 +144,11 @@ DO NOT lose your keystore and the alias and passwords otherwise you will not be 
 ### Base configuration
 
 Choose a package name for your project. It should follow the Java package naming conventions,
-which is your domain name in reverse and then the project name.
+which is your domain name in reverse and then the project name.  This is called the bundle id for your iOS app.
 
 For example we have used com.engineerstoolbox.cloneder
+
+* Open **/server/config.json** and update the **appId** attribute with your package name.
 
 * Open **/app/config.xml** and update the widget id attribute with your package name.
 
