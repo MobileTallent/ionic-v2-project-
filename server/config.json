@@ -1,7 +1,8 @@
 {
   "appName": "",
-  "appId": "",
-  "masterKey": "",
+
+  "parseAppId": "",
+  "parseMasterKey": "",
   "parseMount": "/parse/",
 
   "gcpBrowserKey": "",

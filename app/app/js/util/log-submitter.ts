@@ -5,7 +5,7 @@ angular.module('ionicApp')
 	 * Server submissions are limited to once every 10 seconds and duplicate error messages
 	 * in a row are not sent to avoid spamming the server.
 	 */
-	.config([ '$provide', 'serverUrl', function( $provide, serverUrl, appId ) {
+	.config([ '$provide', 'serverUrl', function( $provide, serverUrl, parseAppId ) {
 
 		if (!serverUrl) {
 			console.error('ERROR: serverUrl config value not configured for logging')
@@ -92,7 +92,7 @@ angular.module('ionicApp')
 						var xmlHttp = new XMLHttpRequest()
 						xmlHttp.open('POST', serverUrl + '/client-log', true)
 						xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
-						xmlHttp.setRequestHeader('X-Parse-Application-Id', appId)
+						xmlHttp.setRequestHeader('X-Parse-Application-Id', parseAppId)
 						var data = 'userId=' + encodeURIComponent(userId)
 							+ '&message=' + encodeURIComponent(errorMessage)
 							+ '&recent=' + encodeURIComponent(JSON.stringify(recent))
