@@ -9,6 +9,11 @@
   "gcpBrowserKey": "",
   "gcpServerKey": "",
 
+  "devP12file": "",
+  "devP12passphrase": "",
+  "prodP12file": "",
+  "prodP12passphrase": "",
+
   "environments": ["dev", "qa", "prod"],
 
   "dev": {

@@ -59,24 +59,54 @@ if(gaeId)
 	)
 
 if(config.facebookAppId) {
-	console.log('Configurating Facebook authentication for app Id', config.facebookAppId)
+	console.log('Configuring Facebook authentication for app Id', config.facebookAppId)
 	parseConfig.oauth.facebook = { appIds: [config.facebookAppId] }
 }
 
-// Just use the GCM key from the production project
-if(config.prod && config.prod.gcpProjectNumber && config.gcpServerKey) {
+// Configure Push notifications - see https://github.com/ParsePlatform/Parse-Server/wiki/Push for more details
+/*
+push: {
+	android: {
+		senderId: '...',
+		apiKey: '...'
+	},
+	ios: {
+		pfx: '/file/path/to/XXX.p12',
+			passphrase: '', // optional password to your p12/PFX
+			bundleId: '',
+			production: false
+	}
+}
+*/
+// Just use the GCM key from the production project for all environments so we only need the one apiKey
+if(config.prod && config.prod.gcpProjectNumber && config.gcpServerKey)
 	parseConfig.push.android = {
 		senderId: config.prod.gcpProjectNumber,
 		apiKey: config.gcpServerKey
 	}
-}
+else
+	console.log('Unable to configure push notification for Android')
 
-console.log('TODO Parse iOS Push config')
-// 	ios: {
-// 		pfx: '/file/path/to/XXX.p12',
-// 		bundleId: '',
-// 		production: false
-// 	}
+if(config.devP12file && config.appId)
+	parseConfig.push = {
+		pfx: config.devP12file,
+		passphrase: config.devP12passphrase, // optional password to your p12/PFX
+		bundleId: config.appId,
+		production: false
+	}
+else
+	console.log('Unable to configure development push notification for iOS')
+
+if(config.prodP12file && config.appId)
+	parseConfig.push = {
+		pfx: config.prodP12file,
+		passphrase: config.prodP12passphrase, // optional password to your p12/PFX
+		bundleId: config.appId,
+		production: true
+	}
+else
+	console.log('Unable to configure production push notification for iOS')
+
 
 
 module.exports = parseConfig

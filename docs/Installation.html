@@ -186,9 +186,11 @@ If you are having any issues look in /app/package.json at the scripts.ios-setup 
 * In /app run **ionic platform add ios**
 
 Follow the instructions to setup push notifications for iOS. This is complicated and you can delay doing this step until you are ready for a production build.
-https://parse.com/tutorials/ios-push-notifications
+https://parse.com/tutorials/ios-push-notifications. Note the following:
 
-Unlike the Android platform, you will need to open /platforms/ios/(project name).xcodeproj with XCode to perform the release builds.
+- In section 1.7 save the certificate files (one for dev and prod) to /server, and in /server/config.json update the **devP12file** and **prodP12file** properties with the certificate file name
+- Skip section 5 as the Parse push plugin will handle that.
+
 
 # Facebook
 
