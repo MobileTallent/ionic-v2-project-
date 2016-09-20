@@ -29,8 +29,8 @@ var port = process.env.PORT || 1337
 var parseConfig = {
 
 	// Config that is common to all environments
-	appId: config.appId,
-	masterKey: config.masterKey,
+	appId: config.parseAppId,
+	masterKey: config.parseMasterKey,
 	serverURL: 'http://localhost:' + port + config.parseMount,
 	cloud: 'cloud/main.js',
 	databaseURI: envConfig.databaseURI,
