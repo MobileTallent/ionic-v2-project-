@@ -276,7 +276,7 @@ angular.module('controllers')
         $scope.cancel = () => $scope.profile = AppService.getProfile($scope).clone()
     })
 
-    .controller('SettingsCtrl', function($log, $scope, $rootScope, $state, $translate, AppService, AppUtil, $ionicActionSheet) {
+    .controller('SettingsCtrl', function($log, $scope, $rootScope, $state, $translate, AppService, AppUtil, $ionicActionSheet, env) {
 
         var translations
         $translate(['SETTINGS_SAVE_ERROR','DELETE', 'DELETE_ACCOUNT','CANCEL']).then(function (translationsResult) {
@@ -351,7 +351,7 @@ angular.module('controllers')
             console.log('debug...')
             $ionicActionSheet.show({
                 destructiveText: 'Send Debug Logs',
-                titleText: 'UID ' + AppService.getProfile().uid,
+                titleText: 'UID: ' + AppService.getProfile().uid + ' Env: ' + env,
                 cancelText: translations.CANCEL,
                 cancel: function() {},
                 destructiveButtonClicked: function(index) {
