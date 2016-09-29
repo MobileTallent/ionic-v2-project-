@@ -222,6 +222,7 @@ keytool -exportcert -alias YOUR_RELEASE_KEY_ALIAS -keystore YOUR_RELEASE_KEY_PAT
 (You will have need to completed the android setup and release steps to have this. You can do it later)
 
 There is a npm script in /app/package.json with this command configured to read the alias and keystore name from the /app/build.json file.<br/>
+In /app run **npm run generate-hash**
 The auto-configuring of the script variables only works with OSX/Linux. You will need to manually update the npm script with the actual values in Windows.<br/>
 Also you will need the Java bin directory and OpenSSL bin directory on your PATH.
 
