@@ -21,6 +21,8 @@ body {
 
 .padding-10 { padding: 10px; }
 
+.padding-left-right { padding-left: 10px; padding-right: 10px; }
+
 .bold { font-weight: bold; }
 
 .wide { width:100%; }
