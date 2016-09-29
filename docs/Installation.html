@@ -218,10 +218,14 @@ Default Activity Class Name (add .CordovaAppp to the package name, for example c
 
 To get the release key hash you have two options.
 Run (replacing YOUR_RELEASE_KEY_ALIAS and YOUR_RELEASE_KEY_PATH with the appropriate values):
-keytool -exportcert -alias YOUR_RELEASE_KEY_ALIAS -keystore YOUR_RELEASE_KEY_PATH | openssl sha1 -binary | openssl base64
+keytool -exportcert -alias YOUR_RELEASE_KEY_ALIAS -keystore YOUR_RELEASE_KEY_PATH | openssl sha1 -binary | openssl base64<br/>
 (You will have need to completed the android setup and release steps to have this. You can do it later)
 
-or otherwise just try and login to Facebook. You will get an error like "The hash aurhgu3u4gh9a3u4hg= is not found"
+There is a npm script in /app/package.json with this command configured to read the alias and keystore name from the /app/build.json file.<br/>
+The auto-configuring of the script variables only works with OSX/Linux. You will need to manually update the npm script with the actual values in Windows.<br/>
+Also you will need the Java bin directory and OpenSSL bin directory on your PATH.
+
+Or otherwise just try and login to Facebook. You will get an error like "The hash aurhgu3u4gh9a3u4hg= is not found"
 Then type that hash into the Facebook Android hash configuration.
 
 ### Facebook App settings

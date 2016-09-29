@@ -106,7 +106,8 @@
     "deploy-ios": "deliver --ipa \"platforms/ios/build/device/AppName.ipa\" --submit_for_review",
     "deploy-ios-test": "pilot upload --ipa \"platforms/ios/build/device/AppName.ipa\" --distribute_external --skip_waiting_for_build_processing",
     "build-deploy": "npm run build-release && npm run deploy-play && npm run deploy-ios && echo 'App deployed. Update your version in config.xml'",
-    "build-deploy-test": "npm run build-release && npm run deploy-play-test && npm run deploy-ios-test"
+    "build-deploy-test": "npm run build-release && npm run deploy-play-test && npm run deploy-ios-test",
+    "generate-hash": "keytool -exportcert -alias $(json -f build.json android.release.alias) -keystore $(json -f build.json android.release.keystore) | openssl sha1 -binary | openssl base64"
   }
 
 }
