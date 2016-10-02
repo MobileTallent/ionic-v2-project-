@@ -135,7 +135,7 @@ gulp.task('envConfig', function (done) {
     }
 
     // Write out the constants.js file with all the required values in the configuration json
-    var properties = ['appName','appId','parseMount','gcpBrowserKey','playStoreUrl','itunesUrl','facebookAppId','linkedInId','linkedInSecret','socialShareMessage','adMob']
+    var properties = ['appName','parseAppId','parseMount','gcpBrowserKey','playStoreUrl','itunesUrl','facebookAppId','linkedInId','linkedInSecret','socialShareMessage','adMob']
 
     var constants = 'angular.module("constants", [])\n'
     properties.forEach(function(prop) {
@@ -150,7 +150,7 @@ gulp.task('envConfig', function (done) {
 
     // Copy the custom Android application class with the app id and server url configured
     var replacePatterns = [
-        {match: 'parseAppId', replacement: config.appId},
+        {match: 'parseAppId', replacement: config.parseAppId},
         {match: 'serverUrl', replacement: envConfig.serverUrl},
         {match: 'parseMount', replacement: config.parseMount}]
     var java = gulp.src('./app/config/CustomApplication.java')
