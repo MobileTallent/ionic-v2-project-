@@ -5,18 +5,25 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.media.MediaRecorder;
 import android.media.MediaPlayer;
 import android.media.AudioManager;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.content.Context;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import java.util.UUID;
 import java.io.FileInputStream;
 import java.io.File;
 import java.io.IOException;
 
+
 public class AudioRecorderAPI extends CordovaPlugin {
+
+private static final int RECORD_REQUEST_CODE = 101;
 
   private MediaRecorder myRecorder;
   private String outputFile;
@@ -25,6 +32,16 @@ public class AudioRecorderAPI extends CordovaPlugin {
   @Override
   public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
     Context context = cordova.getActivity().getApplicationContext();
+
+    int permission = ContextCompat.checkSelfPermission(cordova.getActivity(),
+      Manifest.permission.RECORD_AUDIO);
+
+    if (permission != PackageManager.PERMISSION_GRANTED) {
+      ActivityCompat.requestPermissions(cordova.getActivity(),
+        new String[]{Manifest.permission.RECORD_AUDIO},
+        RECORD_REQUEST_CODE);
+    }
+
     Integer seconds;
     if (args.length() >= 1) {
       seconds = args.getInt(0);
