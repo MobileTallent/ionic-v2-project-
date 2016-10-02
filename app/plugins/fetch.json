@@ -27,22 +27,6 @@
         "is_top_level": true,
         "variables": {}
     },
-    "cordova-plugin-compat": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-compat"
-        },
-        "is_top_level": false,
-        "variables": {}
-    },
-    "cordova-plugin-camera": {
-        "source": {
-            "type": "registry",
-            "id": "cordova-plugin-camera"
-        },
-        "is_top_level": true,
-        "variables": {}
-    },
     "cordova-plugin-geolocation": {
         "source": {
             "type": "registry",
@@ -206,5 +190,21 @@
             "APP_ID": "1219040608124053",
             "APP_NAME": "Justababy"
         }
+    },
+    "cordova-plugin-compat": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-compat"
+        },
+        "is_top_level": false,
+        "variables": {}
+    },
+    "cordova-plugin-camera": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-camera"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }
