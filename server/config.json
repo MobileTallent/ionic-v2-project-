@@ -1,11 +1,17 @@
 {
   "appName": "Just A Baby",
+  "appId": "co.justababy.app",
   "parseAppId": "11111111122444",
   "parseMasterKey": "3333333344888",
   "parseMount": "/parse/",
 
   "gcpBrowserKey": "AIzaSyCUgT951OiYF4TmpR-lcpPd9zJ_NVBpoow",
   "gcpServerKey": "AIzaSyAejh_rsmEqgCu8mSQ1Y0uiRavvrZIDQf8",
+
+  "devP12file": "",
+  "devP12passphrase": "",
+  "prodP12file": "",
+  "prodP12passphrase": "",
 
   "environments": ["dev", "qa", "prod"],
 

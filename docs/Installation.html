@@ -114,7 +114,7 @@ In development you will need to start the Mongo database yourself. If you want t
 
 * In /server/config.json enter your appName,
 
-* In /server/config.json enter an appId and masterKey (random numbers and letters, about 16 characters is good)
+* In /server/config.json enter a parseAppId and parseMasterKey (random numbers and letters, about 16 characters is good)
 
 
 
@@ -144,9 +144,11 @@ DO NOT lose your keystore and the alias and passwords otherwise you will not be 
 ### Base configuration
 
 Choose a package name for your project. It should follow the Java package naming conventions,
-which is your domain name in reverse and then the project name.
+which is your domain name in reverse and then the project name.  This is called the bundle id for your iOS app.
 
 For example we have used com.engineerstoolbox.cloneder
+
+* Open **/server/config.json** and update the **appId** attribute with your package name.
 
 * Open **/app/config.xml** and update the widget id attribute with your package name.
 
@@ -184,9 +186,11 @@ If you are having any issues look in /app/package.json at the scripts.ios-setup 
 * In /app run **ionic platform add ios**
 
 Follow the instructions to setup push notifications for iOS. This is complicated and you can delay doing this step until you are ready for a production build.
-https://parse.com/tutorials/ios-push-notifications
+https://parse.com/tutorials/ios-push-notifications. Note the following:
 
-Unlike the Android platform, you will need to open /platforms/ios/(project name).xcodeproj with XCode to perform the release builds.
+- In section 1.7 save the certificate files (one for dev and prod) to /server, and in /server/config.json update the **devP12file** and **prodP12file** properties with the certificate file name
+- Skip section 5 as the Parse push plugin will handle that.
+
 
 # Facebook
 
