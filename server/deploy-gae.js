@@ -27,5 +27,10 @@ if(!fs.existsSync(envYaml)) {
 
 shell.cp(envYaml, 'app.yaml')
 
+if(!config[env].gcpProjectId) {
+    console.log('gcpProjectId is not configured in config.json for the environment ' + env)
+    process.exit(1)
+}
+
 // Deploy!
-var child = shell.exec('gcloud app deploy --quiet --stop-previous-version --project cloneder-prod ');
+var child = shell.exec('gcloud app deploy --quiet --stop-previous-version --project ' + config[env].gcpProjectId);
