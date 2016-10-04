@@ -800,11 +800,18 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
             // 141 is SCRIPT_ERROR, including when response.error() was called
             if(error.code === 141) {
-                if(error.message && error.message[3] && error.message[3].message &&  error.message[3].message.startsWith('{')) {
+                if(_.isNumber(error.message.code)) {
+                    // An error object was returned as the message
+                    error = error.message
+                }
+                else if(_.isString(error.message) && error.message.startsWith('{')) {
+                    // There's an error object as a string
                     try {
                         error = JSON.parse(error.message)
                         return $q.reject(error)
-                    } catch (e) {}
+                    } catch (e) {
+                        $log.debug('Error parsing unwrapped error ' + e)
+                    }
                 }
                 if(error.message == 'function not found')
                     $log.error('Cloud function not found. Is the latest Cloud Code deployed?')
