@@ -30,10 +30,10 @@
           <div class="track"><div class="handle"></div></div>
         </label>
       </li>
-      <li class="item item-divider">
+      <li class="item item-divider hidden">
         {{'SEARCH_DISTANCE' | translate}}: {{profile.distance}}{{profile.distanceType}}
       </li>
-      <li class="item" style="height: 60px">
+      <li class="item hidden" style="height: 60px">
         <slider floor="1" ceiling="6000" ng-model-low="profile.distance" ng-model-high="profile.distance"></slider>
       </li>
       <li class="item item-divider">
