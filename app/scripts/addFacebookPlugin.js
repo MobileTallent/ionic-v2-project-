@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-// Script to deploy to Google App Engine
 var shell = require('shelljs')
 var fs = require('fs')
 
@@ -23,5 +22,5 @@ if(!config.facebookAppName) {
 }
 
 var command = 'ionic plugin add cordova-plugin-facebook4@1.7.1 --save --variable APP_ID="' + config.facebookAppId + '" --variable APP_NAME="' + config.facebookAppName + '"'
-console.log('exec ' + command)
+console.log('exec: ' + command)
 var child = shell.exec(command)
