@@ -2,16 +2,18 @@
  * Module for sending email which uses the Mailgun implementation
  */
 var config = require('../config.js')
-var Mailgun = require('mailgun-js')
+console.log('Mailgun configuration: ' + JSON.stringify(config.mailgun))
 
-var exports = module.exports = {}
+var configured = config.mailgun.domain && config.mailgun.key && config.mailgun.from
 
-var configured = config.mailgun_domain && config.mailgun_key && config.mailgun_from
-configured = false
+var mailgun
+
 if(configured)
-	Mailgun.initialize(config.mailgun_domain, config.mailgun_key)
+	mailgun = require('mailgun.js').client({username: 'api', key: process.env.MAILGUN_API_KEY || config.mailgun.key});
 else
 	console.log('Email sending is not configured')
+
+var exports = module.exports = {}
 
 
 exports.sendEmail = function (to, subject, text) {
@@ -20,11 +22,12 @@ exports.sendEmail = function (to, subject, text) {
 		return Parse.Promise.as()
 	}
 
-	return Mailgun.sendEmail({
-		to: to,
-		from: config.mailgun_from,
+	return mailgun.messages.create(config.mailgun.domain, {
+		from: config.mailgun.from,
+		to: [to],
 		subject: subject,
-		text: text
+		text: text,
+		html: text
 	})
 }
 
@@ -35,10 +38,11 @@ exports.sendAdminEmail = function(subject, text) {
 		return Parse.Promise.as()
 	}
 
-	return Mailgun.sendEmail({
-		to: config.mailgun_from,
-		from: config.mailgun_from,
+	return mailgun.messages.create(config.mailgun.domain, {
+		from: config.mailgun.from,
+		to: [config.mailgun.from],
 		subject: subject,
-		text: text
+		text: text,
+		html: text
 	})
 }
