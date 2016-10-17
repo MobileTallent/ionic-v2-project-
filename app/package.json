@@ -112,8 +112,8 @@
     "build-release": "gulp prodBuild && ionic build --release --device",
     "deploy-play": "echo 'Uploading to the Play store. This may take a few minutes.' && playup --track production --auth ../server/service-account-key-prod.json ./platforms/android/build/outputs/apk/android-release.apk",
     "deploy-play-test": "echo 'Uploading to the Play store. This may take a few minutes.' && playup --track beta --auth ../server/service-account-key-prod.json ./platforms/android/build/outputs/apk/android-release.apk",
-    "deploy-ios": "deliver --ipa \"platforms/ios/build/device/AppName.ipa\" --submit_for_review",
-    "deploy-ios-test": "pilot upload --ipa \"platforms/ios/build/device/AppName.ipa\" --distribute_external --skip_waiting_for_build_processing",
+    "deploy-ios": "deliver --ipa \"platforms/ios/build/device/Just A Baby.ipa\" --submit_for_review",
+    "deploy-ios-test": "pilot upload --ipa \"platforms/ios/build/device/Just A Baby.ipa\" --distribute_external --skip_waiting_for_build_processing",
     "build-deploy": "npm run build-release && npm run deploy-play && npm run deploy-ios && echo 'App deployed. Update your version in config.xml'",
     "build-deploy-test": "npm run build-release && npm run deploy-play-test && npm run deploy-ios-test",
     "generate-hash": "node scripts/generate-hash.js"
