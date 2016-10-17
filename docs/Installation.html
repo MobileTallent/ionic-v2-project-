@@ -223,8 +223,8 @@ keytool -exportcert -alias YOUR_RELEASE_KEY_ALIAS -keystore YOUR_RELEASE_KEY_PAT
 
 There is a npm script in /app/package.json with this command configured to read the alias and keystore name from the /app/build.json file.<br/>
 In /app run **npm run generate-hash**
-The auto-configuring of the script variables only works with OSX/Linux. You will need to manually update the npm script with the actual values in Windows.<br/>
-Also you will need the Java bin directory and OpenSSL bin directory on your PATH.
+
+(You will need the Java bin directory and OpenSSL bin directory on your PATH for this script to work)
 
 Or otherwise just try and login to Facebook. You will get an error like "The hash aurhgu3u4gh9a3u4hg= is not found"
 Then type that hash into the Facebook Android hash configuration.
@@ -264,8 +264,7 @@ A Google Cloud account is required as a minimum for push notifications and maps.
 The project naming convention is used in the configuration is appName-environment, e.g. appName-prod, appName-qa
 
 If you will be hosting your production server on the GCP then open the advanced options and select the location that is closest to your main user base.
-If unsure, or expecting global users then leave as the default option.  If you are migrating a live Parse app then choose usa-east1 as that
-will be the closest to the Parse AWS datacenter.
+If unsure, or expecting global users then leave as the default option.
 
 * Go to the IAM & Admin -> Settings page. In /server/config.json copy the Project ID and Project number to the values for prod.gcpProjectId and prod.gcpProjectNumber
 
@@ -424,7 +423,7 @@ To deploy a debug build to your real iOS device you will need to do it from XCod
 
 The iOS emulator is sufficient for most purposes. The main limitation is it can't receive push notifications.
 
-# Dashboard
+# Admin Dashboard
 
 The admin dashboard is a separate Parse project at https://github.com/ParsePlatform/parse-dashboard
 
@@ -468,7 +467,7 @@ For other hosting options follow the documentation on the [Parse wiki](https://g
 
 * Create a project for each environment you want in the cloud (QA, production etc) with billing enabled (e.g appname-prod, appname-qa). You should have already created the production project in the previous step.
 
-* In /server/config.json update the GCP configuration values in the qa and prod sections.  You can leave the parseServerUrl blank, it will be automatically configured when running in Google App Engine.
+* In /server/config.json update the GCP configuration values in the qa and prod sections.
 
 ## Database setup
 
