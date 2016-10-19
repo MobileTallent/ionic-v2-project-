@@ -135,7 +135,7 @@ gulp.task('envConfig', function (done) {
     }
 
     // Write out the constants.js file with all the required values in the configuration json
-    var properties = ['appName','parseAppId','parseMount','gcpBrowserKey','playStoreUrl','itunesUrl','facebookAppId','linkedInId','linkedInSecret','socialShareMessage','adMob']
+    var properties = ['appName','parseAppId','parseMount','gcpBrowserKey','playStoreUrl','itunesUrl', 'webStoreUrl', 'facebookAppId','linkedInId','linkedInSecret','socialShareMessage', 'socialShareSubject', 'adMob']
 
     var constants = 'angular.module("constants", [])\n'
     properties.forEach(function(prop) {

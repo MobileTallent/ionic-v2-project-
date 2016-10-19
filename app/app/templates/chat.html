@@ -1,14 +1,11 @@
 <ion-view id="userMessagesView">
 	<ion-nav-title class="center">{{::matchProfile.name}}</ion-nav-title>
+
 	<ion-nav-buttons side="right">
-
 		<!--Make Icon profile avatar-->
-
-		<i class="button button-icon icon ion-person" ui-sref="^.match-profile({matchId: matchId, profileId : matchP–––––rofile.id})"></i>
-
+		<img ui-sref="^.match-profile({matchId: matchId, profileId : matchProfile.id})" class="profile-pic square" ng-src="{{::matchProfile | profileImageUrl}}" onerror="onProfilePicError(this)"/>
+		<!--<i class="button button-icon icon ion-person" ui-sref="^.match-profile({matchId: matchId, profileId : matchProfile.id})"></i>-->
 		<i class="button button-icon icon ion-android-more-vertical" ng-click="chatOptions()"></i>
-
-
 	</ion-nav-buttons>
 
 	<ion-content has-bouncing="true" class="has-header has-footer" delegate-handle="userMessageScroll">
@@ -21,12 +18,13 @@
 
 			<div ng-if="::message.sender != profile.uid">
 
-				<img ng-click="viewProfile(message)" class="profile-pic right" ng-src="{{::matchProfile | profileImageUrl}}" onerror="onProfilePicError(this)" />
+				<img ng-click="viewProfile(message)" class="profile-pic right" ng-src="{{::matchProfile | profileImageUrl}}" onerror="onProfilePicError(this)"
+				/>
 
 				<div class="center chat-date-recieved">
 					<span>{{::message.createdAt | chatDateFormat}}</span>
 				</div>
-				<div class="chat-bubble left">
+				<div class="chat-bubble right">
 					<div class="message" ng-if="::message.text" ng-bind-html="::message.text | escapeHTML | emoji" autolinker>
 						<!--  | nl2br -->
 					</div>
@@ -44,7 +42,7 @@
 			<div ng-if="::message.sender == profile.uid">
 				<!-- Change the sytle .chat-bubble.right to have margin-right: 55px if you want to show your own image too-->
 
-<img ng-click="viewProfile(message)" class="profile-pic" ng-src="{{::profile | profileImageUrl}}" onerror="onProfilePicError(this)"
+				<img ng-click="viewProfile(message)" class="profile-pic left" ng-src="{{::profile | profileImageUrl}}" onerror="onProfilePicError(this)"
 				/>
 
 
@@ -53,8 +51,8 @@
 					<span>{{::message.createdAt | chatDateFormat}}</span>
 				</div>
 
-				
-				<div class="chat-bubble right">
+
+				<div class="chat-bubble left">
 
 					<div class="message" ng-if="::message.text" ng-bind-html="::message.text | escapeHTML | emoji" autolinker>
 						<!-- | nl2br -->

@@ -348,6 +348,12 @@ img.profile-pic.right {
     right: 10px;
 }
 
+img.profile-pic.square {
+    right: 30px;
+    top: 0px;
+    border-radius: 10%;
+}
+
 .ion-email {
     float: right;
     font-size: 32px;
@@ -423,7 +429,7 @@ img.profile-pic.right {
     background-color: #158ffe;
     color: #fff;
     float: right;
-    margin-right: 10px;
+    margin-right: 55px;
 }
 
 .chat-bubble.right:before {

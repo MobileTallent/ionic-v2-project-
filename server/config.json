@@ -36,15 +36,17 @@
     "gcpKeyFile": ""
   },
 
-  "playStoreUrl": "",
+  "playStoreUrl": "http://goo.gl/6fQnJC",
   "itunesUrl": "",
+  "webStoreUrl": "http://justababy.co",
 
   "facebookAppId": "1219040608124053",
   "facebookAppName": "Justababy",
   "linkedInId": "",
   "linkedInSecret": "",
 
-  "socialShareMessage": "",
+  "socialShareMessage": "With Just-a-Baby, you know you’re meeting people who are ready to help you start your new journey.",
+  "socialShareSubject": "Download the App now.",
 
   "adMob": {
     "android": {

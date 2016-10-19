@@ -70,27 +70,19 @@
 			
 			#login-facebook {
 				width: 40px;
-				vertical-align:middle !important;
-				padding-bottom:3px !important;
+				vertical-align: middle !important;
+				padding-bottom: 3px !important;
 			}
 			
 			#facebookBtnSubtext {
 				color: #ffffff;
 				font-family: 'Avenir Next LT Pro Regular', 'Helvetica Neue', Helvetica;
 				font-size: 18px;
-				padding-top:1.5px;
-				
-			}
-			
-			#login-background-image {
-				background: url(../img/kids-edited.png);
-				background-repeat: no-repeat;
-				background-size: cover;
-				width: 100%;
-				opacity: 0.64;
+				padding-top: 1.5px;
 			}
 			
 			#login-status {
+				color: #ffffff;
 				bottom: 10px;
 				text-align: center;
 				width: 100%;
@@ -107,10 +99,6 @@
 					<div class="app-name">{{::appName}}</div>
 				</div>
 			</div>
-
-
-
-
 			<br/>
 			<!-- Splash Image upon successfuly sign in -->
 			<!--<div class="row center">
@@ -121,31 +109,26 @@
 			</div>-->
 
 			<!--<div class="row center">
-      <div class="col">
-        <img style="width:100%; max-width: 250px; padding-top: 10px" src="img/icon.png"/>
-      </div>
-    </div>-->
+			<div class="col">
+				<img style="width:100%; max-width: 250px; padding-top: 10px" src="img/icon.png"/>
+			</div>
+    		</div>-->
 
 			<!--Sign in with Facebook button-->
+			<div class="row center" style="padding-top: 150px">
+				<div class="col">
+					<a ng-show="showForm == true" ng-class="login.class" ng-click="facebookLogin()"><img style="width:75%; max-width: 600px;" src="img/facebook.png" /></a>
+					<!--<a ng-show="showForm == true" ng-class="login.class" ng-click="linkedInLogin()"><img style="width:100%; max-width: 600px; padding-top: 30px" src="img/linkedin.png" /></a>-->
 
-
-
-			<div class="text-center">
-				<div class="button button-outline button-light" ng-click="facebookLogin()">
-					<div class="row">
-						<div class="col col-center">
-							<a ng-show="showForm == true" ng-class="login.class" ><img id="login-facebook" src="img/ic-facebook.png" /></a>
-						</div>
-						<div class="col col-80 col-center">
-							<h5 id="facebookBtnSubtext">Sign in with Facebook</h5>
-						</div>
-
-					</div>
+					<!-- Optional button/icon version
+					<button ng-show="showForm == true" ng-class="login.class" ng-click="facebookLogin()" class="button button-large icon ion-social-facebook-outline social-facebook">&nbsp;&nbsp;&nbsp;Login with Facebook</button>
+					<button ng-show="showForm == true" ng-class="login.class" ng-click="facebookLogin()" class="button button-large icon ion-social-linkedin-outline social-linkedin">&nbsp;&nbsp;&nbsp;Login with LinkedIn</button>
+            		-->
 				</div>
 			</div>
 
 			<!--<div class="row">
-      <div class="col col-80 col-offset-10">-->
+      		<div class="col col-80 col-offset-10">-->
 
 			<!-- Login/Register -->
 			<!----<div ng-show="showForm == true" class="list">
@@ -164,7 +147,7 @@
             <!--<div class="center" style="padding-top: 20px;">
                 <a id="resetLink" ng-click="showResetPasswordForm()" translate="RESET_PASSWORD"></a>
             </div>
-        </div>
+        	</div>
 
           <!-- Reset Password
           <div ng-show="showResetPassword == true" class="list">
@@ -186,6 +169,4 @@
 			</div>
 		</div>
 	</ion-content>
-    </div>-->
-			<!--</div>
 </ion-view>
