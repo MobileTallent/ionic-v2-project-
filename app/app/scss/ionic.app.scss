@@ -19,6 +19,11 @@ $dark:                            #444 !default;
 //$ionicons-font-path: "../lib/ionic/fonts" !default;
 $ionicons-font-path: "fonts" !default;
 
+$positive: rgba(182, 229, 225, 68); /* soft green */
+$energized: rgb(43, 172, 143); /*strong green */
+$assertive: rgb(191, 127, 204); /*purple*/
+
+
 // Include all of Ionic
 @import "bower_components/ionic/scss/ionic";
 

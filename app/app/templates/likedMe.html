@@ -1,28 +1,29 @@
-<ion-view view-title="Likes Me">
-    <ion-content ng-controller="LikedMe as vm">
+<ion-view view-title="Likes Me" >
+	<ion-content ng-controller="LikedMe as vm">
 
-        <ion-refresher
-                pulling-text="{{'PULL_TO_REFRESH' | translate}}"
-                on-refresh="vm.refresh()">
-        </ion-refresher>
+		<ion-refresher pulling-text="{{'PULL_TO_REFRESH' | translate}}" on-refresh="vm.refresh()">
+		</ion-refresher>
 
-        <div ng-if="!vm.profiles.length" class="center">
-            <br/>
-            {{'NO_LIKES' | translate}}
-        </div>
+		<div ng-if="!vm.profiles.length" class="center">
+			<br/> {{'NO_LIKES' | translate}}
+		</div>
 
-        <ion-list>
-            <ion-item ng-repeat="profile in vm.profiles"
-                      class="item-thumbnail-left" ng-click="vm.view($index)">
+		<!--<ion-list>-->
+			<ion-item ng-repeat="profile in vm.profiles" ng-click="vm.view($index)" class="card">
+                
+				<!--<div class="card item-borderless" >-->
 
-                <img ng-src="{{profile | profileImageUrl}}">
-                <h2>{{profile.name}}, {{profile | profileAge}}</h2>
-                <p>
-                    {{profile.location | distance}} {{'AWAY' | translate}}<br/>
-                    {{profile.about}}
-                </p>
-            </ion-item>
-        </ion-list>
+					<div class="item item-avatar " >
 
-    </ion-content>
+                        <img ng-src="{{profile | profileImageUrl}}" >
+						<h2>{{profile.name}}, {{profile | profileAge}}</h2>
+						<p>
+							{{profile.location | distance}} {{'AWAY' | translate}}
+						</p>
+					</div>
+				<!--</div>-->
+			</ion-item>
+		<!--</ion-list>-->
+
+	</ion-content>
 </ion-view>

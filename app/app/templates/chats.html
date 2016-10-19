@@ -1,30 +1,42 @@
 <ion-view view-title="Chat">
 
-  <ion-nav-buttons side="right">
-    <i class="button button-icon icon ion-gear-a" ng-click="chatSettings($event)"></i>
-  </ion-nav-buttons>
+	<ion-nav-buttons side="right">
+		<i class="button button-icon icon ion-gear-a" ng-click="chatSettings($event)"></i>
+	</ion-nav-buttons>
 
-  <ion-content>
+	<ion-content>
 
-    <!-- TODO style this better -->
-    <div ng-show="!matches.length" style="text-align: center;font-family:'Avenir Next LT Pro Regular';font-size:18px">
-        <br/>
-        {{'NO_MATCHES' | translate}}<br/>
-        <br/>
-        {{'START_SWIPING' | translate}}!
+		<!--<div class="row">
+			<div class="col col-50 center ">
+				<h5 class="assertive">Recent</h5>
+			</div>
+			<div class="col col-50 center ">
+				<h5 class="assertive">All</h5>
+			</div>
+			<!--<div class="col col-33 center">x
+				<h5 class="assertive">New</h5>
+			</div>
+		</div>-->
 
-      <!-- buttons which tinder has
+		<!-- TODO style this better -->
+		<div ng-show="!matches.length" style="text-align: center;font-family:'Avenir Next LT Pro Regular';font-size:18px">
+			<br/> {{'NO_MATCHES' | translate}}<br/>
+			<br/> {{'START_SWIPING' | translate}}!
+
+			<!-- buttons which tinder has
       Discover New People
       Invite your friends!
       -->
-    </div>
-    <div class="list">
-      <a class="item item-avatar" ng-repeat="match in matches track by match.id" ui-sref="^.chat({matchId : match.id})">
-        <img ng-src="{{::match.profile | profileImageUrl}}" img-cache>
-        <h2>{{::match.profile.name}}</h2>
-        <p ng-class="match.read ? '' : 'chat-unread'" ng-bind-html="match.lastMessage | escapeHTML | emoji" />
-      </a>
-    </div>
+		</div>
+		<div class="list">
+			<a class="item item-avatar item-borderless" ng-repeat="match in matches track by match.id" ui-sref="^.chat({matchId : match.id})" ng-class-odd="'chats-list-odd'" ng-class-even="'chats-list-even'">
+				
+					<img ng-src="{{::match.profile | profileImageUrl}}" img-cache>
+					<h2 class="energized" >{{::match.profile.name}}</h2>
+					<p class="energized" ng-class="match.read ? '' : 'chat-unread'" ng-bind-html="match.lastMessage | escapeHTML | emoji" />
+		
+			</a>
+		</div>
 
-  </ion-content>
+	</ion-content>
 </ion-view>

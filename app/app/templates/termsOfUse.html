@@ -1,9 +1,15 @@
-<ion-view>
-    <ion-header-bar class="bar-positive">
-        <h1 class="title">{{'TERMS_OF_USE' | translate}}</h1>
-    </ion-header-bar>
+<ion-view view-with-bg id="background" >
+   
     <ion-content padding="true" class="center">
         <style>
+
+            #background{
+                 background: url(../img/kids-edited.png);
+                background-repeat:no-repeat;
+                background-size:cover;
+                width:100%;
+                opacity:0.3;
+            }
             ul {
                 list-style: disc;
                 padding-left: 20px;
@@ -14,7 +20,14 @@
                 padding: 5px;
                 display: list-item;
             }
+            #terms-of-use-card{
+                margin-top:50%;
+                opacity:0.95;
+            }
         </style>
+        <div class="card" id="terms-of-use-card">
+            <div class="item item-text-wrap">
+                <h1 class="title center positive">{{'TERMS_OF_USE' | translate}}</h1>
         <div>
             <p>
                 By continuing, you agree to <b> <a href="javascript:void(0)" ng-click="isTermsOpen = !isTermsOpen; isPrivacyOpen =false; isClickedOnce=true;">terms of service</a></b>                and
@@ -129,6 +142,7 @@
         <br/>
 
         <button class="button button-block" ng-click="logout()">{{'LOGOUT' | translate}}</button>
-
+        </div>
+        </div>
     </ion-content>
 </ion-view>
