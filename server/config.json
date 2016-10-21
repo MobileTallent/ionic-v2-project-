@@ -60,9 +60,9 @@
   },
 
   "mailgun": {
-    "domain": "www.justababy.co",
-    "key": "key-c15cc58c98b8dd94bbd1d3b73792f8b9",
-    "from": "justababy@gmail.com"
+    "domain": "justababy.scale.com.au",
+    "key": "key-315de865fab7c7d955ca040d2b3b5005",
+    "from": "justababy.app@scale.com.au"
   },
 
   "twilio": {

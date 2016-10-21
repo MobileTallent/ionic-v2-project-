@@ -1,4 +1,4 @@
-<ion-view view-with-bg id="login-background-image">
+<ion-view view-with-bg id="login-background-image" cache-view="false">
 	<ion-content padding="true" class="center">
 		<style>
 			ul {
@@ -16,8 +16,16 @@
 				margin-top: 50%;
 				opacity: 0.70;
 			}
+
+			#terms-of-use-card.topZero{
+				margin-top: 10%;
+			}
+
+			.platform-android #terms-of-use-card.topZero{
+				opacity: 1;
+			}
 		</style>
-		<div class="card" id="terms-of-use-card">
+		<div class="card" id="terms-of-use-card" ng-class="isPrivacyOpen || isTermsOpen ? 'topZero' : ''">
 			<div class="item item-text-wrap">
 				<h1 class="title center positive">{{'TERMS_OF_USE' | translate}}</h1>
 				<div>

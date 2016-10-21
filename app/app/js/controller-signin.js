@@ -35,7 +35,7 @@ angular.module('controllers', ['service.app', 'ngAnimate', 'ngCordova', 'ionic.c
         function setLoggingInStyles() {
             $scope.showForm = false
             $scope.showLogo = true
-            $scope.logo.class = 'pulse'
+            $scope.logo.class = 'animated jello infinite'
             $scope.status = '' // the translation key to display on the login screen
         }
 
@@ -232,7 +232,7 @@ angular.module('controllers', ['service.app', 'ngAnimate', 'ngCordova', 'ionic.c
          */
         function proceed() {
             $scope.status = ''
-            $scope.logo.class = 'drop'
+            $scope.logo.class = 'animated zoomOutDown'
             AppService.getMutualMatches() // load in the background
             // disable the back button
             $ionicHistory.nextViewOptions({
@@ -241,7 +241,7 @@ angular.module('controllers', ['service.app', 'ngAnimate', 'ngCordova', 'ionic.c
             })
 
             // the timeout is to give the drop CSS animation time
-            $timeout(() => AppService.goToNextLoginState(), 500)
+            $timeout(() => AppService.goToNextLoginState(), 1000)
         }
 
 
