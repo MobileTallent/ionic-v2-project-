@@ -64,7 +64,7 @@ var mockParseService = function($provide) {
 		return $q.when(msg)
 	}
 
-	ParseService.rebuildMatches = () => {}
+	ParseService.rebuildMatches = ():IPromise<void> => $q.when()
 
 	$provide.value('ParseService', ParseService)
 	return ParseService

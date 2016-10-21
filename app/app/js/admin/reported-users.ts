@@ -71,7 +71,7 @@ module app {
 		}
 
 		private fileUrl(photo) {
-			if(photo.url)
+			if (photo.url)
 				return photo.url()
 			return photo._url
 		}

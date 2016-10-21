@@ -1,10 +1,8 @@
-import IProfile = app.IProfile
-import IAppService = app.IAppService
 
 /**
  * A directive to display an unread count badge
  */
-angular.module('ionicApp').directive('unreadChatsBadge', function(AppService:IAppService) {
+angular.module('ionicApp').directive('unreadChatsBadge', function(AppService:app.IAppService) {
 	return {
 		restrict: 'E',
 		scope: {},

@@ -1,4 +1,3 @@
-import IAppRootScope = app.IAppRootScope
 
 interface FacebookDetailsScope extends ng.IScope {
 	likes
@@ -7,7 +6,7 @@ interface FacebookDetailsScope extends ng.IScope {
 /**
  * Display the facebook information for the currenly logged in user
  */
-angular.module('ionicApp').directive('facebookDetails', function(AppService:IAppService, $rootScope:IAppRootScope, $cordovaFacebook) {
+angular.module('ionicApp').directive('facebookDetails', function(AppService:IAppService, $rootScope:app.IAppRootScope, $cordovaFacebook) {
 	return {
 		restrict: 'E',
 		scope: {},

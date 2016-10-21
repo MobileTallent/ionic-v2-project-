@@ -14,7 +14,7 @@ module app {
 		processMatch(profile:IProfile, liked:boolean): ng.IPromise<IMatch>
 		getProfileSearchResults():IProfile[]
 
-		reportProfile(reason:string, profile:IProfile, match:IMatch=null): ng.IPromise<void>
+		reportProfile(reason:string, profile:IProfile, match?:IMatch): ng.IPromise<void>
 
 		getUnreadChatsCount():number
 
@@ -46,6 +46,7 @@ module app {
 		getUserId(): string
 		sendChatMessage(message:IChatMessage, match:IMatch): ng.IPromise<IChatMessage>
 		getTwilioToken(): ng.IPromise<string>
+		rebuildMatches(): ng.IPromise<void>
 	}
 
 	// Partially defined
