@@ -18,13 +18,13 @@
 
 			<div ng-if="::message.sender != profile.uid">
 
-				<img ng-click="viewProfile(message)" class="profile-pic right" ng-src="{{::matchProfile | profileImageUrl}}" onerror="onProfilePicError(this)"
+				<img ng-click="viewProfile(message)" class="profile-pic left" ng-src="{{::matchProfile | profileImageUrl}}" onerror="onProfilePicError(this)"
 				/>
 
 				<div class="center chat-date-recieved">
 					<span>{{::message.createdAt | chatDateFormat}}</span>
 				</div>
-				<div class="chat-bubble right">
+				<div class="chat-bubble left">
 					<div class="message" ng-if="::message.text" ng-bind-html="::message.text | escapeHTML | emoji" autolinker>
 						<!--  | nl2br -->
 					</div>
@@ -42,7 +42,7 @@
 			<div ng-if="::message.sender == profile.uid">
 				<!-- Change the sytle .chat-bubble.right to have margin-right: 55px if you want to show your own image too-->
 
-				<img ng-click="viewProfile(message)" class="profile-pic left" ng-src="{{::profile | profileImageUrl}}" onerror="onProfilePicError(this)"
+				<img ng-click="viewProfile(message)" class="profile-pic right" ng-src="{{::profile | profileImageUrl}}" onerror="onProfilePicError(this)"
 				/>
 
 
@@ -52,7 +52,7 @@
 				</div>
 
 
-				<div class="chat-bubble left">
+				<div class="chat-bubble right">
 
 					<div class="message" ng-if="::message.text" ng-bind-html="::message.text | escapeHTML | emoji" autolinker>
 						<!-- | nl2br -->

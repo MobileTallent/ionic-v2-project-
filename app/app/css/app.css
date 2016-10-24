@@ -396,7 +396,7 @@ img.profile-pic.square {
 .chat-bubble {
     border-radius: 6px;
     display: inline-block;
-    padding: 4px 8px;
+    padding: 10px;
     position: relative;
     margin: 8px;
     max-width: 80%;
@@ -414,7 +414,8 @@ img.profile-pic.square {
 */
 
 .chat-bubble.left {
-    background-color: #e6e5eb;
+    background: rgba(250, 248, 218, 0.71);
+    color: rgb(165, 161, 121);
     float: left;
     margin-left: 55px;
 }
@@ -426,8 +427,8 @@ img.profile-pic.square {
 }
 
 .chat-bubble.right {
-    background-color: #158ffe;
-    color: #fff;
+    background: rgba(182, 229, 225, 0.68);
+    color: rgb(43, 172, 143);
     float: right;
     margin-right: 55px;
 }
