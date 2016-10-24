@@ -41,11 +41,12 @@ To download your fork you will want a Git GUI application such as [SourceTree](h
 
 Once you have cloned the project open up a command prompt in the project root folder.
 
-* Run: **git branch dev**
+* Run: **git remote add cloneder https://bitbucket.org/daniel_campagnoli/cloneder**
 
-This makes a new branch within your fork of the repository, and you will do your customisations in the dev branch and not the master branch.
-It's essential to do this so you can easily merge in new updates from the base Cloneder code.
+This will add the cloneder repository to your git configuration, allowing you to easily see new updates and merge them into your custom fork of the code.
 
+It is recommended that you frequently merge in the latest changes. If need to keep your master branch stable for a release
+then create a new branch from your master, merge in cloneder, then when you're ready merge the new branch back into your master.
 
 
 # Node.js setup
@@ -59,7 +60,7 @@ particularly for Windows users (The Visual C++ build tools, Python 2.7 and set m
 
 * Change to /server and run: **npm run installglobals**
 
-If on OSX/linux you shouldn't be logged in as an admin/root user, so you will need to run it with **sudo**. In Windows you may need to run it as Administrator.
+If on OSX/linux you shouldn't be logged in as an admin/root user, so you will need to run it with **sudo** or [setup your npm so you don't need sudo](https://johnpapa.net/how-to-use-npm-global-without-sudo-on-osx/). In Windows you may need to run it as Administrator.
 
 If you get an error installing on Windows then to fix this delete the folder C:\Users\<username>\.node-gyp\<node_version>\include\node\openssl and retry npm install
 
@@ -110,13 +111,7 @@ they are shutting down they have release an API compatible node.js server which 
 In development you will need to start the Mongo database yourself. If you want to specify where it put the data the command is in the form
 **mongod --dbpath /path/to/the/mongo-data/**
 
-* Change directory to /server folder and run **npm install**
-
-* In /server/config.json enter your appName,
-
-* In /server/config.json enter a parseAppId and parseMasterKey (random numbers and letters, about 16 characters is good)
-
-
+* Change directory to */server* folder and run **npm install**
 
 # Mobile app initial setup
 
@@ -143,20 +138,20 @@ DO NOT lose your keystore and the alias and passwords otherwise you will not be 
 
 ### Base configuration
 
-Choose a package name for your project. It should follow the Java package naming conventions,
-which is your domain name in reverse and then the project name.  This is called the bundle id for your iOS app.
+* In */server/config.json* enter your app name for the **appName** value.
+* In */app/config.xml* enter the same app name in the **name** element
 
-For example we have used com.engineerstoolbox.cloneder
+Choose an app id which should follow the reverse domain naming conventions, for example we have used com.apporchestra.cloneder.
+You might choose com.yourdomain.app.  This is called the package name in Android and the bundle id for your iOS app.
 
-* Open **/server/config.json** and update the **appId** attribute with your package name.
+* In */server/config.json* enter your app id for the **appId** value,
+* In */app/config.xml* and update the widget id attribute with your package name.
 
-* Open **/app/config.xml** and update the widget id attribute with your package name.
+* Update all the other appropriate values in **/app/config.xml** (email, description etc)
 
-* Update all the other appropriate values in **/app/config.xml** (email, description, app name etc)
+* In */app* run **npm install**
 
-* Change directory to /app folder and run **npm install**
-
-* In /app run **ionic platform add android**
+* In */app* run **ionic platform add android**
 
 **DO NOT** check in the files under /app/platforms into Git. You should be able to remove and re-add the platforms at any time.
 The scripts in the /app/hooks directory perform any custom actions required on the platform files. The .gitignore file
@@ -241,17 +236,12 @@ It may be advisable to increase the age restriction to 18+
 
 * In the /app folder run: **npm run addFacebookPlugin**
 
+* Commit the new and updated files to Git
+
 At some point you will need to submit your Facebook application for review so the app use the extended permissions to get the birthdate, likes and photos from the users facebook account.
 Note: You will need to remove the website platform when you submit your application for review to enable the extended permissions
 The estimated review time is 7 days an in that time you can't re-add the website platform.
-What you can do is make another facebook app with the website platform and update the var FACEBOOK_APP_ID in /app/js/app.js
-Parse doesn't care which Facebook app you are using.
-
-### Install Parse Push plugin
-
-* In the /app folder run: **npm run addParsePlugin**
-
-This requires the prod.gcpProjectNumber value to have been set in /server/config.json
+What you can do temporarily is make another facebook app with the website platform and update the var FACEBOOK_APP_ID in /server/config.js while you are waiting for it to be approved.
 
 # Google Cloud Platform (GCP) account setup
 
@@ -266,15 +256,13 @@ The project naming convention is used in the configuration is appName-environmen
 If you will be hosting your production server on the GCP then open the advanced options and select the location that is closest to your main user base.
 If unsure, or expecting global users then leave as the default option.
 
-* Go to the IAM & Admin -> Settings page. In /server/config.json copy the Project ID and Project number to the values for prod.gcpProjectId and prod.gcpProjectNumber
+* Go to the IAM & Admin -> Settings page. In */server/config.json* copy the Project ID and Project number to the values for **prod.gcpProjectId** and *prod.gcpProjectNumber**
 
 * Go to API Manager -> Credentials and create a new service account key in json format.
 
-* Download the file then save it as /server/service-account-key-prod.json
+* Download the file then save it as */server/service-account-key-prod.json*
 
-* In API Manager -> Credentials chose Create credentials -> Browser key and enter the value in /server/config.json for gcpBrowserKey
-
-* In API Manager -> Credentials chose Create credentials -> Server key and enter the value in /server/config.json for gcpServerKey
+* In API Manager -> Credentials chose Create credentials -> API key and enter the value in */server/config.json* for **gcpBrowserKey** and **gcpServerKey**
 
 * Go to API Manager -> Overview and enable the following APIs:
     * Google Maps JavaScript API
@@ -290,6 +278,16 @@ If unsure, or expecting global users then leave as the default option.
 
 TODO https://github.com/ParsePlatform/Parse-Server/wiki/Push-Configuring-Clients#configure-broadcast-receiver-and-permissions
 
+* Commit the new and updated files to Git
+
+# Parse setup
+
+* In */server/config.json* enter a value for **parseAppId** and **parseMasterKey** (random numbers and letters, about 16 characters is good)
+
+* In the */app* folder run: **npm run addParsePlugin**, which installs the Parse push plugin.
+(This requires the **prod.gcpProjectNumber** value to have been set in */server/config.json*)
+
+* Commit the new and updated files to Git
 
 ### Twilio video chat (optional)
 
@@ -301,11 +299,11 @@ Twilio is used for the real-time video chat (and in the future will be used for 
 
 * Create a video profile (Programmable Video -> Configuration Profiles)
 
-* Enter these Twilio configuration values in /server/config.json
+* Enter these Twilio configuration values in */server/config.json* and commit to Git
 
-account_sid is your Twilio account id
-api_key is from https://www.twilio.com/user/account/video/dev-tools/api-keys
-configuration_sid is from https://www.twilio.com/user/account/video/profiles
+**account_sid** is your Twilio account id<br/>
+**api_key** is from https://www.twilio.com/user/account/video/dev-tools/api-keys<br/>
+**configuration_sid** is from https://www.twilio.com/user/account/video/profiles<br/>
 
 
 ### LinkedIn (optional)
@@ -318,7 +316,10 @@ If you want to enable the optional LinkedIn authentication then:
 
 * Add http://localhost/callback to the OAuth2 callbacks
 
-* Copy the Client Id and Client Secret to the linkedInId and linkedInSecret values in /server/config.json
+* Copy the Client Id and Client Secret to the **linkedInId** and **linkedInSecret** values in */server/config.json* and commit to Git
+
+Note that the LinkedIn authentication doesn't work when developing in the browser, as it relies on a Cordova plugin
+when running on a device (or emulator).
 
 ### AdMob (optional)
 
@@ -326,7 +327,7 @@ AdMob is the Google mobile advertising product. If you want banner and/or then d
 
 * Create and account at https://www.google.com/admob/
 
-* Enter the appropriate ids in /server/config.json in the **adMob** section.
+* Enter the appropriate ids in /server/config.json in the **adMob** section and commit to Git.
 
 * If you enable ads in Android then in the Google Play Store developer console for your app select the option at
 **Pricing & Distribution** > **CONTAINS ADS** >  *Does your application have ads?*
@@ -467,7 +468,7 @@ For other hosting options follow the documentation on the [Parse wiki](https://g
 
 * Create a project for each environment you want in the cloud (QA, production etc) with billing enabled (e.g appname-prod, appname-qa). You should have already created the production project in the previous step.
 
-* In /server/config.json update the GCP configuration values in the qa and prod sections.
+* In **/server/config.json** update the GCP configuration values in the qa and prod sections. (**serverUrl** must be in the format https://<project-id>.appspot.com/ )
 
 ## Database setup
 
@@ -481,7 +482,7 @@ MLab provides fully managed Mongo databases at https://mlab.com.
 
 * Create the Mongo database with the appropriate specifications
 
-* In /server/config.json update the qa.databaseURI and/or prod.databaseURI with the IP address of the Mongo database
+* In */server/config.json* update the **qa.databaseURI** and/or **prod.databaseURI** with the IP address of the Mongo database
 
 #### Option 2 - Self-managed
 
@@ -491,23 +492,22 @@ MLab provides fully managed Mongo databases at https://mlab.com.
 
 * Make sure the zone is in your projects App Engine region
 
-For a cheapest setup option (for QA or low traffic prod apps)
-    Select
-    Node count: 1
-    Machine type: f1-micro
-    Data Disk Type: SSD
-    Disk Size in GB: 10GB
-    Arbiter count: 0
+For a cheapest setup option (for QA or low traffic prod apps) select:<br/>
+    Node count: 1<br/>
+    Machine type: f1-micro<br/>
+    Data Disk Type: SSD<br/>
+    Disk Size in GB: 10GB<br/>
+    Arbiter count: 0<br/>
 
-* Open Compute Engine -> VM Instances and copy the internal IP for your Mongo database
+* When the deployment in complete go to Compute Engine -> VM Instances and copy the internal IP for your Mongo database
 
-* In /server/config.json update the qa.databaseURI and/or prod.databaseURI with the IP address of the Mongo database
+* In */server/config.json* update the **qa.databaseURI** and/or **prod.databaseURI** with the IP address of the Mongo database as appropriate and commit to Git
 
 For detailed information on the node.js runtime environment on Google App Engine see https://cloud.google.com/appengine/docs/flexible/nodejs/runtime
 
-To deploy the server app go to /serve and run **npm run deploy-prod**
+To deploy the server app go to */server* and run **npm run deploy-prod**
 
-There is also **npm run deploy-qa** command configured in the /server/package.json
+There is also **npm run deploy-qa** command configured in the */server/package.json*
 
 </xmp>
 
