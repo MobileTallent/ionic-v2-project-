@@ -320,17 +320,7 @@ img.profile-pic.circle {
     margin: 8px;
     max-width: 80%;
 }
-/*
-.chat-bubble:before {
-    content: "\00a0";
-    display: block;
-    height: 16px;
-    width: 9px;
-    position: absolute;
-    bottom: -7.5px;
-}
-*/
-.chat-bubble.left {
+
 .user-messages-top-icon {
     font-size: 28px;
     display: inline-block;

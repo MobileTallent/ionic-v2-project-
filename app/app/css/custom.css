@@ -17,10 +17,7 @@
 .image{
     border-radius: 4px !important;
 }
-.chat-bubble{
-    padding: 10px !important;
 
-}
 /* Action Sheets*/
 .platform-android .action-sheet {
     align-content: center;
@@ -38,7 +35,17 @@
 .platform-android .action-sheet-has-icons .button {
     padding-left: 56px;
 }
+
+ul.list.custom{
+    margin-bottom: 0px;
+    border-top-left-radius: 10%;
+    border-top-right-radius: 10%;
+}
+
+li.item.custom{
+    border-bottom-left-radius: 10% !important;
+    border-bottom-right-radius: 10% !important;
+}
 .black-and-white{
     filter: grayscale();
 }
-

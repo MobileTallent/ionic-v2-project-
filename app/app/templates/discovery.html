@@ -2,7 +2,7 @@
 	<ion-nav-title>{{'DISCOVERY_TITLE' | translate}}</ion-nav-title>
 	<ion-content>
 		<div class="card">
-			<ul class="list">
+			<ul class="list custom">
 
       <li >
         <ion-toggle ng-model="profile.enabled" toggle-class="toggle-assertive">{{'DISCOVERABLE' | translate}}</ion-toggle>
@@ -59,7 +59,7 @@
 				</li>
 
 				<!-- There is a MAX_AGE_PLUS var in the cloud code to make the 55 effectively 55+ -->
-				<li class="item" style="height: 60px">
+				<li class="item custom" style="height: 60px">
 					<slider floor="18" ceiling="55" ng-model-low="profile.ageFrom" ng-model-high="profile.ageTo"></slider>
 				</li>
 

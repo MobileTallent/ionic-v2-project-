@@ -20,7 +20,7 @@ $dark:                            #444 !default;
 
 $ionicons-font-path: "fonts" !default;
 
-$positive: rgba(187, 225, 213, 0.35); /* soft green */ 
+$positive: rgba(187, 225, 213, 35); /* soft green */ 
 $energized: rgb(43, 172, 143); /*strong green */
 $calm: rgb(187, 225, 213);
 $assertive: rgb(191, 127, 204); /*purple*/
@@ -30,11 +30,11 @@ $match-search-text: rgb(130, 156, 148);
 
 
 //Chat
-$chat-bubble-right-background: rgba(250, 248, 218, 0.71);
-$chat-bubble-right-text: rgb(165, 161, 121);
+$chat-bubble-right-background: rgba(187, 225, 213, 0.35);
+$chat-bubble-right-text: rgb(43, 172, 143);
 
-$chat-bubble-left-background: rgba(187, 225, 213, 0.35);
-$chat-bubble-left-text: rgb(43, 172, 143);
+$chat-bubble-left-background: rgba(250, 248, 218, 0.71);
+$chat-bubble-left-text:  rgb(165, 161, 121);
 
 $chat-date-recieved:rgb(155,155,155);
 
@@ -117,14 +117,12 @@ button.button, button.button.button-stable{
     color: $chat-bubble-right-text;
     float: right;
     margin-right: 55px;
-    padding:5px;
     }
 .chat-bubble.left{
     background-color: $chat-bubble-left-background;
     color: $chat-bubble-left-text;
     float: left;
     margin-left: 55px;
-    padding:5px;
     }
 .chat-date-recieved{
     font-size: 12px; 
