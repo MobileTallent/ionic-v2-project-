@@ -23,7 +23,8 @@
         </ion-slide-box>
 
         <div style="padding: 10px;">
-            <b>{{vm.profile.name}}</b>, {{vm.profile.age}}<br/>
+            <h3>{{vm.profile.name}}, {{vm.profile.age}}</h3>
+            <br/>
             <span style="color:gray">{{vm.profile.location | distance}} {{'AWAY' | translate}} <!-- TODO Active x hours ago --></span><br/>
 
             <div ng-show="vm.profile.about">

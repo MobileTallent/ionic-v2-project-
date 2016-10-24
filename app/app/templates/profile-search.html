@@ -1,10 +1,10 @@
-<ion-view view-title="{{::appName}}">
+<ion-view view-title="{{::appName}}" class="title" id="match-search-background">
   <ion-nav-buttons side="right">
     <i class="button button-icon icon ion-ios-chatbubble-outline" ui-sref="menu.chats">
         <unread-chats-badge/>
     </i>
   </ion-nav-buttons>
-  <ion-content class="padding" style="padding-top:100px;padding-top:5vw;text-align:center" no-scroll>
+  <ion-content class="padding " style="padding-top:100px;padding-top:5vw;text-align:center" no-scroll>
   <!-- no-scroll style=""-->
 
     <style>
@@ -60,7 +60,7 @@
     <button style="position: absolute;bottom:5px" ng-click="openNewMatch()">Match</button>
 -->
 
-    <div></div>
+
 
     <div ng-if="!profile.enabled" class="text-label" style="padding-top:50px;padding-top:20vw;">
         <div style="font-size: 24px; font-size: 8vw">{{'NOT_DISCOVERABLE' | translate}}</div>
@@ -106,11 +106,12 @@
                    class="card-{{$index}}" ng-class="{'accepted-transform': profile.accepted, 'rejected-transform': profile.rejected}">
             <div class="image" ng-click="viewDetails(profile)">
               <div class="yes-text" ng-style="leftTextOpacity">{{'LIKE' | translate}}</div>
-              <img style="width:100%" ng-src="{{::profile | profileImageUrl}}">
+              <img style="width:80%; border-radius:100%; margin-top:20px;" ng-src="{{::profile | profileImageUrl}}">
               <div class="no-text" ng-style="rightTextOpacity">{{'NOT_LIKE' | translate}}</div>
             </div>
-            <div >
-              {{profile.name}}
+
+            <div class="center">
+              <p style="font-size:24px; color: rgb(130, 156, 148);margin-top:15%"> {{profile.name}}, {{profile.age}}</p>
               <!--
               <div class="button-bar" style="{{profile.hideButtons ? 'display:none' : ''}}">
                 <button class="button button-clear button-positive icon ion-ios7-close-empty" ng-click="reject(profile)"></button>
@@ -118,6 +119,7 @@
               </div>
               -->
             </div>
+          
           </td-card>
         </td-cards>
 
@@ -126,12 +128,12 @@
             <div class="row" >
                 <div class="col">
                     <a class="button button-icon" ng-click="reject()">
-                        <i class="icon ion-ios-close-outline swipe-button swipe-reject"></i>
+                        <i class="icon ion-close swipe-button swipe-reject"></i>
                     </a>
                 </div>
                 <div class="col">
                     <a class="button button-icon" ng-click="accept()">
-                        <i class="icon ion-ios-checkmark-outline swipe-button swipe-accept"></i>
+                        <i class="icon ion-heart swipe-button swipe-accept"></i>
                     </a>
                 </div>
             </div>

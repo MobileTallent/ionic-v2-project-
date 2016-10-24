@@ -1,9 +1,9 @@
 <ion-view id="userMessagesView">
-	<ion-nav-title class="center">{{::matchProfile.name}}</ion-nav-title>
+	<ion-nav-title class="title">{{::matchProfile.name}}</ion-nav-title>
 
 	<ion-nav-buttons side="right">
 		<!--Make Icon profile avatar-->
-		<img ui-sref="^.match-profile({matchId: matchId, profileId : matchProfile.id})" class="profile-pic square" ng-src="{{::matchProfile | profileImageUrl}}" onerror="onProfilePicError(this)"/>
+		<img ui-sref="^.match-profile({matchId: matchId, profileId : matchProfile.id})" class="profile-pic circle" ng-src="{{::matchProfile | profileImageUrl}}" onerror="onProfilePicError(this)"/>
 		<!--<i class="button button-icon icon ion-person" ui-sref="^.match-profile({matchId: matchId, profileId : matchProfile.id})"></i>-->
 		<i class="button button-icon icon ion-android-more-vertical" ng-click="chatOptions()"></i>
 	</ion-nav-buttons>

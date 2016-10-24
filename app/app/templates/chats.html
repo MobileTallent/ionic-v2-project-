@@ -1,5 +1,5 @@
-<ion-view view-title="Chat">
-
+<ion-view >
+<ion-nav-title class="title">Chat</ion-nav-title>
 	<ion-nav-buttons side="right">
 		<i class="button button-icon icon ion-gear-a" ng-click="chatSettings($event)"></i>
 	</ion-nav-buttons>
@@ -31,7 +31,7 @@
 		<div class="list">
 			<a class="item item-avatar item-borderless" ng-repeat="match in matches track by match.id" ui-sref="^.chat({matchId : match.id})" ng-class-odd="'chats-list-odd'" ng-class-even="'chats-list-even'">
 				
-					<img ng-src="{{::match.profile | profileImageUrl}}" img-cache>
+					<img class="black-and-white" ng-src="{{::match.profile | profileImageUrl}}" img-cache>
 					<h2 class="energized" >{{::match.profile.name}}</h2>
 					<p class="energized" ng-class="match.read ? '' : 'chat-unread'" ng-bind-html="match.lastMessage | escapeHTML | emoji" />
 		

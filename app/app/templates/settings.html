@@ -1,43 +1,42 @@
-<ion-view view-title="{{'SETTINGS_TITLE' | translate}}" cache-view="false">
+<ion-view view-title="{{'SETTINGS_TITLE' | translate}}" class="title" cache-view="false">
   <ion-content>
-
+<div class="card">
       <div class="list">
 
           <div class="item item-divider">
               {{'NOTIFICATION_SOUND' | translate}}:
           </div>
 
-          <ion-toggle ng-model="profile.notifyMatch" toggle-class="toggle-calm">{{'NEW_MATCH' | translate}}</ion-toggle>
+          <ion-toggle ng-model="profile.notifyMatch" toggle-class="toggle-assertive">{{'NEW_MATCH' | translate}}</ion-toggle>
 
-          <ion-toggle ng-model="profile.notifyMessage" toggle-class="toggle-calm">{{'NEW_MESSAGE' | translate}}</ion-toggle>
+          <ion-toggle ng-model="profile.notifyMessage" toggle-class="toggle-assertive">{{'NEW_MESSAGE' | translate}}</ion-toggle>
 
           <div class="item item-divider">
               {{'SHOW_DISTANCES_IN' | translate}}:
           </div>
 
-          <ion-radio ng-model="profile.distanceType" name="distanceType" ng-value="'km'">Km</ion-radio>
+          <ion-radio ng-model="profile.distanceType" name="distanceType" ng-value="'km'">Kilometers</ion-radio>
 
-          <ion-radio ng-model="profile.distanceType" name="distanceType" ng-value="'mi'">Mi</ion-radio>
+          <ion-radio ng-model="profile.distanceType" name="distanceType" ng-value="'mi'">Miles</ion-radio>
 
           <div class="item item-divider">
               {{'LANGUAGE' | translate}}:
           </div>
 
-          <div style="width:100%;padding:2px">
+          <div style="width:100%;padding:5px;">
             <button ng-click="setLanguage('en')" class="button button-small button-stable">English</button>
             <button ng-click="setLanguage('de')" class="button button-small button-stable">Deutch</button>
           </div>
       </div>
-
-      <br/>
-
+</div>
+<div class="card">
       <div class="wide center padding-10">
-          <button class="button button-block button-positive" ng-click="save()" translate="SAVE"></button>
-          <button class="button button-block button-stable" ng-click="testPushNotification()">Test Push Notification</button>
+          <button class="button button-block button-assertive" ng-click="save()" translate="SAVE"></button>
+          <button class="button button-block button-positive" ng-click="testPushNotification()">Test Push Notification</button>
           <button class="button button-block button-stable" ng-click="logout()" translate="LOGOUT"></button>
-          <button class="button button-block button-assertive" ng-click="deleteAccount()" translate="DELETE_ACCOUNT"></button>
+          <button class="button button-block button-stable" ng-click="deleteAccount()" translate="DELETE_ACCOUNT"></button>
       </div>
-
+</div>
       <div class="wide center padding-10 bold" ng-click="debug()">
           {{'VERSION' | translate}}: {{::(appVersion ? appVersion : 'N/A')}}
       </div>

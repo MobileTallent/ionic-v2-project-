@@ -1,11 +1,12 @@
 <ion-modal-view>
-    <ion-header-bar>
+    <ion-header-bar >
         <h1 class="title center assertive">{{'ITS_A_MATCH' | translate}}!</h1>
     </ion-header-bar>
-    <ion-content style="margin-top: 25%">
+    <ion-content style="background-color: rgba(187, 255, 213, 0.32)">
+      <div class="card" style="margin-top: 25%; padding:25px" >
         <div class="row">
           <div class="col center">
-                <p translate="LIKED_EACH_OTHER"  translate-values="{name: matchProfile.name}"></p>
+                <h5 class="assertive" style="padding: 25px" translate="LIKED_EACH_OTHER"  translate-values="{name: matchProfile.name}"></h5>
           </div>
         </div>
 
@@ -18,13 +19,12 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="col col-50 col-offset-25 center">
-            <a class="button" style="width:100%;" ng-click="messageNewMatch()">{{'SEND_MESSAGE' | translate}}</a>
-            <br/><br/>
-            <a class="button" style="width:100%;" ng-click="closeNewMatch()">{{'KEEP_PLAYING' | translate}}</a>
-          </div>
-        </div>
-
+ 
+            <button class="button button-block button-calm"  ng-click="messageNewMatch()">{{'SEND_MESSAGE' | translate}}</button>
+            
+            <button class="button button-block button-stable"  ng-click="closeNewMatch()">{{'KEEP_PLAYING' | translate}}</button>
+      
+   
+      </div>
     </ion-content>
 </ion-modal-view>
