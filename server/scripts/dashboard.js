@@ -3,7 +3,7 @@
 var shell = require('shelljs')
 var fs = require('fs')
 
-var config = require('./config.json');
+var config = require('../config.json');
 
 // Get the --env arg
 var env = require('commander')

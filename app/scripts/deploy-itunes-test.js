@@ -7,7 +7,7 @@ var fs = require('fs')
 var parser = new xml2js.Parser();
 var config = parser
 
-fs.readFile(__dirname + '/config.xml', function(err, data) {
+fs.readFile(__dirname + '/../config.xml', function(err, data) {
 
     if(err) {
         console.log('Error reading config.xml')
