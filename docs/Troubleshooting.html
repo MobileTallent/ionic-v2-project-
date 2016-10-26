@@ -45,6 +45,18 @@ Add a new Environment Variable called GRADLE_OPTS with a value of -Dorg.gradle.j
 
 ### iOS
 
+**Errors on submitting a build to iTunes**
+
+Error: "This app attempts to access privacy-sensitive data without a usage description. The app's Info.plist must contain an NSPhotoLibraryUsageDescription key with a string value explaining to the user how the app uses this data."
+
+Solution: Reinstall the cordova camera plugin with the two variables to set the NSPhotoLibraryUsageDescription. See https://github.com/apache/cordova-plugin-camera#--photolibrary_usage_description-for-nsphotolibraryusagedescriptionentry
+
+
+Error: "Missing Push Notification Entitlement - Your app includes an API for Apple's Push Notification service, but the aps-environment entitlement is missing from the app's signature."
+
+Enable the push notification in the Capabilities section in XCode
+
+
 http://stackoverflow.com/questions/26773783/undefined-symbols-for-architecture-i386-facebook-sdk
 <br>
 **Undefined symbols for architecture i386:**<br>
