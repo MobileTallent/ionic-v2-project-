@@ -45,17 +45,6 @@ Add a new Environment Variable called GRADLE_OPTS with a value of -Dorg.gradle.j
 
 ### iOS
 
-**Errors on submitting a build to iTunes**
-
-Error: "This app attempts to access privacy-sensitive data without a usage description. The app's Info.plist must contain an NSPhotoLibraryUsageDescription key with a string value explaining to the user how the app uses this data."
-
-Solution: Reinstall the cordova camera plugin with the two variables to set the NSPhotoLibraryUsageDescription. See https://github.com/apache/cordova-plugin-camera#--photolibrary_usage_description-for-nsphotolibraryusagedescriptionentry
-
-
-Error: "Missing Push Notification Entitlement - Your app includes an API for Apple's Push Notification service, but the aps-environment entitlement is missing from the app's signature."
-
-Enable the push notification in the Capabilities section in XCode
-
 
 http://stackoverflow.com/questions/26773783/undefined-symbols-for-architecture-i386-facebook-sdk
 <br>
@@ -82,6 +71,20 @@ Don't set the Main Interface drop-down in General -> Deployment Info. Leave it b
 ** /Users/username/Cloneder/platforms/android/res/values/facebookconnect.xml: Error: Found item String/fb_app_id more than one time **
 
 Open */Users/username/Cloneder/platforms/android/res/values/facebookconnect.xml* and remove the duplicate elements
+
+# App Submissions
+
+### iOS
+
+**Error:** "This app attempts to access privacy-sensitive data without a usage description. The app's Info.plist must contain an NSPhotoLibraryUsageDescription key with a string value explaining to the user how the app uses this data."
+
+**Solution:** Reinstall the cordova camera plugin with the two variables to set the NSPhotoLibraryUsageDescription. See https://github.com/apache/cordova-plugin-camera#--photolibrary_usage_description-for-nsphotolibraryusagedescriptionentry
+
+
+**Error:** "Missing Push Notification Entitlement - Your app includes an API for Apple's Push Notification service, but the aps-environment entitlement is missing from the app's signature."
+
+**Solution:** Enable the push notification in the Capabilities section in XCode
+
 
 # Runtime
 
@@ -111,6 +114,13 @@ Go in to Build Settings and set Enable Bitcode to No
 ### Push notifications
 
 See the Parse FAQ at https://groups.google.com/forum/m/#!topic/parse-developers/65WAfRIiEnA
+
+
+### Server logs
+
+For production in Google App Engine the logs are in the Logs menu in the Google Cloud Console. Select the sysout or syserr filter.
+
+![GAE logs](img/logs.png)
 
 <br/><br/>
 
