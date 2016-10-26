@@ -20,9 +20,9 @@ $dark:                            #444 !default;
 
 $ionicons-font-path: "fonts" !default;
 
-$positive: rgba(187, 225, 213, 35); /* soft green */ 
+$positive: rgba(187, 225, 213, 0.69); /* soft green */ 
 $energized: rgb(43, 172, 143); /*strong green */
-$calm: rgb(187, 225, 213);
+$calm: rgba(187, 225, 213, 0.35);
 $assertive: rgb(191, 127, 204); /*purple*/
 
 // Profile Search
