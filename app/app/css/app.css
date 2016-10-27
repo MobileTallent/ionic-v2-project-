@@ -59,7 +59,9 @@ body {
     padding: 0;
 }
 
-
+.menu-list a {
+    border-width: 0px;
+}
 
 
 /* For the google map */
