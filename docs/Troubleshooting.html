@@ -85,6 +85,12 @@ Open */Users/username/Cloneder/platforms/android/res/values/facebookconnect.xml*
 
 **Solution:** Enable the push notification in the Capabilities section in XCode
 
+**Rejection:** "Your app uses Facebook login for authentication purposes but does not include account-based features offered by that site, which is not allowed on the App Store.
+    In order for Facebook to be the only authentication mechanism available, your app must include significant account-specific functionality from Facebook. Pulling profile information, or sharing, are not sufficient account-based features for Facebook to be the only authentication mechanism available."
+
+**Solution:**  If your app asks for information from Facebook (birthdate etc) you have to use it for some functionality.
+You will need to give an explanation in the review notes of how you are using the information.
+
 
 # Runtime
 
