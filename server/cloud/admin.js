@@ -22,14 +22,11 @@ Parse.Cloud.define('GetReportedUsers', function(request, response) {
 	// type (spam, offensive)
 
 	new Parse.Query('Report')
-			.include('reportedBy')
-			.include('reportedUser')
-			.include('profile')
 			.doesNotExist('actionTaken')
 			.descending('createdAt')
 			.find()
 			.then(function(result) {
-				response.success(result)
+				response.success(_.map(result, report => report.toJSON()))
 			}, function(error) {
 				response.error(error)
 			})
@@ -49,7 +46,7 @@ Parse.Cloud.define('GetReportedUserDetails', function(request, response) {
 	var reportsQuery = new Parse.Query('Report')
 			.descending('updatedAt')
 			.limit(1000)
-			.equalTo('reportedBy', reportedBy)
+			.equalTo('reportedBy', reportedBy.id)
 			.find()
 
 	// Load the recent messages the reported user has sent
@@ -241,7 +238,7 @@ Parse.Cloud.define('CloseReport', function(request, response) {
 
 		return report.save()
 	}).then(function() {
-		response.success()
+		response.success(null)
 	}, function(error) {
 		response.error(error)
 	})
