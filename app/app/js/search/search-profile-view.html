@@ -1,9 +1,8 @@
-<ion-view view-title="{{profile.name}}">
+<ion-view view-title="{{profile.name}}" ng-controller="SearchProfileView as vm">
     <ion-nav-buttons side="right">
-        <i class="button button-icon icon ion-android-close" ng-click="reject()"></i>
-        <i class="button button-icon icon ion-ios-heart-outline" ng-click="like()"></i>
-        <i class="button button-icon icon ion-android-more-vertical" ng-click="profileOptions()"></i>
-        <!-- TODO menu that contain 'Report' menu item )-->
+        <i class="button button-icon icon ion-android-close" ng-click="vm.reject()"></i>
+        <i class="button button-icon icon ion-ios-heart-outline" ng-click="vm.like()"></i>
+        <i class="button button-icon icon ion-android-more-vertical" ng-click="vm.profileOptions()"></i>
     </ion-nav-buttons>
 
     <ion-content>

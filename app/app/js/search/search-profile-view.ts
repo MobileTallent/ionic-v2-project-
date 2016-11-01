@@ -22,19 +22,19 @@ module app {
 			this.$scope['profile'] = this.profile
 		}
 
-		like() {
+		public like() {
 			let match = this.AppService.getProfileSearchResults().pop()
 			this.AppService.processMatch(match, true)
 			this.$ionicHistory.goBack()
 		}
 
-		reject() {
+		public reject() {
 			let match = this.AppService.getProfileSearchResults().pop()
 			this.AppService.processMatch(match, false)
 			this.$ionicHistory.goBack()
 		}
 
-		profileOptions() {
+		public profileOptions() {
 			this.$ionicActionSheet.show({
 				destructiveText: this.translations.REPORT,
 				titleText: this.translations.MATCH_OPTIONS,
@@ -47,7 +47,7 @@ module app {
 			})
 		}
 
-		report() {
+		public report() {
 			let profile = this.AppService.getProfileSearchResults().pop()
 
 			this.AppUtil.blockingCall(
