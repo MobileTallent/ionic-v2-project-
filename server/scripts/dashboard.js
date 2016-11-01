@@ -37,6 +37,6 @@ if(!config[env].serverUrl) {
     process.exit(1)
 }
 
-var command = `parse-dashboard --serverURL \"${config.prod.serverUrl}${config.parseMount}\" --appId ${config.parseAppId} --masterKey ${config.parseMasterKey}`
+var command = `parse-dashboard --serverURL \"${config[env].serverUrl}${config.parseMount}\" --appId ${config.parseAppId} --masterKey ${config.parseMasterKey}`
 console.log('exec: ' + command)
 var child = shell.exec(command);
