@@ -1,22 +1,13 @@
-<ion-view >
-<ion-nav-title class="title">Chat</ion-nav-title>
+<ion-view>
+	<ion-nav-title class="title">Chat</ion-nav-title>
 	<ion-nav-buttons side="right">
 		<i class="button button-icon icon ion-gear-a" ng-click="chatSettings($event)"></i>
 	</ion-nav-buttons>
 
 	<ion-content>
-
-		<!--<div class="row">
-			<div class="col col-50 center ">
-				<h5 class="assertive">Recent</h5>
-			</div>
-			<div class="col col-50 center ">
-				<h5 class="assertive">All</h5>
-			</div>
-			<!--<div class="col col-33 center">x
-				<h5 class="assertive">New</h5>
-			</div>
-		</div>-->
+		<style>
+			
+		</style>
 
 		<!-- TODO style this better -->
 		<div ng-show="!matches.length" style="text-align: center;font-family:'Avenir Next LT Pro Regular';font-size:18px">
@@ -28,15 +19,21 @@
       Invite your friends!
       -->
 		</div>
-		<div class="list">
-			<a class="item item-avatar item-borderless" ng-repeat="match in matches track by match.id" ui-sref="^.chat({matchId : match.id})" ng-class-odd="'chats-list-odd'" ng-class-even="'chats-list-even'">
-				
-					<img class="black-and-white" ng-src="{{::match.profile | profileImageUrl}}" img-cache>
-					<h2 class="energized" >{{::match.profile.name}}</h2>
-					<p class="energized" ng-class="match.read ? '' : 'chat-unread'" ng-bind-html="match.lastMessage | escapeHTML | emoji" />
-		
-			</a>
-		</div>
+		<div class="list" style="padding: 10px">
+			<div ng-repeat="match in matches track by match.id">
+				<a ui-sref="^.chat({matchId : match.id})" style="text-decoration:none;">
+					<div class="item item-avatar item-borderless custom-list-item">
 
+						<img ng-src="{{::match.profile | profileImageUrl}}" img-cache>
+						<div ng-class-odd="'chats-list-odd'" ng-class-even="'chats-list-even'">
+							<h2 class="custom-list-item-text energized">{{::match.profile.name}}</h2>
+							<p class="custom-list-item-subtext" ng-class="match.read ? '' : 'chat-unread'" ng-bind-html="match.lastMessage | escapeHTML | emoji"
+							/>
+						</div>
+					</div>
+
+				</a>
+			</div>
+		</div>
 	</ion-content>
 </ion-view>

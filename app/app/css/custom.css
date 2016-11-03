@@ -4,20 +4,30 @@
 .center{
     text-align: center;
 }
+.padding-15{
+    padding:15px;
+}
+.padding-25{
+    padding:25px;
+}
 /*.right{
     text-align: right;
 }
 .left{
     text-align: left;
 }*/
-.card, .button, td-card, image{
+.card, .button, image{
     border-radius: 8px;
-    
-}
-.image{
-    border-radius: 4px !important;
 }
 
+
+td-card {
+    position: absolute;
+    left: 50%;
+    margin-top: 20px; 
+    width: 100%;
+    margin-left: -50%;
+}
 /* Action Sheets*/
 .platform-android .action-sheet {
     align-content: center;

@@ -1,4 +1,4 @@
-<ion-view view-title="Likes Me" >
+<ion-view view-title="Likes Me">
 	<ion-content ng-controller="LikedMe as vm">
 
 		<ion-refresher pulling-text="{{'PULL_TO_REFRESH' | translate}}" on-refresh="vm.refresh()">
@@ -8,22 +8,15 @@
 			<br/> {{'NO_LIKES' | translate}}
 		</div>
 
-		<!--<ion-list>-->
-			<ion-item ng-repeat="profile in vm.profiles" ng-click="vm.view($index)" class="card">
-                
-				<!--<div class="card item-borderless" >-->
+		<div class="list" style="padding:10px;">
 
-					<div class="item item-avatar " >
-
-                        <img ng-src="{{profile | profileImageUrl}}" >
-						<h2>{{profile.name}}, {{profile | profileAge}}</h2>
-						<p>
-							{{profile.location | distance}} {{'AWAY' | translate}}
-						</p>
+			<div ng-repeat="profile in vm.profiles" ng-click="vm.view($index)">
+				<div class="item item-avatar item-borderless custom-list-item">
+					<img ng-src="{{profile | profileImageUrl}}">
+					<div ng-class-odd="'chats-list-odd'" ng-class-even="'chats-list-even'">
+						<h2 class="custom-list-item-text energized">{{profile.name}}, {{profile | profileAge}}</h2>
+						<p class="custom-list-item-subtext">{{profile.location | distance}} {{'AWAY' | translate}}</p>
 					</div>
-				<!--</div>-->
-			</ion-item>
-		<!--</ion-list>-->
-
+				</div>
 	</ion-content>
 </ion-view>
