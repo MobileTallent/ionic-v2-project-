@@ -257,7 +257,7 @@ angular.module('controllers')
     .controller('DiscoveryCtrl', function($scope, $state, $ionicHistory, AppService, AppUtil) {
 
         // The Profile fields on the discover page to save
-        var fields = ['enabled','guys','girls','ageFrom','ageTo']
+        var fields = ['enabled','guys','girls','ageFrom','ageTo','distance']
 
         $scope.$on('$ionicView.enter', () => $scope.profile = AppService.getProfile().clone())
 

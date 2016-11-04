@@ -927,14 +927,18 @@ function onNotificationOpen(pnObj){
 			chatSyncInProgress = true
 
 			let matchesById = _.indexBy(matches, 'id')
-			let lastChatSyncTime = $localStorage.lastChatSyncTime
+			let lastChatSyncTime = $localStorage.lastChatSyncTime			
 
 			// On Android lastChatSyncTime was changing from an object to a string, causing the sync query to return no result
 			// Merely logging it (investigating my hunch) appears to keep it as an object. Quick fix for now. Needs more investigation.
-			$log.info('typeof ' + typeof lastChatSyncTime)
+			$log.info('typeof ' + typeof lastChatSyncTime)			
 
 			let newMessage = false // if there are any new messages (which we didn't already have locally) from this sync
 			$log.info('synchronizing chat messages' + (lastChatSyncTime ? ' from ' + lastChatSyncTime : ''))
+
+			if(typeof lastChatSyncTime === 'string')
+				lastChatSyncTime = new Date(lastChatSyncTime)
+				
 			return server.loadChatMessages(lastChatSyncTime)
 				.then(function(messages) {
 					$log.info('Found ' + messages.length + ' chat messages to synchronize')
