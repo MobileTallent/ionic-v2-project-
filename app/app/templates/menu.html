@@ -23,14 +23,14 @@
     <ion-content>
       <ul class="list">
         <!-- Note each link has the 'menu-close' attribute so the menu auto closes when clicking on one of these links -->
-        <a ui-sref="menu.profile" class="item energized" menu-close><i class="icon ion-ios-person-outline"></i> {{'MENU_PROFILE' | translate}}</a>
-        <a ui-sref="menu.home" class="item energized" menu-close><i class="icon ion-ios-people-outline"></i> {{'MENU_MATCHES' | translate}}</a>
-        <a ui-sref="menu.chats" class="item energized" menu-close><i class="icon ion-ios-chatbubble-outline"></i> {{'MENU_CHAT' | translate}} <unread-chats-badge/></a>
-        <a ui-sref="menu.likedMe" class="item energized" menu-close><i class="icon ion-ios-checkmark-outline"></i> {{'MENU_LIKED_ME' | translate}}</a>
+        <a ui-sref="menu.profile" class="item energized" menu-close><i class="icon ion-person"></i> {{'MENU_PROFILE' | translate}}</a>
+        <a ui-sref="menu.home" class="item energized" menu-close><i class="icon ion-person-stalker"></i> {{'MENU_MATCHES' | translate}}</a>
+        <a ui-sref="menu.chats" class="item energized" menu-close><i class="icon ion-ios-chatbubble"></i> {{'MENU_CHAT' | translate}} <unread-chats-badge/></a>
+        <a ui-sref="menu.likedMe" class="item energized" menu-close><i class="icon ion-ios-checkmark"></i> {{'MENU_LIKED_ME' | translate}}</a>
         <a ui-sref="menu.discovery" class="item energized" menu-close><i class="icon ion-ios-search-strong"></i> {{'MENU_DISCOVERY' | translate}}</a>
-        <a ui-sref="menu.location" class="item energized" menu-close><i class="icon ion-ios-location-outline"></i> {{'LOCATION' | translate}}</a>
-        <a ui-sref="menu.settings" class="item energized" menu-close><i class="icon ion-ios-cog-outline"></i> {{'MENU_SETTINGS' | translate}}</a>
-        <a ui-sref="menu.contact" class="item energized" menu-close><i class="icon ion-ios-email-outline"></i> {{'MENU_CONTACT' | translate}}</a>
+        <a ui-sref="menu.location" class="item energized" menu-close><i class="icon ion-ios-location"></i> {{'LOCATION' | translate}}</a>
+        <a ui-sref="menu.settings" class="item energized" menu-close><i class="icon ion-ios-gear"></i> {{'MENU_SETTINGS' | translate}}</a>
+        <a ui-sref="menu.contact" class="item energized" menu-close><i class="icon ion-ios-email"></i> {{'MENU_CONTACT' | translate}}</a>
         <a ng-if="isAdmin" ui-sref="menu.adminMenu" class="item" menu-close><i class="icon ion-ios-email"></i> {{'ADMIN' | translate}}</a>
         <a ng-controller="ShareController as shareCtrl" ng-click="shareCtrl.share()" class="item energized" menu-close><i class="icon ion-android-share-alt"></i> {{'MENU_SHARE' | translate}}</a>
       </ul>
