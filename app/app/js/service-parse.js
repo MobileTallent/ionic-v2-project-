@@ -739,11 +739,15 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         // Admin user functions
 
         function getReportedUsers() {
-            return Parse.Cloud.run('GetReportedUsers').catch(_unwrapError)
+            return Parse.Cloud.run('GetReportedUsers')
+                .then(reports => _.map(reports, toId))
+                .catch(_unwrapError)
         }
 
         function getReportedUserDetails(report) {
-            return Parse.Cloud.run('GetReportedUserDetails', {reportedBy: report.reportedBy.id, reportedUser: report.reportedUser.id}).catch(_unwrapError)
+            return Parse.Cloud.run('GetReportedUserDetails', {reportedBy: report.reportedBy.id, reportedUser: report.reportedUser.id})
+                .then(report => toId)
+                .catch(_unwrapError)
         }
 
         function deletePhoto(reportId, photoUrl) {
@@ -787,6 +791,11 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             }
             object.className = className
             return Parse.Object.fromJSON(object)
+        }
+
+        function toId(object) {
+            object.id = object.objectId
+            return object
         }
 
         /**

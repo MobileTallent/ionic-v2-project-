@@ -527,14 +527,14 @@ Parse.Cloud.define("GetMatches", function(request, response) {
 	var profileQuery = new Parse.Query("Profile")
 
 	var point = profile.location
-	// Removed distance filter for now... 9/30/16 - Jojo
-	// if(profile.distanceType === 'km')
-	// 	profileQuery.withinKilometers("location", point, profile.distance)
-	// else
-	// 	profileQuery.withinMiles("location", point, profile.distance)
 
-	//Get profiles near to the current location
-	profileQuery.near("location", point);
+	if(profile.distanceType === 'km')
+		profileQuery.withinKilometers("location", point, profile.distance)
+	else
+		profileQuery.withinMiles("location", point, profile.distance)
+
+	//Get profiles near to the current location 9/30/16 - Jojo
+	//profileQuery.near("location", point);
 
 	var gender = []
 	if(profile.guys)
