@@ -28,6 +28,7 @@ $assertive: rgb(191, 127, 204); /*purple*/
 
 //***************************** Profile Search
 $match-search-text: rgb(130, 156, 148);
+$text-colour-white: #ffffff;
 
 //***************************** Chat
 $chat-bubble-right-background: rgba(187, 225, 213, 0.35);
@@ -80,8 +81,12 @@ button.button, button.button.button-stable{
 .background-positive{
     background-color: $positive;
 }
-
-
+.text-color-white{
+    color: $text-colour-white;
+}
+.text-size-24{
+    font-size: 18px;
+}
 
 //*********************************************************** Login
 #login-background-image {
@@ -89,7 +94,7 @@ button.button, button.button.button-stable{
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
-    opacity: 0.64;
+    
     }
 .button.button-outline.button-light{
     border-width: 2px;

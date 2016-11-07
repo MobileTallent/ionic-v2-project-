@@ -1,28 +1,29 @@
 <ion-modal-view>
-    <ion-content style="background-color: rgba(187, 225, 213, 0.69);">
-      <div class="card" style="margin: 25% 25px auto 25px; padding: 10px" >
-        <div class="row">
-          <div class="col center">
-            <h1 class="assertive">{{'ITS_A_MATCH' | translate}}!</h1>
-                <h5 class="assertive" style="padding: 15px" translate="LIKED_EACH_OTHER"  translate-values="{name: matchProfile.name}"></h5>
-          </div>
-        </div>
+  <ion-content id="login-background-image">
+    <h1 class="center assertive" style="margin-top:10%">{{'ITS_A_MATCH' | translate}}!</h1>
+    <div class="card" style="margin: 15% 25px auto 25px; padding: 10px">
+      <div class="row">
+        <div class="col center">
 
-        <div class="row">
-          <div class="col center" style="min-height: 100px;">
-            <img class="circle" ng-src="{{profile | profileImageUrl}}"/>
-            <span style="width:30px"></span>
-            <!-- TODO make this image a link to their profile -->
-            <img class="circle" ng-src="{{matchProfile | profileImageUrl}}"/>
-          </div>
+          <h5 class="assertive" style="padding: 15px" translate="LIKED_EACH_OTHER" translate-values="{name: matchProfile.name}"></h5>
         </div>
-
- 
-            <button class="button button-block button-assertive"  ng-click="messageNewMatch()">{{'SEND_MESSAGE' | translate}}</button>
-            
-            <button class="button button-block button-positive"  ng-click="closeNewMatch()">{{'KEEP_PLAYING' | translate}}</button>
-      
-   
       </div>
-    </ion-content>
+
+      <div class="row">
+        <div class="col center" style="min-height: 100px;">
+          <img class="circle" ng-src="{{profile | profileImageUrl}}" />
+          <span style="width:30px"></span>
+          <!-- TODO make this image a link to their profile -->
+          <img class="circle" ng-src="{{matchProfile | profileImageUrl}}" />
+        </div>
+      </div>
+
+
+      <button class="button button-block button-assertive" ng-click="messageNewMatch()">{{'SEND_MESSAGE' | translate}}</button>
+
+      <button class="button button-block button-positive" ng-click="closeNewMatch()">{{'KEEP_PLAYING' | translate}}</button>
+
+
+    </div>
+  </ion-content>
 </ion-modal-view>

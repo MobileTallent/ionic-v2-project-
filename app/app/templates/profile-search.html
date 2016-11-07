@@ -89,11 +89,11 @@
 				<div class="verticalAlign text-label" ng-show="!profiles">
 					{{'FINDING_PEOPLE' | translate}}
 				</div>
-				<div class="verticalAlign text-label" style="font-size: 16px;font-size: 5.5vw" ng-show="profiles.length == 0">
+				<div class="verticalAlign text-label energized" style="font-size: 16px;font-size: 5.5vw" ng-show="profiles.length == 0">
 					{{'NO_ONE_NEW' | translate}}
 					<br/>
 					<br/>
-					<button class="button" ng-click="searchAgain()">{{'SEARCH_AGAIN' | translate}}</button>
+					<button class="button button-assertive" ng-click="searchAgain()"><b>{{'SEARCH_AGAIN' | translate}}</b></button>
 				</div>
 			</div>
 

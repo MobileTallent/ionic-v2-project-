@@ -1,23 +1,31 @@
-<ion-view view-title="Contact" cache-view="false">
-    <ion-content padding="true">
-        <div style="text-align: center">
+<ion-view view-with-bg view-title="Contact" cache-view="false">
+    <ion-content padding="true" id="login-background-image">
+        <div style="text-align: center" style="margin-bottom:0px;">
 
-            <h1>Just a Baby</h1><br/>
-            <b>A social app for parents to connect.
-             <br/>Available for Android and iOS.
-            <br/>
-            
-            </b>
+            <h1 class="assertive" style="margin-top:10%;" >{{::appName}}</h1><br/>
+
+
         </div>
 
-        <br/><br/>
 
-        <b>Contact Us</b>
-        <textarea ng-model="contact.message" rows="6" class="wide input-grey"></textarea>
-        <button class="button button-block button-positive" ng-click="sendMessage()">Send</button>
 
-        <br/>
-        
+        <div class="card padding-15 center">
+            <div class="energized">
+                <p class="text-size-24">A social app for parents to connect.</p>
+                <p class="text-size-24">Available for Android and iOS.</p>
+
+            </div>
+            <div class="col-33 col-offset-33 center">
+                <i class="ion-ios-email-outline  assertive" style="font-size:90px;" />
+            </div>
+            <div class="energized">
+                <p class="text-size-24">We would love to hear your feedback.</p>
+            </div>
+            <textarea ng-model="contact.message" rows="6" class="wide input-grey"></textarea>
+            <button class="button button-block button-positive" ng-click="sendMessage()">Send</button>
+
+        </div>
+
 
     </ion-content>
 </ion-view>
