@@ -7,6 +7,8 @@ module app {
 	export interface IAppService {
 		twilioAccessToken: string
 
+		goToNextLoginState(): void
+
 		saveProfile(updates:IProfile): ng.IPromise<IProfile>
 		getProfile(): IProfile
 		getProfileByUserId(id:string): IProfile
