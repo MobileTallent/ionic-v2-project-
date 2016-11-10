@@ -1,7 +1,7 @@
 angular.module('controllers')
 
-    .controller('ProfileSearch', function($log, $scope, $state, $timeout, $translate, $ionicSideMenuDelegate,
-                                      TDCardDelegate, AppService, AppUtil, $ionicModal) {
+    .controller('ProfileSearch', function ($log, $scope, $state, $timeout, $translate, $ionicSideMenuDelegate,
+        TDCardDelegate, AppService, AppUtil, $ionicModal) {
 
         var translations
         $translate(['MATCHES_LOAD_ERROR']).then(function (translationsResult) {
@@ -17,11 +17,11 @@ angular.module('controllers')
 
 
         $scope.$on('$ionicView.enter', () => {
-            if(profile.enabled) {
+            if (profile.enabled) {
                 // Check for any previously search results
                 $scope.profiles = AppService.getProfileSearchResults()
                 // If we haven't searched yet or we are coming back to the screen and there isn't any results then search for more
-                if(!$scope.profiles || $scope.profiles.length === 0)
+                if (!$scope.profiles || $scope.profiles.length === 0)
                     $scope.searchAgain()
             }
         })
@@ -44,7 +44,7 @@ angular.module('controllers')
                     result.map(profile => profile.image = profile.photoUrl)
                     // Make the search screen show for at least a certain time so it doesn't flash quickly
                     var elapsed = Date.now() - startTime
-                    if(elapsed < MIN_SEARCH_TIME)
+                    if (elapsed < MIN_SEARCH_TIME)
                         $timeout(() => $scope.profiles = result, MIN_SEARCH_TIME - elapsed)
                     else
                         $scope.profiles = result
@@ -53,7 +53,7 @@ angular.module('controllers')
                     $scope.profiles = []
                     AppUtil.toastSimple(translations.MATCHES_LOAD_ERROR)
                 }
-            )
+                )
         }
 
         // Initialise the new match modal
@@ -74,7 +74,7 @@ angular.module('controllers')
 
         $scope.messageNewMatch = () => {
             $scope.modal.hide()
-            $state.go('^.chat',{matchId : $scope.newMatch.id})
+            $state.go('^.chat', { matchId: $scope.newMatch.id })
         }
         // a test function for viewing the new match modal screen
         $scope.openNewMatch = () => {
@@ -99,7 +99,7 @@ angular.module('controllers')
 
         $scope.accept = () => {
             $log.log('accept button')
-            var topProfile = $scope.profiles[$scope.profiles.length-1]
+            var topProfile = $scope.profiles[$scope.profiles.length - 1]
             AppService.processMatch(topProfile, true)
             topProfile.accepted = true // this triggers the animation out
             $timeout(() => $scope.profiles.pop(), 340)
@@ -107,7 +107,7 @@ angular.module('controllers')
 
         $scope.reject = () => {
             $log.log('reject button')
-            var topProfile = $scope.profiles[$scope.profiles.length-1]
+            var topProfile = $scope.profiles[$scope.profiles.length - 1]
             AppService.processMatch(topProfile, false)
             topProfile.rejected = true // this triggers the animation out
             $timeout(() => $scope.profiles.pop(), 340)
@@ -119,22 +119,22 @@ angular.module('controllers')
 
         $scope.cardTransitionLeft = (profile) => {
             AppService.processMatch(profile, false)
-            if($scope.profiles.length == 0) {
+            if ($scope.profiles.length == 0) {
                 // TODO auto-load more?
             }
         }
         $scope.cardTransitionRight = (profile) => {
             AppService.processMatch(profile, true)
-            if($scope.profiles.length == 0) {
+            if ($scope.profiles.length == 0) {
                 // TODO auto-load more?
             }
         }
     })
 
 
-    .controller('MatchProfileCtrl', function($scope, $translate, AppService, AppUtil,
-                                             $state, $stateParams, $ionicHistory, $ionicActionSheet, $ionicPopup,
-                                             matchProfile) {
+    .controller('MatchProfileCtrl', function ($scope, $translate, AppService, AppUtil,
+        $state, $stateParams, $ionicHistory, $ionicActionSheet, $ionicPopup,
+        matchProfile) {
         //$cordovaFacebook.api()
         //{user-id}?fields=context.fields%28mutual_friends%29
 
@@ -147,15 +147,37 @@ angular.module('controllers')
 
         $scope.profileOptions = () => {
             $ionicActionSheet.show({
+                buttons: [
+                    { text: 'Impregnate' }
+                ],
                 destructiveText: translations.REPORT,
                 titleText: translations.MATCH_OPTIONS,
                 cancelText: translations.CANCEL,
-                cancel: function() {},
-                destructiveButtonClicked: function(index) {
+                cancel: function () { },
+                destructiveButtonClicked: function (index) {
                     report()
+                    return true
+                },
+                buttonClicked: function (index) {
+                    $ionicPopup.confirm({
+                        title: "Send Impregnation",
+                        okText: "Send",
+                        cancelText: translations.CANCEL
+                    }).then(function (res) {
+                        impregnate()
+                    })
                     return true
                 }
             })
+        }
+
+        function impregnate() {
+            AppUtil.blockingCall(
+                AppService.processPregnancy($scope.matchProfile, true),
+                () => {
+                    AppUtil.toastSimple("Invitation sent!")
+                }
+            )
         }
 
         function report() {
@@ -189,4 +211,4 @@ angular.module('controllers')
         }
 
     })
-;
+    ;

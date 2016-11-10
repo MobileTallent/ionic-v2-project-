@@ -99,6 +99,15 @@ angular.module('ionicApp').config(function ($stateProvider, $urlRouterProvider) 
                 }
             }
         })
+        .state('menu.relationship', {
+            url: "/relationship",
+            views: {
+                'menuContent': {
+                    templateUrl: "relationship.html",
+                    controller: "RelationshipCtrl"
+                }
+            }
+        })
         .state('menu.profile', {
             url: "/profile",
             views: {

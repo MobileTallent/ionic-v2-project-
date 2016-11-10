@@ -228,7 +228,9 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             saveFile: saveFile,
             searchProfiles: searchProfiles,
             getProfilesWhoLikeMe: getProfilesWhoLikeMe,
+            getProfilesWhoWantsToHaveARelationshipWithMe : getProfilesWhoWantsToHaveARelationshipWithMe,
             processProfile : processProfile,
+            processPregnancy : processPregnancy,
             deleteUnmatched : deleteUnmatched,
             getMatches: getMatches,
             getChatMessages : getChatMessages,
@@ -532,6 +534,17 @@ angular.module('service.parse', ['constants', 'parse-angular'])
                 .then(match => fromJSON(match, 'Match')).catch(_unwrapError)
         }
 
+        /**
+         * Processes a impregnate action of a profile. If its a mutual match, then the Match object will be returned
+         * @param {Profile} profile
+         * @param {boolean} impregnate true if the user sends the pregnancy invitation, false if the user passed/rejected
+         * @returns {Promise<Match>} a promise resolving to a Match if it was a mutual match, else null
+         */
+        function processPregnancy(profile, impregnate) {
+            return Parse.Cloud.run('ProcessPregnancy', { otherUserId: profile.uid, impregnate: impregnate })
+                .then(match => fromJSON(match, 'Match')).catch(_unwrapError)
+        }
+
 
         /**
          * Queries for profiles which:
@@ -570,14 +583,21 @@ angular.module('service.parse', ['constants', 'parse-angular'])
                 }))
                 .catch(_unwrapError)
         }
-
-
+        
         /**
          * Loads the mutual matches for the given ids
          * @returns {Promise<IProfile[]>} an array of the mutual matches
          */
         function getProfilesWhoLikeMe() {
             return Parse.Cloud.run('GetProfilesWhoLikeMe').catch(_unwrapError)
+        }
+
+        /**
+         * Loads the Profiles who wants to have a relationship with current user.
+         * @returns {Promise<IProfile[]>} an array of the mutual matches
+         */
+        function getProfilesWhoWantsToHaveARelationshipWithMe() {
+            return Parse.Cloud.run('GetProfilesWhoWantsToHaveARelationshipWithMe').catch(_unwrapError)
         }
 
 

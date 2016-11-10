@@ -4,7 +4,7 @@
 .center{
     text-align: center;
 }
-.padding-15{
+.padding-15, .pending-list{
     padding:15px;
 }
 .padding-25{
@@ -19,7 +19,6 @@
 .card, .button, image{
     border-radius: 8px;
 }
-
 
 td-card {
     position: absolute;
@@ -58,4 +57,17 @@ li.item.custom{
 }
 .black-and-white{
     filter: grayscale();
+}
+
+.list .item.item-accordion {
+  line-height: 38px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.list .item.item-accordion.ng-hide {
+  line-height: 0px;
+}
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+  display: block !important;
 }

@@ -1,5 +1,5 @@
 {
-  "appName": "Just A Baby",
+  "appName": "Just a Baby",
   "appId": "co.justababy.app",
   "parseAppId": "11111111122444",
   "parseMasterKey": "3333333344888",
@@ -37,7 +37,7 @@
   },
 
   "playStoreUrl": "http://goo.gl/6fQnJC",
-  "itunesUrl": "",
+  "itunesUrl": "https://goo.gl/438VwP",
   "webStoreUrl": "http://justababy.co",
 
   "facebookAppId": "1219040608124053",

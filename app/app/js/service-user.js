@@ -108,10 +108,12 @@ function onNotificationOpen(pnObj){
 			getProfileSearchResults: getProfileSearchResults,
 			updateProfileSearchResults: updateProfileSearchResults,
 			getProfilesWhoLikeMe: getProfilesWhoLikeMe,
+			getProfilesWhoWantsToHaveARelationshipWithMe : getProfilesWhoWantsToHaveARelationshipWithMe,
 			clearProfileSearchResults: clearProfileSearchResults,
 			removeMatchNotification : removeMatchNotification,
             deleteUnmatched : deleteUnmatched,
 			processMatch : processMatch,
+			processPregnancy: processPregnancy,
 			getMutualMatches : getMutualMatches,
 			getMatch : getMatch,
 			getActiveChat : getActiveChat,
@@ -746,6 +748,25 @@ function onNotificationOpen(pnObj){
 		}
 
 		/**
+		 * Process a pregnancy invitation on a profile
+		 * @param profile
+		 * @param {boolean} impregnate
+		 * @returns {Promise.<T>}
+		 */
+		function processPregnancy(profile, impregnate) {
+			$analytics.eventTrack('processPregnancy', {impregnate:impregnate ? 'true' : 'false'})
+			return server.processPregnancy(profile, impregnate).then(function(match) {
+				$log.log('processed impregnate action' + match)
+				// If it's a mutual match then run a mutual match sync
+				// if(match && match.state === 'M') {
+				// 	synchronizeMutualMatches()
+				// }
+			}, function(error) {
+				$log.error('error processing pregnancy invitation ' + JSON.stringify(error))
+			})
+		}
+
+		/**
 		 * Call when the this user removes a matched user
 		 * @param matchId
 		 */
@@ -810,6 +831,14 @@ function onNotificationOpen(pnObj){
 		 */
 		function getProfilesWhoLikeMe() {
 			return server.getProfilesWhoLikeMe()
+		}
+
+		/**
+		 *
+		 * @returns {Promise.<IProfile[]>}
+		 */
+		function getProfilesWhoWantsToHaveARelationshipWithMe() {
+			return server.getProfilesWhoWantsToHaveARelationshipWithMe()
 		}
 
 		/**
@@ -1159,9 +1188,9 @@ function onNotificationOpen(pnObj){
 
 		function saveBirthdate(birthdate) {
 			service.profile.birthdate = birthdate
-			service.profile.ageFrom = service.profile.age - 5
+			service.profile.ageFrom = 18 //service.profile.age - 5
 			if(service.profile.ageFrom < 18) service.profile.ageFrom = 18
-			service.profile.ageTo = service.profile.age + 5
+			service.profile.ageTo = 55 //service.profile.age + 5
 			return server.saveProfile(service.profile, service.profile)
 		}
 
