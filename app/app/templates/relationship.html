@@ -19,14 +19,54 @@
 
 
 		<ion-list>
-			<div class="pending-list item-stable" ng-click="showPendingProfiles = !showPendingProfiles">
-				<ion-item ng-class="{active: showPendingProfiles}">
-					<i class="icon" ng-class="showPendingProfiles ? 'ion-minus' : 'ion-plus'"></i> Pending Request
+			<div class="pending-list item-stable" ng-init="showPendingRequest=true">
+				<ion-item ng-class="{active: showPendingRequest}" ng-click="showPendingRequest = !showPendingRequest">
+					<i class="icon" ng-class="showPendingRequest ? 'ion-minus' : 'ion-plus'"></i> Pending Request
 				</ion-item>
-				<ion-item class="center" ng-if="!vm.profiles.length" ng-show="showPendingProfiles">
+				<ion-item class="center" ng-if="!vm.profilePendingRequest.length" ng-show="showPendingRequest">
 					No Pending Request
 				</ion-item>
-				<ion-item class="item-accordion" ng-repeat="profile in vm.profiles" ng-click="vm.view($index)" ng-show="showPendingProfiles">
+				<ion-item class="item-accordion" ng-repeat="profile in vm.profilePendingRequest" ng-click="vm.view($index,vm.profilePendingRequest)" ng-show="showPendingRequest">
+					<div class="item item-avatar item-borderless custom-list-item">
+						<img ng-src="{{profile | profileImageUrl}}">
+						<div ng-class-odd="'chats-list-odd'" ng-class-even="'chats-list-even'">
+							<h2 class="custom-list-item-text energized">{{profile.name}}, {{profile | profileAge}}</h2>
+							<p class="custom-list-item-subtext">{{profile.location | distance}} {{'AWAY' | translate}}</p>
+						</div>
+					</div>
+				</ion-item>
+			</div>
+		</ion-list>
+
+		<ion-list>
+			<div class="pending-list item-stable" ng-init="showPendingInvite=true">
+				<ion-item ng-class="{active: showPendingInvite}" ng-click="showPendingInvite = !showPendingInvite">
+					<i class="icon" ng-class="showPendingInvite ? 'ion-minus' : 'ion-plus'"></i> Pending Invite
+				</ion-item>
+				<ion-item class="center" ng-if="!vm.profilePendingInvite.length" ng-show="showPendingInvite">
+					No Pending Invite
+				</ion-item>
+				<ion-item class="item-accordion" ng-repeat="profile in vm.profilePendingInvite" ng-click="vm.view($index,vm.profilePendingInvite)" ng-show="showPendingInvite">
+					<div class="item item-avatar item-borderless custom-list-item">
+						<img ng-src="{{profile | profileImageUrl}}">
+						<div ng-class-odd="'chats-list-odd'" ng-class-even="'chats-list-even'">
+							<h2 class="custom-list-item-text energized">{{profile.name}}, {{profile | profileAge}}</h2>
+							<p class="custom-list-item-subtext">{{profile.location | distance}} {{'AWAY' | translate}}</p>
+						</div>
+					</div>
+				</ion-item>
+			</div>
+		</ion-list>
+
+		<ion-list>
+			<div class="pending-list item-stable" ng-init="showMutual=true">
+				<ion-item ng-class="{active: showMutual}" ng-click="showMutual = !showMutual">
+					<i class="icon" ng-class="showMutual ? 'ion-minus' : 'ion-plus'"></i> Partners
+				</ion-item>
+				<ion-item class="center" ng-if="!vm.profileMutual.length" ng-show="showMutual">
+					No Partners Yet
+				</ion-item>
+				<ion-item class="item-accordion" ng-repeat="profile in vm.profileMutual" ng-click="vm.view($index,vm.profileMutual)" ng-show="showMutual">
 					<div class="item item-avatar item-borderless custom-list-item">
 						<img ng-src="{{profile | profileImageUrl}}">
 						<div ng-class-odd="'chats-list-odd'" ng-class-even="'chats-list-even'">

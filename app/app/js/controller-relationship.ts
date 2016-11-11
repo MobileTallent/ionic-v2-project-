@@ -14,6 +14,10 @@ module app {
 		private AppUtil:AppUtil
 
 		public profiles:IProfile[]
+		public profilePendingRequest:IProfile[]
+		public profilePendingInvite:IProfile[]
+		public profileMutual:IProfile[]
+
 
 		private profileModal
 		public profile // The profile being viewed
@@ -44,8 +48,12 @@ module app {
 
 			this.AppService.getProfilesWhoWantsToHaveARelationshipWithMe()
 				.then(profiles => {
-					this.profiles = profiles
-					this.$log.log('getProfilesWhoWantsToHaveARelationshipWithMe returned ' + profiles.length + ' profiles')
+					this.profilePendingRequest = profiles["pendingUserRequest"]
+					this.profilePendingInvite = profiles["pendingUserInvite"]
+					this.profileMutual = profiles["mutualUsers"]
+					this.$log.log('getProfilesWhoWantsToHaveARelationshipWithMe pending request returned ' + this.profilePendingRequest.length + ' profiles')
+					this.$log.log('getProfilesWhoWantsToHaveARelationshipWithMe pending invitereturned ' + this.profilePendingInvite.length + ' profiles')
+					this.$log.log('getProfilesWhoWantsToHaveARelationshipWithMe mutual returned ' + this.profileMutual.length + ' profiles')
 
 				}, error => {
 					this.$log.error('Error loading profiles who wants to have a relationship with current user ' + JSON.stringify(error))
@@ -54,12 +62,13 @@ module app {
 				.finally(() => this.$scope.$broadcast('scroll.refreshComplete'))
 		}
 
-		public view(index:number) {
+		public view(index:number, profileList) {
 			this.$log.debug('viewing profile who wants to have a relationship with me at index ' + index)
+			this.profiles = profileList
 			this.profile = this.profiles[index]
 			this.profileIndex = index
 			this.profileModal.show()
-		}
+		}	
 
 		public like() {
 			this.$log.debug('approving relationship invite at index ' + this.profileIndex)

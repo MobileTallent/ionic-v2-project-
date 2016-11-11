@@ -61,7 +61,7 @@ li.item.custom{
 
 .list .item.item-accordion {
   line-height: 38px;
-  padding-top: 0;
+  padding-top: 10px;
   padding-bottom: 0;
 }
 .list .item.item-accordion.ng-hide {

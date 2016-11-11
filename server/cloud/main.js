@@ -783,13 +783,13 @@ Parse.Cloud.define("ProcessPregnancy", function (request, response) {
 		match.set(isFirstId ? 'u1PregAction' : 'u2PregAction', impregnate ? 'L' : 'R')
 
 		// set the current pregnancy state of this match
-		if (match.get('u1PregAction') == null || match.get('u2PregAction') == null){
+		if (match.get('u1PregAction') == null || match.get('u2PregAction') == null) {
 			match.set('pregState', 'P') // P for pending - this user was the first one to swipe
 		}
-		else if (match.get('u1PregAction') === 'R' || match.get('u2PregAction') === 'R'){
+		else if (match.get('u1PregAction') === 'R' || match.get('u2PregAction') === 'R') {
 			match.set('pregState', 'R') // R for rejected
 		}
-		else if (match.get('u1PregAction') === 'L' && match.get('u2PregAction') === 'L'){
+		else if (match.get('u1PregAction') === 'L' && match.get('u2PregAction') === 'L') {
 			match.set('pregState', 'M') // M for mutual like
 		}
 
@@ -909,15 +909,57 @@ Parse.Cloud.define('GetProfilesWhoWantsToHaveARelationshipWithMe', function (req
 
 	var maxResults = 20
 
+	var stringPendingRequest = "pendingUserRequest"
+	var stringPendingUserInvite = "pendingUserInvite"
+	var stringmutualUsers = "mutualUsers"
+
+	var userIdsPendingRequest = [] //someone's request is pending on u'
+	var userIdsPendingInvite = []	// ur request to someone is pending
+	var userIdsMutual = [] //both are accepted
+
+	var profilePendingRequest = []
+	var profilePendingInvite = []
+	var profileMutual = []
+
+	var userContainer = {}
+
+
 	function baseMatchQuery(thisId, otherId) {
+		var pregStates = ['P', 'M']
 		var matchQuery = new Parse.Query("Match")
-		matchQuery.equalTo('pregState', 'P') // pending the current user to swipe
-		matchQuery.equalTo('u' + otherId + 'PregAction', 'L') // where the other user has liked us
+		matchQuery.containedIn('pregState', pregStates) // get all pending and mutual preg states
 		matchQuery.limit(maxResults)
 		matchQuery.select('uid' + thisId)
 		matchQuery.equalTo('uid' + thisId, request.user.id)
 		matchQuery.descending('createdAt')
 		return matchQuery
+	}
+	function setUserContainer(userProfile, users) {
+		userContainer[userProfile] = users
+		console.log(userProfile + " here " + userContainer[userProfile].length)
+	}
+
+	function baseUserQuery(userIds) {
+		var userQuery = new Parse.Query(Parse.User)
+		userQuery.include('profile')
+		userQuery.containedIn('objectId', userIds)
+		userQuery.limit(maxResults)
+		return userQuery.find()
+	}
+
+	function getUsersOrReturnEmpty(userIds) {
+		if (userIds.length === 0)
+			return []
+		return baseUserQuery(userIds)
+	}
+
+	function iterateUserProfiles(userProfile, userProfilesList) {
+		if (userContainer[userProfile] && userContainer[userProfile].length) {
+			_.each(userContainer[userProfile], function (user) {
+					userProfilesList.push(_processProfile(user.get('profile')))
+			})
+			console.log(userProfile + " array length " + userProfilesList.length)
+		}
 	}
 
 	var matchQuery = Parse.Query.or(baseMatchQuery('1', '2'), baseMatchQuery('2', '1'))
@@ -926,35 +968,60 @@ Parse.Cloud.define('GetProfilesWhoWantsToHaveARelationshipWithMe', function (req
 		console.log('found ' + matches.length + ' matches objects who wants to have a relationship with me')
 		// The match objects are not a mutual match so they wont have the profile reference set
 		// So load the User objects including the profile
-		var userIds = []
+
+
 		_.each(matches, function (match) {
 			var uid1 = match.get('uid1')
 			var uid2 = match.get('uid2')
 
-			userIds.push(userId === uid1 ? uid2 : uid1)
+			if (match.get('pregState') === 'M')
+				userIdsMutual.push(userId === uid1 ? uid2 : uid1)
+			else if (match.get('pregState') === 'P') {
+				if (userId === uid1 && match.get('u1PregAction') === 'L') {
+					userIdsPendingInvite.push(uid2)
+				} else {
+					userIdsPendingRequest.push(uid1)
+				}
+			}
 		})
 
-		if (userIds.length === 0)
-			return []
-		var userQuery = new Parse.Query(Parse.User)
-		userQuery.include('profile')
-		userQuery.containedIn('objectId', userIds)
-		userQuery.limit(maxResults)
-		return userQuery.find()
+		return getUsersOrReturnEmpty(userIdsPendingRequest)
 	}).then(function (users) {
-		var profiles = []
-		_.each(users, function (user) {
-			profiles.push(_processProfile(user.get('profile')))
-		})
-		return profiles
-	}).then(function (profiles) {
-		response.success(profiles)
+		setUserContainer(stringPendingRequest, users)
+		return getUsersOrReturnEmpty(userIdsPendingInvite)
+	}).then(function (users) {
+		setUserContainer(stringPendingUserInvite, users)
+		return getUsersOrReturnEmpty(userIdsMutual)
+	}).then(function (users) {
+		setUserContainer(stringmutualUsers, users)
+		console.log("Second stage here" + userContainer[stringPendingRequest])
+		console.log("Second stage here" + userContainer[stringPendingUserInvite])
+		console.log("Second stage here" + userContainer[stringmutualUsers])
+
+		var profileContainer = {}
+
+
+		iterateUserProfiles(stringPendingRequest, profilePendingRequest)
+		iterateUserProfiles(stringPendingUserInvite, profilePendingInvite)
+		iterateUserProfiles(stringmutualUsers, profileMutual)
+
+
+
+		profileContainer[stringPendingRequest] = profilePendingRequest
+		profileContainer[stringPendingUserInvite] = profilePendingInvite
+		profileContainer[stringmutualUsers] = profileMutual
+
+		console.log("profileMutual array length" + profileMutual.length)
+
+		return profileContainer
+	}).then(function (profileContainer) {
+		console.log("Success returning the profileContainer" + profileContainer)
+		response.success(profileContainer)
 	}, function (error) {
+		console.log("RIP Error" + error)
 		response.error(error)
 	})
 })
-
-
 
 Parse.Cloud.define("RemoveMatch", function (request, response) {
 	var matchId = request.params.matchId
