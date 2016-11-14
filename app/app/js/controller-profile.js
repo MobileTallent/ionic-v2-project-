@@ -14,6 +14,12 @@ angular.module('controllers')
         $scope.cancel = () => AppService.logout()
     })
 
+    .controller('ClinicsCtrl', function ($scope, AppService, AppUtil) {
+
+        //TODO ClinicsCtrl
+        
+    })
+
 
     .controller('ProfileSetupCtrl', function ($scope, $state, AppService, AppUtil) {
         // The user will be sent here from AppService.goToNextLoginState() if AppService.isProfileValid() returns false

@@ -170,6 +170,15 @@ angular.module('ionicApp').config(function ($stateProvider, $urlRouterProvider) 
                 }
             }
         })
+        .state('menu.clinics', {
+            url: "/clinics",
+            views: {
+                'menuContent': {
+                    templateUrl: "clinics.html",
+                    controller: "ClinicsCtrl"
+                }
+            }
+        })
         .state('menu.settings', {
             url: "/settings",
             views: {
