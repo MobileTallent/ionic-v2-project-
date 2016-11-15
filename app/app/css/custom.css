@@ -10,6 +10,7 @@
 .padding-25{
     padding:25px;
 }
+
 /*.right{
     text-align: right;
 }
@@ -58,6 +59,19 @@ li.item.custom{
 .black-and-white{
     filter: grayscale();
 }
+
+/* ---------- Profile -----------*/
+
+#profile-name-banner{
+    background-color: rgba(187, 225, 213, 0.69);
+    border: 1px solid rgba(187, 225, 213, 0.69);
+    border-radius: 16px;
+    padding: 20px 15px;
+    margin-top: 10px
+}
+
+
+
 
 .list .item.item-accordion {
   line-height: 38px;

@@ -1,17 +1,40 @@
 <ion-slide-box show-pager="true" does-continue="true">
     <ion-slide ng-repeat="photo in profile.photos track by $index">
-        <img ng-src="{{photo | fileUrl}}" style="width:100%"/>
+        <img ng-src="{{photo | fileUrl}}" style="width:100%" />
     </ion-slide>
     <ion-slide ng-if="!selectedCard.photos.length">
-        <img src="img/generic_avatar.jpg" style="width:100%"/>
+        <img src="img/generic_avatar.jpg" style="width:100%" />
     </ion-slide>
 </ion-slide-box>
 
-<div style="padding: 10px;">
-    <b>{{profile.name}}</b>, {{profile | profileAge}}<br/>
+
+<div id="profile-name-banner" class="col-80 col-offset-10">
+    <div class="center text-color-white text-size-24">
+        {{profile.name}}, {{profile | profileAge}}
+    </div>
+
+
+</div>
+
+<div class="padding-15">
+    <h4 style="color:#666666">My City, My State</h4>
+</div>
+
+<!--<div>
     <span ng-if="distance && !isCurrentUser" style="color:gray">{{distance}} {{'AWAY' | translate}}</span><br/>
-    <!-- TODO Active x hours ago -->
-    <div ng-show="profile.about">
+  TODO Active x hours ago 
+
+</div>-->
+
+<!-- My Status-->
+<!--<div class="center">
+    <p class="assertive text-size-18">Trying for a baby</p>
+</div>-->
+
+
+<div class="padding-15">
+    <h4 style="color:#666666">About Me</h4>
+    <div ng-show="profile.about" style="color:#9B9B9B" class="text-size-18">
         {{profile.about}}
     </div>
 </div>

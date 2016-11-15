@@ -18,7 +18,7 @@
         </div>
         <br/>
         <div>
-            <h2>{{'ABOUT_YOU' | translate}}</h2>
+            <h5>{{'ABOUT_YOU' | translate}}</h5>
 
             <textarea class="wide input-grey"
                     placeholder="{{'ABOUT_YOU' | translate}}"
@@ -27,6 +27,19 @@
                     ng-keyup="vm.expandText()"
                     ng-keydown="vm.expandText()"></textarea>
             <br/>
+
+            <!--<label class="item item-input item-select">
+                <div class="input-label">
+                    My Status
+                </div>
+
+                <select>
+                    <option class="assertive">{{profile.name}} is trying for a baby</option>
+                    <option class="assertive">{{profile.name}} has a bun in the oven</option>
+                    <option class="assertive">{{profile.name}} wants to try for a baby</option>
+                </select>
+                
+            </label>-->
             <div style="text-align:center">
                 <button class="button button-positive" ng-click="vm.saveProfile()" ng-hide="vm.profile.about == vm.about">&nbsp;{{'SAVE' | translate}}&nbsp;</button>
             </div>

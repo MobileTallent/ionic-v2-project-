@@ -58,8 +58,6 @@ button.button, button.button.button-stable{
     background-color: rgb(221, 221, 221);
     }
 
-
-
 //*********************************************************** Profile edit 
 .profileImage {
     border: 5px solid white;
@@ -67,8 +65,6 @@ button.button, button.button.button-stable{
 .profileImageSelected {
     border: 5px solid dodgerblue;
     }
-
-
 
 //*********************************************************** Global Selectors
 
@@ -84,8 +80,14 @@ button.button, button.button.button-stable{
 .text-color-white{
     color: $text-colour-white;
 }
-.text-size-24{
+.text-size-18{
     font-size: 18px;
+}
+.text-size-24{
+    font-size: 24px;
+}
+.text-size-28{
+    font-size: 28px;
 }
 
 //*********************************************************** Login

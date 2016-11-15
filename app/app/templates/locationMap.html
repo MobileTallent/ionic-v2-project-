@@ -1,13 +1,19 @@
 <ion-view view-title="{{'SET_LOCATION' | translate}}" cache-view="false">
     <ion-content>
         <ul class="items">
-            <li class="item item-toggle">
+
+            <li>
+                <ion-toggle ng-model="location.useGPS" ng-change="useGPSchanged()" toggle-class="toggle-assertive">{{'USE_GPS_LOCATION' | translate}}</ion-toggle>
+            </li>
+
+
+            <!--<li class="item item-toggle">
                 {{'USE_GPS_LOCATION' | translate}}
                 <label class="toggle">
                     <input type="checkbox" ng-model="location.useGPS" ng-change="useGPSchanged()">
                     <div class="track"><div class="handle"></div></div>
                 </label>
-            </li>
+            </li>-->
         </ul>
 
         <div id="map" data-tap-disabled="true"></div>
