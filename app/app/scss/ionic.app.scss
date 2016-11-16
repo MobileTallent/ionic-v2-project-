@@ -46,14 +46,6 @@ $chats-even: rgba(155, 155, 155, 0.15);
 // Include all of Ionic
 @import "bower_components/ionic/scss/ionic";
 
-//*********************************************************** Yet to sort
-
-
-// This is the input color in 'Edit Page' 
-.input-grey { 
-    background-color: #F5F5F5; 
-    }
-
 button.button, button.button.button-stable{
     background-color: rgb(221, 221, 221);
     }
@@ -61,11 +53,22 @@ button.button, button.button.button-stable{
 //*********************************************************** Profile edit 
 .profileImage {
     border: 5px solid white;
-    }
+}
 .profileImageSelected {
     border: 5px solid dodgerblue;
-    }
-
+}
+.input-grey { 
+    background-color: #F5F5F5;
+}
+.about-you-header{
+    color: $energized;
+    font-size: 18px;
+}
+.about-you-info{
+    color: #6c6c6c;
+    font-size: 18px;
+    font-style: italic;
+}
 //*********************************************************** Global Selectors
 
 .text-colour-energized{
@@ -168,10 +171,6 @@ a.autolinker {
 //      Create a css filter to adjust the greyscale(70% maybe?), not to full black and white, so the unread message seems brighter.
 //      It could also put the answered texts to black and white and the unanswered texts to colour?
 
-
-.list-color-filter{
-
-}
 .item-avatar>img:first-child {
     width: 100% !important;
     height: 100% !important;
@@ -273,4 +272,13 @@ a.autolinker {
 }
 .platform-android .action-sheet-backdrop.active {
         background-color: rgba(0, 0, 0, 0.1);
+}
+
+/*My Relationships*/
+/*.background-color-assertive{
+    background-color: $assertive !important;
+}*/
+
+.clinic-header{
+    background-color: $positive;
 }
