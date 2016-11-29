@@ -17,64 +17,64 @@ angular.module('controllers')
     .controller('ClinicsCtrl', function ($scope, AppService, AppUtil) {
 
         //TODO ClinicsCtrl
-        
+
     })
 
 
     .controller('ProfileSetupCtrl', function ($scope, $state, AppService, AppUtil) {
         // The user will be sent here from AppService.goToNextLoginState() if AppService.isProfileValid() returns false
-        $scope.$on('$ionicView.beforeEnter', function(event) {
+        $scope.$on('$ionicView.beforeEnter', function (event) {
             var profile = AppService.getProfile()
 
             var birthYear = null, birthMonth = null, birthDay = null
-            if(profile.birthdate) {
+            if (profile.birthdate) {
                 birthYear = profile.birthdate.getFullYear()
                 birthMonth = profile.birthdate.getMonth()
                 birthDay = profile.birthdate.getDay()
             }
 
             // pre-populate the values we already have on the profile
-            $scope.user = {name:profile.name, birthYear:birthYear, birthMonth:birthMonth, birthDay:birthDay, gender: profile.gender}
+            $scope.user = { name: profile.name, birthYear: birthYear, birthMonth: birthMonth, birthDay: birthDay, gender: profile.gender }
         })
 
 
         // Static data
-        $scope.months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+        $scope.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         $scope.years = []
         // provide the years for people aged 13 to 100
-        var yearsFrom = new Date().getFullYear()-100
-        var yearsTo = new Date().getFullYear()-13
-        for(var i=yearsFrom;i<=yearsTo;i++) {
+        var yearsFrom = new Date().getFullYear() - 100
+        var yearsTo = new Date().getFullYear() - 13
+        for (var i = yearsFrom; i <= yearsTo; i++) {
             $scope.years.push((i))
         }
         $scope.yearFrom = yearsFrom
         $scope.yearTo = yearsTo
 
-        $scope.saveProfile = function() {
+        $scope.saveProfile = function () {
 
-            if(!$scope.user.name || $scope.user.name.trim().length < 1) {
+            if (!$scope.user.name || $scope.user.name.trim().length < 1) {
                 AppUtil.toastSimpleTranslate('FIRST_NAME_REQUIRED')
                 return
             }
-            if(!$scope.user.birthDay) {
+            if (!$scope.user.birthDay) {
                 AppUtil.toastSimpleTranslate('BIRTH_DAY_REQUIRED')
                 return
             }
-            if(!$scope.user.birthMonth) {
+            if (!$scope.user.birthMonth) {
                 AppUtil.toastSimpleTranslate('BIRTH_MONTH_REQUIRED')
                 return
             }
-            if(!$scope.user.birthYear) {
+            if (!$scope.user.birthYear) {
                 AppUtil.toastSimpleTranslate('BIRTH_YEAR_REQUIRED')
                 return
             }
-            if(!$scope.user.gender) {
+            if (!$scope.user.gender) {
                 AppUtil.toastSimpleTranslate('GENDER_REQUIRED')
                 return
             }
 
             var birthdate = new Date(Date.UTC($scope.user.birthYear, $scope.user.birthMonth, $scope.user.birthDay))
-            var changes = {name: $scope.user.name, birthdate: birthdate, gender: $scope.user.gender}
+            var changes = { name: $scope.user.name, birthdate: birthdate, gender: $scope.user.gender }
 
             AppUtil.blockingCall(AppService.saveProfile(changes),
                 () => AppService.goToNextLoginState(),
@@ -84,7 +84,7 @@ angular.module('controllers')
         $scope.logout = () => AppService.logout()
     })
 
-    .controller('LocationSetupCtrl', function($scope, $translate, AppService, AppUtil, $ionicPopup) {
+    .controller('LocationSetupCtrl', function ($scope, $translate, AppService, AppUtil, $ionicPopup) {
 
         var translations
         $translate(['SETTINGS_SAVE_ERROR', 'GPS_ERROR', 'SET_MAP_LOCATION']).then(function (translationsResult) {
@@ -117,15 +117,15 @@ angular.module('controllers')
             draggable: true
         })
 
-        google.maps.event.addListener(map, 'click', function(event) {
+        google.maps.event.addListener(map, 'click', function (event) {
             marker.setPosition(event.latLng)
         })
 
-        $scope.setLocation = function() {
+        $scope.setLocation = function () {
             var pos = marker.getPosition()
 
             AppUtil.blockingCall(
-                AppService.saveProfile({gps: false, location:{latitude:pos.lat(), longitude:pos.lng()}}),
+                AppService.saveProfile({ gps: false, location: { latitude: pos.lat(), longitude: pos.lng() } }),
                 () => AppService.goToNextLoginState(),
                 'SETTINGS_SAVE_ERROR'
             )
@@ -133,7 +133,7 @@ angular.module('controllers')
 
         $scope.cancel = () => AppService.logout()
 
-        $scope.$on('$ionicView.afterEnter', function(event) {
+        $scope.$on('$ionicView.afterEnter', function (event) {
             $ionicPopup.alert({
                 title: translations.GPS_ERROR,
                 template: translations.SET_MAP_LOCATION
@@ -156,25 +156,25 @@ angular.module('controllers')
         $scope.logout = () => AppService.logout()
     })
 
-    .controller('FbAlbumsCtrl', function($scope, $log, $cordovaFacebook) {
+    .controller('FbAlbumsCtrl', function ($scope, $log, $cordovaFacebook) {
         $scope.albums = null
 
         // TODO use $iconicLoading instead of the text status
-        $cordovaFacebook.api('/me/albums').then(function(result) {
+        $cordovaFacebook.api('/me/albums').then(function (result) {
             $scope.albums = result.data
-        }, function(error) {
+        }, function (error) {
             $log.log('FbAlbumsController error ' + JSON.stringify(error))
         })
         // TODO handle if there are no albums
     })
 
-    .controller('FbAlbumCtrl', function($log, $rootScope, $state, $scope, $stateParams, $ionicLoading, $cordovaFacebook) {
+    .controller('FbAlbumCtrl', function ($log, $rootScope, $state, $scope, $stateParams, $ionicLoading, $cordovaFacebook) {
 
-        $cordovaFacebook.api('/'+ $stateParams.albumId +'/photos?fields=id,picture,source,height,width,images&limit=500')
-            .then(function(result) {
+        $cordovaFacebook.api('/' + $stateParams.albumId + '/photos?fields=id,picture,source,height,width,images&limit=500')
+            .then(function (result) {
                 $scope.photos = result.data
                 // TODO handle if there are no photos
-            }, function(error) {
+            }, function (error) {
                 $log.log('FbAlbumController - error getting album photos ' + JSON.stringify(error))
             })
 
@@ -185,12 +185,12 @@ angular.module('controllers')
 
         function getBase64FromImageUrl(URL) {
             var img = new Image()
-            img.crossOrigin="anonymous"
+            img.crossOrigin = "anonymous"
             img.src = URL
             img.onload = function () {
                 var canvas = document.createElement("canvas")
-                canvas.width =this.width
-                canvas.height =this.height
+                canvas.width = this.width
+                canvas.height = this.height
 
                 var ctx = canvas.getContext("2d")
                 ctx.drawImage(this, 0, 0)
@@ -204,13 +204,13 @@ angular.module('controllers')
         }
     })
 
-    .controller('PhotoCropCtrl', function($log, $scope, $rootScope, $ionicLoading, $state, $stateParams, $ionicHistory, AppService, AppUtil) {
+    .controller('PhotoCropCtrl', function ($log, $scope, $rootScope, $ionicLoading, $state, $stateParams, $ionicHistory, AppService, AppUtil) {
         $scope.myImage = $rootScope.cropPhoto
         // $scope.myImage = $stateParams.imageData TODO try and use a state param instead of rootScoe
 
-        $scope.croppedImage = { data: ''}
+        $scope.croppedImage = { data: '' }
 
-        $scope.$on('$ionicView.afterLeave', function(event) {
+        $scope.$on('$ionicView.afterLeave', function (event) {
             $rootScope.cropPhoto = null
         })
 
@@ -229,12 +229,12 @@ angular.module('controllers')
                 else
                     base64 = unescape(dataURI.split(',')[1])
 
-                AppService.setPhoto(base64).then(function(result) {
+                AppService.setPhoto(base64).then(function (result) {
                     $ionicLoading.hide()
 
                     var viewHistory = $ionicHistory.viewHistory()
 
-                    if(viewHistory.backView.stateName == 'menu.fb-album') {
+                    if (viewHistory.backView.stateName == 'menu.fb-album') {
                         // pop off the facebook album history items and set the back view to the profile edit page
                         var history = viewHistory.histories[viewHistory.currentView.historyId]
                         history.stack.splice(2, 3)
@@ -246,7 +246,7 @@ angular.module('controllers')
                         // if we came from a camers/gallery photo selection then can just go back
                         $ionicHistory.goBack()
                     }
-                },function(error){
+                }, function (error) {
                     $ionicLoading.hide()
                     $log.error('Error saving cropped image ' + JSON.stringify(error))
                     AppUtil.toastSimple('Error saving cropped image')
@@ -260,10 +260,10 @@ angular.module('controllers')
         }
     })
 
-    .controller('DiscoveryCtrl', function($scope, $state, $ionicHistory, AppService, AppUtil) {
+    .controller('DiscoveryCtrl', function ($scope, $state, $ionicHistory, AppService, AppUtil) {
 
         // The Profile fields on the discover page to save
-        var fields = ['enabled','guys','girls','ageFrom','ageTo','distance']
+        var fields = ['enabled', 'guys', 'girls', 'ageFrom', 'ageTo', 'distance']
 
         $scope.$on('$ionicView.enter', () => $scope.profile = AppService.getProfile().clone())
 
@@ -282,10 +282,10 @@ angular.module('controllers')
         $scope.cancel = () => $scope.profile = AppService.getProfile($scope).clone()
     })
 
-    .controller('SettingsCtrl', function($log, $scope, $rootScope, $state, $translate, AppService, AppUtil, $ionicActionSheet, env) {
+    .controller('SettingsCtrl', function ($log, $scope, $rootScope, $state, $translate, AppService, AppUtil, $ionicActionSheet, env) {
 
         var translations
-        $translate(['SETTINGS_SAVE_ERROR','DELETE', 'DELETE_ACCOUNT','CANCEL']).then(function (translationsResult) {
+        $translate(['SETTINGS_SAVE_ERROR', 'DELETE', 'DELETE_ACCOUNT', 'CANCEL']).then(function (translationsResult) {
             translations = translationsResult
         })
 
@@ -305,12 +305,12 @@ angular.module('controllers')
             )
         }
 
-        $scope.cancel = function() {
+        $scope.cancel = function () {
             $scope.profile = AppService.getProfile($scope).clone()
         }
 
 
-        $scope.logout = function() {
+        $scope.logout = function () {
             AppService.logout()
         }
 
@@ -334,13 +334,13 @@ angular.module('controllers')
         )
 
 
-        $scope.deleteAccount = function() {
+        $scope.deleteAccount = function () {
             $ionicActionSheet.show({
                 destructiveText: translations.DELETE,
                 titleText: translations.DELETE_ACCOUNT,
                 cancelText: translations.CANCEL,
-                cancel: function() {},
-                destructiveButtonClicked: function(index) {
+                cancel: function () { },
+                destructiveButtonClicked: function (index) {
                     doDelete()
                     return true
                 }
@@ -359,8 +359,8 @@ angular.module('controllers')
                 destructiveText: 'Send Debug Logs',
                 titleText: 'UID: ' + AppService.getProfile().uid + ' Env: ' + env,
                 cancelText: translations.CANCEL,
-                cancel: function() {},
-                destructiveButtonClicked: function(index) {
+                cancel: function () { },
+                destructiveButtonClicked: function (index) {
                     $log.error('debug log')
                     return true
                 }
@@ -369,12 +369,18 @@ angular.module('controllers')
 
     })
 
-    .controller('ContactCtrl', function($scope, AppService, AppUtil) {
+    .controller('ContactCtrl', function ($scope, AppService, AppUtil, $translate) {
 
-        $scope.contact = {message: ''}
 
-        $scope.sendMessage = function() {
-            if($scope.contact.message.length < 10) {
+        var translations
+        $translate(['GIVE_US_FEEDBACK']).then(function (translationsResult) {
+            translations = translationsResult
+        })
+
+        $scope.contact = { message: '' }
+
+        $scope.sendMessage = function () {
+            if ($scope.contact.message.length < 10) {
                 AppUtil.toastSimple('Write at least a few words!')
                 return
             }
@@ -389,7 +395,7 @@ angular.module('controllers')
         }
     })
 
-    .controller('LocationCtrl', function($scope, $translate, AppService, AppUtil, $ionicLoading) {
+    .controller('LocationCtrl', function ($scope, $translate, AppService, AppUtil, $ionicLoading) {
 
         // TODO load the google map script async here when required instead of index.html
         var translations
@@ -400,7 +406,7 @@ angular.module('controllers')
         var profile = AppService.getProfile()
         var location = profile.location
 
-        $scope.location = {useGPS: profile.gps}
+        $scope.location = { useGPS: profile.gps }
 
         var myLatlng = new google.maps.LatLng(location.latitude, location.longitude)
 
@@ -427,47 +433,47 @@ angular.module('controllers')
             draggable: !profile.gps
         })
 
-        google.maps.event.addListener(map, 'click', function(event) {
-            if(!$scope.location.useGPS)
+        google.maps.event.addListener(map, 'click', function (event) {
+            if (!$scope.location.useGPS)
                 marker.setPosition(event.latLng)
         })
 
-        $scope.useGPSchanged = function() {
+        $scope.useGPSchanged = function () {
             marker.setDraggable(!$scope.location.useGPS)
 
-            if($scope.location.useGPS) {
+            if ($scope.location.useGPS) {
                 $ionicLoading.show({ templateUrl: 'loading.html' })
-                AppService.getCurrentPosition().then(function(gpsLocation) {
-                    return AppService.saveProfile({gps: true, location: gpsLocation})
+                AppService.getCurrentPosition().then(function (gpsLocation) {
+                    return AppService.saveProfile({ gps: true, location: gpsLocation })
                 }).then(
-                    function(profile) {
+                    function (profile) {
                         var gpsLatLng = new google.maps.LatLng(profile.location.latitude, profile.location.longitude)
                         marker.setPosition(gpsLatLng)
                         map.setCenter(gpsLatLng)
                         $ionicLoading.hide()
                     }, error => {
                         $ionicLoading.hide()
-                        if(error === 'GPS_ERROR')
+                        if (error === 'GPS_ERROR')
                             AppUtil.toastSimple(translations.GPS_ERROR)
                         else
                             AppUtil.toastSimple(translations.SETTINGS_SAVE_ERROR)
                         $scope.location.useGPS = false
                         marker.setDraggable(true)
                     }
-                )
+                    )
             }
             // else the user needs to click the save button
         }
 
-        $scope.setLocation = function() {
+        $scope.setLocation = function () {
             var pos = marker.getPosition()
 
             AppUtil.blockingCall(
-                AppService.saveProfile({gps: false, location:{latitude:pos.lat(), longitude:pos.lng()}}),
-                () => { /* send back to main page? */},
+                AppService.saveProfile({ gps: false, location: { latitude: pos.lat(), longitude: pos.lng() } }),
+                () => { /* send back to main page? */ },
                 'SETTINGS_SAVE_ERROR'
             )
         }
 
     })
-;
+    ;

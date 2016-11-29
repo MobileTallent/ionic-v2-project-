@@ -1,26 +1,179 @@
+
+/* --- padding --- */
+
+.no-padding { 
+    padding: 0px;
+    }
+.padding-5{
+    padding: 5px;  
+    }
+.padding-10 { 
+    padding: 10px; 
+    }
+.padding-15 {
+    padding:15px;
+    }
+.padding-25{
+    padding:25px;
+    }
+.padding-left-right {
+    padding-left: 10px; padding-right: 10px; 
+    }
+
+/* --- Positioning and Display ---*/
 .hidden{
     display: none;
 }
 .center{
     text-align: center;
 }
-.padding-15, .pending-list{
-    padding:15px;
+.wide {
+    width:100%;
+    }
+.cf {
+    clear: both !important;
+    }
+
+/* --- Text and Font --- */
+.bold {
+    font-weight: bold;
+    }
+textarea {
+    padding: 3px;
 }
-.padding-25{
-    padding:25px;
+.text-size-18{
+    font-size: 18px;
 }
-.padding-5{
-    padding: 5px;
-    
+.text-size-24{
+    font-size: 24px;
+}
+.text-size-28{
+    font-size: 28px;
 }
 
-/*.right{
-    text-align: right;
+
+/* --- Chat --- */
+/* This is need for the chat screen otherwise there is a pixel gap between the button bar and the message box */
+.bar-subfooter {
+    bottom: 43px;
+    }
+
+.subfooter-height {
+    height: 43px;
+    }
+
+.auto-height {
+    height: auto !important;
+    }
+/* fixes an ios bug bear */
+button.ion-android-send {
+    padding-top: 2px;
 }
-.left{
-    text-align: left;
-}*/
+
+/* add this to keep your footer buttons down
+at the bottom as the textarea resizes */
+.footer-btn-wrap {
+    position: relative;
+    height: 100%;
+    width: 50px;
+    top: 7px;
+}
+
+.footer-btn {
+    position: absolute !important;
+    bottom: 0;
+}
+
+img.profile-pic {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 8px;
+}
+
+img.profile-pic.left {
+    left: 10px;
+}
+
+img.profile-pic.right {
+    right: 10px;
+}
+
+img.profile-pic.circle {
+    right: 30px;
+    top: 0px;
+    border-radius: 100%;
+}
+
+.ion-email {
+    float: right;
+    font-size: 32px;
+    vertical-align: middle;
+}
+
+
+.chat-header {
+    padding: 5px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.message {
+    font-size: 14px;
+}
+
+.message-detail {
+    white-space: nowrap;
+    font-size: 10px;
+}
+
+.bar.item-input-inset .item-input-wrapper input {
+    width: 100% !important;
+}
+
+.message-wrapper {
+    position: relative;
+}
+
+.message-footer {
+    border: 1px 0 0 0;
+    border-style: solid;
+}
+
+.message-wrapper:last-child {
+    margin-bottom: 10px;
+}
+
+.chat-bubble {
+    border-radius: 6px;
+    display: inline-block;
+    padding: 10px;
+    position: relative;
+    margin: 8px;
+    max-width: 80%;
+}
+
+.user-messages-top-icon {
+    font-size: 28px;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    top: -3px;
+    right: 5px;
+}
+.msg-header-username {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    top: -3px;
+}
+
+
+.pending-list{
+    padding: 15px;
+}
+
 .card, .button, image{
     border-radius: 8px;
 }
@@ -31,37 +184,6 @@ td-card {
     margin-top: 20px; 
     width: 100%;
     margin-left: -50%;
-}
-/* Action Sheets*/
-.platform-android .action-sheet {
-    align-content: center;
-    margin: auto;
-    max-width: 96vw;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-.platform-android .action-sheet .action-sheet-title,
-.platform-android .action-sheet .button {
-    text-align: left;
-    font-size: 16px;
-    color: inherit;
-}
-.platform-android .action-sheet-has-icons .button {
-    padding-left: 56px;
-}
-
-ul.list.custom{
-    margin-bottom: 0px;
-    border-top-left-radius: 10%;
-    border-top-right-radius: 10%;
-}
-
-li.item.custom{
-    border-bottom-left-radius: 10% !important;
-    border-bottom-right-radius: 10% !important;
-}
-.black-and-white{
-    filter: grayscale();
 }
 
 /* ---------- Profile -----------*/
@@ -74,7 +196,10 @@ li.item.custom{
     margin-top: 10px
 }
 /* --------- Edit Profile ---------*/
-
+.profileImg {
+    width: 100%;
+    padding: 0;
+}
 
 /* --------- My Relationships ---------------*/
 .list .item.item-accordion {
@@ -92,7 +217,15 @@ li.item.custom{
   display: block !important;
   
 }
-
-/*------ clinics --------*/
+/* --- Set Location ---*/
+/* For the google map */
+.scroll {
+    height: 100%;
+}
+#map {
+    width: 100%;
+    height: 100%;
+}
+/* --- clinics --- */
 
 

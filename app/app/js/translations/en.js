@@ -54,7 +54,7 @@ var TRANSLATION_EN = {
     'MENU_LIKED_ME': 'Liked Me',
     'MENU_DISCOVERY': 'Discovery Preferences',
     'MENU_SETTINGS': 'App Settings',
-    'MENU_CONTACT': 'Contact Us',
+    'MENU_CONTACT': 'Give Feedback',
     'MENU_SHARE': 'Share',
 
     'PROFILE_SETUP_MSG': 'We need a couple more details',
@@ -73,6 +73,7 @@ var TRANSLATION_EN = {
 
     'EDIT_PROFILE_TITLE': 'Edit Profile',
     'ABOUT_YOU' : 'Here you can write something about yourself to give others an idea of what you’re about and what you’re looking for. Others will see this text as they browse your profile.',
+
 
     'AWAY' : 'away', // for "5km away"
 
@@ -147,6 +148,9 @@ var TRANSLATION_EN = {
 
     'SETTINGS_SAVE_ERROR': 'Error saving settings. Try again later',
     'REQUEST_FAILED': 'Request failed',
+
+    'GIVE_US_FEEDBACK' : '\'Just a Baby\' is built for you. We want your suggestions and your feedback so that we can make it better! Tell us what you like, what you hate, and how we could improve the experience. If you include your email address we\'ll endeavour to reply. Thanks in advance!.',
+    // 'THANKS_FEEDBACK' : 'Thanks in advance! The Just-a-Baby Team',
 
     'DELETE_ACCOUNT': 'Delete your account',
 

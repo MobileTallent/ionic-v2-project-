@@ -9,11 +9,14 @@
 			
 		</style>
 
-		<!-- TODO style this better -->
-		<div ng-show="!matches.length" style="text-align: center;font-family:'Avenir Next LT Pro Regular';font-size:18px">
-			<br/> {{'NO_MATCHES' | translate}}<br/>
-			<br/> {{'START_SWIPING' | translate}}!
+		<!-- TODO style this better (style="text-align: center;font-family:'Avenir Next LT Pro Regular';font-size:18px">) -->
+		<div ng-show="!matches.length" class="center text-size-24"> 
 
+			<br/><p class="assertive"> {{'NO_MATCHES' | translate}}</p><br/>
+			<br/><p class="assertive"> {{'START_SWIPING' | translate}}!</p>
+
+
+			
 			<!-- buttons which tinder has
       Discover New People
       Invite your friends!

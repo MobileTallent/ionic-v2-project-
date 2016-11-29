@@ -148,7 +148,7 @@ angular.module('controllers')
         $scope.profileOptions = () => {
             $ionicActionSheet.show({
                 buttons: [
-                    { text: 'Impregnate' }
+                    { text: 'We have agreed to try for a baby' }
                 ],
                 destructiveText: translations.REPORT,
                 titleText: translations.MATCH_OPTIONS,
@@ -160,7 +160,7 @@ angular.module('controllers')
                 },
                 buttonClicked: function (index) {
                     $ionicPopup.confirm({
-                        title: "Send Impregnation",
+                        title: "Press send to confirm with your potential co-parent that you have agreed to try for a baby with each other. Don’t worry, it’s not legally binding. This will be the beginning of your journey. From here we will guide you through best practices around having a baby. This feature also aims to reduce the chance of what we call the Genghis Kahn effect. The Kahn family is thought to have over 30 million descendants. We encourage you to use this feature to better inform yourself and others. Best to be open and honest, we’re dealing with potential family.",
                         okText: "Send",
                         cancelText: translations.CANCEL
                     }).then(function (res) {
@@ -175,7 +175,7 @@ angular.module('controllers')
             AppUtil.blockingCall(
                 AppService.processPregnancy($scope.matchProfile, true),
                 () => {
-                    AppUtil.toastSimple("Invitation sent!")
+                    AppUtil.toastSimple("Confirmation Request Sent!")
                 }
             )
         }

@@ -1,4 +1,4 @@
-<ion-view view-title="My Relationships">
+<ion-view view-title="My Co-Parents">
 	<ion-content ng-controller="RelationshipCtrl as vm">
 
 		<ion-refresher pulling-text="{{'PULL_TO_REFRESH' | translate}}" on-refresh="vm.refresh()">
@@ -20,9 +20,9 @@
 
 		<ion-list>
 			<div class="pending-list item-stable" ng-init="showPendingRequest=true">
-				<div ng-click="showPendingRequest = !showPendingRequest">
-					<ion-item ng-class="{active: showPendingRequest}">
-						<i class="icon" ng-class="showPendingRequest ? 'ion-minus' : 'ion-plus'"></i> Pending Request
+				<div ng-click="showPendingRequest = !showPendingRequest" >
+					<ion-item ng-class="{active: showPendingRequest}" class="background-positive"> 
+						<i class="icon" ng-class="showPendingRequest ? 'ion-minus' : 'ion-plus'"></i>Requests I've Sent
 					</ion-item>
 				</div>
 				<ion-item class="center" ng-if="!vm.profilePendingRequest.length" ng-show="showPendingRequest">
@@ -44,12 +44,12 @@
 		<ion-list>
 			<div class="pending-list item-stable" ng-init="showPendingInvite=true">
 				<div ng-click="showPendingInvite = !showPendingInvite">
-					<ion-item ng-class="{active: showPendingInvite}">
-						<i class="icon" ng-class="showPendingInvite ? 'ion-minus' : 'ion-plus'"></i> Pending Invite
+					<ion-item ng-class="{active: showPendingInvite}" class="background-positive">
+						<i class="icon" ng-class="showPendingInvite ? 'ion-minus' : 'ion-plus'"></i> Requests I've Recieved
 					</ion-item>
 				</div>
 				<ion-item class="center" ng-if="!vm.profilePendingInvite.length" ng-show="showPendingInvite">
-					No Pending Invite
+					No Pending Invites
 				</ion-item>
 				<ion-item class="item-accordion" ng-repeat="profile in vm.profilePendingInvite" ng-click="vm.view($index,vm.profilePendingInvite)"
 					ng-show="showPendingInvite">
@@ -67,12 +67,12 @@
 		<ion-list>
 			<div class="pending-list item-stable" ng-init="showMutual=true">
 				<div ng-click="showMutual = !showMutual">
-					<ion-item ng-class="{active: showMutual}">
-						<i class="icon" ng-class="showMutual ? 'ion-minus' : 'ion-plus'"></i> Partners
+					<ion-item ng-class="{active: showMutual}" class="background-positive">
+						<i class="icon" ng-class="showMutual ? 'ion-minus' : 'ion-plus'"></i> We're Trying for a Baby!
 					</ion-item>
 				</div>
 				<ion-item class="center" ng-if="!vm.profileMutual.length" ng-show="showMutual">
-					No Partners Yet
+					No Co-Parents Yet
 				</ion-item>
 				<ion-item class="item-accordion" ng-repeat="profile in vm.profileMutual" ng-click="vm.view($index,vm.profileMutual)" ng-show="showMutual">
 					<div class="item item-avatar item-borderless custom-list-item">

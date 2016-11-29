@@ -19,12 +19,12 @@ $dark:                            #444 !default;
 //$ionicons-font-path: "../lib/ionic/fonts" !default;
 
 $ionicons-font-path: "fonts" !default;
-//**************************************************************************************** Ionic Color Override
+//***************************** Ionic Color Override
 $positive: rgba(187, 225, 213, 0.69); /* Main Theme */ 
 $energized: rgb(43, 172, 143); /*strong green */
 $calm: rgba(187, 225, 213, 0.35); /* soft Green */
 $assertive: rgb(191, 127, 204); /*purple*/
-//*********************************************************** Other Colors
+
 
 //***************************** Profile Search
 $match-search-text: rgb(130, 156, 148);
@@ -50,7 +50,7 @@ button.button, button.button.button-stable{
     background-color: rgb(221, 221, 221);
     }
 
-//*********************************************************** Profile edit 
+/* --- Profile edit --- */ 
 .profileImage {
     border: 5px solid white;
 }
@@ -69,31 +69,24 @@ button.button, button.button.button-stable{
     font-size: 18px;
     font-style: italic;
 }
-//*********************************************************** Global Selectors
+/* --- Global Selectors --- */
 
 .text-colour-energized{
     color: $energized;
 }
+
 .background-calm{
     background-color: $calm;
 }
 .background-positive{
-    background-color: $positive;
+    background-color: $positive !important;
 }
 .text-color-white{
     color: $text-colour-white;
 }
-.text-size-18{
-    font-size: 18px;
-}
-.text-size-24{
-    font-size: 24px;
-}
-.text-size-28{
-    font-size: 28px;
-}
 
-//*********************************************************** Login
+
+/* --- Login --- */
 #login-background-image {
     background-image: url("img/kids-edited.png");
     background-repeat: no-repeat;
@@ -116,8 +109,23 @@ button.button, button.button.button-stable{
     color: white;
     }
 
-//*********************************************************** Chat
+/* --- Chat --- */
+.chat-unread {
+    font-weight: bold;
+}
 
+/* allows the bar-footer to be elastic /*
+/* optionally set a max-height */
+/* maxlength on the textarea will prevent /*
+/* it from getting too large also */
+.bar-footer {
+    overflow: visible !important;
+}
+
+.bar-footer textarea {
+    resize: none;
+    height: 25px;
+}
 .item-input-wrapper {
     background-color: white !important;
     }
@@ -165,7 +173,7 @@ a.autolinker {
     color: darkred;
 }
 
-//***********************************************************Chat List & Liked me 
+/* --- Chat List & Liked me --- */ 
 
 //Thomas TODO - 
 //      Create a css filter to adjust the greyscale(70% maybe?), not to full black and white, so the unread message seems brighter.
@@ -205,7 +213,7 @@ a.autolinker {
     height:61px; 
     box-shadow: 0px 0px 3px 0px rgba(155, 155, 155, 0.65); 
 }
-//*********************************************************** Match Search
+/* --- Match Search --- */
 #match-search-background{
     background-color: $calm !important;
 }
@@ -246,7 +254,7 @@ a.autolinker {
     color: white;
 }
 
-//*********************************************************** Action Sheets - Android
+/* --- Action Sheets - Android --- */
 
 .platform-android .action-sheet-group {
     border-radius: 0;
@@ -274,11 +282,8 @@ a.autolinker {
         background-color: rgba(0, 0, 0, 0.1);
 }
 
-/*My Relationships*/
-/*.background-color-assertive{
-    background-color: $assertive !important;
-}*/
+/* --- My Relationships --- */
 
-.clinic-header{
+.item.active{
     background-color: $positive;
 }

@@ -1,31 +1,10 @@
-body {
-  
-}
+
 @font-face {
     font-family: 'Avenir Next LT Pro Regular';
     font-style: normal;
     font-weight: normal;
     src: local('fonts/Avenir Next LT Pro Regular'), url('../fonts/AvenirNextLTPro-Regular.woff') format('woff');
 }
-
-/* This is need for the chat screen otherwise there is a pixel gap between the button bar and the message box */
-.bar-subfooter { bottom: 43px; }
-
-.subfooter-height { height: 43px; }
-
-.auto-height {height: auto !important;}
-
-.no-padding { padding: 0px; }
-
-.padding-10 { padding: 10px; }
-
-.padding-left-right { padding-left: 10px; padding-right: 10px; }
-
-.bold { font-weight: bold; }
-
-.wide { width:100%; }
-
-.cf { clear: both !important; }
 
 .rotate90 {
     transform:rotate(90deg);
@@ -39,19 +18,7 @@ body {
     top: -35px;
     left: 8px;
 }
-/* Profile edit */
-.profileImg {
-    width: 100%;
-    padding: 0;
-}
-/* For the google map */
-.scroll {
-    height: 100%;
-}
-#map {
-    width: 100%;
-    height: 100%;
-}
+
 /* For the image cropper */
 .cropArea {
     background: white;
@@ -59,6 +26,8 @@ body {
     width:100%px;
     height:350px;
 }
+
+
 /* Over-ride styles for the multi-slider */
 [slider], slider {
     margin-top: 0px;
@@ -71,12 +40,8 @@ body {
 [slider] div.handle:after, slider div.handle:after {
     display: none; /* This gets rid of the dot in the slider drag handles */
 }
-textarea {
-    padding: 3px;
-}
-.center {
-    text-align: center;
-}
+
+
 .flex-center{
     display: -webkit-box;
     display: -moz-box;
@@ -137,6 +102,7 @@ textarea {
     -webkit-border-radius: 100px;
     -moz-border-radius: 100px;
 }
+
 /* Swipe cards */
 
 td-cards {
@@ -160,6 +126,8 @@ td-card.card-2 {
   z-index: 8;
 }
 */
+
+
 td-card .image {
     position: relative;
 }
@@ -213,126 +181,36 @@ td-card img {
 }
 
 
-/*  Chat styles */
-
-.chat-unread {
-    font-weight: bold;
-}
-
-/* allows the bar-footer to be elastic /*
-/* optionally set a max-height */
-/* maxlength on the textarea will prevent /*
-/* it from getting too large also */
-.bar-footer {
-    overflow: visible !important;
-}
-
-.bar-footer textarea {
-    resize: none;
-    height: 25px;
-}
-
-/* fixes an ios bug bear */
-button.ion-android-send {
-    padding-top: 2px;
-}
-
-/* add this to keep your footer buttons down
-at the bottom as the textarea resizes */
-.footer-btn-wrap {
-    position: relative;
-    height: 100%;
-    width: 50px;
-    top: 7px;
-}
-
-.footer-btn {
-    position: absolute !important;
-    bottom: 0;
-}
-
-img.profile-pic {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    position: absolute;
-    bottom: 8px;
-}
-
-img.profile-pic.left {
-    left: 10px;
-}
-
-img.profile-pic.right {
-    right: 10px;
-}
-
-img.profile-pic.circle {
-    right: 30px;
-    top: 0px;
-    border-radius: 100%;
-}
-
-.ion-email {
-    float: right;
-    font-size: 32px;
-    vertical-align: middle;
-}
-
-
-.chat-header {
-    padding: 5px;
-    text-align: center;
-    font-size: 14px;
-}
-
-.message {
-    font-size: 14px;
-}
-
-.message-detail {
-    white-space: nowrap;
-    font-size: 10px;
-}
-
-.bar.item-input-inset .item-input-wrapper input {
-    width: 100% !important;
-}
-
-.message-wrapper {
-    position: relative;
-}
-
-.message-footer {
-    border: 1px 0 0 0;
-    border-style: solid;
-}
-
-.message-wrapper:last-child {
+/* Action Sheets*/
+.platform-android .action-sheet {
+    align-content: center;
+    margin: auto;
+    max-width: 96vw;
+    border-radius: 5px;
     margin-bottom: 10px;
 }
-
-.chat-bubble {
-    border-radius: 6px;
-    display: inline-block;
-    padding: 10px;
-    position: relative;
-    margin: 8px;
-    max-width: 80%;
+.platform-android .action-sheet .action-sheet-title,
+.platform-android .action-sheet .button {
+    text-align: left;
+    font-size: 16px;
+    color: inherit;
+}
+.platform-android .action-sheet-has-icons .button {
+    padding-left: 56px;
 }
 
-.user-messages-top-icon {
-    font-size: 28px;
-    display: inline-block;
-    vertical-align: middle;
-    position: relative;
-    top: -3px;
-    right: 5px;
+ul.list.custom{
+    margin-bottom: 0px;
+    border-top-left-radius: 10%;
+    border-top-right-radius: 10%;
 }
-.msg-header-username {
-    display: inline-block;
-    vertical-align: middle;
-    position: relative;
-    top: -3px;
+
+li.item.custom{
+    border-bottom-left-radius: 10% !important;
+    border-bottom-right-radius: 10% !important;
 }
+.black-and-white{
+    filter: grayscale();
+}
+
 

@@ -1,24 +1,23 @@
-<ion-view view-with-bg view-title="Contact" cache-view="false">
+<ion-view view-with-bg view-title="Feedback" cache-view="false">
     <ion-content padding="true" id="login-background-image">
         <div style="text-align: center" style="margin-bottom:0px;">
-            <h1 class="assertive" style="margin-top:10%;" >Send feedback</h1><br/>
+            <h1 class="assertive" style="margin-top:10%;">Send feedback</h1><br/>
         </div>
         <div class="card padding-15 center">
-             <div class="assertive">
+            <div class="assertive">
                 <p class="text-size-18">Help us Improve</p>
             </div>
             <div class="energized">
-                <p class="text-size-18">
-                    We value your feedback on how we can improve Just A Baby to better suit your needs.
-                     If you'd like a response, please leave your email address. Due to volume,
-                      we can only respond to certain requests, but rest assured we read EVERYTHING.</p>
+                <p class="text-size-18">{{::'GIVE_US_FEEDBACK' | translate}}</p>
+            </div>
+            </br>
+            <div class="energized">
+                <p class="text-size-18">The Just a Baby Team.</p>
             </div>
             <div class="col-33 col-offset-33 center">
                 <i class="ion-ios-email-outline  assertive" style="font-size:90px;" />
             </div>
-            <div class="energized">
-                <p class="text-size-18">Contact the Just-a-Baby team</p>
-            </div>
+
             <textarea ng-model="contact.message" rows="6" class="wide input-grey"></textarea>
             <button class="button button-block button-positive" ng-click="sendMessage()">Send</button>
         </div>
