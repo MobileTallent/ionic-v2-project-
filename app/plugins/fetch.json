@@ -84,11 +84,7 @@
             "type": "registry",
             "id": "android-camera-permission"
         },
-        "is_top_level": true,
-        "variables": {
-            "CAMERA_USAGE_DESCRIPTION": "Take a photo for your profile",
-            "PHOTOLIBRARY_USAGE_DESCRIPTION": "Choose a photo for your profile"
-        }
+        "is_top_level": true
     },
     "cordova-plugin-extension": {
         "source": {
@@ -186,6 +182,9 @@
             "id": "cordova-plugin-camera"
         },
         "is_top_level": true,
-        "variables": {}
+        "variables": {
+            "CAMERA_USAGE_DESCRIPTION": "Take a photo for your profile",
+            "PHOTOLIBRARY_USAGE_DESCRIPTION": "Choose a photo for your profile"
+        }
     }
 }
