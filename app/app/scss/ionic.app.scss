@@ -84,6 +84,11 @@ button.button, button.button.button-stable{
 .text-color-white{
     color: $text-colour-white;
 }
+.popup-button{
+    background-color: $positive !important;
+    color: #fff;
+    border-radius: 16px !important;
+}
 
 
 /* --- Login --- */

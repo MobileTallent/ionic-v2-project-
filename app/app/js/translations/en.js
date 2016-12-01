@@ -51,11 +51,12 @@ var TRANSLATION_EN = {
     'MENU_PROFILE': 'Profile',
     'MENU_MATCHES': 'Find Matches',
     'MENU_CHAT': 'Chat',
-    'MENU_LIKED_ME': 'Liked Me',
+    'MENU_LIKED_ME': 'People who liked Me',
     'MENU_DISCOVERY': 'Discovery Preferences',
     'MENU_SETTINGS': 'App Settings',
     'MENU_CONTACT': 'Give Feedback',
     'MENU_SHARE': 'Share',
+    'MENU_CO_PARENTS': 'My Co-Parents Shortlist',
 
     'PROFILE_SETUP_MSG': 'We need a couple more details',
     'BIRTH_DAY': 'Birth day',
