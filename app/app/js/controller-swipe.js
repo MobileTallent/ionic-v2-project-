@@ -153,7 +153,7 @@ angular.module('controllers')
                 destructiveText: translations.REPORT,
                 titleText: translations.MATCH_OPTIONS,
                 cancelText: translations.CANCEL,
-                cancel: function () { },
+
                 destructiveButtonClicked: function (index) {
                     report()
                     return true
@@ -162,11 +162,17 @@ angular.module('controllers')
                     $ionicPopup.confirm({
                         title: "Press send to confirm with your potential co-parent that you have agreed to try for a baby with each other. Don’t worry, it’s not legally binding. This will be the beginning of your journey. From here we will guide you through best practices around having a baby. This feature also aims to reduce the chance of what we call the Genghis Kahn effect. The Kahn family is thought to have over 30 million descendants. We encourage you to use this feature to better inform yourself and others. Best to be open and honest, we’re dealing with potential family.",
                         okText: "Send",
-                        cancelText: translations.CANCEL
+                        cancelText: translations.CANCEL,
+
                     }).then(function (res) {
-                        impregnate()
+                        if (res) {
+                            impregnate()
+                        } else {
+                            AppUtil.toastSimple("No Confirmation Request has been Sent")
+                        }
+                        return true
                     })
-                    return true
+
                 }
             })
         }
@@ -179,6 +185,7 @@ angular.module('controllers')
                 }
             )
         }
+
 
         function report() {
             AppUtil.blockingCall(
