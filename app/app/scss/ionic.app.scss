@@ -295,3 +295,20 @@ a.autolinker {
 .item.active{
     background-color: $positive;
 }
+
+/*Try for a baby pop-up*/
+
+.popup-vertical-buttons .popup-buttons {
+  display: block;
+  font-size: 10px !important;
+  
+}
+.popup-vertical-buttons .popup-buttons .button{
+  display:block;
+  min-width: 100% !important;
+  margin-bottom: 5px !important;
+  border-radius: 16px !important;
+  font-size: 10px !important;
+  color: $energized !important;
+  
+}
