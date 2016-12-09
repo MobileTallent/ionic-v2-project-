@@ -191,13 +191,13 @@ td-card img {
 }
 .platform-android .action-sheet .action-sheet-title,
 .platform-android .action-sheet .button {
-    text-align: left;
-    font-size: 16px;
+  
+    font-size: 22px;
     color: inherit;
 }
-.platform-android .action-sheet-has-icons .button {
+/*.platform-android .action-sheet-has-icons .button {
     padding-left: 56px;
-}
+}*/
 
 ul.list.custom{
     margin-bottom: 0px;

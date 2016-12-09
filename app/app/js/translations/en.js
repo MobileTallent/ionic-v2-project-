@@ -51,7 +51,7 @@ var TRANSLATION_EN = {
     'MENU_PROFILE': 'Profile',
     'MENU_MATCHES': 'Find Matches',
     'MENU_CHAT': 'Chat',
-    'MENU_LIKED_ME': 'People who liked Me',
+    'MENU_LIKED_ME': 'People Who Liked Me',
     'MENU_DISCOVERY': 'Discovery Preferences',
     'MENU_SETTINGS': 'App Settings',
     'MENU_CONTACT': 'Give Feedback',
