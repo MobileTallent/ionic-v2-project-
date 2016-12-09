@@ -154,7 +154,9 @@ Parse.Cloud.beforeSave(Profile, function (request, response) {
 		profile.set('enabled', false)
 		profile.set('gps', true)
 		profile.set('about', '')
-		profile.set('distance', 25)
+		profile.set('distance', 6000)
+		profile.set('ageFrom', 18)
+		profile.set('ageTo', 55)
 		profile.set('distanceType', 'km')
 		profile.set('notifyMatch', true)
 		profile.set('notifyMessage', true)
@@ -527,11 +529,16 @@ Parse.Cloud.define("GetMatches", function (request, response) {
 	var profileQuery = new Parse.Query("Profile")
 
 	var point = profile.location
+	
+	if (profile.distance === 6000)
+		console.log("Searching 6371+++ 3 === signs")
+	if (profile.distance == 6000)
+		console.log("Searching 6371+++ 2 == signs")
 
 	if (profile.distanceType === 'km')
-		profileQuery.withinKilometers("location", point, profile.distance)
+		profileQuery.withinKilometers("location", point, profile.distance === 6000 ? 6371 : profile.distance)
 	else
-		profileQuery.withinMiles("location", point, profile.distance)
+		profileQuery.withinMiles("location", point, profile.distance === 6000 ? 6371 : profile.distance)
 
 	//Get profiles near to the current location 9/30/16 - Jojo
 	//profileQuery.near("location", point);
