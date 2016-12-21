@@ -28,7 +28,7 @@ var TRANSLATION_EN = {
     'PASSWORD': 'Password',
     'RESET_PASSWORD': 'Reset password',
     'PASSWORD_RESET_SENT': 'Password reset link emailed',
-    'PASSWORD_LENGTH' : 'Password must be at least 6 characters',
+    'PASSWORD_LENGTH': 'Password must be at least 6 characters',
     'INVALID_EMAIL': 'Enter a valid email',
     'LOGGING_IN_TO_FB': 'Logging into Facebook',
     'LOGGING_IN_TO_LINKEDIN': 'Logging into LinkedIn',
@@ -73,10 +73,10 @@ var TRANSLATION_EN = {
     'MY_INTERESTS': 'My Interests',
 
     'EDIT_PROFILE_TITLE': 'Edit Profile',
-    'ABOUT_YOU' : 'Here you can write something about yourself to give others an idea of what you’re about and what you’re looking for. Others will see this text as they browse your profile.',
+    'ABOUT_YOU': 'Here you can write something about yourself.',
 
 
-    'AWAY' : 'away', // for "5km away"
+    'AWAY': 'away', // for "5km away"
 
     'SELECT_PHOTO_SOURCE': 'Select photo source',
     'TAKE_PHOTO': 'Take photo',
@@ -106,7 +106,7 @@ var TRANSLATION_EN = {
     'ENABLE_DISCOVERY': 'Enable Discovery',
     'FINDING_PEOPLE': 'Finding people near you',
     'NO_ONE_NEW': 'There\'s no one new around you',
-    'SEARCH_AGAIN': 'Search Again',
+    'SEARCH_AGAIN': 'Search',
     'LIKE': 'Like',
     'NOT_LIKE': 'Nope',
 
@@ -118,7 +118,7 @@ var TRANSLATION_EN = {
 
     'NO_MATCHES': 'You don\'t have any matches yet.',
     'START_SWIPING': 'Start swiping',
-    'MATCHES_LOAD_ERROR' : 'Unable to load matches',
+    'MATCHES_LOAD_ERROR': 'Unable to load matches',
 
     'ITS_A_MATCH': 'It\'s A Match',
     'LIKED_EACH_OTHER': 'You and {{name}} have liked each other',
@@ -150,7 +150,7 @@ var TRANSLATION_EN = {
     'SETTINGS_SAVE_ERROR': 'Error saving settings. Try again later',
     'REQUEST_FAILED': 'Request failed',
 
-    'GIVE_US_FEEDBACK' : '\'Just a Baby\' is built for you. We want your suggestions and your feedback so that we can make it better! Tell us what you like, what you hate, and how we could improve the experience. If you include your email address we\'ll endeavour to reply. Thanks in advance!.',
+    'GIVE_US_FEEDBACK': '\'Just a Baby\' is built for you. We want your suggestions and your feedback so that we can make it better! Tell us what you like, what you hate, and how we could improve the experience. If you include your email address we\'ll endeavour to reply. Thanks in advance!.',
     // 'THANKS_FEEDBACK' : 'Thanks in advance! The Just-a-Baby Team',
 
     'DELETE_ACCOUNT': 'Delete your account',

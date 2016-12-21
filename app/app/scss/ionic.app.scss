@@ -17,74 +17,89 @@ $dark:                            #444 !default;
 
 // The path for our ionicons font files, relative to the built CSS in www/(css)
 //$ionicons-font-path: "../lib/ionic/fonts" !default;
-
 $ionicons-font-path: "fonts" !default;
 //***************************** Ionic Color Override
-$positive: rgba(187, 225, 213, 0.69); /* Main Theme */ 
-$energized: rgb(43, 172, 143); /*strong green */
-$calm: rgba(187, 225, 213, 0.35); /* soft Green */
-$assertive: rgb(191, 127, 204); /*purple*/
+$positive: rgba(187, 225, 213, 0.69);
 
+/* Main Theme */
+
+$energized: rgb(43, 172, 143);
+
+/*strong green */
+
+$calm: rgba(187, 225, 213, 0.35);
+
+/* soft Green */
+
+$assertive: rgb(191, 127, 204);
+
+/*purple*/
 
 //***************************** Profile Search
 $match-search-text: rgb(130, 156, 148);
 $text-colour-white: #ffffff;
-
 //***************************** Chat
 $chat-bubble-right-background: rgba(187, 225, 213, 0.35);
 $chat-bubble-right-text: rgb(43, 172, 143);
-
 $chat-bubble-left-background: rgba(250, 248, 218, 0.71);
-$chat-bubble-left-text:  rgb(165, 161, 121);
-
-$chat-date-recieved:rgb(155,155,155);
-
+$chat-bubble-left-text : rgb(165, 161, 121);
+$chat-date-recieved:rgb(155, 155, 155);
 //***************************** Chat List
-$chats-odd: rgba(155, 155, 155, 0.10); 
+$chats-odd: rgba(155, 155, 155, 0.10);
 $chats-even: rgba(155, 155, 155, 0.15);
-
 // Include all of Ionic
 @import "bower_components/ionic/scss/ionic";
-
-button.button, button.button.button-stable{
+button.button,
+button.button.button-stable {
     background-color: rgb(221, 221, 221);
-    }
+}
 
-/* --- Profile edit --- */ 
+
+/* --- Profile edit --- */
+
 .profileImage {
     border: 5px solid white;
 }
+
 .profileImageSelected {
     border: 5px solid dodgerblue;
 }
-.input-grey { 
+
+.input-grey {
     background-color: #F5F5F5;
 }
-.about-you-header{
+
+.about-you-header {
     color: $energized;
     font-size: 18px;
 }
-.about-you-info{
+
+.about-you-info {
     color: #6c6c6c;
     font-size: 18px;
     font-style: italic;
 }
+
+
 /* --- Global Selectors --- */
 
-.text-colour-energized{
+.text-colour-energized {
     color: $energized;
 }
 
-.background-calm{
+.background-calm {
     background-color: $calm;
 }
-.background-positive{
+
+.background-positive {
     background-color: $positive !important;
 }
-.text-color-white{
+
+.text-color-white {
     color: $text-colour-white;
 }
-.popup-button{
+
+.popup-button {
     background-color: $positive !important;
     color: #fff;
     border-radius: 16px !important;
@@ -92,37 +107,46 @@ button.button, button.button.button-stable{
 
 
 /* --- Login --- */
+
 #login-background-image {
     background-image: url("img/kids-edited.png");
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
-    
-    }
-.button.button-outline.button-light{
+}
+
+.button.button-outline.button-light {
     border-width: 2px;
     padding: 0px;
     margin-top: 45%;
     border-color: #fff;
-    }
+}
+
 .social-facebook {
-    background-color: rgb(92,119,180);
+    background-color: rgb(92, 119, 180);
     color: white;
-    }
+}
+
 .social-linkedin {
-    background-color: rgb(0,119,181);
+    background-color: rgb(0, 119, 181);
     color: white;
-    }
+}
+
 
 /* --- Chat --- */
+
 .chat-unread {
     font-weight: bold;
 }
 
+
 /* allows the bar-footer to be elastic /*
 /* optionally set a max-height */
+
+
 /* maxlength on the textarea will prevent /*
 /* it from getting too large also */
+
 .bar-footer {
     overflow: visible !important;
 }
@@ -131,27 +155,29 @@ button.button, button.button.button-stable{
     resize: none;
     height: 25px;
 }
+
 .item-input-wrapper {
     background-color: white !important;
-    }
+}
 
 .chat-bubble.right {
     background-color: $chat-bubble-right-background;
     color: $chat-bubble-right-text;
     float: right;
     margin-right: 55px;
-    }
-.chat-bubble.left{
+}
+
+.chat-bubble.left {
     background-color: $chat-bubble-left-background;
     color: $chat-bubble-left-text;
     float: left;
     margin-left: 55px;
-    }
-.chat-date-recieved{
-    font-size: 12px; 
-    color: $chat-date-recieved; 
-    }
+}
 
+.chat-date-recieved {
+    font-size: 12px;
+    color: $chat-date-recieved;
+}
 
 .chat-bubble.left:before {
     background-color: #e6e5eb;
@@ -169,6 +195,7 @@ button.button, button.button.button-stable{
     color: #fff;
     font-weight: bold;
 }
+
 a.autolinker {
     color: #3b88c3;
     text-decoration: none;
@@ -178,12 +205,12 @@ a.autolinker {
     color: darkred;
 }
 
-/* --- Chat List & Liked me --- */ 
+
+/* --- Chat List & Liked me --- */
 
 //Thomas TODO - 
 //      Create a css filter to adjust the greyscale(70% maybe?), not to full black and white, so the unread message seems brighter.
 //      It could also put the answered texts to black and white and the unanswered texts to colour?
-
 .item-avatar>img:first-child {
     width: 100% !important;
     height: 100% !important;
@@ -195,35 +222,42 @@ a.autolinker {
     top: 0px;
     left: 0px;
 }
-.custom-list-item{
-    padding:0px 0px 10px 30px !important;
-    min-height:62px;
+
+.custom-list-item {
+    padding: 0px 0px 10px 30px !important;
+    min-height: 62px;
     border-radius: 8px;
 }
-.custom-list-item-text{
+
+.custom-list-item-text {
     padding: 10px 0px 0px 50px;
     color: $energized;
 }
-.custom-list-item-subtext{
+
+.custom-list-item-subtext {
     padding: 0px 5px 5px 50px;
     color: $energized;
 }
-.chats-list-odd{
+
+.chats-list-odd {
     background: $chats-odd;
-    height:61px;
-    
+    height: 61px;
 }
-.chats-list-even{
+
+.chats-list-even {
     background: $chats-even;
-    height:61px; 
-    box-shadow: 0px 0px 3px 0px rgba(155, 155, 155, 0.65); 
+    height: 61px;
+    box-shadow: 0px 0px 3px 0px rgba(155, 155, 155, 0.65);
 }
+
+
 /* --- Match Search --- */
-#match-search-background{
+
+#match-search-background {
     background-color: $calm !important;
 }
 
-#match-search-text{
+#match-search-text {
     margin-top: 10%;
     padding-bottom: 25px;
     color: $match-search-text !important;
@@ -233,7 +267,6 @@ a.autolinker {
 .td-card {
     background: white;
     border-radius: 8px;
-
 }
 
 .yes-text {
@@ -244,6 +277,7 @@ a.autolinker {
     color: rgb(111, 250, 111);
     opacity: 0;
 }
+
 .no-text {
     position: absolute;
     top: 10px;
@@ -252,12 +286,17 @@ a.autolinker {
     color: rgb(255, 115, 115);
     opacity: 0;
 }
-.swipe-reject:before, .swipe-reject {
+
+.swipe-reject:before,
+.swipe-reject {
     color: white;
 }
-.swipe-accept:before, .swipe-accept {
+
+.swipe-accept:before,
+.swipe-accept {
     color: white;
 }
+
 
 /* --- Action Sheets - Android --- */
 
@@ -265,13 +304,14 @@ a.autolinker {
     border-radius: 0;
     background-color: #fafafa;
 }
+
 .platform-android .action-sheet .button.active,
 .platform-android .action-sheet .button.activated {
     background: #e8e8e8;
 }
+
 .platform-android .action-sheet .button {
     border-color: #e2e2e2;
- 
     color: $assertive !important;
     text-align: center !important;
 }
@@ -279,36 +319,38 @@ a.autolinker {
 .platform-android .action-sheet .button.destructive {
     text-align: center !important;
     color: red !important;
-    
 }
+
 .platform-android .action-sheet .action-sheet-title {
     padding: 16px;
     color: #666;
     text-align: center !important;
 }
+
 .platform-android .action-sheet-backdrop.active {
-        background-color: rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
 }
+
 
 /* --- My Relationships --- */
 
-.item.active{
+.item.active {
     background-color: $positive;
 }
+
 
 /*Try for a baby pop-up*/
 
 .popup-vertical-buttons .popup-buttons {
-  display: block;
-  font-size: 10px !important;
-  
+    display: block;
+    font-size: 14px !important;
 }
-.popup-vertical-buttons .popup-buttons .button{
-  display:block;
-  min-width: 100% !important;
-  margin-bottom: 5px !important;
-  border-radius: 16px !important;
-  font-size: 10px !important;
-  color: $energized !important;
-  
+
+.popup-vertical-buttons .popup-buttons .button {
+    display: block;
+    min-width: 100% !important;
+    margin-bottom: 5px !important;
+    border-radius: 16px !important;
+    font-size: 14px !important;
+    color: $energized !important;
 }
