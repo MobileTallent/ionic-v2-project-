@@ -89,20 +89,24 @@
                 <div class="verticalAlign text-label" ng-show="!profiles">
                     {{'FINDING_PEOPLE' | translate}}
                 </div>
-                <div class="verticalAlign text-label energized" style="font-size: 16px;font-size: 5.5vw" ng-show="profiles.length == 0">
-                    <b>{{'NO_ONE_NEW' | translate}}</b>
+                <div class="verticalAlign text-label energized" style="font-size: 16px;font-size: 5.5vw" ng-show="profiles.length == 0"><b>
+					{{'NO_ONE_NEW' | translate}}</b>
                     <br/>
                     <br/>
-                    <button class="button button-energized wide" ng-click="searchAgain()"><span>{{'SEARCH_AGAIN' | translate}}</span></button>
-                    <button class="button button-positive wide" style="margin-top: 15px" ng-click="deleteUnmatchedSwipes()">
-						<span class="text-colour-energized">Reset Search Results</span></button>
-                    <button class="button button-assertive wide" style="margin-top: 15px" ng-click="window.open('http://www.justababy.co/', '_system', 'location=yes'); return false">
-					<span>Visit the Just a Baby Site</span>
-					</button>
-
+                    <button class="button button-energized wide" ng-click="searchAgain()">{{'SEARCH_AGAIN' | translate}}</button>
+                    <button class="button button-calm wide " style="margin-top: 10px" ng-click="deleteUnmatchedSwipes()">
+						<span class="text-colour-energized">Reset Search Results</span>
+						</button>
+                    <!--For this button to work we need to add the inAppBrowser from cordova. 
+					cordova plugin add https://git-wip-us.apache.org/repos/asf/cordove-plugin-inappbrowser.git-->
+                    <button class="button button-assertive wide" style="margin-top: 10px" ng-click="window.open('http://www.justababy.co/', '_system', 'location=yes'); return false">
+						<span class="text-colour-assertive">Visit the Just a Baby Site</span>
+						</button>
                 </div>
             </div>
 
+                </div>
+            </div>
 
             <td-cards>
                 <!-- ng-if="$index >= profiles.length -2" is to display only the top 2 cards in the DOM for performance -->
