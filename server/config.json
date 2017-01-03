@@ -14,6 +14,11 @@
   "prodP12file": "",
   "prodP12passphrase": "",
 
+  "itunesConnect": {
+    "email": "",
+    "teamId": ""
+  },
+
   "environments": ["dev", "qa", "prod"],
 
   "dev": {
