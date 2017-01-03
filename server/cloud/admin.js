@@ -1,6 +1,7 @@
 
 // Cloud code functions which are only run by admin users
 var _ = require('underscore')
+var parseConfig = require('../parse-config.js')
 
 function checkAdmin(request, response) {
 	if(!request.user.get('admin')) {
@@ -10,6 +11,56 @@ function checkAdmin(request, response) {
 	Parse.Cloud.useMasterKey()
 	return true
 }
+
+
+Parse.Cloud.define('GetProfilesWithPhotosToReview', function(request, response) {
+    if(!checkAdmin(request, response))
+        return
+
+    new Parse.Query('Profile')
+        .ascending('updatedAt')
+		.exists('photosInReview')
+        .limit(50)
+        .find()
+        .then(function(result) {
+            response.success(_.map(result, profile => profile.toJSON()))
+        }, function(error) {
+            response.error(error)
+        })
+})
+
+Parse.Cloud.define('ReviewPhoto', function(request, response) {
+    if(!checkAdmin(request, response))
+        return
+
+	var profileId = request.params.profileId
+	var fileUrl = request.params.fileUrl
+	var approved = request.params.approved
+
+    new Parse.Query('Profile').get(profileId)
+        .then(function(profile) {
+			var photosInReview = profile.get('photosInReview')
+            var file = _.find(photosInReview, file => file.url() === fileUrl)
+
+			if(!file)
+				return Promise.reject('Could not find photo file')
+
+			profile.remove('photosInReview', file)
+			if(approved) {
+                profile.add('photos', file)
+			} else {
+				var filename = fileUrl.substring(fileUrl.lastIndexOf('/') + 1)
+                parseConfig.filesAdapter.deleteFile(filename).then(
+                	success => console.log('Rejected photo deleted'),
+					error => console.error('Error deleting file', filename, error))
+			}
+			return profile.save()
+        }).then(result => response.success(null),
+				error => response.error(error)
+        )
+})
+
+
 
 Parse.Cloud.define('GetReportedUsers', function(request, response) {
 	if(!checkAdmin(request, response))

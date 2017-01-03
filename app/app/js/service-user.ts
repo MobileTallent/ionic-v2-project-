@@ -30,6 +30,8 @@ module app {
 		loadUser(id:string): ng.IPromise<IUser>
 		deleteUser(userId:string): ng.IPromise<void>
 		searchUsersByName(name:string): ng.IPromise<IProfile[]>
+		getProfilesWithPhotosToReview(): ng.IPromise<IProfile[]>
+		reviewPhoto(profileId:string, fileUrl:string, approved:boolean): ng.IPromise<void>
 	}
 
 	/**

@@ -7,7 +7,9 @@
 
 From the Parse dashboard you can check contact messages
 
-From the app (if your user has the admin flag set to true) you can check reported profiles/messages
+From the app (if your user has the admin flag set to true) you can check reported profiles/messages, and profile photos to review.
+
+To enable new profile photo uploads to require admin moderation, then open app/js/service-user.js and change the value of **MODERATE_PROFILE_PHOTOS** to **true**.
 
 You can make your production app user account an admin by running the Parse dashboard (in /server run **npm run dashboard-prod**) and for your User entry set the admin flag to true.
 

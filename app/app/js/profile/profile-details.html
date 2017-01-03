@@ -5,6 +5,11 @@
     <ion-slide ng-if="!selectedCard.photos.length">
         <img src="img/generic_avatar.jpg" style="width:100%"/>
     </ion-slide>
+    <!-- profile.photosInReview should only exist for the current user, and be unset for search results -->
+    <ion-slide ng-repeat="photo in profile.photosInReview track by $index">
+        IN REVIEW
+        <img ng-src="{{photo | fileUrl}}" style="width:100%"/>
+    </ion-slide>
 </ion-slide-box>
 
 <div style="padding: 10px;">
