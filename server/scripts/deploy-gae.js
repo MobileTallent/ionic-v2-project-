@@ -33,6 +33,10 @@ if(!config[env].gcpProjectId) {
 }
 
 // Deploy!
-require("child_process")
-    .spawnSync( "gcloud", [ "app", "deploy", "--quiet", "--stop-previous-version", "--project", config[env].gcpProjectId],
-        { stdio: "inherit", stdin: "inherit" } )
+if (os.platform() === 'win32') {
+    shell.exec('gcloud app deploy --quiet --stop-previous-version --project ' + config[env].gcpProjectId)
+} else {
+    require("child_process")
+        .spawnSync( "gcloud", [ "app", "deploy", "--quiet", "--stop-previous-version", "--project", config[env].gcpProjectId],
+            { stdio: "inherit", stdin: "inherit" } )
+}
