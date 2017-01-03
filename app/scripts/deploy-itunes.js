@@ -1,11 +1,10 @@
 #!/usr/bin/env node
 
-var shell = require('shelljs')
 var xml2js = require('xml2js')
 var fs = require('fs')
 
-var parser = new xml2js.Parser();
-var config = parser
+var parser = new xml2js.Parser()
+var config = require('../../server/config.json')
 
 fs.readFile(__dirname + '/../config.xml', function(err, data) {
 
@@ -36,8 +35,28 @@ fs.readFile(__dirname + '/../config.xml', function(err, data) {
             process.exit(1)
         }
 
-        var command = `deliver --ipa \"platforms/ios/build/device/${result.widget.name}.ipa\" --submit_for_review`
-        console.log('exec: ' + command)
-        shell.exec(command)
+        var itunesConnect = config.itunesConnect
+
+        var deliverArgs = ["deliver", "--ipa", `platforms/ios/build/device/${result.widget.name}.ipa`, "--submit_for_review"]
+
+        var options = { stdio: "inherit", stdin: "inherit", env: process.env }
+
+        if(itunesConnect) {
+            if(itunesConnect.email)
+                deliverArgs.push("--username", itunesConnect.email)
+            else
+                console.log('Populate the itunesConnect.email value in server/config.json to automate the username entry')
+
+            if(itunesConnect.teamId)
+                options.env.FASTLANE_ITC_TEAM_ID = itunesConnect.teamId
+            else
+                console.log('Populate the itunesConnect.teamId value in server/config.json to automate the team selection')
+        }
+        // console.log("fastlane " + JSON.stringify(deliverArgs))
+        var result = require("child_process")
+            .spawnSync("fastlane", deliverArgs, options )
+        // console.log(result.stdout)
+        // console.log(result.stderr)
+        // console.log(result.error)
     })
 })
