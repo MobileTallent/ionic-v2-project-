@@ -33,7 +33,7 @@ if(!config[env].gcpProjectId) {
 }
 
 // Deploy!
-if (os.platform() === 'win32') {
+if (process.platform === 'win32') {
     shell.exec('gcloud app deploy --quiet --stop-previous-version --project ' + config[env].gcpProjectId)
 } else {
     require("child_process")
