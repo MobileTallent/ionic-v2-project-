@@ -33,4 +33,6 @@ if(!config[env].gcpProjectId) {
 }
 
 // Deploy!
-var child = shell.exec('gcloud app deploy --quiet --stop-previous-version --project ' + config[env].gcpProjectId);
+require("child_process")
+    .spawnSync( "gcloud", [ "app", "deploy", "--quiet", "--stop-previous-version", "--project", config[env].gcpProjectId],
+        { stdio: "inherit", stdin: "inherit" } )
