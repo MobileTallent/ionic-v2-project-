@@ -15,6 +15,8 @@ function onNotification(pnObj){
 		appService.reloadProfile()
 	else if(pnObj.type == 'accountBanned')
 		appService.logout()
+    else if(pnObj.type == 'test')
+        $log.log('Test push notification received')
 }
 
 function onNotificationOpen(pnObj){

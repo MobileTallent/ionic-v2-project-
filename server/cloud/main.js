@@ -1147,6 +1147,9 @@ Parse.Cloud.define('TestPushNotification', function(request, response) {
 		channels: ['user_' + request.user.id],
 		data: {
 			alert: 'Test push notification',
+			data: {
+				type: 'test'
+			}
 			// title: 'Test push notification',
 		}
 	}, masterKey).then(
