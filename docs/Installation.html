@@ -171,7 +171,7 @@ iOS builds and app submissions can only be done on a Mac with OSX and XCode.
 
 Ionic does have an iOS build service at http://docs.ionic.io/docs/package-ios but as we use our own Mac's to build we can't comment on using it.
 
-* Install the Rugy gems package manager at https://rubygems.org/pages/download
+* Install the Ruby gems package manager at https://rubygems.org/pages/download
 
 * Run ** npm run ios-setup** to install the iOS emulator plugin, ios-deploy module, and the Fastland deploy tools.
 
@@ -287,7 +287,8 @@ TODO https://github.com/ParsePlatform/Parse-Server/wiki/Push-Configuring-Clients
 * In */server/config.json* enter a value for **parseAppId** and **parseMasterKey** (random numbers and letters, about 16 characters is good)
 
 * In the */app* folder run: **npm run addParsePlugin**, which installs the Parse push plugin.
-(This requires the **prod.gcpProjectNumber** value to have been set in */server/config.json*)
+
+* In app/config.xml update the ParseGcmSenderId preference value to be that of **prod.gcpProjectNumber** in */server/config.json*
 
 * Commit the new and updated files to Git
 

@@ -16,6 +16,27 @@
     <preference name="AndroidLaunchMode" value="singleTask" />
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
+
+    <!-- These aren't required by our custom Application class
+    <preference name="ParseAppId" value="" />
+    <preference name="ParseServerUrl" value="" />
+    <preference name="ParseClientKey" value="" />
+    -->
+    <!-- As standard, this plugin only shows the most recent PN in
+      the android notifications tray along with a count of unopened
+      PNs. If you would like to override this behaviour and show all
+      PNs in the tray, then add this preference.
+      If not, skip this preference -->
+    <preference name="ParseMultiNotifications" value="true" />
+    <!-- required for Android push notification
+      To get your GCM sender ID, enable GCM for your Android project in the Google Developer Console.
+      The sender id is your project number, and should be a large integer like 123427208255.
+      This is the same "senderId" to be used in your parse-server push configuration.
+    -->
+    <preference name="ParseGcmSenderId" value="ENTER-YOUR-GCM-SENDER-ID" />
+
+
+
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
