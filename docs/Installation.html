@@ -182,6 +182,12 @@ If you are having any issues look in /app/package.json at the scripts.ios-setup 
 
 * In /app run **ionic platform add ios**
 
+* Open up the project in XCode (*platforms/ios/[project_name].xcodeproj*) and make sure the Push entitlement is ON
+
+![Push](./img/push_entitlement.png "Push entitlement")
+
+Any time you re-add the ios platform you will need to check the Push entitlement is ON
+
 Follow the instructions to setup push notifications for iOS. This is complicated and you can delay doing this step until you are ready for a production build.
 https://parse.com/tutorials/ios-push-notifications. Note the following:
 
