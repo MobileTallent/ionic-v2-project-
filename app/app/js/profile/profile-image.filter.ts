@@ -6,15 +6,18 @@ angular.module('ionicApp').filter('profileImageUrl', function() {
 
 		if (!profile) return ''
 
-		if(profile.photos && profile.photos.length) {
+		if (profile.photos && profile.photos.length) {
 			var photo = profile.photos[0]
 			// The Parse JSON format converts the the url() functions to the _url field
-			if(photo['_url'])
+			if (photo['_url'])
 				return photo['_url']
-			if(angular.isFunction(photo.url))
+			if (angular.isFunction(photo.url))
 				return photo.url()
-			if(angular.isString(photo.url))
-				return photo['url']
+			if (angular.isString(photo.url)) {
+				let url:any = photo['url']
+				return <string>url
+			}
+
 		}
 
 		return 'img/generic_avatar.jpg'

@@ -15,6 +15,8 @@ function onNotification(pnObj){
 		appService.reloadProfile()
 	else if(pnObj.type == 'accountBanned')
 		appService.logout()
+    else if(pnObj.type == 'test')
+        $log.log('Test push notification received')
 }
 
 function onNotificationOpen(pnObj){
@@ -59,6 +61,9 @@ function onNotificationOpen(pnObj){
 		// keep a reference to the current chat messages so we can update when a push notification arrives
 		var activeChatMatchId = null
 		var activeChatMessages = null
+
+		// If true then photos need to be approved by an admin before they are visible on the users public profile
+		var MODERATE_PROFILE_PHOTOS = false
 
 		// Variables for the polling when push notifications haven't been detected
 		const CHAT_SYNC_INTERVAL = 5000
@@ -136,7 +141,9 @@ function onNotificationOpen(pnObj){
 			getReportedUserDetails: getReportedUserDetails,
 			deletePhoto: deletePhoto,
 			banUser: banUser,
-			closeReport: closeReport,
+            closeReport: closeReport,
+            getProfilesWithPhotosToReview: getProfilesWithPhotosToReview,
+            reviewPhoto: reviewPhoto,
 			searchUsersByEmail: searchUsersByEmail,
 			searchUsersByName: searchUsersByName,
 			loadUser: loadUser,
@@ -1166,14 +1173,22 @@ function onNotificationOpen(pnObj){
 		function setPhoto(base64data) {
 
 			return server.saveFile("photo.png", base64data).then(file => {
-				$log.log('photo saved. saving profile...')
+				$log.log('photo saved. saving to profile...')
 				var profileUpdate = {}
-				profileUpdate.photos = service.profile.photos
-				if(!profileUpdate.photos) {
-					profileUpdate.photos = []
-				}
 
-				profileUpdate.photos.push(file)
+				if(MODERATE_PROFILE_PHOTOS) {
+                    profileUpdate.photosInReview = service.profile.photosInReview
+                    if(!profileUpdate.photosInReview) {
+                        profileUpdate.photosInReview = []
+                    }
+                    profileUpdate.photosInReview.push(file)
+				} else {
+                    profileUpdate.photos = service.profile.photos
+                    if(!profileUpdate.photos) {
+                        profileUpdate.photos = []
+                    }
+                    profileUpdate.photos.push(file)
+				}
 
 				return server.saveProfile(service.profile, profileUpdate)
 			}).then(result => {
@@ -1184,7 +1199,6 @@ function onNotificationOpen(pnObj){
 				return $q.reject(error)
 			})
 		}
-
 
 		function saveBirthdate(birthdate) {
 			service.profile.birthdate = birthdate
@@ -1257,7 +1271,16 @@ function onNotificationOpen(pnObj){
 			return server.deleteUser(userId)
 		}
 
+        function getProfilesWithPhotosToReview() {
+            return server.getProfilesWithPhotosToReview()
+        }
 
+        function reviewPhoto(profileId, fileUrl, approved) {
+			$log.log('reviewPhoto', profileId, fileUrl, approved)
+            if(!profileId) throw 'profileId is required'
+            if(!fileUrl) throw 'fileUrl is required'
+            return server.reviewPhoto(profileId, fileUrl, approved)
+        }
 
 		// Util functions
 

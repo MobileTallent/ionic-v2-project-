@@ -5,16 +5,41 @@
 <xmp theme="cerulean" style="display:none;">
 [Index](index.html)
 
-Check contact messages
+To run the Parse dashboard - in */server* run **npm run dashboard-prod** then go to http://localhost:4040/
 
-Check reported profiles/messages
+## Contact Messages
 
-Check Parse error log
+From the Parse dashboard you can check contact messages in Core -> ContactMessage if you have not configured email notifications.
 
-Check ClientLog data in Parse
+![Contact](./img/contact_messages.png "Contact")
 
-Check API requests/second
+## Enable admin user
 
+To make your production app user account an admin go to the Parse dashboard, Core -> User, find your User and  set the admin flag to true.
+
+![Admin](./img/admin.png "Admin")
+
+## Reported users/content
+
+From the app (if your user has the admin flag set to true) you can check reported profiles/messages, and profile photos to review from the Admin menu.
+
+To enable new profile photo uploads to require admin moderation, then open *app/js/service-user.js* and change the value of **MODERATE_PROFILE_PHOTOS** to **true**.
+
+## Error Logs
+
+From the Google Cloud console go to the logging page and check the syserr logs
+
+![AppEngine Logs](./img/logs.png "AppEngine Logs")
+
+## Database backup
+
+Periodically create snapshots of your MongoDB persistant disk.
+
+![Snapshot](./img/disk_snapshot.png "Disk Snapshot")
+
+## API Limits
+
+Check your project daily usage in the Google Cloud Console to determine whether you are approaching the 25,000 daily free limit for the JavaScript, Street View or Static Maps API.
 
 </xmp>
 

@@ -21,6 +21,6 @@ if(!config.facebookAppName) {
     process.exit(1)
 }
 
-var command = 'ionic plugin add cordova-plugin-facebook4@1.7.1 --save --variable APP_ID="' + config.facebookAppId + '" --variable APP_NAME="' + config.facebookAppName + '"'
+var command = 'cordova plugin add cordova-plugin-facebook4@1.7.4 --variable APP_ID="' + config.facebookAppId + '" --variable APP_NAME="' + config.facebookAppName + '"'
 console.log('exec: ' + command)
 var child = shell.exec(command)

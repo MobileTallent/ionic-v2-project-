@@ -47,8 +47,7 @@ angular.module('ionicApp').config(function ($stateProvider, $urlRouterProvider) 
             url: "/search-profile-view",
             views: {
                 'menuContent': {
-                    templateUrl: "search/search-profile-view.html",
-                    controller: "SearchProfileView"
+                    templateUrl: "search/search-profile-view.html"
                 }
             },
             params: {

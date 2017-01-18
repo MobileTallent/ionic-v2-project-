@@ -1,6 +1,7 @@
 
 // Cloud code functions which are only run by admin users
 var _ = require('underscore')
+var parseConfig = require('../parse-config.js')
 
 function checkAdmin(request, response) {
 	if (!request.user.get('admin')) {

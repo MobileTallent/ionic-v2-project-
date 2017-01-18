@@ -4,13 +4,13 @@
 angular.module('ionicApp').filter('fileUrl', function() {
 	return function(file:any):string {
 
-		if(!file)
+		if (!file)
 			return null
-		if(file._url)
+		if (file._url)
 			return file._url
-		if(angular.isFunction(file.url))
+		if (angular.isFunction(file.url))
 			return file.url()
-		if(angular.isString(file.url))
+		if (angular.isString(file.url))
 			return file['url']
 
 		throw 'unknown file ' + JSON.stringify(file)

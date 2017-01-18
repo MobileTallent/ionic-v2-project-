@@ -3,7 +3,7 @@ class GeoUtils {
 
 	// Credit to http://stackoverflow.com/questions/27928/how-do-i-calculate-distance-between-two-latitude-longitude-points
 	static getDistanceFromLatLonInKm(lat1:number, lon1:number, lat2:number, lon2:number):number {
-		if(!lat1 || !lon1 || !lat2 || !lon2) {
+		if (!lat1 || !lon1 || !lat2 || !lon2) {
 			console.log('Not all params supplied for getDistanceFromLatLonInKm')
 			return null
 		}

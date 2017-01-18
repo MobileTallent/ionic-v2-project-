@@ -11,6 +11,6 @@ if(!config.prod.gcpProjectNumber) {
     process.exit(1)
 }
 
-var command = 'ionic plugin add https://github.com/taivo/parse-push-plugin#a2e696aa27dcc0df7c7a4669caa3d0c0a5ffdaf2 --save --variable GCM_SENDER_ID="' + config.prod.gcpProjectNumber + '"'
+var command = 'cordova plugin add https://github.com/taivo/parse-push-plugin#55b92cf416dec3dd973ba58559e0d74f7409471f'
 console.log('exec: ' + command)
 var child = shell.exec(command);

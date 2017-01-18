@@ -24,6 +24,7 @@ module app {
 
 		public profile:IProfile
 		public photos:ProfilePhoto[] = []
+		public photosInReview:ProfilePhoto[] = []
 		public about:string
 
 		private $log:ng.ILogService
@@ -59,6 +60,9 @@ module app {
 			this.profile = this.AppService.getProfile()
 			this.about = this.profile.about
 			this.photos = _.map(this.profile.photos, photo => new ProfilePhoto(photo))
+			this.photosInReview = this.profile.photosInReview
+				? _.map(this.profile.photosInReview, photo => new ProfilePhoto(photo))
+				: []
 		}
 
 
@@ -75,15 +79,29 @@ module app {
 			return _.filter(this.photos, (photo) => photo.selected).length
 		}
 
+		public canAddPhoto(): boolean {
+			return this.photos.length + this.photosInReview.length < this.MAX_PHOTOS
+		}
+
+		/**
+		 * @returns {boolean} if any of the photos or photos in review are selected
+		 */
+		public canDeletePhotos() {
+			return _.filter(this.photos, (photo) => photo.selected).length + _.filter(this.photosInReview, (photo) => photo.selected).length > 0
+		}
+
 		/**
 		 * Deletes the selected photos from the profile
 		 */
 		public deletePhotos() {
+			let profileUpdate = <IProfile>{}
+
 			// Extract the unselected photos and update the profile with those
 			let remainingPhotos = _.filter(this.photos, (photo) => !photo.selected)
-
-			let profileUpdate = <IProfile>{}
 			profileUpdate.photos = _.map(remainingPhotos, (photo) => photo.file)
+
+			let remainingInReviewPhotos = _.filter(this.photosInReview, (photo) => !photo.selected)
+			profileUpdate.photosInReview = _.map(remainingInReviewPhotos, (photo) => photo.file)
 
 			this.AppUtil.blockingCall(
 				this.AppService.saveProfile(profileUpdate),

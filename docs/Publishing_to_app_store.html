@@ -6,21 +6,25 @@
 [Index](index.html)
 
 # Checklist before publishing your initial version
+* Make your production app user account an admin by running the Parse dashboard (in /server run **npm run dashboard-prod**) and for your User entry set the admin flag to true.
 * Splash screen and icon configured. See http://ionicframework.com/blog/automating-icons-and-splash-screens/
 * Facebook permissions approved (test by logging in to the app with a Facebook account that is NOT an admin for the facebook app)
 * Add the hash to the Facebook app in the Android settings
-* Parse Cloud code uploaded
-* In Parse go to Settings -> General and fill out App Information
-* In Parse go to Settings -> Email and review/update the settings (in particular 'Verify user emails')
 * Test the push notifications to a real iPhone to test the push notification configuration
 * Create a public API key for your Google cloud project and add it to the google maps script in index.html
 * Lock down the external network access in */config.xml* and the Content-Security-Policy meta tags in */www/index.html*. See the inline comments and https://github.com/apache/cordova-plugin-whitelist
+* For iOS open up XCode and select the Push entitlement
+
+![Xcode push](img/xcode_push.png)
+
+* Check the Fastlane docs for any other XCode config https://docs.fastlane.tools/codesigning/xcode-project/#xcode-8-and-up
 
 # Checklist for submitting a build to the app stores
 After you've completed your initial submission checklist, to upload a new (or first) version to the app stores remember to do the following:
 
+We recommend doing the build for iOS and Android separately, i.e. provide a platform argument to the ionic build command, e.g. ionic build android --release
 * Increment the version attributes in /config.xml
-* Run **gulp --env prod** to build with your production configuration
+* Run **gulp prodBuild** to build with your production configuration
 * Run **ionic build --release**
 * Android - sign and align the .apk (See http://developer.android.com/tools/publishing/app-signing.html to have the build do this for you)
 * iOS - in XCode update the Version and Build number in Targets [Project Name] -> General -> Identity
@@ -36,11 +40,6 @@ After you've completed your initial submission checklist, to upload a new (or fi
 # Android
 
 http://developer.android.com/tools/publishing/publishing_overview.html
-
-# iOS
-
-iOS build automation tool set https://fastlane.tools/
-
 
 </xmp>
 

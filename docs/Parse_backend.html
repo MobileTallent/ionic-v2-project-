@@ -5,73 +5,7 @@
 <xmp theme="cerulean" style="display:none;">
 [Index](index.html)
 
-The backed provided for Cloneder is developed with [Parse.com](http://www.parse.com), a fully managed mobile backend service which is now owned by Facebook
-
-On the plus side it is easy to setup and modify, and there is a modest free allowance to get you started. 
-
-You also get other features such as the [analytics](https://www.parse.com/products/analytics) and [crash reporting](http://blog.parse.com/2014/12/09/introducing-parse-crash-reporting-2/).
-
-In 2014 Parse powered [10% of the top Android and iOS Apps](http://blog.parse.com/2014/12/23/best-of-parse-2014/).
-
-In the dating niche it is used by [The League](http://blog.parse.com/2015/02/05/the-league-meets-its-backend-match-in-parse/), "the dating app for would-be power couples" which in 2015 received [$2.1 million in seed funding](http://techcrunch.com/2015/01/22/investors-join-dating-app-the-league-with-2-1-million-seed-round/).
-
-Like anything it's not perfect and it's important to understand its limitations as a [Sacrificial Architecture](http://martinfowler.com/bliki/SacrificialArchitecture.html) to get your app started.
-
-Here is a good overview of pros and cons of the Parse platform https://medium.com/@stanfymobile/backend-without-code-parse-com-myth-vs-reality-9965d7b3606
-
-Parse has had a bad rap in the past for instability while their platform experienced massive growth and associated growing pains.
-They have recently make a significant improvement in their backend architecture, and said "Our reliability improved by an order of magnitude."
-
-http://blog.parse.com/learn/how-we-moved-our-api-from-ruby-to-go-and-saved-our-sanity/
-
-Also they have made recent change to their database for significant storage and performance improvements
-
-http://blog.parse.com/announcements/mongodb-rocksdb-parse/
-
-http://blog.parse.com/learn/engineering/mongodb-rocksdb-benchmark-setup-compression/
-
-http://blog.parse.com/learn/engineering/mongodb-rocksdb-writing-so-fast-it-makes-your-head-spin/
-
-
-## Request time limits and transactions
-
-Under the covers Parse uses a Mongo database to store data, which means there are no transactions.
-
-Lack of transactions and unique indexes make it difficult to ensure data integrity when you need to do a multi-step datastore operation.
-
-Interactive requests have a limit of 3 seconds before they are killed off before completing, increasing the chance of an incomplete multi-step operation.
-
-
-## API count and costs
-
-The 30 API calls per second may be used up faster that you initially think.  Every API call in a request counts towards the limit, as does web requests.
-
-For example if you call a cloud function which does a query, and update and sends a push notification then that would be 4 API calls:
-
-1. Cloud function call
-2. Data query
-3. Data update
-4. Push notification
-
-Every additional 10 API calls per second above the free 30/s currently costs $100/month
-
-The per second limit is actually averaged over 1 minute, so the free 30 requests a second is actually 1800 API calls a minute.
-
-The data model has been designed to minimise API calls. For example when you send a chat message your name is denormalised into the message object to avoid an additional API call when sending the push notificaion.
-
-
-## Query limitations
-
-The maximum number of objects you can return from a query is 1000. By default the limit is 100 unless you specify a different amount.
-
-This limit also applies to subqueries.
-
-Also the maximum start offest you can have in a query is 10,000.
-
-For an example how to make your queries return more than 1000 see http://ramblings.mcpher.com/Home/excelquirks/parse/parselimits
-
-and https://groups.google.com/forum/#!topic/parse-developers/GmIt3OG2m8o
-    
+Cloneder uses the [Parse.com](http://www.parse.com) framework Javascript SDK in the mobile app and the Node.js server.
 
 # Data/Query modeling
 
@@ -88,19 +22,6 @@ http://www.slideshare.net/jrosoff/mongodb-advanced-schema-design-inboxes
 http://docs.mongodb.org/manual/core/data-model-operations/
 
 http://docs.mongodb.org/manual/applications/data-models/
-
-## Migration
-
-If you want to migrate to your own backend at some point then you will have a couple of options to evaluate
-
-1. Migrate everything in one go if your users will tolerate some downtime.
-
-2. Replicate your data using afterSave Web hooks in the cloud code to HTTP post the data to your own sever so you can seamlessly switch over. https://parse.com/docs/js/guide#cloud-code-advanced-cloud-code-webhooks
-
-3. Migrate on demand. When a user first logs into your new server, do a call to your Parse backend with the master key to copy all the data required for that user.
-
-You could use a combination of 2 and 3 to slowly transition to your new backend.
-
 
 </xmp>
 

@@ -9,6 +9,8 @@ import com.parse.Parse;
 import com.parse.Parse.Configuration;
 import com.parse.Parse.Configuration.Builder;
 import com.parse.ParseInstallation;
+import com.parse.SaveCallback;
+import com.parse.ParseException;
 
 /**
  * Required to handle push notifications when the app is closed. See the following links:
@@ -45,9 +47,17 @@ public class CustomApplication extends Application {
             .server("@@serverUrl@@parseMount") // The trailing slash is important.
             .build()
         );
-        //PushService.setDefaultPushCallback(this, PushClient.class);
-        //PushService.subscribe(this, "Channel", PushClient.class);
-        ParseInstallation.getCurrentInstallation().saveInBackground();
+
+        ParseInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException ex) {
+               if (null != ex) {
+                  Log.e(LOGTAG, ex.toString());
+               } else {
+                  Log.d(LOGTAG, "Installation saved");
+               }
+            }
+        });
     }
 
     public static boolean isForeground() {

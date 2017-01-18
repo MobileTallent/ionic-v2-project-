@@ -186,6 +186,12 @@ Parse.Cloud.beforeSave(Profile, function (request, response) {
 			if (!profile.has('girls'))
 				profile.set('girls', gender !== 'F')
 		}
+
+		// If the array exists is empty, then unset it
+		var photosInReview = profile.get('photosInReview')
+		if(photosInReview && photosInReview.length === 0) {
+            profile.remove('photosInReview')
+		}
 	}
 
 	response.success()
@@ -486,6 +492,7 @@ function _processProfile(profile) {
 	delete profile.guys
 	delete profile.girls
 	delete profile.distance
+    delete profile.photosInReview
 	delete profile.distanceType
 	delete profile.error
 
@@ -1373,6 +1380,9 @@ Parse.Cloud.define('TestPushNotification', function (request, response) {
 		channels: ['user_' + request.user.id],
 		data: {
 			alert: 'Test push notification',
+			data: {
+				type: 'test'
+			}
 			// title: 'Test push notification',
 		}
 	}, masterKey).then(

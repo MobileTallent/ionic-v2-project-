@@ -3,7 +3,7 @@
 var shell = require('shelljs')
 var fs = require('fs')
 
-var config = require('./config.json');
+var config = require('../config.json');
 
 // Get the --env arg
 var env = require('commander')
@@ -33,4 +33,10 @@ if(!config[env].gcpProjectId) {
 }
 
 // Deploy!
-var child = shell.exec('gcloud app deploy --quiet --stop-previous-version --project ' + config[env].gcpProjectId);
+if (process.platform === 'win32') {
+    shell.exec('gcloud app deploy --quiet --stop-previous-version --project ' + config[env].gcpProjectId)
+} else {
+    require("child_process")
+        .spawnSync( "gcloud", [ "app", "deploy", "--quiet", "--stop-previous-version", "--project", config[env].gcpProjectId],
+            { stdio: "inherit", stdin: "inherit" } )
+}

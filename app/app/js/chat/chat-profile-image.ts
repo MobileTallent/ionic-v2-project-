@@ -1,5 +1,3 @@
-import IProfile = app.IProfile
-import IAppService = app.IAppService
 
 /**
  * Displays the appropriate profile image for a chat.
@@ -7,7 +5,7 @@ import IAppService = app.IAppService
  * If multiple people show the image of the last person who messaged, excluding the current user.
  * If no messages yet, then the person who last joined the chat
  */
-angular.module('ionicApp').directive('chatProfileImage', function(AppService:IAppService) {
+angular.module('ionicApp').directive('chatProfileImage', function(AppService:app.IAppService) {
 	return {
 		restrict: 'E',
 		scope: {

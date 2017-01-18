@@ -112,8 +112,7 @@
             "type": "registry",
             "id": "cordova-plugin-admobpro"
         },
-        "is_top_level": true,
-        "variables": {}
+        "is_top_level": true
     },
     "cordova-plugin-extension": {
         "source": {
@@ -205,7 +204,10 @@
             "id": "cordova-plugin-camera"
         },
         "is_top_level": true,
-        "variables": {}
+        "variables": {
+            "CAMERA_USAGE_DESCRIPTION": "Take a photo for your profile",
+            "PHOTOLIBRARY_USAGE_DESCRIPTION": "Choose a photo for your profile"
+        }
     },
     "cordova-plugin-splashscreen": {
         "source": {

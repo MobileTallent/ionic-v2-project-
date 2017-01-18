@@ -2,7 +2,7 @@
 
     <ion-nav-buttons side="primary">
         <i class="button button-icon icon ion-arrow-swap" ng-click="vm.swapPhotos()" ng-if="vm.selectedCount() == 2" ng-cloak></i>
-        <i class="button button-icon icon ion-ios-trash" ng-click="vm.deletePhotos()" ng-if="vm.selectedCount() > 0" ng-cloak></i>
+        <i class="button button-icon icon ion-ios-trash" ng-click="vm.deletePhotos()" ng-if="vm.canDeletePhotos()" ng-cloak></i>
     </ion-nav-buttons>
 
     <ion-content padding="true">
@@ -13,11 +13,21 @@
                 <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}"
                     class="profileImg">
             </div>
-            <div class="col col-33" id="addPhoto" ng-if="vm.photos.length < vm.MAX_PHOTOS">
-                <img ng-src="{{vm.NO_IMAGE}}" ng-click="vm.addPhoto()" class="profileImg" />
+            <div class="col col-33" id="addPhoto" ng-if="vm.canAddPhoto()">
+                <img ng-src="{{vm.NO_IMAGE}}" ng-click="vm.addPhoto()" class="profileImg"/>
             </div>
             <!-- TODO could have some placeholder images in the other empty spots so there isn't odd looking empty space -->
         </div>
+
+        <div ng-if="vm.photosInReview.length">
+            Awaiting Review
+        </div>
+        <div class="row" ng-if="vm.photosInReview.length">
+            <div class="col col-33" ng-repeat="photo in vm.photosInReview track by $index">
+                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}" class="profileImg">
+            </div>
+        </div>
+
         <br/>
         <div>
             <div class="about-you-header"><b class="padding-5">About You</b>

@@ -17,7 +17,7 @@ var profileFields = [
     'name',
     'birthdate', 'age',
     'about',
-    'photos',
+    'photos', 'photosInReview',
     'notifyMatch', 'notifyMessage',
     'distance', 'distanceType',
     'location', 'gps',
@@ -251,6 +251,8 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             deletePhoto: deletePhoto,
             banUser: banUser,
             closeReport: closeReport,
+            getProfilesWithPhotosToReview: getProfilesWithPhotosToReview,
+            reviewPhoto: reviewPhoto,
             searchUsersByEmail: searchUsersByEmail,
             searchUsersByName: searchUsersByName,
             loadUser: loadUser,
@@ -496,10 +498,15 @@ angular.module('service.parse', ['constants', 'parse-angular'])
                 profileChanges.location = convertLocation(profileChanges.location.latitude, profileChanges.location.longitude)
             }
 
-            // Workaround for re-saving file objects
+            // Workaround for re-saving file objects. Is this still required?
             // See http://stackoverflow.com/questions/25297590/saving-javascript-object-that-has-an-array-of-parse-files-causes-converting-cir
             if(profileChanges && profileChanges.photos) {
                 profileChanges.photos = _.map(profileChanges.photos, file => {
+                    return {name: file.name, url: file.url(), __type: 'File'}
+                })
+            }
+            if(profileChanges && profileChanges.photosInReview) {
+                profileChanges.photosInReview = _.map(profileChanges.photosInReview, file => {
                     return {name: file.name, url: file.url(), __type: 'File'}
                 })
             }
@@ -798,6 +805,16 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             return Parse.Cloud.run('DeleteUser', {userId: userId}).catch(_unwrapError)
         }
 
+        function getProfilesWithPhotosToReview() {
+            return Parse.Cloud.run('GetProfilesWithPhotosToReview')
+                .then(profiles => _.map(profiles, toId))
+                .catch(_unwrapError)
+        }
+
+        function reviewPhoto(profileId, fileUrl, approved) {
+            return Parse.Cloud.run('ReviewPhoto', {profileId: profileId, fileUrl: fileUrl, approved: approved}).catch(_unwrapError)
+        }
+
         // Private functions
 
 		/**
@@ -813,6 +830,16 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             return Parse.Object.fromJSON(object)
         }
 
+        function toId(object) {
+            object.id = object.objectId
+            return object
+        }
+
+        /**
+         * Converts the internal mongo objectId to the Parse id
+         * @param object
+         * @returns {*}
+         */
         function toId(object) {
             object.id = object.objectId
             return object

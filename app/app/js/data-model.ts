@@ -102,6 +102,12 @@ module app {
 		/** The user profile photos */
 		photos: IFile[]
 
+		/**
+		 * The user profile photos that are awaiting review by admin/moderators. '
+		 * Must be set undefined if there are none to enable the Parse.Query.exists() call to work when querying for them.
+		 */
+		photosInReview: IFile[]
+
 		/** If the user should show up in potential matches for other users */
 		enabled: boolean
 

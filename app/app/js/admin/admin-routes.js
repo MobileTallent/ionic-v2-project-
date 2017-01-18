@@ -41,4 +41,12 @@ angular.module('ionicApp').config(function ($stateProvider) {
 				}
 			}
 		})
+        .state('menu.adminPhotoReview', {
+            url: "/adminPhotoReview/",
+            views: {
+                'menuContent': {
+                    templateUrl: "admin/photo-review.html"
+                }
+            }
+        })
 })

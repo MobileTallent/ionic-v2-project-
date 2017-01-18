@@ -7,6 +7,8 @@ module app {
 	export interface IAppService {
 		twilioAccessToken: string
 
+		goToNextLoginState(): void
+
 		saveProfile(updates:IProfile): ng.IPromise<IProfile>
 		getProfile(): IProfile
 		getProfileByUserId(id:string): IProfile
@@ -14,7 +16,7 @@ module app {
 		processMatch(profile:IProfile, liked:boolean): ng.IPromise<IMatch>
 		getProfileSearchResults():IProfile[]
 
-		reportProfile(reason:string, profile:IProfile, match:IMatch=null): ng.IPromise<void>
+		reportProfile(reason:string, profile:IProfile, match?:IMatch): ng.IPromise<void>
 
 		getUnreadChatsCount():number
 
@@ -28,6 +30,8 @@ module app {
 		loadUser(id:string): ng.IPromise<IUser>
 		deleteUser(userId:string): ng.IPromise<void>
 		searchUsersByName(name:string): ng.IPromise<IProfile[]>
+		getProfilesWithPhotosToReview(): ng.IPromise<IProfile[]>
+		reviewPhoto(profileId:string, fileUrl:string, approved:boolean): ng.IPromise<void>
 	}
 
 	/**
@@ -46,6 +50,7 @@ module app {
 		getUserId(): string
 		sendChatMessage(message:IChatMessage, match:IMatch): ng.IPromise<IChatMessage>
 		getTwilioToken(): ng.IPromise<string>
+		rebuildMatches(): ng.IPromise<void>
 	}
 
 	// Partially defined
