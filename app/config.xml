@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget android-versionCode="168" id="co.justababy.app" ios-CFBundleVersion="0.1.6" version="0.1.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="198" id="co.justababy.app" ios-CFBundleVersion="0.1.9" version="0.1.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Just a Baby</name>
   <description>&#xD;
     An app for single parents to meet and discover each other.&#xD;
   </description>
   <author email="daniel@apporchestra.com" href="http://apporchestra.com/">&#xD;
-    Daniel Campagnoli&#xD;
+    Just a Baby&#xD;
   </author>
   <content src="index.html"/>
   <access origin="*"/>

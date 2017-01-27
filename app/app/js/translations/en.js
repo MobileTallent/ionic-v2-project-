@@ -55,7 +55,7 @@ var TRANSLATION_EN = {
     'MENU_DISCOVERY': 'Discovery Preferences',
     'MENU_SETTINGS': 'App Settings',
     'MENU_CONTACT': 'Give Feedback',
-    'MENU_SHARE': 'Share',
+    'MENU_SHARE': 'Invite My Friends',
     'MENU_CO_PARENTS': 'My Co-Parents Shortlist',
 
     'PROFILE_SETUP_MSG': 'We need a couple more details',

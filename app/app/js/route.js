@@ -1,4 +1,4 @@
-angular.module('ionicApp').config(function ($stateProvider, $urlRouterProvider) {
+angular.module('ionicApp').config(function($stateProvider, $urlRouterProvider) {
 
     $stateProvider
         .state('signin', {
@@ -63,10 +63,10 @@ angular.module('ionicApp').config(function ($stateProvider, $urlRouterProvider) 
                 }
             },
             resolve: {
-                matchProfile: function (AppService, $stateParams) {
-                    if($stateParams.matchId)
+                matchProfile: function(AppService, $stateParams) {
+                    if ($stateParams.matchId)
                         return AppService.getProfileByMatchId($stateParams.matchId)
-                    else if($stateParams.profileId)
+                    else if ($stateParams.profileId)
                         return AppService.getProfileById($stateParams.profileId)
                 }
             }

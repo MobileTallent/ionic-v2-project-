@@ -2,13 +2,13 @@
     <ion-slide ng-repeat="photo in profile.photos track by $index">
         <img ng-src="{{photo | fileUrl}}" style="width:100%" />
     </ion-slide>
-    <ion-slide ng-if="!selectedCard.photos.length">
+    <ion-slide ng-if="!profile.photos.length">
         <img src="img/generic_avatar.jpg" style="width:100%" />
     </ion-slide>
     <!-- profile.photosInReview should only exist for the current user, and be unset for search results -->
     <ion-slide ng-repeat="photo in profile.photosInReview track by $index">
         IN REVIEW
-        <img ng-src="{{photo | fileUrl}}" style="width:100%"/>
+        <img ng-src="{{photo | fileUrl}}" style="width:100%" />
     </ion-slide>
 </ion-slide-box>
 
@@ -38,7 +38,7 @@
 
 
 <div class="padding-15">
-    <h4 style="color:#666666" class="center" >{{distance}} {{'AWAY' | translate}}</h4>
+    <h4 style="color:#666666" class="center">{{distance}} {{'AWAY' | translate}}</h4>
     <h4 style="color:#666666">About Me</h4>
     <div ng-show="profile.about" style="color:#9B9B9B" class="text-size-18">
         {{profile.about}}
