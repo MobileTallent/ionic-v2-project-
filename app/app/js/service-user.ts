@@ -32,6 +32,9 @@ module app {
 		searchUsersByName(name:string): ng.IPromise<IProfile[]>
 		getProfilesWithPhotosToReview(): ng.IPromise<IProfile[]>
 		reviewPhoto(profileId:string, fileUrl:string, approved:boolean): ng.IPromise<void>
+		addClinicsQuestion(clinicQuestion:any): ng.IPromise<void>
+		getClinicsQuestion(): ng.IPromise<IClinicsQuestion[]>
+		delClinicsQuestion(id:string): ng.IPromise<void>
 	}
 
 	/**

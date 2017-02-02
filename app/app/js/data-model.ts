@@ -188,4 +188,13 @@ module app {
 		/** The admin user which took the action */
 		actionUser: IUser
 	}
+
+	export interface IClinicsQuestion extends IBase {
+		/** The header question */
+		question: string
+		/** The answer from the question */
+		answer: string
+		/** The position of the question */
+		position: number
+	}
 }

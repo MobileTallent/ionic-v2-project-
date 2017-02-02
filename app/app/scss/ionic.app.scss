@@ -42,7 +42,7 @@ $text-colour-white: #ffffff;
 $chat-bubble-right-background: rgba(187, 225, 213, 0.35);
 $chat-bubble-right-text: rgb(43, 172, 143);
 $chat-bubble-left-background: rgba(250, 248, 218, 0.71);
-$chat-bubble-left-text : rgb(165, 161, 121);
+$chat-bubble-left-text: rgb(165, 161, 121);
 $chat-date-recieved:rgb(155, 155, 155);
 //***************************** Chat List
 $chats-odd: rgba(155, 155, 155, 0.10);
@@ -86,7 +86,8 @@ button.button.button-stable {
 .text-colour-energized {
     color: $energized;
 }
-.text-colour-assertive{
+
+.text-colour-assertive {
     color: $assertive;
 }
 
@@ -338,7 +339,7 @@ a.autolinker {
 /* --- My Relationships --- */
 
 .item.active {
-    background-color: $positive;
+    background-color: $positive !important;
 }
 
 

@@ -1,77 +1,101 @@
-
 /* --- padding --- */
 
-.no-padding { 
+.no-padding {
     padding: 0px;
-    }
-.padding-5{
-    padding: 5px;  
-    }
-.padding-10 { 
-    padding: 10px; 
-    }
+}
+
+.padding-5 {
+    padding: 5px;
+}
+
+.padding-10 {
+    padding: 10px;
+}
+
 .padding-15 {
-    padding:15px;
-    }
-.padding-25{
-    padding:25px;
-    }
+    padding: 15px;
+}
+
+.padding-25 {
+    padding: 25px;
+}
+
 .padding-left-right {
-    padding-left: 10px; padding-right: 10px; 
-    }
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 
 /* --- Positioning and Display ---*/
-.hidden{
+
+.hidden {
     display: none;
 }
-.center{
+
+.center {
     text-align: center;
 }
+
 .wide {
-    width:100%;
-    }
+    width: 100%;
+}
+
 .cf {
     clear: both !important;
-    }
+}
+
 
 /* --- Text and Font --- */
+
 .bold {
     font-weight: bold;
-    }
+}
+
 textarea {
     padding: 3px;
 }
-.text-size-18{
+
+.text-size-18 {
     font-size: 18px;
 }
-.text-size-24{
+
+.text-size-24 {
     font-size: 24px;
 }
-.text-size-28{
+
+.text-size-28 {
     font-size: 28px;
 }
 
 
 /* --- Chat --- */
+
+
 /* This is need for the chat screen otherwise there is a pixel gap between the button bar and the message box */
+
 .bar-subfooter {
     bottom: 43px;
-    }
+}
 
 .subfooter-height {
     height: 43px;
-    }
+}
 
 .auto-height {
     height: auto !important;
-    }
+}
+
+
 /* fixes an ios bug bear */
+
 button.ion-android-send {
     padding-top: 2px;
 }
 
+
 /* add this to keep your footer buttons down
 at the bottom as the textarea resizes */
+
 .footer-btn-wrap {
     position: relative;
     height: 100%;
@@ -111,7 +135,6 @@ img.profile-pic.circle {
     font-size: 32px;
     vertical-align: middle;
 }
-
 
 .chat-header {
     padding: 5px;
@@ -162,6 +185,7 @@ img.profile-pic.circle {
     top: -3px;
     right: 5px;
 }
+
 .msg-header-username {
     display: inline-block;
     vertical-align: middle;
@@ -169,63 +193,86 @@ img.profile-pic.circle {
     top: -3px;
 }
 
-
-.pending-list{
+.pending-list {
     padding: 15px;
 }
 
-.card, .button, image{
+.card,
+.button,
+image {
     border-radius: 8px;
 }
 
 td-card {
     position: absolute;
     left: 50%;
-    margin-top: 20px; 
+    margin-top: 20px;
     width: 100%;
     margin-left: -50%;
 }
 
+
 /* ---------- Profile -----------*/
 
-#profile-name-banner{
+#profile-name-banner {
     background-color: rgba(187, 225, 213, 0.69);
     border: 1px solid rgba(187, 225, 213, 0.69);
     border-radius: 16px;
     padding: 20px 15px;
     margin-top: 10px
 }
+
+
 /* --------- Edit Profile ---------*/
+
 .profileImg {
     width: 100%;
     padding: 0;
 }
 
-/* --------- My Relationships ---------------*/
-.list .item.item-accordion {
 
-  line-height: 38px;
-  padding-top: 10px;
-  padding-bottom: 0;
+/* --------- My Relationships ---------------*/
+
+.list .item.item-accordion {
+    line-height: 38px;
+    padding-top: 10px;
+    padding-bottom: 0;
 }
+
 .list .item.item-accordion.ng-hide {
-    
-  line-height: 0px;
+    line-height: 0px;
 }
+
 .list .item.item-accordion.ng-hide-add,
 .list .item.item-accordion.ng-hide-remove {
-  display: block !important;
-  
+    display: block !important;
 }
+
+
 /* --- Set Location ---*/
+
+
 /* For the google map */
+
 .scroll {
     height: 100%;
 }
+
 #map {
     width: 100%;
     height: 100%;
 }
+
+
 /* --- clinics --- */
 
+.clinic-container {
+    padding: 10px;
+}
 
+.clinic-container .item.item-accordion {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 43px;
+    transition: 0.09s all linear;
+}
