@@ -147,7 +147,13 @@ function onNotificationOpen(pnObj) {
                 deleteUser: deleteUser,
                 addClinicsQuestion: addClinicsQuestion,
                 getClinicsQuestion: getClinicsQuestion,
-                delClinicsQuestion: delClinicsQuestion
+                delClinicsQuestion: delClinicsQuestion,
+                getFindUs: getFindUs,
+                addFindUs: addFindUs,
+                delFindUs: delFindUs,
+                addFindUsReport: addFindUsReport,
+                getFindUsReport: getFindUsReport,
+                delFindUsReport: delFindUsReport
             }
 
             return service
@@ -1292,6 +1298,30 @@ function onNotificationOpen(pnObj) {
 
             function delClinicsQuestion(id) {
                 return server.delClinicsQuestion(id)
+            }
+
+            function addFindUs(findUs) {
+                return server.addFindUs(findUs)
+            }
+
+            function getFindUs() {
+                return server.getFindUs()
+            }
+
+            function delFindUs(id) {
+                return server.delFindUs(id)
+            }
+
+            function addFindUsReport(findUsVotes) {
+                return server.addFindUsReport(findUsVotes)
+            }
+
+            function getFindUsReport() {
+                return server.getFindUsReport()
+            }
+
+            function delFindUsReport(id) {
+                return server.getFindUsReport(id)
             }
 
             // Util functions

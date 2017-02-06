@@ -112,6 +112,27 @@ var ClinicsQuestion = Parse.Object.extend({
     attrs: clinicsQuestionFields
 })
 
+/**
+ * @typedef {Object} FindUs
+ * @property {string} name - the name
+ */
+var findUsFields = ['name']
+var FindUs = Parse.Object.extend({
+    className: "FindUs",
+    attrs: findUsFields
+})
+
+/**
+ * @typedef {Object} FindUsReport
+ * @property {string} username - the name of the person
+ * @property {string} name - the name of the group
+ */
+var findUsReportFields = ['username', 'name', 'checked']
+var FindUsReport = Parse.Object.extend({
+    className: "FindUsReport",
+    attrs: findUsReportFields
+})
+
 
 enhance(Parse.User.prototype, userFields)
 enhance(Profile.prototype, profileFields)
@@ -120,6 +141,8 @@ enhance(ChatMessage.prototype, chatMessageFields)
 enhance(Report.prototype, reportFields)
 enhance(ContactMessage.prototype, contactMessageFields)
 enhance(ClinicsQuestion.prototype, clinicsQuestionFields)
+enhance(FindUs.prototype, findUsFields)
+enhance(FindUsReport.prototype, findUsReportFields)
 
 function enhance(prototype, fields) {
     for (var i = 0; i < fields.length; i++) {
@@ -273,7 +296,13 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         deleteUser: deleteUser,
         addClinicsQuestion: addClinicsQuestion,
         getClinicsQuestion: getClinicsQuestion,
-        delClinicsQuestion: delClinicsQuestion
+        delClinicsQuestion: delClinicsQuestion,
+        getFindUs: getFindUs,
+        addFindUs: addFindUs,
+        delFindUs: delFindUs,
+        addFindUsReport: addFindUsReport,
+        getFindUsReport: getFindUsReport,
+        delFindUsReport: delFindUsReport
     }
 
     return service
@@ -834,16 +863,6 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
     function addClinicsQuestion(clinicQuestion) {
         return Parse.Cloud.run('AddClinicsQuestion', { clinicQuestion: clinicQuestion }).catch(_unwrapError)
-            // var cq = new ClinicsQuestion()
-            // if (clinicQuestion.id) {
-            //     cq.id = clinicQuestion.id
-            //     delete clinicQuestion.id
-            // }
-
-        // cq.question = clinicQuestion.question
-        // cq.answer = clinicQuestion.answer
-        // cq.position = clinicQuestion.position
-        // return cq.save()
     }
 
     function getClinicsQuestion(clinicQuestion) {
@@ -852,6 +871,37 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
     function delClinicsQuestion(id) {
         return Parse.Cloud.run('DelClinicsQuestion', { id: id }).catch(_unwrapError)
+    }
+
+    function addFindUs(findUs) {
+        return Parse.Cloud.run('AddFindUs', { findUs: findUs }).catch(_unwrapError)
+    }
+
+    function getFindUs() {
+        return Parse.Cloud.run('GetFindUs').catch(_unwrapError)
+    }
+
+    function delFindUs(id) {
+        return Parse.Cloud.run('DelFindUs', { id: id }).catch(_unwrapError)
+    }
+
+    function addFindUsReport(findUsVotes) {
+        return Parse.Cloud.run('AddFindUsReport', { findUsVotes: findUsVotes }).catch(_unwrapError)
+            // findUsVotes.forEach(vote => {
+            //     var report = new FindUsReport()
+            //     report.name = vote.name
+            //     report.username = vote.username
+            //     report.checked = vote.checked
+            //     report.save()
+            // })
+    }
+
+    function getFindUsReport() {
+        return Parse.Cloud.run('GetFindUsReport').catch(_unwrapError)
+    }
+
+    function delFindUsReport(id) {
+        return Parse.Cloud.run('DelFindUsReport', { id: id }).catch(_unwrapError)
     }
 
     // Private functions

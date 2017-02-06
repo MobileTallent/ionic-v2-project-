@@ -7,6 +7,8 @@ var Report = Parse.Object.extend("Report")
 var ChatMessage = Parse.Object.extend("ChatMessage")
 var DeletedUser = Parse.Object.extend("DeletedUser")
 var ClinicsQuestion = Parse.Object.extend("ClinicsQuestion")
+var FindUs = Parse.Object.extend("FindUs")
+var FindUsReport = Parse.Object.extend("FindUsReport")
 
 var _ = require('underscore')
 
@@ -1229,6 +1231,111 @@ Parse.Cloud.define('DelClinicsQuestion', function(request, response) {
         }
 })
 
+/* Add/Edit Find Us */
+Parse.Cloud.define('AddFindUs', function(request, response) {
+    console.log('AddFindUs')
+    var findUsData = request.params.findUs
+
+    if (!findUsData)
+        return response.error('findUsData parameter must be provided')
+
+    var fu = new FindUs()
+    if (findUsData.id) {
+        fu.id = findUsData.id
+        delete findUsData.id
+    }
+
+    fu.save(findUsData).then(function(result) {
+        console.log("Success saving find us data")
+        response.success("Success saving find us data")
+    }, function(error) {
+        console.log("Error saving find us data")
+        response.error(error)
+    })
+})
+
+/* Get Find Us */
+Parse.Cloud.define('GetFindUs', function(request, response) {
+    console.log('GetFindUs')
+    new Parse.Query(FindUs).limit(1000).find().then(function(result) {
+        console.log("Successs " + JSON.stringify(result))
+        response.success(result)
+    }, function(error) {
+        console.log("Erroorrr: " + JSON.stringify(error))
+        response.error(error)
+    })
+})
+
+/* Delete Find Us */
+Parse.Cloud.define('DelFindUs', function(request, response) {
+    console.log('DelFindUs')
+    var id = request.params.id
+    if (!id) return response.error('id parameter is required')
+
+    var findUsQuery = new Parse.Query(FindUs);
+    findUsQuery.get(id, masterKey).then(function(findUs) {
+            return findUs.destroy()
+        }).then(function() {
+            response.success("Successfully deleted findus item!")
+        }),
+        function(error) {
+            console.log(JSON.stringify(error))
+            response.error(error)
+        }
+})
+
+/* Vote Find Us Report*/
+Parse.Cloud.define('AddFindUsReport', function(request, response) {
+    console.log('AddFindUsReport')
+    var findUsVotesData = request.params.findUsVotes
+
+    if (!findUsVotesData)
+        return response.error('findUsVotesData parameter must be provided')
+
+    findUsVotesData.forEach(vote => {
+        var fur = new FindUsReport()
+        fur.set('name', vote.name)
+        fur.set('username', vote.username)
+        fur.set('checked', vote.checked)
+        fur.save().then(function(result) {
+            console.log("Success saving vote")
+            response.success("Success saving vote")
+        }, function(error) {
+            console.log("Error saving vote")
+            response.error(error)
+        })
+    })
+})
+
+/* Get Find Us Report for analysis*/
+Parse.Cloud.define('GetFindUsReport', function(request, response) {
+    console.log('GetFindUsReport')
+    new Parse.Query(FindUsReport).limit(1000).find().then(function(result) {
+        console.log("Successs " + JSON.stringify(result))
+        response.success(result)
+    }, function(error) {
+        console.log("Erroorrr: " + JSON.stringify(error))
+        response.error(error)
+    })
+})
+
+/* Delete Vote Report*/
+Parse.Cloud.define('DelFindUsReport', function(request, response) {
+    console.log('DelFindUsReport')
+    var id = request.params.id
+    if (!id) return response.error('id parameter is required')
+
+    var findUsReportQuery = new Parse.Query(FindUsReport);
+    findUsReportQuery.get(id, masterKey).then(function(vote) {
+            return vote.destroy()
+        }).then(function() {
+            response.success("Successfully deleted votes!")
+        }),
+        function(error) {
+            console.log(JSON.stringify(error))
+            response.error(error)
+        }
+})
 
 /**
  * We don't normally delete matches, just mark them as deleted

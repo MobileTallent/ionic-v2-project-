@@ -1,43 +1,49 @@
 module app {
 
-    export class WhereUFindUs {
+    export class WhereUFindUsAdmin {
         private modalText = "New "
-        public clinicQuestions
-        public clinicQuestion: IClinicsQuestion
-        private clinicsModal
+        public findUsGroup
+        public findUs: IFindUs
+        private findUsModal
         private submitted = false;
 
         constructor(private $ionicPopup, private $log: ng.ILogService, private $scope: ng.IScope,
             private $state, private $ionicModal, private AppService: IAppService, private AppUtil: AppUtil) {
 
             $scope.$on('$ionicView.beforeEnter', () => this.refresh())
-            // $ionicModal.fromTemplateUrl('clinicsModal.html', {
 
             // // Cleanup the modal when we're done with it
-            $scope.$on('$destroy', () => this.clinicsModal.remove())
+            $scope.$on('$destroy', () => this.findUsModal.remove())
 
             $ionicModal.fromTemplateUrl('templates/modal.html', {
                 scope: $scope,
                 animation: 'slide-in-up'
-            }).then(modal => this.clinicsModal = modal)
+            }).then(modal => this.findUsModal = modal)
+
+            $scope.devList = [
+                { text: "HTML5", checked: true },
+                { text: "CSS3", checked: false },
+                { text: "JavaScript", checked: false }
+            ];
         }
 
         public refresh() {
             this.AppUtil.blockingCall(
-                this.AppService.getClinicsQuestion(),
-                questions => {
-                    this.$log.log('loaded ' + questions.length + ' questions')
-                    this.clinicQuestions = questions
+                this.AppService.getFindUs(),
+                items => {
+                    this.$log.log('loaded ' + items.length + ' items')
+                    this.findUsGroup = items
                 })
         }
 
-        public addClinicsQuestion(form) {
+        public addFindUs(form) {
             this.submitted = true
             if (form.$valid) {
                 this.AppUtil.blockingCall(
-                    this.AppService.addClinicsQuestion(this.clinicQuestion),
+                    this.AppService.addFindUs(this.findUs),
                     () => {
-                        this.clinicQuestion = null
+                        this.modalText = "New "
+                        this.findUs = null
                         this.AppUtil.toastSimple("Saved Successfully")
                         this.refresh()
                     })
@@ -45,18 +51,18 @@ module app {
             }
         }
 
-        public editClinicsQuestion(question) {
+        public editFindUs(question) {
             this.modalText = "Update "
-            this.clinicQuestion = question.toJSON()
-            this.clinicsModal.show()
+            this.findUs = question.toJSON()
+            this.findUsModal.show()
         }
 
-        public deleteClinicsQuestion(id) {
-            this.$log.log('Delete question ' + id)
+        public deleteFindUs(id) {
+            this.$log.log('Delete find us name ' + id)
             var _this = this
             this.$ionicPopup.confirm({
-                title: 'Delete Question',
-                template: 'Are you sure you want to delete this question?'
+                title: 'Delete',
+                template: 'Are you sure you want to delete this item?'
             }).then(function (res) {
                 if (res)
                     _this.deleteQ(id)
@@ -65,7 +71,7 @@ module app {
 
         public deleteQ(id) {
             this.AppUtil.blockingCall(
-                this.AppService.delClinicsQuestion(id),
+                this.AppService.delFindUs(id),
                 () => {
                     this.AppUtil.toastSimple("Deleted Successfully")
                     this.refresh()
@@ -73,19 +79,20 @@ module app {
         }
 
         public close() {
-            this.clinicQuestion = null
-            this.clinicsModal.hide()
+            this.modalText = "New "
+            this.findUs = null
+            this.findUsModal.hide()
         }
 
         public resetForm(form) {
-            this.clinicQuestion = null
-            this.clinicsModal.hide()
+            this.findUs = null
+            this.findUsModal.hide()
             form.$setPristine()
             form.$setUntouched()
         }
 
     }
 
-    WhereUFindUs.$inject = ['$ionicPopup', '$log', '$scope', '$state', '$ionicModal', 'AppService', 'AppUtil']
-    angular.module('controllers').controller('WhereUFindUs', WhereUFindUs)
+    WhereUFindUsAdmin.$inject = ['$ionicPopup', '$log', '$scope', '$state', '$ionicModal', 'AppService', 'AppUtil']
+    angular.module('controllers').controller('WhereUFindUsAdmin', WhereUFindUsAdmin)
 }

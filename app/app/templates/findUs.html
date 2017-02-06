@@ -1,0 +1,17 @@
+<ion-view view-title="WELCOME">
+    <ion-header-bar class="bar-positive">
+        <h1 class="title title-center">WELCOME</h1>
+    </ion-header-bar>
+    <ion-content>
+        <div class="list">
+            <h4 style="padding-left: 20px">Please tell us how you heard about us?</h4>
+            <ion-checkbox ng-repeat="item in findUsList" ng-model="item.checked " ng-checked="item.checked ">
+                {{ item.name }}
+            </ion-checkbox>
+            <div class="padding">
+                <button class="button button-block button-stable" ng-click="skip()">Skip</button>
+                <button class="button button-block button-assertive" ng-click="done()">Done</button>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

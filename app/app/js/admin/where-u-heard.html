@@ -1,14 +1,13 @@
-<ion-view view-title="How Did U Find Us list" ng-controller="ClinicsQuestion as vm">
+<ion-view view-title="Where Did U Heard Us list" ng-controller="WhereUFindUsAdmin as vm">
     <ion-nav-buttons side="right">
-        <i class="button button-icon icon ion-ios-plus-outline" ng-click="vm.clinicsModal.show()"></i>
+        <i class="button button-icon icon ion-ios-plus-outline" ng-click="vm.findUsModal.show()"></i>
     </ion-nav-buttons>
     <ion-content>
         <ion-list show-delete="false" can-swipe="true">
-            <ion-item ng-repeat="item in vm.clinicQuestions">
-                <h2>{{item.position}} - {{item.question}}</h2>
-                <p>{{item.answer}}</p>
-                <ion-option-button class="button-balanced icon ion-edit" ng-click="vm.editClinicsQuestion(item)"></ion-option-button>
-                <ion-option-button class="button-assertive icon ion-trash-a" ng-click="vm.deleteClinicsQuestion(item.id)"></ion-option-button>
+            <ion-item ng-repeat="item in vm.findUsGroup">
+                <h2>{{item.name}}</h2>
+                <ion-option-button class="button-balanced icon ion-edit" ng-click="vm.editFindUs(item)"></ion-option-button>
+                <ion-option-button class="button-assertive icon ion-trash-a" ng-click="vm.deleteFindUs(item.id)"></ion-option-button>
             </ion-item>
         </ion-list>
     </ion-content>
@@ -16,26 +15,17 @@
     <script id="templates/modal.html" type="text/ng-template">
         <ion-modal-view>
             <ion-header-bar class="bar bar-header bar-positive">
-                <h1 class="title">{{vm.modalText}} Question</h1>
+                <h1 class="title">{{vm.modalText}} Name</h1>
                 <button class="button button-clear button-primary" ng-click="vm.close()">Cancel</button>
             </ion-header-bar>
             <ion-content class="padding">
 
-                <form name="clinicsForm" novalidate ng-submit="vm.addClinicsQuestion(clinicsForm)">
+                <form name="findUsForm" novalidate ng-submit="vm.addFindUs(findUsForm)">
                     <div class="list">
-                        <label class="item item-input" ng-class="{ 'has-errors' : clinicsForm.question.$invalid, 'no-errors' : clinicsForm.question.$valid}">
-                            <input name="question" ng-model="vm.clinicQuestion.question" ng-required="true" type="text" placeholder="Question">
+                        <label class="item item-input" ng-class="{ 'has-errors' : findUsForm.name.$invalid, 'no-errors' : findUsForm.name.$valid}">
+                            <input name="name" ng-model="vm.findUs.name" ng-required="true" type="text" placeholder="Name">
                         </label>
-
-                        <label class="item item-input" ng-class="{ 'has-errors' : clinicsForm.answer.$invalid, 'no-errors' : clinicsForm.answer.$valid}">
-                            <input name="answer" ng-model="vm.clinicQuestion.answer" ng-required="true" type="text" placeholder="Answer">
-                        </label>
-
-                        <label class="item item-input" ng-class="{ 'has-errors' : clinicsForm.position.$invalid, 'no-errors' : clinicsForm.position.$valid}">
-                            <input name="position" ng-model="vm.clinicQuestion.position" ng-required="true" type="number" placeholder="Position">
-                        </label>
-
-                        <div class="error-container last-error-container" ng-show="(clinicsForm.question.$error || clinicsForm.answer.$error || clinicsForm.position.$error) && vm.submitted" ng-messages="clinicsForm.answer.$error">
+                        <div class="error-container last-error-container" ng-show="findUsForm.name.$error && vm.submitted" ng-messages="findUsForm.name.$error">
                             <i class="ion-information-circled"></i> Fill-in all fields!
                         </div>
                         <button class="button button-full button-positive">Save</button>

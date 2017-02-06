@@ -37,6 +37,7 @@ module app {
                 this.AppUtil.blockingCall(
                     this.AppService.addClinicsQuestion(this.clinicQuestion),
                     () => {
+                        this.modalText = "New "
                         this.clinicQuestion = null
                         this.AppUtil.toastSimple("Saved Successfully")
                         this.refresh()
@@ -73,6 +74,7 @@ module app {
         }
 
         public close() {
+            this.modalText = "New "
             this.clinicQuestion = null
             this.clinicsModal.hide()
         }

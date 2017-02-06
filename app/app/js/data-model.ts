@@ -15,12 +15,12 @@ module app {
 		 * Gets the url of the file.
 		 * @method url
 		 */
-		url : () => string
+		url: () => string
 		/**
 		 * Gets the name of the file.
 		 * @method name
 		 */
-		name : () => string
+		name: () => string
 	}
 
 	export interface ILocation {
@@ -196,5 +196,19 @@ module app {
 		answer: string
 		/** The position of the question */
 		position: number
+	}
+
+	export interface IFindUs extends IBase {
+		/** The name */
+		name: string
+	}
+
+	export interface IFindUsReport extends IBase {
+		/** The name of the voted group */
+		name: string
+		/** The name of the person */
+		username: string
+		/** The state */
+		checked: boolean
 	}
 }

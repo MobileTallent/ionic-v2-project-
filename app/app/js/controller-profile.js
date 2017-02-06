@@ -20,31 +20,49 @@ angular.module('controllers')
     $scope.$on('$ionicView.beforeEnter', () => $scope.refresh())
 
     $scope.refresh = function() {
-            AppUtil.blockingCall(
-                AppService.getClinicsQuestion(),
-                questions => {
-                    console.log('loaded ' + questions.length + ' questions')
-                    $scope.clinicQuestions = questions
-                })
-        }
-        /*
-         * if given group is the selected group, deselect it
-         * else, select the given group
-         */
-    $scope.toggleGroup = function(group) {
-        if ($scope.isGroupShown(group)) {
-            $scope.shownGroup = null;
-        } else {
-            $scope.shownGroup = group;
-        }
-    };
-    $scope.isGroupShown = function(group) {
-        return $scope.shownGroup === group;
-    };
+        AppUtil.blockingCall(
+            AppService.getClinicsQuestion(),
+            questions => {
+                console.log('loaded ' + questions.length + ' questions')
+                $scope.clinicQuestions = questions
+            })
+    }
 })
 
+.controller('FindUsCtrl', function($scope, $stateParams, AppService, AppUtil) {
+    $scope.$on('$ionicView.beforeEnter', () => $scope.refresh())
+    $scope.findUsList = null
+    $scope.refresh = function() {
+        AppUtil.blockingCall(
+            AppService.getFindUs(),
+            findUs => {
+                $scope.findUsList = []
+                console.log('loaded ' + findUs.length + ' find us group')
+                findUs.forEach(item => {
+                    var findUs = { name: "", username: "", checked: false }
+                    findUs.name = item.name
+                    findUs.username = $stateParams.username
+                    $scope.findUsList.push(findUs)
+                });
+            })
+    }
+    $scope.skip = function() {
+        AppService.goToNextLoginState()
+    }
+    $scope.done = function() {
+        $scope.votes = $scope.findUsList.filter(function(item) {
+            return item.checked;
+        });
+        AppUtil.blockingCall(
+            AppService.addFindUsReport($scope.votes),
+            () => {
+                AppUtil.toastSimple("Thank You")
+                AppService.goToNextLoginState()
+            })
+    }
+})
 
-.controller('ProfileSetupCtrl', function($scope, $state, AppService, AppUtil) {
+.controller('ProfileSetupCtrl', function($scope, $state, $ionicHistory, AppService, AppUtil) {
     // The user will be sent here from AppService.goToNextLoginState() if AppService.isProfileValid() returns false
     $scope.$on('$ionicView.beforeEnter', function(event) {
         var profile = AppService.getProfile()
@@ -102,8 +120,13 @@ angular.module('controllers')
         var changes = { name: $scope.user.name, birthdate: birthdate, gender: $scope.user.gender }
 
         AppUtil.blockingCall(AppService.saveProfile(changes),
-            () => AppService.goToNextLoginState(),
-            'SETTINGS_SAVE_ERROR')
+            () => {
+                $ionicHistory.nextViewOptions({
+                    historyRoot: true,
+                    disableBack: true
+                })
+                $state.go('findUs', { username: $scope.user.name })
+            }, 'SETTINGS_SAVE_ERROR')
     }
 
     $scope.logout = () => AppService.logout()

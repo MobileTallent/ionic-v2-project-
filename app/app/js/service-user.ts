@@ -35,6 +35,12 @@ module app {
 		addClinicsQuestion(clinicQuestion:any): ng.IPromise<void>
 		getClinicsQuestion(): ng.IPromise<IClinicsQuestion[]>
 		delClinicsQuestion(id:string): ng.IPromise<void>
+		addFindUs(findUs:any): ng.IPromise<void>
+		getFindUs(): ng.IPromise<IFindUs[]>
+		delFindUs(id:string): ng.IPromise<void>
+		addFindUsReport(findUsVote:any): ng.IPromise<void>
+		getFindUsReport(): ng.IPromise<IFindUsReport[]>
+		delFindUsReport(id:string): ng.IPromise<void>
 	}
 
 	/**

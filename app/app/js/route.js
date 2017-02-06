@@ -16,6 +16,14 @@ angular.module('ionicApp').config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'profileSetup.html',
             controller: 'ProfileSetupCtrl'
         })
+        .state('findUs', {
+            url: '/findUs',
+            templateUrl: "findUs.html",
+            controller: "FindUsCtrl",
+            params: {
+                username: null
+            }
+        })
         .state('locationSetup', {
             url: '/locationSetup',
             templateUrl: 'locationSetup.html',
