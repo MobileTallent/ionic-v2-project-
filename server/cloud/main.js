@@ -1270,11 +1270,19 @@ Parse.Cloud.define('GetFindUs', function(request, response) {
 Parse.Cloud.define('DelFindUs', function(request, response) {
     console.log('DelFindUs')
     var id = request.params.id
+    var savedName = ""
     if (!id) return response.error('id parameter is required')
 
     var findUsQuery = new Parse.Query(FindUs);
     findUsQuery.get(id, masterKey).then(function(findUs) {
+            savedName = findUs.get('name')
             return findUs.destroy()
+        }).then(function() {
+            var query = new Parse.Query("FindUsReport");
+            query.equalTo("name", savedName)
+            query.find(masterKey).then(function(items) {
+                return Parse.Object.destroyAll(items, masterKey)
+            })
         }).then(function() {
             response.success("Successfully deleted findus item!")
         }),

@@ -1,0 +1,17 @@
+<ion-view view-title="Vote Report" ng-controller="VoteReport as vm">
+    <ion-nav-buttons side="right">
+        <i class="button button-icon icon ion-refresh" ng-click="vm.refresh()"></i>
+    </ion-nav-buttons>
+    <ion-content>
+        <ion-list>
+            <ion-item ng-repeat="(key, value) in vm.voterReport">
+                <h2>{{key}} - {{value}}</h2>
+            </ion-item>
+        </ion-list>
+        <div class="padding">
+            Total # of Votes: {{vm.voteReports.length}}
+        </div>
+    </ion-content>
+
+
+</ion-view>

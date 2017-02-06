@@ -19,12 +19,6 @@ module app {
                 scope: $scope,
                 animation: 'slide-in-up'
             }).then(modal => this.findUsModal = modal)
-
-            $scope.devList = [
-                { text: "HTML5", checked: true },
-                { text: "CSS3", checked: false },
-                { text: "JavaScript", checked: false }
-            ];
         }
 
         public refresh() {

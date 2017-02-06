@@ -65,4 +65,12 @@ angular.module('ionicApp').config(function($stateProvider) {
                 }
             }
         })
+        .state('menu.adminVoteReport', {
+            url: "/adminVoteReport/",
+            views: {
+                'menuContent': {
+                    templateUrl: "admin/vote-report.html"
+                }
+            }
+        })
 })
