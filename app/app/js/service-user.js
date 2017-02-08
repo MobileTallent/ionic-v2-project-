@@ -707,7 +707,7 @@ function onNotificationOpen(pnObj) {
                 server.logout()
                 localStorage.clear()
                 $localStorage.$reset()
-                LocalDB.deleteDb()
+                    // LocalDB.deleteDb() //Removed in order for LocalDB to persist even after logout - https://geidibugs.atlassian.net/browse/JUS-226
                     // TODO do we need to clear the image cache?
                 if ($rootScope.facebookConnected) {
                     $log.log('logging out of Facebook')
@@ -730,6 +730,9 @@ function onNotificationOpen(pnObj) {
 
             function deleteAccount() {
                 $analytics.eventTrack('deleteAccount')
+                localStorage.clear()
+                $localStorage.$reset()
+                LocalDB.deleteDb()
                 return server.deleteAccount().then(
                     () => {
                         logout() // do a best effort logout now the user object is destroyed
