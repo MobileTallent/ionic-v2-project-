@@ -276,3 +276,7 @@ td-card {
     padding-left: 43px;
     transition: 0.09s all linear;
 }
+
+.wrap-space {
+    white-space: normal !important;
+}

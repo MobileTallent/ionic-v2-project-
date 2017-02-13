@@ -730,12 +730,11 @@ function onNotificationOpen(pnObj) {
 
             function deleteAccount() {
                 $analytics.eventTrack('deleteAccount')
-                localStorage.clear()
-                $localStorage.$reset()
-                LocalDB.deleteDb()
+
                 return server.deleteAccount().then(
                     () => {
                         logout() // do a best effort logout now the user object is destroyed
+                        LocalDB.deleteDb()
                         return
                     }
                 )

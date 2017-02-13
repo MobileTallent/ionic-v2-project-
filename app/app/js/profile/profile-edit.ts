@@ -4,10 +4,10 @@ module app {
 
 	class ProfilePhoto {
 
-		selected:boolean
-		file:IFile
+		selected: boolean
+		file: IFile
 
-		constructor(file:IFile) {
+		constructor(file: IFile) {
 			this.file = file
 			this.selected = false
 		}
@@ -19,27 +19,30 @@ module app {
 	export class ProfileEdit {
 
 		// If you increase MAX_PHOTOS you will need to update LocalDB to have more photoN columns in the local SQL db
-		public MAX_PHOTOS:number = 3
-		public NO_IMAGE:string = 'img/add.png'
+		public MAX_PHOTOS: number = 3
+		public NO_IMAGE: string = 'img/add.png'
 
-		public profile:IProfile
-		public photos:ProfilePhoto[] = []
-		public photosInReview:ProfilePhoto[] = []
-		public about:string
+		public profile: IProfile
+		public photos: ProfilePhoto[] = []
+		public photosInReview: ProfilePhoto[] = []
+		public about: string
 
-		private $log:ng.ILogService
-		private $rootScope:app.IAppRootScope
-		private $scope:ng.IScope
+		private $log: ng.ILogService
+		private $rootScope: app.IAppRootScope
+		private $scope: ng.IScope
 		private $state
-		private $q:ng.IQService
+		private $q: ng.IQService
 		private $ionicActionSheet
 		private $cordovaCamera
-		private AppService:IAppService
+		private AppService: IAppService
 		private AppUtil
 		private $translate: ITranslateService
+		private $ionicHistory
+		private $ionicPopup
 
-		constructor($log:ng.ILogService, $rootScope:app.IAppRootScope, $scope:ng.IScope, $q:ng.IQService,
-					$state, $ionicActionSheet, $cordovaCamera, AppService:IAppService, AppUtil, $translate: ITranslateService) {
+		constructor($log: ng.ILogService, $rootScope: app.IAppRootScope, $scope: ng.IScope, $q: ng.IQService,
+			$state, $ionicActionSheet, $cordovaCamera, AppService: IAppService, AppUtil, $translate: ITranslateService,
+			$ionicHistory, $ionicPopup) {
 			this.$log = $log
 			this.$rootScope = $rootScope
 			this.$scope = $scope
@@ -50,6 +53,8 @@ module app {
 			this.AppService = AppService
 			this.AppUtil = AppUtil
 			this.$translate = $translate
+			this.$ionicHistory = $ionicHistory
+			this.$ionicPopup = $ionicPopup
 
 			this.$scope.$on('$ionicView.beforeEnter', () => this.refresh())
 			this.$scope.$on('$ionicView.enter', () => this.expandText())
@@ -139,9 +144,9 @@ module app {
 		 * Add a profile photo
 		 */
 		public addPhoto() {
-			var buttons = [{text: this.$translate.instant('TAKE_PHOTO')}, {text: this.$translate.instant('GALLERY')}]
+			var buttons = [{ text: this.$translate.instant('TAKE_PHOTO') }, { text: this.$translate.instant('GALLERY') }]
 			if (this.$rootScope.facebookConnected)
-				buttons.push({text: 'Facebook'})
+				buttons.push({ text: 'Facebook' })
 
 			this.$ionicActionSheet.show({
 				buttons: buttons,
@@ -156,15 +161,15 @@ module app {
 							return true
 						}
 
-						let sourceType:number = index === 0 ? Camera.PictureSourceType.CAMERA :
-																				Camera.PictureSourceType.PHOTOLIBRARY
+						let sourceType: number = index === 0 ? Camera.PictureSourceType.CAMERA :
+							Camera.PictureSourceType.PHOTOLIBRARY
 
 						var options = {
 							quality: 70,
 							destinationType: Camera.DestinationType.DATA_URL,
 							sourceType: sourceType,
 							allowEdit: false, // allowEdit allows native cropping. However not all devices
-											  // support it, so just use JavaScript cropping for now
+							// support it, so just use JavaScript cropping for now
 							encodingType: Camera.EncodingType.PNG,
 							targetWidth: 800,
 							targetHeight: 800,
@@ -207,15 +212,30 @@ module app {
 		 * @param (a) The index of the first element to swap.
 		 * @param (b) The index of the second element to swap.
 		 */
-		private swapArrayElements(array:any[], a, b) {
+		private swapArrayElements(array: any[], a, b) {
 			var temp = array[a]
 			array[a] = array[b]
 			array[b] = temp
 		}
 
+		/**
+		 * Custom go back
+		 */
+		public myGoBack() {
+			if (this.profile.about)
+				this.$ionicHistory.goBack()
+			else
+				var alertPopup = this.$ionicPopup.alert({
+					title: 'We need more information',
+					cssClass: 'center', 
+					template: 'Please tell us a bit about your situation'
+				});
+
+		}
+
 	}
 
 	ProfileEdit.$inject = ['$log', '$rootScope', '$scope', '$q', '$state', '$ionicActionSheet', '$cordovaCamera',
-							'AppService', 'AppUtil', '$translate']
+		'AppService', 'AppUtil', '$translate', '$ionicHistory', '$ionicPopup']
 	angular.module('controllers').controller('ProfileEdit', ProfileEdit)
 }
