@@ -72,6 +72,7 @@ function onNotificationOpen(pnObj) {
             var matchSyncInRequested = false
             var chatSyncInProgress = false
             var chatSyncInRequested = false
+            var isAcntDelete = false
 
             var service = {
                 // fields
@@ -707,7 +708,8 @@ function onNotificationOpen(pnObj) {
                 server.logout()
                 localStorage.clear()
                 $localStorage.$reset()
-                    // LocalDB.deleteDb() //Removed in order for LocalDB to persist even after logout - https://geidibugs.atlassian.net/browse/JUS-226
+                if (isAcntDelete)
+                    LocalDB.deleteDb() //JUS-226
                     // TODO do we need to clear the image cache?
                 if ($rootScope.facebookConnected) {
                     $log.log('logging out of Facebook')
@@ -730,11 +732,10 @@ function onNotificationOpen(pnObj) {
 
             function deleteAccount() {
                 $analytics.eventTrack('deleteAccount')
-
+                isAcntDelete = true
                 return server.deleteAccount().then(
                     () => {
                         logout() // do a best effort logout now the user object is destroyed
-                        LocalDB.deleteDb()
                         return
                     }
                 )

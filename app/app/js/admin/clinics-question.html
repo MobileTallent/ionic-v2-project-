@@ -1,4 +1,4 @@
-<ion-view view-title="Clinics Question" ng-controller="ClinicsQuestion as vm">
+<ion-view view-title="Become a Parent Question" ng-controller="ClinicsQuestion as vm">
     <ion-nav-buttons side="right">
         <i class="button button-icon icon ion-ios-plus-outline" ng-click="vm.clinicsModal.show()"></i>
     </ion-nav-buttons>
@@ -75,7 +75,18 @@
                             <input name="position" ng-model="vm.clinicQuestion.position" ng-required="true" type="number" placeholder="Position">
                         </label>
 
-                        <div class="error-container last-error-container" ng-show="(clinicsForm.question.$error || clinicsForm.answer.$error || clinicsForm.position.$error) && vm.submitted" ng-messages="clinicsForm.answer.$error">
+                        <label class="item item-input item-select" ng-class="{ 'has-errors' : clinicsForm.type.$invalid, 'no-errors' : clinicsForm.type.$valid}">
+                            <div class="input-label">
+                                Type
+                            </div>
+                            <select ng-model="vm.clinicQuestion.type" name="type" ng-required="true">
+                                <option>General</option>
+                                <option>Male</option>
+                                <option>Female</option>
+                            </select>
+                        </label>
+
+                        <div class="error-container last-error-container" ng-show="(clinicsForm.question.$error || clinicsForm.type.$error || clinicsForm.answer.$error || clinicsForm.position.$error) && vm.submitted" ng-messages="clinicsForm.answer.$error">
                             <i class="ion-information-circled"></i> Fill-in all fields!
                         </div>
                         <button class="button button-full button-positive">Save</button>

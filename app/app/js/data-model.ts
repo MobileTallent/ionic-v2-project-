@@ -196,6 +196,8 @@ module app {
 		answer: string
 		/** The position of the question */
 		position: number
+		/** The type if for male , female or generic question */
+		type: string
 	}
 
 	export interface IFindUs extends IBase {

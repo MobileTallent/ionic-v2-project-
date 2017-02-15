@@ -1,8 +1,11 @@
 <ion-view cache-view="false">
-    <ion-nav-title>My Clinics</ion-nav-title>
+    <ion-nav-title>Become a Parent FAQ</ion-nav-title>
+    <ion-nav-buttons side="right">
+        <i class="button button-icon icon ion-gear-a" ng-click="clinicSettings($event)"></i>
+    </ion-nav-buttons>
     <ion-content>
         <ion-list>
-            <div ng-repeat="item in clinicQuestions" class="clinic-container">
+            <div ng-repeat="item in clinicQuestions" class="clinic-container" ng-show="showcase == item.type || showcase == 'General'">
                 <div ng-click="showItem{{item.id}} = !showItem{{item.id}}">
                     <ion-item class="item-stable wrap-space" ng-class="{active: showItem{{item.id}}}">
                         <i class="icon" ng-class="showItem{{item.id}} ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{item.question}}

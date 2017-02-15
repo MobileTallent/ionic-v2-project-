@@ -105,8 +105,9 @@ var ContactMessage = Parse.Object.extend({
  * @property {string} answer - the answer
  * @property {string} question - the question
  * @property {number} position - the position of the question
+ * @property {string} type - the type if for male , female or generic question
  */
-var clinicsQuestionFields = ['answer', 'question', 'position']
+var clinicsQuestionFields = ['answer', 'question', 'position', 'type']
 var ClinicsQuestion = Parse.Object.extend({
     className: "ClinicsQuestion",
     attrs: clinicsQuestionFields

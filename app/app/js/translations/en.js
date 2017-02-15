@@ -73,7 +73,7 @@ var TRANSLATION_EN = {
     'MY_INTERESTS': 'My Interests',
 
     'EDIT_PROFILE_TITLE': 'Edit Profile',
-    'ABOUT_YOU': 'Here you can write something about yourself.',
+    'ABOUT_YOU': "Tell us your story, your vision. Be open and let people know what you're looking for.",
 
 
     'AWAY': 'away', // for "5km away"

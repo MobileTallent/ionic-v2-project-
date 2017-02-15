@@ -14,10 +14,20 @@ angular.module('controllers')
     $scope.cancel = () => AppService.logout()
 })
 
-.controller('ClinicsCtrl', function($scope, AppService, AppUtil) {
+.controller('ClinicsCtrl', function($scope, AppService, AppUtil, $ionicPopover, $localStorage) {
     $scope.clinicQuestions = null
+    $scope.showcase = "General"
 
     $scope.$on('$ionicView.beforeEnter', () => $scope.refresh())
+
+    $scope.$on('clinicsUpdated', () => {
+        update()
+    })
+
+    function update() {
+        $scope.showcase = $localStorage.clinicSettings
+        console.log('ClinicsCtrl update()' + $scope.showcase)
+    }
 
     $scope.refresh = function() {
         AppUtil.blockingCall(
@@ -26,6 +36,42 @@ angular.module('controllers')
                 console.log('loaded ' + questions.length + ' questions')
                 $scope.clinicQuestions = questions
             })
+    }
+
+    // Show the clinic settings dialog
+    $scope.clinicSettings = ($event) => {
+        var template = '<ion-popover-view style="height: 250px;"><ion-header-bar><h1 class="title">FAQ Settings</h1></ion-header-bar><ion-content>' +
+            '<clinic-settings/>' +
+            '</ion-content></ion-popover-view>'
+        $scope.popover = $ionicPopover.fromTemplate(template, { scope: $scope })
+        $scope.popover.show($event)
+        $scope.closePopover = () => $scope.popover.hide()
+        $scope.$on('$destroy', () => $scope.popover.remove())
+    }
+})
+
+.directive('clinicSettings', function($localStorage, $rootScope) {
+    return {
+        restrict: 'E',
+        scope: {},
+        template: '<ion-list>' +
+            '<div class="item item-divider">Show Questions by:</div>' +
+            // '<ion-checkbox ng-click="showGeneral = !showGeneral">General</ion-checkbox>' +
+            // '<ion-checkbox ng-click="showMale = !showMale">Male</ion-checkbox>' +
+            // '<ion-checkbox ng-click="showFemale = !showFemale">Female</ion-checkbox>' +
+            '<ion-radio ng-model="settings" ng-click="showItem(\'General\')" ng-value="\'General\'">General</ion-radio>' +
+            '<ion-radio ng-model="settings" ng-click="showItem(\'Male\')" ng-value="\'Male\'">Male</ion-radio>' +
+            '<ion-radio ng-model="settings" ng-click="showItem(\'Female\')" ng-value="\'Female\'">Female</ion-radio>' +
+            '</ion-list>',
+        controller: function($scope) {
+            $scope.settings = $localStorage.clinicSettings || "General"
+            $scope.showItem = (itemShown) => {
+                //$scope.settings.sortBy = newSort
+                console.log('clinicSettings.showItem ' + $scope.settings + 'LOL ' + itemShown)
+                $localStorage.clinicSettings = itemShown // persist the settings
+                $rootScope.$broadcast('clinicsUpdated')
+            }
+        }
     }
 })
 
