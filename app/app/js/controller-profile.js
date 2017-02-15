@@ -56,9 +56,6 @@ angular.module('controllers')
         scope: {},
         template: '<ion-list>' +
             '<div class="item item-divider">Show Questions by:</div>' +
-            // '<ion-checkbox ng-click="showGeneral = !showGeneral">General</ion-checkbox>' +
-            // '<ion-checkbox ng-click="showMale = !showMale">Male</ion-checkbox>' +
-            // '<ion-checkbox ng-click="showFemale = !showFemale">Female</ion-checkbox>' +
             '<ion-radio ng-model="settings" ng-click="showItem(\'General\')" ng-value="\'General\'">General</ion-radio>' +
             '<ion-radio ng-model="settings" ng-click="showItem(\'Male\')" ng-value="\'Male\'">Male</ion-radio>' +
             '<ion-radio ng-model="settings" ng-click="showItem(\'Female\')" ng-value="\'Female\'">Female</ion-radio>' +
@@ -66,8 +63,6 @@ angular.module('controllers')
         controller: function($scope) {
             $scope.settings = $localStorage.clinicSettings || "General"
             $scope.showItem = (itemShown) => {
-                //$scope.settings.sortBy = newSort
-                console.log('clinicSettings.showItem ' + $scope.settings + 'LOL ' + itemShown)
                 $localStorage.clinicSettings = itemShown // persist the settings
                 $rootScope.$broadcast('clinicsUpdated')
             }
