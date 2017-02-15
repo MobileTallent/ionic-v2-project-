@@ -10,7 +10,7 @@
                     <ion-item class="item-stable wrap-space" ng-class="{active: showItem{{item.id}}}">
                         <i class="icon" ng-class="showItem{{item.id}} ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{item.question}}
                     </ion-item>
-                    <ion-item class="item-accordion wrap-space" ng-show="showItem{{item.id}}">
+                    <ion-item class="item-accordion wrap-space" style="font-size: 14px;" ng-show="showItem{{item.id}}">
                         {{item.answer}}
                     </ion-item>
                 </div>
