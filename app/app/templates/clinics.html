@@ -5,10 +5,11 @@
     </ion-nav-buttons>
     <ion-content>
         <ion-list>
+           
             <div ng-repeat="item in clinicQuestions" class="clinic-container" ng-show="showcase == item.type || showcase == 'General'">
                 <div ng-click="showItem{{item.id}} = !showItem{{item.id}}">
-                    <ion-item class="item-stable wrap-space" ng-class="{active: showItem{{item.id}}}">
-                        <i class="icon" ng-class="showItem{{item.id}} ? 'ion-minus' : 'ion-plus'"></i> &nbsp; {{item.question}}
+                    <ion-item style="text-align: center; color: rgb(43, 172, 143);" class="item-positive wrap-space" ng-class="{active: showItem{{item.id}}}">
+                        <i class="icon" ng-class="showItem{{item.id}} ? 'ion-minus' : 'ion-plus'"></i> &nbsp; <b >{{item.question}}</b>
                     </ion-item>
                     <ion-item class="item-accordion wrap-space" style="font-size: 14px;" ng-show="showItem{{item.id}}">
                         {{item.answer}}
@@ -17,4 +18,4 @@
             </div>
         </ion-list>
     </ion-content>
-</ion-view>
+</ion-view> 
