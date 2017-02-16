@@ -236,19 +236,15 @@ td-card {
 .list .item.item-accordion {
     line-height: 26Ïpx;
     padding-bottom: 0;
-   
 }
 
 .list .item.item-accordion.ng-hide {
     line-height: 0px;
-     
-
 }
 
 .list .item.item-accordion.ng-hide-add,
 .list .item.item-accordion.ng-hide-remove {
     display: block !important;
-    
 }
 
 
@@ -275,8 +271,6 @@ td-card {
     padding-top: 10px;
     border-radius: 25px;
     border-color: '#fff';
-     
-    
 }
 
 .clinic-container .item.item-accordion {
@@ -284,9 +278,6 @@ td-card {
     padding-bottom: 20px;
     padding-left: 20px;
     padding-right: 20px;
-    transition: 0.09s all linear;
-    
-  
 }
 
 .wrap-space {
