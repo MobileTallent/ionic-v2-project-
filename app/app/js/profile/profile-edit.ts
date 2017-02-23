@@ -76,7 +76,14 @@ module app {
 			profileUpdate.about = this.about
 			this.AppUtil.blockingCall(
 				this.AppService.saveProfile(profileUpdate),
-				() => this.refresh()
+				() => {
+					this.refresh()
+					this.$ionicHistory.nextViewOptions({
+                    historyRoot: false,
+                    disableBack: true
+                	})
+					this.$state.go('menu.profile')
+				}
 			)
 		}
 
