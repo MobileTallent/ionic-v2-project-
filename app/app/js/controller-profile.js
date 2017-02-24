@@ -14,7 +14,7 @@ angular.module('controllers')
     $scope.cancel = () => AppService.logout()
 })
 
-.controller('ClinicsCtrl', function($scope, AppService, AppUtil, $ionicPopover, $localStorage) {
+.controller('ClinicsCtrl', function($scope, AppService, AppUtil, $ionicPopover, $localStorage, $sce) {
     $scope.clinicQuestions = null
     $scope.showcase = "General"
 
@@ -47,6 +47,10 @@ angular.module('controllers')
         $scope.popover.show($event)
         $scope.closePopover = () => $scope.popover.hide()
         $scope.$on('$destroy', () => $scope.popover.remove())
+    }
+
+    $scope.trustSrcurl = function(data) {
+        return $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + data);
     }
 })
 

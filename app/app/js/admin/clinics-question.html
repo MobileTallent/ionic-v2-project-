@@ -85,6 +85,9 @@
                                 <option>Female</option>
                             </select>
                         </label>
+                        <label class="item item-input">
+                            <input name="video" ng-model="vm.clinicQuestion.video" type="url" placeholder="Video ID">
+                        </label>
 
                         <div class="error-container last-error-container" ng-show="(clinicsForm.question.$error || clinicsForm.type.$error || clinicsForm.answer.$error || clinicsForm.position.$error) && vm.submitted" ng-messages="clinicsForm.answer.$error">
                             <i class="ion-information-circled"></i> Fill-in all fields!

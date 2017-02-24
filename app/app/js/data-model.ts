@@ -198,6 +198,8 @@ module app {
 		position: number
 		/** The type if for male , female or generic question */
 		type: string
+		/** URL of Youtube video */
+		video: string
 	}
 
 	export interface IFindUs extends IBase {
