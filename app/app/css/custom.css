@@ -15,7 +15,9 @@
 .padding-15 {
     padding: 15px;
 }
-
+.padding-20 {
+    padding: 20px;
+}
 .padding-25 {
     padding: 25px;
 }
@@ -209,6 +211,7 @@ td-card {
     margin-top: 20px;
     width: 100%;
     margin-left: -50%;
+    height: 100%;
 }
 
 
@@ -234,7 +237,7 @@ td-card {
 /* --------- My Relationships ---------------*/
 
 .list .item.item-accordion {
-    line-height: 26Ïpx;
+    line-height: 26px;
     padding-bottom: 0;
 }
 
