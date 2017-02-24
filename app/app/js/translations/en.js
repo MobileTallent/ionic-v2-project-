@@ -54,7 +54,7 @@ var TRANSLATION_EN = {
     'MENU_LIKED_ME': 'People Who Liked Me',
     'MENU_DISCOVERY': 'Discovery Preferences',
     'MENU_SETTINGS': 'App Settings',
-    'MENU_CONTACT': 'Give Feedback',
+    'MENU_CONTACT': 'Submit Feature Request',
     'MENU_SHARE': 'Invite My Friends',
     'MENU_CO_PARENTS': 'My Co-Parents Shortlist',
 

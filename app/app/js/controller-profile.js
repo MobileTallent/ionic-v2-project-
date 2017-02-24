@@ -30,6 +30,7 @@ angular.module('controllers')
     }
 
     $scope.refresh = function() {
+        $localStorage.clinicSettings = "General"
         AppUtil.blockingCall(
             AppService.getClinicsQuestion(),
             questions => {
@@ -50,7 +51,8 @@ angular.module('controllers')
     }
 
     $scope.trustSrcurl = function(data) {
-        return $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + data);
+        if (data)
+            return $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + data)
     }
 })
 
