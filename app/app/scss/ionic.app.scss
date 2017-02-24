@@ -260,17 +260,29 @@ a.autolinker {
 #match-search-background {
     background-color: $calm !important;
 }
-
-#match-search-text {
-    margin-top: 10%;
-    padding-bottom: 25px;
+#match-search-distance {
+    padding-top: 25px;
+    padding-left: 13%;
     color: $match-search-text !important;
     font-size: 19px;
 }
+#match-search-name {
+    padding: 5px 11%;
+    color: $match-search-text !important;
+    font-size: 24px;
+}
 
+#match-search-about {
+    padding: 20px;
+    color: $match-search-text !important;
+    font-size: 19px;
+    height: 100%;
+    overflow: auto;
+}
 .td-card {
     background: white;
     border-radius: 8px;
+    height: 80%;
 }
 
 .yes-text {

@@ -130,10 +130,14 @@ td-card.card-2 {
 
 td-card .image {
     position: relative;
+    text-align: left;
+    margin-left: 5%;
+
 }
 
 td-card img {
     max-width: 100%;
+
 }
 
 
