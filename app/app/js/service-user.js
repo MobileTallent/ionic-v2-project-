@@ -557,6 +557,11 @@ function onNotificationOpen(pnObj) {
                     return
                 }
 
+                if (!service.profile.about) {
+                    $state.go('menu.profile-edit')
+                    return
+                }
+
                 // TODO welcome/intro slides
 
                 startSynchronisation()

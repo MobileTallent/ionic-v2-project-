@@ -43,7 +43,7 @@
 
 
             <div style="text-align center padding-25">
-                <button class="button button-positive" ng-click="vm.saveProfile()" ng-hide="vm.profile.about == vm.about">&nbsp;{{'SAVE' | translate}}&nbsp;</button>
+                <button class="button button-positive" ng-click="vm.saveProfile()" ng-hide="vm.profile.about == vm.about || !vm.about">&nbsp;{{'SAVE' | translate}}&nbsp;</button>
             </div>
 
         </div>
