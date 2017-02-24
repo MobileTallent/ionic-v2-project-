@@ -262,18 +262,20 @@ a.autolinker {
 }
 #match-search-distance {
     padding-top: 25px;
-    padding-left: 13%;
+    text-align: center;
     color: $match-search-text !important;
     font-size: 19px;
 }
 #match-search-name {
-    padding: 5px 11%;
+    padding: 10px 0;
+    text-align: center;
     color: $match-search-text !important;
     font-size: 24px;
+    
 }
 
 #match-search-about {
-    padding: 20px;
+    padding: 10px;
     color: $match-search-text !important;
     font-size: 19px;
     height: 100%;
