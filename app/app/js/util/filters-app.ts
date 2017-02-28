@@ -22,7 +22,7 @@ angular.module('ionicApp')
 			var distance = getDistanceFromLatLonInKm(from.latitude, from.longitude, to.latitude, to.longitude)
 
 			if (userProfile.distanceType === 'mi')
-				distance *= 1.609344
+				distance *= 0.621371
 
 			let output:string = distance.toFixed(0)
 			// Always say at least 1km even if less than that

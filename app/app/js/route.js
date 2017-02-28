@@ -186,6 +186,15 @@ angular.module('ionicApp').config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state('menu.about', {
+            url: "/about",
+            views: {
+                'menuContent': {
+                    templateUrl: "about.html",
+                    controller: "AboutCtrl"
+                }
+            }
+        })
         .state('menu.settings', {
             url: "/settings",
             views: {

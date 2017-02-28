@@ -1,0 +1,21 @@
+<ion-view view-title="About Just a Baby" ng-controller="AboutJAB as vm">
+    <ion-nav-buttons side="right">
+        <i class="button button-icon icon ion-refresh" ng-click="vm.refreshAbout()"></i>
+    </ion-nav-buttons>
+    <ion-content>
+        <div class="card padding-15 center">
+            <div class="assertive">
+                <p class="text-size-18">Say something nice to users~</p>
+            </div>
+
+            </br>
+            <label class="item item-input">
+                <input name="videoId" ng-model="vm.about.videoId" type="text" placeholder="Video ID">
+            </label>
+            </br>
+
+            <textarea ng-model="vm.about.message" rows="20" class="wide input-grey" placeholder="Place your message here..."></textarea>
+            <button class="button button-block button-assertive" ng-click="vm.saveAbout()">Save</button>
+        </div>
+    </ion-content>
+</ion-view>

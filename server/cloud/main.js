@@ -9,6 +9,7 @@ var DeletedUser = Parse.Object.extend("DeletedUser")
 var ClinicsQuestion = Parse.Object.extend("ClinicsQuestion")
 var FindUs = Parse.Object.extend("FindUs")
 var FindUsReport = Parse.Object.extend("FindUsReport")
+var AboutJab = Parse.Object.extend("AboutJab")
 
 var _ = require('underscore')
 
@@ -153,10 +154,10 @@ Parse.Cloud.beforeSave(Profile, function(request, response) {
 
         profile.set('uid', userId)
         profile.set('photos', [])
-        profile.set('enabled', false)
+        profile.set('enabled', true)
         profile.set('gps', true)
         profile.set('about', '')
-        profile.set('distance', 6000)
+        profile.set('distance', 20000)
         profile.set('ageFrom', 18)
         profile.set('ageTo', 55)
         profile.set('distanceType', 'km')
@@ -540,9 +541,9 @@ Parse.Cloud.define("GetMatches", function(request, response) {
     var point = profile.location
 
     if (profile.distanceType === 'km')
-        profileQuery.withinKilometers("location", point, profile.distance === 6000 ? 6371 : profile.distance)
+        profileQuery.withinKilometers("location", point, profile.distance)
     else
-        profileQuery.withinMiles("location", point, profile.distance === 6000 ? 6371 : profile.distance)
+        profileQuery.withinMiles("location", point, profile.distance)
 
     //Get profiles near to the current location 9/30/16 - Jojo
     //profileQuery.near("location", point);
@@ -598,6 +599,7 @@ Parse.Cloud.define("GetMatches", function(request, response) {
             else
                 ids.push(row.get('uid2'))
         }
+        console.log('Results here JYR: ' + length)
         return ids
     }).then(function(ids) {
         ids.push(userId)
@@ -1343,6 +1345,41 @@ Parse.Cloud.define('DelFindUsReport', function(request, response) {
             console.log(JSON.stringify(error))
             response.error(error)
         }
+})
+
+/* Get About Jab*/
+Parse.Cloud.define('GetAboutJab', function(request, response) {
+    console.log('GetAboutJab')
+    new Parse.Query(AboutJab).first().then(function(result) {
+        console.log("Successs " + JSON.stringify(result))
+        response.success(result.toJSON())
+    }, function(error) {
+        console.log("Erroorrr: " + JSON.stringify(error))
+        response.error(error)
+    })
+})
+
+/* Add/Edit About Jab */
+Parse.Cloud.define('AddAboutJab', function(request, response) {
+    console.log('AddAboutJab')
+    var aboutData = request.params.about
+
+    if (!aboutData)
+        return response.error('aboutData parameter must be provided')
+
+    var about = new AboutJab()
+    if (aboutData.id) {
+        about.id = aboutData.id
+        delete aboutData.id
+    }
+
+    about.save(aboutData).then(function(result) {
+        console.log("Success saving about JAB")
+        response.success("Success saving about JAB")
+    }, function(error) {
+        console.log("Error saving about JAB")
+        response.error(error)
+    })
 })
 
 /**

@@ -15,9 +15,11 @@
 .padding-15 {
     padding: 15px;
 }
+
 .padding-20 {
     padding: 20px;
 }
+
 .padding-25 {
     padding: 25px;
 }
@@ -285,4 +287,20 @@ td-card {
 
 .wrap-space {
     white-space: normal !important;
+}
+
+
+/* --- Discovery Preferences Slider  ---*/
+
+.custom-slider div.handle.low {
+    visibility: hidden;
+}
+
+.custom-slider div.slider-bar .selection {
+    left: 0px !important;
+}
+
+[slider] div.slider-bar .selection,
+slider div.slider-bar .selection {
+    background: #bf7fcc
 }

@@ -125,6 +125,17 @@ var FindUs = Parse.Object.extend({
 })
 
 /**
+ * @typedef {Object} AboutJab
+ * @property {string} message - the message
+ * @property {string} videoId - the video ID
+ */
+var aboutJabFields = ['message', 'videoId']
+var AboutJab = Parse.Object.extend({
+    className: "AboutJab",
+    attrs: aboutJabFields
+})
+
+/**
  * @typedef {Object} FindUsReport
  * @property {string} username - the name of the person
  * @property {string} name - the name of the group
@@ -145,6 +156,7 @@ enhance(ContactMessage.prototype, contactMessageFields)
 enhance(ClinicsQuestion.prototype, clinicsQuestionFields)
 enhance(FindUs.prototype, findUsFields)
 enhance(FindUsReport.prototype, findUsReportFields)
+enhance(AboutJab.prototype, aboutJabFields)
 
 function enhance(prototype, fields) {
     for (var i = 0; i < fields.length; i++) {
@@ -304,7 +316,9 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         delFindUs: delFindUs,
         addFindUsReport: addFindUsReport,
         getFindUsReport: getFindUsReport,
-        delFindUsReport: delFindUsReport
+        delFindUsReport: delFindUsReport,
+        addAboutJab: addAboutJab,
+        getAboutJab: getAboutJab
     }
 
     return service
@@ -535,7 +549,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
 
     function saveSettings(profile, profileChanges) {
-        var mods = { notifyMatch: profileChanges.notifyMatch, notifyMessage: profileChanges.notifyMessage, distanceType: profileChanges.distanceType }
+        var mods = { notifyMatch: profileChanges.notifyMatch, notifyMessage: profileChanges.notifyMessage, distanceType: profileChanges.distanceType, distance: profileChanges.distance }
         return profile.save(mods)
     }
 
@@ -904,6 +918,14 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
     function delFindUsReport(id) {
         return Parse.Cloud.run('DelFindUsReport', { id: id }).catch(_unwrapError)
+    }
+
+    function addAboutJab(about) {
+        return Parse.Cloud.run('AddAboutJab', { about: about }).catch(_unwrapError)
+    }
+
+    function getAboutJab() {
+        return Parse.Cloud.run('GetAboutJab').catch(_unwrapError)
     }
 
     // Private functions

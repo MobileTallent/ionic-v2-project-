@@ -207,6 +207,13 @@ module app {
 		name: string
 	}
 
+	export interface IAboutJab extends IBase {
+		/** The message */
+		message: string
+		/** The name */
+		videoId: string
+	}
+
 	export interface IFindUsReport extends IBase {
 		/** The name of the voted group */
 		name: string

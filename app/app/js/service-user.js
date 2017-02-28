@@ -154,7 +154,9 @@ function onNotificationOpen(pnObj) {
                 delFindUs: delFindUs,
                 addFindUsReport: addFindUsReport,
                 getFindUsReport: getFindUsReport,
-                delFindUsReport: delFindUsReport
+                delFindUsReport: delFindUsReport,
+                addAboutJab: addAboutJab,
+                getAboutJab: getAboutJab
             }
 
             return service
@@ -657,7 +659,7 @@ function onNotificationOpen(pnObj) {
             }
 
             function saveSettings(profile) {
-                var mods = { notifyMatch: profile.notifyMatch, notifyMessage: profile.notifyMessage, distanceType: profile.distanceType }
+                var mods = { notifyMatch: profile.notifyMatch, notifyMessage: profile.notifyMessage, distanceType: profile.distanceType, distance: profile.distance }
                 return server.saveSettings(service.profile, mods)
                     .then(function(result) {
                         $log.log('saveSettings result:' + JSON.stringify(result))
@@ -1330,6 +1332,14 @@ function onNotificationOpen(pnObj) {
 
             function delFindUsReport(id) {
                 return server.getFindUsReport(id)
+            }
+
+            function addAboutJab(about) {
+                return server.addAboutJab(about)
+            }
+
+            function getAboutJab() {
+                return server.getAboutJab()
             }
 
             // Util functions

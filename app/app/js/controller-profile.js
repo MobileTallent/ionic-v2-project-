@@ -18,7 +18,7 @@ angular.module('controllers')
     $scope.clinicQuestions = null
     $scope.showcase = "General"
 
-    $scope.$on('$ionicView.beforeEnter', () => $scope.refresh())
+    $scope.$on('$ionicView.beforeEnter', () => $scope.refreshClinics())
 
     $scope.$on('clinicsUpdated', () => {
         update()
@@ -29,7 +29,7 @@ angular.module('controllers')
         console.log('ClinicsCtrl update()' + $scope.showcase)
     }
 
-    $scope.refresh = function() {
+    $scope.refreshClinics = function() {
         $localStorage.clinicSettings = "General"
         AppUtil.blockingCall(
             AppService.getClinicsQuestion(),
@@ -76,10 +76,27 @@ angular.module('controllers')
     }
 })
 
+.controller('AboutCtrl', function($scope, AppService, AppUtil, $sce) {
+    $scope.$on('$ionicView.beforeEnter', () => $scope.refreshAbout())
+
+    $scope.refreshAbout = function() {
+        AppUtil.blockingCall(
+            AppService.getAboutJab(),
+            about => {
+                $scope.about = about
+            })
+    }
+
+    $scope.trustSrcurl = function(data) {
+        if (data)
+            return $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + data)
+    }
+})
+
 .controller('FindUsCtrl', function($scope, $stateParams, AppService, AppUtil) {
-    $scope.$on('$ionicView.beforeEnter', () => $scope.refresh())
+    $scope.$on('$ionicView.beforeEnter', () => $scope.refreshFindUs())
     $scope.findUsList = null
-    $scope.refresh = function() {
+    $scope.refreshFindUs = function() {
         AppUtil.blockingCall(
             AppService.getFindUs(),
             findUs => {
@@ -164,7 +181,7 @@ angular.module('controllers')
         }
 
         var birthdate = new Date(Date.UTC($scope.user.birthYear, $scope.user.birthMonth, $scope.user.birthDay))
-        var changes = { name: $scope.user.name, birthdate: birthdate, gender: $scope.user.gender }
+        var changes = { name: $scope.user.name, birthdate: birthdate, gender: $scope.user.gender, enabled: true }
 
         AppUtil.blockingCall(AppService.saveProfile(changes),
             () => {
@@ -359,7 +376,15 @@ angular.module('controllers')
     // The Profile fields on the discover page to save
     var fields = ['enabled', 'guys', 'girls', 'ageFrom', 'ageTo', 'distance']
 
-    $scope.$on('$ionicView.enter', () => $scope.profile = AppService.getProfile().clone())
+    $scope.$on('$ionicView.beforeEnter', () => {
+        $scope.profile = AppService.getProfile().clone()
+        $scope.showMI = $scope.showKM = true
+    })
+
+    $scope.$on('$ionicView.enter', function(event) {
+        $scope.showMI = $scope.profile.distanceType === 'mi' ? true : false
+        $scope.showKM = $scope.profile.distanceType === 'km' ? true : false
+    })
 
     $scope.save = () => AppUtil.blockingCall(
         AppService.saveProfile(_.pick($scope.profile, fields)),
@@ -384,7 +409,7 @@ angular.module('controllers')
     })
 
     $scope.profile = AppService.getProfile().clone()
-
+    var dType = $scope.profile.distanceType
 
     $scope.setLanguage = (key) => {
         $log.log('setting language to ' + key)
@@ -392,6 +417,16 @@ angular.module('controllers')
     }
 
     $scope.save = () => {
+        if (dType != $scope.profile.distanceType && $scope.profile.distanceType == 'mi') {
+            $scope.profile.distance *= 0.621371
+            $scope.profile.distance = Math.floor($scope.profile.distance)
+        } else if (dType != $scope.profile.distanceType && $scope.profile.distanceType == 'km') {
+            $scope.profile.distance *= 1.609344
+            $scope.profile.distance = Math.ceil($scope.profile.distance)
+        }
+
+        dType = $scope.profile.distanceType
+        console.log("LOL: " + dType + $scope.profile.distance)
         AppUtil.blockingCall(
             AppService.saveSettings($scope.profile),
             () => $scope.profile = AppService.getProfile().clone(),

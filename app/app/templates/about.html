@@ -1,5 +1,13 @@
-<ion-view view-title="About">
-  <ion-content class="padding">
-    <p>About</p>
-  </ion-content>
-</ion-view>
+<ion-view cache-view="false">
+    <ion-nav-title>About Just a Baby</ion-nav-title>
+    <ion-content>
+        <div class="card padding-15 center">
+            <div class="video-container" ng-class="about.videoId ? '' : 'hidden'">
+                <iframe width="560" height="315" ng-src="{{trustSrcurl(about.videoId)}}" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div style="white-space: pre-wrap; margin-top: 10px;">
+                {{about.message}}
+            </div>
+        </div>
+    </ion-content>
+</ion-view> 

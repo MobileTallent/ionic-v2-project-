@@ -22,7 +22,7 @@ angular.module('ionicApp').directive('profileDetails', function(AppService:IAppS
 				let distance = GeoUtils.getDistanceFromLatLonInKm(profile.location.latitude, profile.location.longitude,
 					myLocation.latitude, myLocation.longitude)
 				if (currentUserProfile.distanceType === 'mi')
-					distance *= 1.609344
+					distance *= 0.621371
 				let distanceString = distance.toFixed(0)
 				// Show 1km/1m as a minimum‰
 				$scope.distance = (distanceString === '0' ? 1 : distanceString) + currentUserProfile.distanceType

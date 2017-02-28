@@ -57,6 +57,14 @@ angular.module('ionicApp').config(function($stateProvider) {
                 }
             }
         })
+        .state('menu.adminAbout', {
+            url: "/adminAbout/",
+            views: {
+                'menuContent': {
+                    templateUrl: "admin/about-jab.html"
+                }
+            }
+        })
         .state('menu.adminWhereUHeardUs', {
             url: "/adminWhereUHeardUs/",
             views: {
