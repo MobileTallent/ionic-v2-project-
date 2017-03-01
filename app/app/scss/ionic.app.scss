@@ -275,11 +275,21 @@ a.autolinker {
 }
 
 #match-search-about {
-    padding: 10px;
+    display: inline-block;
+    padding: 0px 10px;
+    margin-bottom: 0;
     color: $match-search-text !important;
     font-size: 19px;
-    height: 100%;
-    overflow: auto;
+    height: 95%;
+    white-space: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#match-search-readmore{
+    margin: 0;
+    font-size: 16px;
+    color: $assertive;
+    text-align: center;
 }
 .td-card {
     background: white;

@@ -60,7 +60,6 @@ module app {
 			this.$scope.$on('$ionicView.enter', () => this.expandText())
 		}
 
-
 		private refresh() {
 			this.profile = this.AppService.getProfile()
 			this.about = this.profile.about
@@ -68,24 +67,12 @@ module app {
 			this.photosInReview = this.profile.photosInReview
 				? _.map(this.profile.photosInReview, photo => new ProfilePhoto(photo))
 				: []
+
+			this.onRedirectToEditProfile()
 		}
 
 
-		public saveProfile() {
-			let profileUpdate = <IProfile>{}
-			profileUpdate.about = this.about
-			this.AppUtil.blockingCall(
-				this.AppService.saveProfile(profileUpdate),
-				() => {
-					this.refresh()
-					this.$ionicHistory.nextViewOptions({
-                    historyRoot: false,
-                    disableBack: true
-                	})
-					this.$state.go('menu.profile')
-				}
-			)
-		}
+
 
 		public selectedCount() {
 			return _.filter(this.photos, (photo) => photo.selected).length
@@ -225,20 +212,66 @@ module app {
 			array[b] = temp
 		}
 
+		public saveProfile() {
+			let profileUpdate = <IProfile>{}
+			profileUpdate.about = this.about
+			this.AppUtil.blockingCall(
+				this.AppService.saveProfile(profileUpdate),
+				() => {
+					this.refresh()
+					this.$ionicHistory.nextViewOptions({
+						historyRoot: false,
+						disableBack: true
+					})
+					if (this.profile.about) {
+						this.$state.go('menu.profile')
+					} 
+					
+
+				}
+			)
+
+
+		}
 		/**
 		 * Custom go back
 		 */
-		public myGoBack() {
-			if (this.profile.about)
-				this.$ionicHistory.goBack()
-			else
+		// public myGoBack() {
+		// 	if (this.profile.about) {
+		// 		let profileUpdate = <IProfile>{}
+		// 		profileUpdate.about = this.about
+		// 		this.AppUtil.blockingCall(
+		// 			this.AppService.saveProfile(profileUpdate),
+		// 			() => {
+		// 				this.refresh()
+		// 				this.$ionicHistory.nextViewOptions({
+		// 					historyRoot: false,
+		// 					disableBack: true
+		// 				})
+		// 				this.$ionicHistory.goBack()
+		// 			}
+		// 		)
+		// 	} else {
+		// 		this.onRedirectToEditProfile();
+		// 	}
+
+		// }
+
+		public onRedirectToEditProfile() {
+			if (!this.profile.about) {
 				var alertPopup = this.$ionicPopup.alert({
 					title: 'We need more information',
-					cssClass: 'center', 
-					template: 'Please tell us a bit about your situation'
+					cssClass: 'center',
+					template: 'We have directed you to this page because it seems as though you havent written anything in your "About Me" section. </br> On Just-a-Baby people are looking for someone with a compatible vision. Let people know yours! Once you enter a little about yourself in the space provided you can browse the profiles of others!'
 				});
 
+			}
+
 		}
+
+
+
+
 
 	}
 

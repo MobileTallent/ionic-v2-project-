@@ -560,6 +560,7 @@ function onNotificationOpen(pnObj) {
                 }
 
                 if (!service.profile.about) {
+                    
                     $state.go('menu.profile-edit')
                     return
                 }

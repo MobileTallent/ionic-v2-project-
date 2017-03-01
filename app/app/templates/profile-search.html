@@ -78,7 +78,7 @@
         </div>
 
         <div ng-show="profile.enabled" class="center">
- 
+
             <div class="verticalAlign center" ng-show="!profiles" style="padding-top:150px;padding-top:45vw;">
                 <img class="imgOverlay fade-out" style="width:150px" src="img/ring.png"></img>
                 <img class="photo imgCircle imgOverlay" img-cache ng-src="{{::profilePhoto}}"></img>
@@ -120,7 +120,7 @@
                 class="card-{{$index}}" ng-class="{'accepted-transform': profile.accepted, 'rejected-transform': profile.rejected}">
                 <div class="row image" ng-click="viewDetails(profile)">
                     <div class="yes-text" ng-style="leftTextOpacity">{{'LIKE' | translate}}</div>
-                    <img class="col-50" style="width:50%; height:50%; border-radius:360px; margin-top:15px;" ng-src="{{::profile | profileImageUrl}}">
+                    <img class="col-50" style="width:55%; height:55%; border-radius:360px; margin-top:15px;" ng-src="{{::profile | profileImageUrl}}">
                     <div class="no-text" ng-style="rightTextOpacity">{{'NOT_LIKE' | translate}}</div>
 
                     <div class="col-center col-50">
@@ -128,11 +128,16 @@
                     </div>
                 </div>
 
-                <div class="row" >
-                    <p class="col-60"  id="match-search-name">{{profile.name}}, {{profile.age}}</p>
+                <div class="row">
+                    <p class="col-60" id="match-search-name">{{profile.name}}, {{profile.age}}</p>
                 </div>
-                <div style="height: 45%;">
-                    <p id="match-search-about">{{profile.about}}</p>
+                <div style="height: 45%">
+                    <div id="match-search-about">
+                        {{profile.about}}
+                    </div>
+                </div>
+                <div class="center">
+                    <p id="match-search-readmore">Read More</p>
                 </div>
                 <!--
               <div class="button-bar" style="{{profile.hideButtons ? 'display:none' : ''}}">
