@@ -599,7 +599,6 @@ Parse.Cloud.define("GetMatches", function(request, response) {
             else
                 ids.push(row.get('uid2'))
         }
-        console.log('Results here JYR: ' + length)
         return ids
     }).then(function(ids) {
         ids.push(userId)
