@@ -17,7 +17,8 @@
                     opacity: 0;
                 }
             }
-            
+
+
             .imgOverlay {
                 position: absolute;
                 margin-left: auto;
@@ -25,7 +26,9 @@
                 left: 0;
                 right: 0;
             }
-            
+
+
+
             .imgCircle {
                 width: 150px;
                 height: 150px;
@@ -33,7 +36,9 @@
                 -webkit-border-radius: 150px;
                 -moz-border-radius: 150px;
             }
-            
+
+
+
             .verticalAlign {
                 position: relative;
                 top: 50%;
@@ -41,7 +46,11 @@
                 width: 100%;
                 margin: 0 auto;
             }
-            
+
+
+
+
+
             .fade-out {
                 animation-name: 'fade_out_animation';
                 animation-duration: 2000ms;
@@ -117,37 +126,33 @@
             <!-- The profiles array is used like a stack, where the last item shows first -->
             <td-card ng-if="$index >= profiles.length - 2" ng-show="profiles" ng-repeat="profile in profiles track by $index" ng-click="viewDetails(profile)"
                 on-destroy="cardDestroyed($index)" on-transition-left="cardTransitionLeft(profile)" on-transition-right="cardTransitionRight(profile)"
-                class="card-{{$index}}" ng-class="{'accepted-transform': profile.accepted, 'rejected-transform': profile.rejected}">
+                class="card-{{$index}}" ng-class="{'accepted-transform': profile.accepted, 'rejected-transform': profile.rejected}" >
                 <div class="row image" ng-click="viewDetails(profile)">
                     <div class="yes-text" ng-style="leftTextOpacity">{{'LIKE' | translate}}</div>
-                    <img class="col-50" style="width:55%; height:55%; border-radius:360px; margin-top:15px;" ng-src="{{::profile | profileImageUrl}}">
+                    <img class="col-60" style="width:50%; height:50%; border-radius:360px; margin-top:15px;" ng-src="{{::profile | profileImageUrl}}">
                     <div class="no-text" ng-style="rightTextOpacity">{{'NOT_LIKE' | translate}}</div>
 
-                    <div class="col-center col-50">
+                    <div class="col-center col-40">
                         <p id="match-search-distance">{{profile.location | distance}} {{'AWAY' | translate}}</p>
                     </div>
                 </div>
 
                 <div class="row">
-                    <p class="col-60" id="match-search-name">{{profile.name}}, {{profile.age}}</p>
-                </div>
-                <div style="height: 45%">
-                    <div id="match-search-about">
-                        {{profile.about}}
-                    </div>
-                </div>
-                <div class="center">
-                    <p id="match-search-readmore">Read More</p>
-                </div>
-                <!--
-              <div class="button-bar" style="{{profile.hideButtons ? 'display:none' : ''}}">
-                <button class="button button-clear button-positive icon ion-ios7-close-empty" ng-click="reject(profile)"></button>
-                <button class="button button-clear button-positive icon ion-ios7-heart-outline" ng-click="accept(profile)"></button>
-              </div>
-              -->
+                    <p class="col-75" id="match-search-name">{{profile.name}}, {{profile.age}}</p>
                 </div>
 
-                </td-card>
+
+                    <div id="match-search-about-container">
+                        <div id="match-search-about">
+                        {{profile.about}}
+                        </div>
+
+                        <div id="match-search-readmore">
+                        Read More
+                        </div>
+                    </div>
+     
+            </td-card>
         </td-cards>
 
 
