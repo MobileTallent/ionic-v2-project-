@@ -11,6 +11,7 @@ angular.module('controllers')
     // when $scope.profiles is null then we haven't done a search
     // when $scope.profiles is an empty array then there are no new matches
     $scope.profiles = null
+    $scope.noOneAround = false
 
     var profile = $scope.profile = AppService.getProfile()
     $scope.profilePhoto = profile.photoUrl
@@ -36,6 +37,7 @@ angular.module('controllers')
 
     $scope.searchAgain = () => {
         $scope.profiles = null
+        $scope.noOneAround = false
         updateProfileSearchResults()
     }
 
@@ -48,6 +50,7 @@ angular.module('controllers')
         AppService.updateProfileSearchResults()
             .then(result => {
                 $log.log('CardsCtrl: found ' + result.length + ' profiles')
+                $scope.noOneAround = result.length ? false : true
                 result.map(profile => profile.image = profile.photoUrl)
                     // Make the search screen show for at least a certain time so it doesn't flash quickly
                 var elapsed = Date.now() - startTime

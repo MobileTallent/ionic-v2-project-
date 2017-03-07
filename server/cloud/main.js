@@ -605,7 +605,7 @@ Parse.Cloud.define("GetMatches", function(request, response) {
         profileQuery.notContainedIn('uid', ids)
             //profileQuery.notEqualTo("uid", userId)
         profileQuery.descending("updatedAt")
-        profileQuery.limit(25)
+        profileQuery.limit(100)
         return profileQuery.find(masterKey)
     }).then(function(result) {
         result = _.map(result, _processProfile)

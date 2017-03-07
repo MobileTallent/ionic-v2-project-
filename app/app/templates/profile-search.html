@@ -17,8 +17,7 @@
                     opacity: 0;
                 }
             }
-
-
+            
             .imgOverlay {
                 position: absolute;
                 margin-left: auto;
@@ -26,9 +25,7 @@
                 left: 0;
                 right: 0;
             }
-
-
-
+            
             .imgCircle {
                 width: 150px;
                 height: 150px;
@@ -36,9 +33,7 @@
                 -webkit-border-radius: 150px;
                 -moz-border-radius: 150px;
             }
-
-
-
+            
             .verticalAlign {
                 position: relative;
                 top: 50%;
@@ -46,11 +41,7 @@
                 width: 100%;
                 margin: 0 auto;
             }
-
-
-
-
-
+            
             .fade-out {
                 animation-name: 'fade_out_animation';
                 animation-duration: 2000ms;
@@ -98,8 +89,10 @@
                 <div class="verticalAlign match-search-distance" ng-show="!profiles">
                     {{'FINDING_PEOPLE' | translate}}
                 </div>
-                <div class="verticalAlign text-label energized" style="font-size: 16px;font-size: 5.5vw" ng-show="profiles.length == 0"><b>
-					{{'NO_ONE_NEW' | translate}}</b>
+                <div class="verticalAlign text-label energized" style="font-size: 16px;font-size: 5.5vw" ng-show="profiles.length == 0">
+                    <div ng-show="noOneAround">
+                        <b>{{'NO_ONE_NEW' | translate}}</b>
+                    </div>
                     <br/>
                     <br/>
                     <button class="button button-energized wide" ng-click="searchAgain()">{{'SEARCH_AGAIN' | translate}}</button>
@@ -124,9 +117,8 @@
         <td-cards>
             <!-- ng-if="$index >= profiles.length -2" is to display only the top 2 cards in the DOM for performance -->
             <!-- The profiles array is used like a stack, where the last item shows first -->
-            <td-card ng-if="$index >= profiles.length - 2" ng-show="profiles" ng-repeat="profile in profiles track by $index" ng-click="viewDetails(profile)"
-                on-destroy="cardDestroyed($index)" on-transition-left="cardTransitionLeft(profile)" on-transition-right="cardTransitionRight(profile)"
-                class="card-{{$index}}" ng-class="{'accepted-transform': profile.accepted, 'rejected-transform': profile.rejected}" >
+            <td-card ng-if="$index >= profiles.length - 2" ng-show="profiles" ng-repeat="profile in profiles track by $index" ng-click="viewDetails(profile)" on-destroy="cardDestroyed($index)" on-transition-left="cardTransitionLeft(profile)" on-transition-right="cardTransitionRight(profile)"
+                class="card-{{$index}}" ng-class="{'accepted-transform': profile.accepted, 'rejected-transform': profile.rejected}">
                 <div class="row image" ng-click="viewDetails(profile)">
                     <div class="yes-text" ng-style="leftTextOpacity">{{'LIKE' | translate}}</div>
                     <img class="col-60" style="width:50%; height:50%; border-radius:360px; margin-top:15px;" ng-src="{{::profile | profileImageUrl}}">
@@ -142,16 +134,16 @@
                 </div>
 
 
-                    <div id="match-search-about-container">
-                        <div id="match-search-about">
+                <div id="match-search-about-container">
+                    <div id="match-search-about">
                         {{profile.about}}
-                        </div>
-
-                        <div id="match-search-readmore">
-                        Read More
-                        </div>
                     </div>
-     
+
+                    <div id="match-search-readmore">
+                        Read More
+                    </div>
+                </div>
+
             </td-card>
         </td-cards>
 

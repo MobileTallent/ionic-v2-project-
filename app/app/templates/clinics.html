@@ -10,7 +10,7 @@
                     <ion-item style="text-align: center; color: rgb(43, 172, 143);" class="item-positive wrap-space" ng-class="{active: showItem{{item.id}}}">
                         <i class="icon" ng-class="showItem{{item.id}} ? 'ion-minus' : 'ion-plus'"></i> &nbsp; <b>{{item.question}}</b>
                     </ion-item>
-                    <ion-item class="item-accordion wrap-space" style="font-size: 14px;" ng-show="showItem{{item.id}}" ng-class="showItem{{item.id}} ? 'animated slideInUp' : ''">
+                    <ion-item class="item-accordion" style="white-space: pre-wrap; font-size: 14px;" ng-show="showItem{{item.id}}" ng-class="showItem{{item.id}} ? 'animated slideInUp' : ''">
                         <div class="video-container" ng-class="item.video ? '' : 'hidden'">
                             <iframe width="560" height="315" ng-src="{{trustSrcurl(item.video)}}" frameborder="0" allowfullscreen></iframe>
                         </div>

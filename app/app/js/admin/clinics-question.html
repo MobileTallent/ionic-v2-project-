@@ -68,7 +68,7 @@
                         </label>
 
                         <label class="item item-input" ng-class="{ 'has-errors' : clinicsForm.answer.$invalid, 'no-errors' : clinicsForm.answer.$valid}">
-                            <input name="answer" ng-model="vm.clinicQuestion.answer" ng-required="true" type="text" placeholder="Answer">
+                            <textarea name="answer" ng-model="vm.clinicQuestion.answer" ng-required="true" type="text" placeholder="Answer" rows="10" class="wide"></textarea>
                         </label>
 
                         <label class="item item-input" ng-class="{ 'has-errors' : clinicsForm.position.$invalid, 'no-errors' : clinicsForm.position.$valid}">
