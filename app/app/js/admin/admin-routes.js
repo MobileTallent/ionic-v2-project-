@@ -81,4 +81,12 @@ angular.module('ionicApp').config(function($stateProvider) {
                 }
             }
         })
+        .state('menu.adminGraph', {
+            url: "/adminGraph/",
+            views: {
+                'menuContent': {
+                    templateUrl: "admin/graph.html"
+                }
+            }
+        })
 })
