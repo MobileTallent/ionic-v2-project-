@@ -4,8 +4,16 @@
     </ion-nav-buttons>
     <ion-content>
         <div class="padding">
+            <label class="item item-input">
+                <input name="numDays" ng-model="vm.numDays" type="number" placeholder="Number of Days">
+            </label>
+            <button class="button button-energized wide" ng-click="getReport()">Get Report</button>
+
             <canvas id="line" class="chart chart-line" chart-data="vm.data" chart-labels="vm.labels" chart-series="vm.series" chart-options="vm.options" chart-dataset-override="vm.datasetOverride" chart-click="vm.onClick">
-            </canvas
+            </canvas>
+
+            <canvas id="line" class="chart chart-line" chart-data="vm.data1" chart-labels="vm.labels1" chart-series="vm.series1" chart-options="vm.options1" chart-dataset-override="vm.datasetOverride1">
+            </canvas>
         </div>
     </ion-content>
 

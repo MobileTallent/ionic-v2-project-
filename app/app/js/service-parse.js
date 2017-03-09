@@ -318,7 +318,8 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         getFindUsReport: getFindUsReport,
         delFindUsReport: delFindUsReport,
         addAboutJab: addAboutJab,
-        getAboutJab: getAboutJab
+        getAboutJab: getAboutJab,
+        getMatchesReport: getMatchesReport
     }
 
     return service
@@ -788,11 +789,11 @@ angular.module('service.parse', ['constants', 'parse-angular'])
      * @returns
      */
     function resetBadge() {
-        if (typeof ParsePushPlugin !== 'undefined' && ionic.Platform.isIOS())
-            ParsePushPlugin.resetBadge(
-                () => $log.info('notification badge reset'),
-                error => $log.error('error resetting badge ' + JSON.stringify(error))
-            )
+        // if (typeof ParsePushPlugin !== 'undefined' && ionic.Platform.isIOS())
+        //     ParsePushPlugin.resetBadge(
+        //         () => $log.info('notification badge reset'),
+        //         error => $log.error('error resetting badge ' + JSON.stringify(error))
+        //     )
     }
 
     /**
@@ -926,6 +927,10 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
     function getAboutJab() {
         return Parse.Cloud.run('GetAboutJab').catch(_unwrapError)
+    }
+
+    function getMatchesReport(numDays) {
+        return Parse.Cloud.run('GetMatchesReport', { numDays: numDays }).catch(_unwrapError)
     }
 
     // Private functions

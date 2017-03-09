@@ -519,8 +519,10 @@ function _calculateAge(birthday) {
         birthdayTime = new Date(birthday.iso).getTime()
     else if (_.isDate(birthday))
         birthdayTime = birthday.getTime()
-    else
+    else {
         console.error('_calculateAge cant get birthday time from ', birthday)
+        console.log('_calculateAge cant get birthday time from' + birthday)
+    }
     var ageDifMs = Date.now() - birthdayTime
     var ageDate = new Date(ageDifMs) // miliseconds from epoch
     return Math.abs(ageDate.getUTCFullYear() - 1970)
@@ -587,7 +589,6 @@ Parse.Cloud.define("GetMatches", function(request, response) {
     alreadyMatchedQuery.limit(10000)
 
     return alreadyMatchedQuery.find(masterKey).then(function(results) {
-        //console.log('or query ' + JSON.stringify(results))
         var ids = []
         var length = results.length
         var userId = request.user.id
@@ -605,7 +606,7 @@ Parse.Cloud.define("GetMatches", function(request, response) {
         profileQuery.notContainedIn('uid', ids)
             //profileQuery.notEqualTo("uid", userId)
         profileQuery.descending("updatedAt")
-        profileQuery.limit(100)
+        profileQuery.limit(150)
         return profileQuery.find(masterKey)
     }).then(function(result) {
         result = _.map(result, _processProfile)
@@ -681,8 +682,10 @@ Parse.Cloud.define("ProcessMatch", function(request, response) {
             match.set('state', 'P') // P for pending - this user was the first one to swipe
         else if (match.get('u1action') == 'R' || match.get('u2action') == 'R')
             match.set('state', 'R') // R for rejected
-        else if (match.get('u1action') == 'L' && match.get('u2action') == 'L')
+        else if (match.get('u1action') == 'L' && match.get('u2action') == 'L') {
             match.set('state', 'M') // M for mutual like
+            match.set('matchDate', Date.now())
+        }
 
         return match
     }, masterKey).then(function(result) {
@@ -1377,6 +1380,32 @@ Parse.Cloud.define('AddAboutJab', function(request, response) {
         response.success("Success saving about JAB")
     }, function(error) {
         console.log("Error saving about JAB")
+        response.error(error)
+    })
+})
+
+/* Get the Number of Matches based on day*/
+Parse.Cloud.define('GetMatchesReport', function(request, response) {
+    console.log('GetMatchesReport')
+    var numDays = request.params.numDays
+    var dateCovered = new Date()
+    dateCovered.setDate(dateCovered.getDate() - numDays)
+    console.log('JYR date: ' + dateCovered.toLocaleString())
+
+    var matchesQueryReport = new Parse.Query("Match")
+    matchesQueryReport.equalTo('state', 'M')
+
+    matchesQueryReport.lessThanOrEqualTo('createdAt', Date.now())
+    console.log('JYR1 date: ' + dateCovered.toLocaleString())
+
+    matchesQueryReport.greaterThan('createdAt', dateCovered)
+    console.log('JYR2 date: ' + dateCovered.toLocaleString())
+
+    matchesQueryReport.limit(10000).find(masterKey).then(function(result) {
+        console.log("Successs " + JSON.stringify(result))
+        response.success(result.toJSON())
+    }, function(error) {
+        console.log("Erroorrr: " + JSON.stringify(error))
         response.error(error)
     })
 })
