@@ -208,7 +208,7 @@ angular.module('controllers')
     })
 
     // New York
-    var latLng = new google.maps.LatLng(40.73, -73.99)
+    var latLng = new google.maps.LatLng(-33.865143, 151.209900)
 
     var mapOptions = {
         center: latLng,
