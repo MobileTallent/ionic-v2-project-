@@ -59,6 +59,11 @@ module app {
         }
 
         public getReport() {
+                // this.AppService.getMatchesReport(this.numDays).then(                
+                //     items => {
+                //     this.realData = items
+                //     this.$log.log('loaded ' + items.length + ' items')
+                // })
             this.AppUtil.blockingCall(
                 this.AppService.getMatchesReport(this.numDays),
                 items => {

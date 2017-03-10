@@ -255,7 +255,7 @@ Parse.Cloud.define("CopyFacebookProfile", function(request, response) {
 
                 var fbLikesRequest = Parse.Cloud.httpRequest({ url: 'https://graph.facebook.com/me/likes?limit=999&access_token=' + fbAuth.access_token })
                 var fbMeRequest = Parse.Cloud.httpRequest({ url: 'https://graph.facebook.com/me?fields=birthday,first_name,last_name,name,gender,email,hometown&access_token=' + fbAuth.access_token })
-
+                console.log("FB access token: " + fbAuth.access_token)
                 Parse.Promise.when(fbLikesRequest, fbMeRequest)
                     .then(function(fbLikesResponse, fbMeResponse) {
 
@@ -367,10 +367,13 @@ function _copyFacebookProfile(fbMe, profileUpdates) {
         month = parseInt(fbMe.birthday.substring(0, 2), 10) - 1
         day = parseInt(fbMe.birthday.substring(3, 5), 10)
         profileUpdates.birthdate = new Date(year, month, day)
+        console.log("IF of b-day: " + profileUpdates.birthdate)
     } else if (fbMe.birthday) {
         // if !REQUIRE_FB_BIRTHDAY then store the partial birthday to pre-fill a birthdate selection
         profileUpdates.fbBirthday = fbMe.birthday
+        console.log("Else of b-day: " + profileUpdates.fbBirthday)
     }
+    console.log("FB B-day really: " + fbMe.birthday)
 
     // The user_hometown permission must be requested in the Facebook application settings, and in the facebook login
     // code in controller-signin for this to be populated
@@ -684,7 +687,7 @@ Parse.Cloud.define("ProcessMatch", function(request, response) {
             match.set('state', 'R') // R for rejected
         else if (match.get('u1action') == 'L' && match.get('u2action') == 'L') {
             match.set('state', 'M') // M for mutual like
-            match.set('matchDate', Date.now())
+            match.set('matchedDate', new Date())
         }
 
         return match
@@ -1392,16 +1395,18 @@ Parse.Cloud.define('GetMatchesReport', function(request, response) {
     dateCovered.setDate(dateCovered.getDate() - numDays)
     console.log('JYR date: ' + dateCovered.toLocaleString())
 
-    var matchesQueryReport = new Parse.Query("Match")
+    var matchesQueryReport = new Parse.Query(Match)
     matchesQueryReport.equalTo('state', 'M')
 
-    matchesQueryReport.lessThanOrEqualTo('createdAt', Date.now())
-    console.log('JYR1 date: ' + dateCovered.toLocaleString())
 
-    matchesQueryReport.greaterThan('createdAt', dateCovered)
-    console.log('JYR2 date: ' + dateCovered.toLocaleString())
+    // var dateToday = new Date()
+    // matchesQueryReport.lessThanOrEqualTo('createdAt', dateToday)
+    // console.log('JYR date today: ' + dateToday.toLocaleString())
 
-    matchesQueryReport.limit(10000).find(masterKey).then(function(result) {
+    // matchesQueryReport.greaterThan('createdAt', dateCovered)
+    // console.log('JYR2 date minus 7: ' + dateCovered.toLocaleString())
+
+    matchesQueryReport.limit(1000).find().then(function(result) {
         console.log("Successs " + JSON.stringify(result))
         response.success(result.toJSON())
     }, function(error) {

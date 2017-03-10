@@ -131,6 +131,11 @@ angular.module('controllers')
     $scope.$on('$ionicView.beforeEnter', function(event) {
         var profile = AppService.getProfile()
 
+        if (!profile.name) {
+            AppService.logout()
+        }
+
+
         var birthYear = null,
             birthMonth = null,
             birthDay = null
@@ -143,7 +148,6 @@ angular.module('controllers')
         // pre-populate the values we already have on the profile
         $scope.user = { name: profile.name, birthYear: birthYear, birthMonth: birthMonth, birthDay: birthDay, gender: profile.gender }
     })
-
 
     // Static data
     $scope.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
