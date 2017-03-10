@@ -1393,22 +1393,14 @@ Parse.Cloud.define('GetMatchesReport', function(request, response) {
     var numDays = request.params.numDays
     var dateCovered = new Date()
     dateCovered.setDate(dateCovered.getDate() - numDays)
-    console.log('JYR date: ' + dateCovered.toLocaleString())
 
     var matchesQueryReport = new Parse.Query(Match)
     matchesQueryReport.equalTo('state', 'M')
-
-
-    // var dateToday = new Date()
-    // matchesQueryReport.lessThanOrEqualTo('createdAt', dateToday)
-    // console.log('JYR date today: ' + dateToday.toLocaleString())
-
-    // matchesQueryReport.greaterThan('createdAt', dateCovered)
-    // console.log('JYR2 date minus 7: ' + dateCovered.toLocaleString())
-
+    matchesQueryReport.greaterThan('createdAt', dateCovered)
+    matchesQueryReport.select('createdAt')
     matchesQueryReport.limit(1000).find().then(function(result) {
         console.log("Successs " + JSON.stringify(result))
-        response.success(result.toJSON())
+        response.success(result)
     }, function(error) {
         console.log("Erroorrr: " + JSON.stringify(error))
         response.error(error)

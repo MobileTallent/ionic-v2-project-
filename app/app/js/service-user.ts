@@ -41,6 +41,7 @@ module app {
 		addFindUsReport(findUsVote:any): ng.IPromise<void>
 		getFindUsReport(): ng.IPromise<IFindUsReport[]>
 		delFindUsReport(id:string): ng.IPromise<void>
+		getMatchesReport(numDays:number): ng.IPromise<IMatch[]>
 	}
 
 	/**

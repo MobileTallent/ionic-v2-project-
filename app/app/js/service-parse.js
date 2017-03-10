@@ -882,7 +882,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         return Parse.Cloud.run('AddClinicsQuestion', { clinicQuestion: clinicQuestion }).catch(_unwrapError)
     }
 
-    function getClinicsQuestion(clinicQuestion) {
+    function getClinicsQuestion() {
         return Parse.Cloud.run('GetClinicsQuestion').catch(_unwrapError)
     }
 

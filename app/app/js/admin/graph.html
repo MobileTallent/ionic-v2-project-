@@ -1,19 +1,26 @@
-<ion-view view-title="Graph Report" ng-controller="Graph as vm">
+<ion-view view-title="Graph Report" ng-controller="GraphReport as vm">
     <ion-nav-buttons side="right">
-        <i class="button button-icon icon ion-refresh" ng-click="vm.refresh()"></i>
+        <i class="button button-icon icon ion-refresh" ng-click="vm.getReport()"></i>
     </ion-nav-buttons>
     <ion-content>
         <div class="padding">
-            <label class="item item-input">
-                <input name="numDays" ng-model="vm.numDays" type="number" placeholder="Number of Days">
-            </label>
-            <button class="button button-energized wide" ng-click="vm.getReport()">Get Report</button>
+            <div class="padding clearfix">
+                <label class="item item-input" style="float:left; margin-right: 10px;">
+                    <input name="numDays" ng-model="vm.numDays" type="number" placeholder="Number of Days">
+                </label>
+                <button class="button button-assertive" style="float:left;" ng-click="vm.getReport() ">Get Report</button>
+            </div>
+            <br>
 
-            <canvas id="line" class="chart chart-line" chart-data="vm.data" chart-labels="vm.labels" chart-series="vm.series" chart-options="vm.options" chart-dataset-override="vm.datasetOverride" chart-click="vm.onClick">
+            <canvas id="line " class="chart chart-line " chart-data="vm.data " chart-labels="vm.labels" chart-series="vm.series" chart-options="vm.options " chart-dataset-override="vm.datasetOverride ">
             </canvas>
-
-            <canvas id="line" class="chart chart-line" chart-data="vm.data1" chart-labels="vm.labels1" chart-series="vm.series1" chart-options="vm.options1" chart-dataset-override="vm.datasetOverride1">
-            </canvas>
+            <br>
+            <button class="" ng-click="details = !details">Show Graph Details</button>
+            <ion-list ng-show="details">
+                <ion-item ng-repeat="item in vm.labels">
+                    <h2>{{item}} - {{vm.matchData[$index]}}</h2>
+                </ion-item>
+            </ion-list>
         </div>
     </ion-content>
 
