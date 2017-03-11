@@ -297,6 +297,10 @@ textarea { height: auto; }
     white-space: normal !important;
 }
 
+/* ------ ------ App setting and Discovery ------ ------- */
+.red-text{
+    color: red;
+}
 
 /* --- Discovery Preferences Slider  ---*/
 
