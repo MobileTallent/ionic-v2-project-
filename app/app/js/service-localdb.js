@@ -227,6 +227,7 @@
                 var deferred = $q.defer()
 
                 db.transaction(function(tx) {
+                    // console.log(`Saving profile ${profile.distance}` )
                     // (id varchar primary key, profile text, user_id varchar)
                     tx.executeSql('INSERT OR REPLACE INTO profile (id, profile, user_id) ' +
                         'VALUES (?,?,?)', [profile.id, JSON.stringify(profile), profile.uid])

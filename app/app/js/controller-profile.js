@@ -443,24 +443,32 @@ angular.module('controllers')
             }
 
             dType = $scope.profile.distanceType
-            console.log("LOL: " + dType + $scope.profile.distance)
+            console.log("LOL: " + dType + $scope.profile.distance);
+            console.log(_.each(fields));
 
             AppUtil.blockingCall(
-                AppService.saveSettings($scope.profile),
-                () => $scope.profile = AppService.getProfile().clone(),
 
+                AppService.saveSettings($scope.profile),
+                () => $scope.profile = AppService.getProfile().clone()
+
+            )
+            console.log(_.each($scope.profile));
+
+            AppUtil.blockingCall(
                 AppService.saveProfile(_.pick($scope.profile, fields)),
                 () => {
+
                     AppService.clearProfileSearchResults()
                     $ionicHistory.nextViewOptions({
                         historyRoot: true,
                         disableBack: true
-                    })
+                    });
+                    $state.go('menu.home')
 
                 }, 'SETTINGS_SAVE_ERROR'
             )
 
-            $state.go('menu.home')
+
         }
 
         $scope.cancel = function () {

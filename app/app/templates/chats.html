@@ -27,7 +27,7 @@
 				<a ui-sref="^.chat({matchId : match.id})" style="text-decoration:none;">
 					<div class="item item-avatar item-borderless custom-list-item">
 
-						<img ng-src="{{::match.profile | profileImageUrl}}" img-cache>
+						<img src="img/generic_avatar.jpg" ng-src="{{::match.profile | profileImageUrl}}" img-cache>
 						<div ng-class-odd="'chats-list-odd'" ng-class-even="'chats-list-even'">
 							<h2 class="custom-list-item-text energized">{{::match.profile.name}}</h2>
 							<p class="custom-list-item-subtext" ng-class="match.read ? '' : 'chat-unread'" ng-bind-html="match.lastMessage | escapeHTML | emoji"
