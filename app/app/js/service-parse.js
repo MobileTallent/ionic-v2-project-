@@ -43,7 +43,7 @@ var Profile = Parse.Object.extend({
  * @property {Profile} profile1 - if a mutual match then the profile of user with uid1
  * @property {Profile} profile2 - if a mutual match then the profile of user with uid2
  */
-var matchFields = ['uid1', 'uid2', 'uid1action', 'uid2action', 'state', 'profile1', 'profile2', 'lastMessage', 'read']
+var matchFields = ['uid1', 'uid2', 'uid1action', 'uid2action', 'state', 'profile1', 'profile2', 'lastMessage', 'read', 'matchedDate']
 var Match = Parse.Object.extend({
         className: "Match",
         attrs: matchFields
@@ -319,7 +319,8 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         delFindUsReport: delFindUsReport,
         addAboutJab: addAboutJab,
         getAboutJab: getAboutJab,
-        getMatchesReport: getMatchesReport
+        getMatchesReport: getMatchesReport,
+        getChatMessageReport: getChatMessageReport
     }
 
     return service
@@ -931,6 +932,10 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
     function getMatchesReport(numDays) {
         return Parse.Cloud.run('GetMatchesReport', { numDays: numDays }).catch(_unwrapError)
+    }
+
+    function getChatMessageReport(numDays) {
+        return Parse.Cloud.run('GetChatMessageReport', { numDays: numDays }).catch(_unwrapError)
     }
 
     // Private functions

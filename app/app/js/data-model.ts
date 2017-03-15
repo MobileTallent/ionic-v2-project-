@@ -153,7 +153,8 @@ module app {
 	}
 
 	export interface IMatch extends IChat {
-
+		/** The date when the profiles matched */
+		matchedDate: Date
 	}
 
 	export interface IChatMessage extends IBase {

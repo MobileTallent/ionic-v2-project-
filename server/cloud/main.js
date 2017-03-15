@@ -1393,13 +1393,37 @@ Parse.Cloud.define('GetMatchesReport', function(request, response) {
     var numDays = request.params.numDays
     var dateCovered = new Date()
     dateCovered.setDate(dateCovered.getDate() - numDays)
+    dateCovered.setUTCHours(24, 0, 0, 0)
 
     var matchesQueryReport = new Parse.Query(Match)
     matchesQueryReport.equalTo('state', 'M')
-    matchesQueryReport.greaterThan('createdAt', dateCovered)
-    matchesQueryReport.select('createdAt')
+    matchesQueryReport.greaterThan('matchedDate', dateCovered)
+    matchesQueryReport.select('matchedDate')
+    matchesQueryReport.ascending('matchedDate')
     matchesQueryReport.limit(1000).find().then(function(result) {
         console.log("Successs " + JSON.stringify(result))
+        response.success(result)
+    }, function(error) {
+        console.log("Erroorrr: " + JSON.stringify(error))
+        response.error(error)
+    })
+})
+
+/* Get the Number of ChatMessages based on day*/
+Parse.Cloud.define('GetChatMessageReport', function(request, response) {
+    console.log('GetChatMessageReport')
+    var numDays = request.params.numDays
+    var dateCovered = new Date()
+    dateCovered.setDate(dateCovered.getDate() - numDays)
+    dateCovered.setUTCHours(24, 0, 0, 0)
+    console.log("Dates starting " + numDays + " " + dateCovered.toLocaleString())
+
+    var chatsQueryReport = new Parse.Query(ChatMessage)
+    chatsQueryReport.greaterThan('createdAt', dateCovered)
+    chatsQueryReport.select('createdAt', 'senderName')
+    chatsQueryReport.ascending('createdAt')
+    chatsQueryReport.limit(1000).find(masterKey).then(function(result) {
+        console.log("Successs " + result.length)
         response.success(result)
     }, function(error) {
         console.log("Erroorrr: " + JSON.stringify(error))

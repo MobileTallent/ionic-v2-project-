@@ -157,7 +157,8 @@ function onNotificationOpen(pnObj) {
                 delFindUsReport: delFindUsReport,
                 addAboutJab: addAboutJab,
                 getAboutJab: getAboutJab,
-                getMatchesReport: getMatchesReport
+                getMatchesReport: getMatchesReport,
+                getChatMessageReport: getChatMessageReport
             }
 
             return service
@@ -1345,6 +1346,10 @@ function onNotificationOpen(pnObj) {
 
             function getMatchesReport(numDays) {
                 return server.getMatchesReport(numDays)
+            }
+
+            function getChatMessageReport(numDays) {
+                return server.getChatMessageReport(numDays)
             }
 
             // Util functions

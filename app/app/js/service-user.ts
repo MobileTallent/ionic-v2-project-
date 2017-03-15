@@ -42,6 +42,7 @@ module app {
 		getFindUsReport(): ng.IPromise<IFindUsReport[]>
 		delFindUsReport(id:string): ng.IPromise<void>
 		getMatchesReport(numDays:number): ng.IPromise<IMatch[]>
+		getChatMessageReport(numDays:number): ng.IPromise<IChatMessage[]>
 	}
 
 	/**

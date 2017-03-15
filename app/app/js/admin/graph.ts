@@ -1,7 +1,6 @@
 module app {
 
     export class GraphReport {
-        public realData
         public labels = []
         public voterReport = null
         public series = ['Matches Per Day', 'Series B']
@@ -57,12 +56,12 @@ module app {
                 items => {
                     this.voterReport = {}
                     this.$log.log('LOADED ' + items.length + ' items')
-                    this.realData = items
+                    
                     items.forEach(a => {
-                        if (a.createdAt.toDateString() in this.voterReport)
-                            this.voterReport[a.createdAt.toDateString()]++
+                        if (a.matchedDate.toDateString() in this.voterReport)
+                            this.voterReport[a.matchedDate.toDateString()]++
                         else
-                            this.voterReport[a.createdAt.toDateString()] = 1;
+                            this.voterReport[a.matchedDate.toDateString()] = 1;
                     })
                     this.labels.forEach(a => {
                         if (a in this.voterReport)
@@ -71,13 +70,26 @@ module app {
                             this.matchData.push(0)    
                     })
                     this.data[0] = this.matchData
-                    this.data[1] = this.chatsData
+
+                    this.AppService.getChatMessageReport(this.numDays).then(                
+                        items => {
+                            this.$log.log('loaded ' + items.length + ' chats')
+                            var groupByDateObj = _.groupBy(items, function(n) {
+                                return n.createdAt.toDateString()
+                            })
+
+                            for (var item in groupByDateObj) {
+                                var arrayOfNames = _.groupBy(item, function(n) {
+                                    return n.senderName
+                                })
+                                console.log("Names length: " + arrayOfNames.length)
+                            }
+                            
+                            
+                            console.log("Length of Users Grouped: " + a.length)
+                    })
+                    //this.data[1] = this.chatsData
             })
-                // this.AppService.getMatchesReport(this.numDays).then(                
-                //     items => {
-                //         this.$log.log('loaded ' + items.length + ' items')
-                //         this.realData = items
-                // })
         }
     }
 
