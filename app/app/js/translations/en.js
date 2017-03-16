@@ -1,5 +1,6 @@
 var TRANSLATION_EN = {
 
+    // Actions and Processes
     'OK': 'Ok',
     'SAVE': 'Save',
     'SEND': 'Send',
@@ -21,6 +22,7 @@ var TRANSLATION_EN = {
     'CALLING': 'Calling',
     'VERSION': 'Version',
 
+    // Auth, form and location.
     'INVALID_EMAIL_PASSWORD': 'Invalid email/password',
     'ACCOUNT_BANNED': 'This account has been disabled',
     'PULL_TO_REFRESH': 'Pull to refresh...',
@@ -48,16 +50,19 @@ var TRANSLATION_EN = {
     'GENDER_REQUIRED': 'Gender is required',
     'TERMS_OF_USE': 'Terms of Use',
 
+    //Menu
     'MENU_PROFILE': 'Profile',
     'MENU_MATCHES': 'Find Matches',
     'MENU_CHAT': 'Chat',
     'MENU_LIKED_ME': 'People Who Liked Me',
     'MENU_DISCOVERY': 'Discovery Preferences',
-    'MENU_SETTINGS': 'App Settings',
-    'MENU_CONTACT': 'Submit Feature Request',
+    'MENU_SETTINGS': 'Settings',
+    'MENU_CONTACT': 'Feature Request or Report a Bug',
     'MENU_SHARE': 'Invite My Friends',
     'MENU_CO_PARENTS': 'My Co-Parents Shortlist',
-
+    'ABOUT_JUST_A_BABY': 'About Just a Baby',
+    'BECOME_A_PARENT': 'Become a Parent',
+    // Profile
     'PROFILE_SETUP_MSG': 'We need a couple more details',
     'BIRTH_DAY': 'Birth day',
     'BIRTH_MONTH': 'Birth month',
@@ -87,6 +92,7 @@ var TRANSLATION_EN = {
     'ADD_A_PHOTO': 'Add a photo',
     'CROP_YOUR_PHOTO': 'Crop your photo',
 
+    // Settings
     'DISCOVERY_TITLE': 'Discovery Preferences',
     'DISCOVERABLE': 'Discoverable',
     'SHOW_ME': 'Show me',
@@ -94,13 +100,11 @@ var TRANSLATION_EN = {
     'GIRLS': 'Girls',
     'SEARCH_DISTANCE': 'Search distance',
     'AGED_BETWEEN': 'Aged between',
-
     'SETTINGS_TITLE': 'App Settings',
     'NOTIFICATION_SOUND': 'Notification Sound',
     'NEW_MATCH': 'New match',
     'NEW_MESSAGE': 'New message',
     'SHOW_DISTANCES_IN': 'Show distances in',
-
     'NOT_DISCOVERABLE': 'You\'re not discoverable',
     'ENABLE_DISCOVERY_TO_MEET': 'Enable discovery to meet new people nearby',
     'ENABLE_DISCOVERY': 'Enable Discovery',
@@ -119,11 +123,11 @@ var TRANSLATION_EN = {
     'NO_MATCHES': 'You don\'t have any matches yet.',
     'START_SWIPING': 'Start swiping',
     'MATCHES_LOAD_ERROR': 'Unable to load matches',
-
+    // New Match
     'ITS_A_MATCH': 'It\'s A Match',
     'LIKED_EACH_OTHER': 'You and {{name}} have liked each other',
     'SEND_MESSAGE': 'Send Message',
-    'KEEP_PLAYING': 'Keep Playing',
+    'KEEP_SEARCHING': 'Keep Searching',
 
     'MATCHED_ON': 'You matched on',
     'REMOVE_MATCH': 'Remove match',
@@ -150,7 +154,7 @@ var TRANSLATION_EN = {
     'SETTINGS_SAVE_ERROR': 'Error saving settings. Try again later',
     'REQUEST_FAILED': 'Request failed',
 
-    'GIVE_US_FEEDBACK': '\'Just a Baby\' is built for you. We want your suggestions and your feedback so that we can make it better! Tell us what you like, what you hate, and how we could improve the experience. If you include your email address we\'ll endeavour to reply. Thanks in advance!.',
+    'GIVE_US_FEEDBACK': '\'Just a Baby\' is built for you. We want your suggestions and your feedback so that we can make it better! Tell us what you like, what you hate, and how we could improve the experience. If you include your email address we\'ll endeavour to reply. Thanks in advance.',
     // 'THANKS_FEEDBACK' : 'Thanks in advance! The Just-a-Baby Team',
 
     'DELETE_ACCOUNT': 'Delete your account',

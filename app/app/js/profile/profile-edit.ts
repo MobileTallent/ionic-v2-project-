@@ -262,7 +262,7 @@ module app {
 				var alertPopup = this.$ionicPopup.alert({
 					title: 'We need more information',
 					cssClass: 'center',
-					template: 'We have directed you to this page because it seems as though you havent written anything in your "About Me" section. </br> On Just-a-Baby people are looking for someone with a compatible vision. Let people know yours! Once you enter a little about yourself in the space provided you can browse the profiles of others!'
+					template: 'It seems as though you havent written anything in your "About Me" section. </br> People on Just-a-Baby are looking for someone with a compatible vision. Let people know yours!'
 				});
 
 			}
