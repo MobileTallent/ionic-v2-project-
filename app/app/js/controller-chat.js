@@ -188,7 +188,9 @@ angular.module('controllers')
         if (message.match.id == $stateParams.matchId) {
             $ionicScrollDelegate.scrollBottom(true)
                 // re-set the read flag if we are viewing this chat
-            AppService.setChatRead(message.match.id, true)
+            $timeout(function() {
+                AppService.setChatRead(message.match.id, true)
+            }, 1000)
         }
     })
 
