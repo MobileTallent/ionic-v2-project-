@@ -5,7 +5,6 @@
     </i>
     </ion-nav-buttons>
     <ion-content class="padding-20" no-scroll>
-        <!-- no-scroll style=""-->
 
         <style>
             @-webkit-keyframes fade_out_animation {
@@ -59,8 +58,8 @@
             }
         </style>
         <!-- for testing the match dialog
-    <button style="position: absolute;bottom:5px" ng-click="openNewMatch()">Match</button>
--->
+            <button style="position: absolute;bottom:5px" ng-click="openNewMatch()">Match</button>
+        -->
 
 
 
@@ -111,61 +110,64 @@
                 </div>
             </div>
 
-        </div>
-        </div>
+            <td-cards>
+                <!-- ng-if="$index >= profiles.length -2" is to display only the top 2 cards in the DOM for performance -->
+                <!-- The profiles array is used like a stack, where the last item shows first -->
+                <td-card ng-if="$index >= profiles.length - 2" ng-show="profiles" ng-repeat="profile in profiles track by $index" ng-click="viewDetails(profile)" on-destroy="cardDestroyed($index)" on-transition-left="cardTransitionLeft(profile)" on-transition-right="cardTransitionRight(profile)"
+                    class="card-{{$index}}" ng-class="{'accepted-transform': profile.accepted, 'rejected-transform': profile.rejected}">
+                    <div class="row image" ng-click="viewDetails(profile)">
+                        <div class="yes-text" ng-style="leftTextOpacity">{{'LIKE' | translate}}</div>
 
-        <td-cards>
-            <!-- ng-if="$index >= profiles.length -2" is to display only the top 2 cards in the DOM for performance -->
-            <!-- The profiles array is used like a stack, where the last item shows first -->
-            <td-card ng-if="$index >= profiles.length - 2" ng-show="profiles" ng-repeat="profile in profiles track by $index" ng-click="viewDetails(profile)" on-destroy="cardDestroyed($index)" on-transition-left="cardTransitionLeft(profile)" on-transition-right="cardTransitionRight(profile)"
-                class="card-{{$index}}" ng-class="{'accepted-transform': profile.accepted, 'rejected-transform': profile.rejected}">
-                <div class="row image" ng-click="viewDetails(profile)">
-                    <div class="yes-text" ng-style="leftTextOpacity">{{'LIKE' | translate}}</div>
+                        <img class="col-60" src="img/generic_avatar.jpg" style="width:50%; height:50%; border-radius:360px; margin-top:15px;" ng-src="{{::profile | profileImageUrl}}">
 
-                    <img class="col-60" src="img/generic_avatar.jpg" style="width:50%; height:50%; border-radius:360px; margin-top:15px;" ng-src="{{::profile | profileImageUrl}}">
+                        <div class="no-text" ng-style="rightTextOpacity">{{'NOT_LIKE' | translate}}</div>
 
-                    <div class="no-text" ng-style="rightTextOpacity">{{'NOT_LIKE' | translate}}</div>
-
-                    <div class="col-center col-40">
-                        <p id="match-search-distance">{{profile.location | distance}}  {{'AWAY' | translate}}</p>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <p class="col-75" id="match-search-name">{{profile.name}}, {{profile.age}}</p>
-                </div>
-
-
-                <div id="match-search-about-container">
-                    <div id="match-search-about">
-                        {{profile.about}}
+                        <div class="col-center col-40">
+                            <p id="match-search-distance">{{profile.location | distance}} {{'AWAY' | translate}}</p>
+                        </div>
                     </div>
 
-                    <div id="match-search-readmore">
-                        Read More
+                    <div class="row">
+                        <p class="col-75" id="match-search-name">{{profile.name}}, {{profile.age}}</p>
                     </div>
-                </div>
-
-            </td-card>
-        </td-cards>
 
 
-        <div ng-show="profiles.length > 0" class="swipe-buttons">
-            <div class="row center">
-                <div class="col col-33">
-                    <a class="button button-icon" ng-click="reject()">
-                        <i class="icon ion-close swipe-button swipe-reject"></i>
-                    </a>
-                </div>
-                <div class="col col-33 col-offset-33">
+                    <div id="match-search-about-container">
+                        <div id="match-search-about">
+                            {{profile.about}}
+                        </div>
 
-                    <a class="button button-icon" ng-click="accept()">
-                        <i class="icon ion-checkmark swipe-button swipe-accept"></i>
-                    </a>
+                        <div id="match-search-readmore">
+                            Read More
+                        </div>
+                    </div>
 
+                </td-card>
+            </td-cards>
+
+            <div ng-show="profiles.length > 0" class="swipe-buttons">
+                <div class="row center">
+                    <div class="col col-33">
+                        <a class="button button-icon" ng-click="reject()">
+                            <i class="icon ion-close swipe-button swipe-reject"></i>
+                        </a>
+                    </div>
+                    <div class="col col-33 col-offset-33">
+
+                        <a class="button button-icon" ng-click="accept()">
+                            <i class="icon ion-checkmark swipe-button swipe-accept"></i>
+                        </a>
+
+                    </div>
                 </div>
             </div>
+
         </div>
+
+
+
+
+
 
 
         <!--
@@ -217,8 +219,6 @@
         </div>
         -->
 
-
-        </div>
 
     </ion-content>
 </ion-view>
