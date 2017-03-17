@@ -23,6 +23,7 @@ angular.module('ionicApp')
 			$ionicHistory.goBack()
 		}
 
+
 		$scope.profileOptions = () => {
 			$ionicActionSheet.show({
 				destructiveText: translations.REPORT,
@@ -46,5 +47,6 @@ angular.module('ionicApp')
 					$ionicHistory.goBack()
 				}
 			)
+			console.log(`Reporting User: ${profile.name}`)
 		}
 	})
