@@ -154,7 +154,7 @@ var TRANSLATION_EN = {
     'SETTINGS_SAVE_ERROR': 'Error saving settings. Try again later',
     'REQUEST_FAILED': 'Request failed',
 
-    'GIVE_US_FEEDBACK': '\'Just a Baby\' is built for you. We want your suggestions and your feedback so that we can make it better! Tell us what you like, what you hate, and how we could improve the experience. If you include your email address we\'ll endeavour to reply. Thanks in advance.',
+    'GIVE_US_FEEDBACK': 'Just a Baby is built for you. We want your suggestions and your feedback so that we can make it better! Tell us what you like, what you hate, and how we could improve the experience. If you include your email address we\'ll endeavour to reply. Thanks in advance.',
     // 'THANKS_FEEDBACK' : 'Thanks in advance! The Just-a-Baby Team',
 
     'DELETE_ACCOUNT': 'Delete your account',
