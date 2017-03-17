@@ -12,7 +12,7 @@
 
 			<div ng-repeat="profile in vm.profiles" ng-click="vm.view($index)">
 				<div class="item item-avatar item-borderless custom-list-item">
-					<img ng-src="{{profile | profileImageUrl}}">
+					<img src="img/generic_avatar.jpg" ng-src="{{profile | profileImageUrl}}">
 					<div ng-class-odd="'chats-list-odd'" ng-class-even="'chats-list-even'">
 						<h2 class="custom-list-item-text energized">{{profile.name}}, {{profile | profileAge}}</h2>
 						<p class="custom-list-item-subtext">{{profile.location | distance}} {{'AWAY' | translate}}</p>
