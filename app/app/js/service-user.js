@@ -73,6 +73,7 @@ function onNotificationOpen(pnObj) {
             var chatSyncInProgress = false
             var chatSyncInRequested = false
             var isAcntDelete = false
+            var isAcntNew = false
 
             var service = {
                 // fields
@@ -556,6 +557,16 @@ function onNotificationOpen(pnObj) {
                     return
                 }
 
+                if (isAcntNew) {
+                    isAcntNew = false
+                    $ionicHistory.nextViewOptions({
+                        historyRoot: true,
+                        disableBack: true
+                    })
+                    $state.go('findUs', { username: user.profile.name })
+                    return
+                }
+
                 if (!$localStorage.termsOfUseAgreed) {
                     go('termsOfUse')
                     return
@@ -675,6 +686,7 @@ function onNotificationOpen(pnObj) {
              */
             function copyFacebookProfile() {
                 return server.copyFacebookProfile().then(profile => {
+                    isAcntNew = true
                     service.profile = profile
                     return service.profile
                 })

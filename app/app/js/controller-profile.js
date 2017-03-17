@@ -189,11 +189,7 @@ angular.module('controllers')
 
         AppUtil.blockingCall(AppService.saveProfile(changes),
             () => {
-                $ionicHistory.nextViewOptions({
-                    historyRoot: true,
-                    disableBack: true
-                })
-                $state.go('findUs', { username: $scope.user.name })
+
             }, 'SETTINGS_SAVE_ERROR')
     }
 
