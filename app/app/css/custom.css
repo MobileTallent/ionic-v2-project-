@@ -39,6 +39,11 @@
 .center {
     text-align: center;
 }
+.horizontal-center{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
 
 .wide {
     width: 100%;

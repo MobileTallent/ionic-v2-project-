@@ -258,32 +258,40 @@ a.autolinker {
 
 /* --- Match Search --- */
 
+.profile-search-avatar{
+     width:50%; 
+     height:50%; 
+     border-radius:360px; 
+     margin-left: auto; 
+     margin-right: auto;
+}
+
 #match-search-background {
     background-color: $calm !important;
 }
 #match-search-distance {
-    padding-top: 25px;
+    padding-top: 5px;
+    margin-bottom: 0;
     text-align: center;
     color: $match-search-text !important;
-    font-size: 12px;
+    font-size: 16px;
 }
 #match-search-name {
-    padding: 10px 0;
+    padding-top: 10px;
     text-align: center;
     color: $match-search-text !important;
     font-size: 24px;
     
 }
 #match-search-about-container{
-    height: 100px;
-    
+    height: 150px;
     display: flex;
     flex-direction: column;
     
 }
 #match-search-about {
 
-    flex: 2;
+    flex: 3;
     padding: 5px 10px;
     color: $match-search-text !important;
     font-size: 16px;
@@ -299,6 +307,7 @@ a.autolinker {
     font-size: 16px;
     color: $assertive;
     padding-top: 10px;
+    margin-bottom: 0;
     
 }
 .td-card {

@@ -12,21 +12,26 @@
 
         <ion-slide-box show-pager="true" does-continue="true">
             <ion-slide ng-repeat="photo in vm.profile.photos track by $index">
-                <img ng-src="{{photo.url()}}" style="width:100%"/>
+                <img ng-src="{{photo.url()}}" style="width:100%" />
             </ion-slide>
             <ion-slide ng-if="!profile.photos.length">
-                <img src="img/generic_avatar.jpg" style="width:100%"/>
+                <img src="img/generic_avatar.jpg" style="width:100%" />
             </ion-slide>
         </ion-slide-box>
 
-        <div style="padding: 10px;">
-            <h3>{{vm.profile.name}}, {{vm.profile.age}}</h3>
-            <br/>
-            <span style="color:gray">{{vm.profile.location | distance}} {{'AWAY' | translate}} <!-- TODO Active x hours ago --></span><br/>
+        <div id="profile-name-banner" class="col-80 col-offset-10">
+            <div class="center text-color-white text-size-24">
+                {{vm.profile.name}}, {{vm.profile.age}}
+            </div>
+        </div>
 
-            <div ng-show="vm.profile.about">
+        <div class="padding-15">
+            <h4 style="color:#666666" class="center">{{vm.profile.location | distance}} {{'AWAY' | translate}} </h4>
+            <h4 style="color:#666666">About Me</h4>
+            <div ng-show="vm.profile.about" style="color:#9B9B9B; white-space: pre-wrap;" class="text-size-18">
                 {{vm.profile.about}}
             </div>
         </div>
+
     </ion-content>
 </ion-modal-view>
