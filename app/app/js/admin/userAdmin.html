@@ -13,9 +13,9 @@
                 <b>Created:</b> {{vm.user.createdAt}}<br/>
             </div>
 
-            <div ng-if="!vm.report.profile.photos">No profile photos</div>
+            <div ng-if="!vm.user.profile.photos">No profile photos</div>
             <ion-list show-delete="true">
-                <ion-item ng-repeat="photo in vm.report.profile.photos" class="item-thumbnail-left">
+                <ion-item ng-repeat="photo in vm.user.profile.photos" class="item-thumbnail-left">
                     <img ng-src="{{photo.url()}}">
                     <!--
                     <ion-delete-button class="ion-minus-circled"
@@ -26,8 +26,8 @@
             </ion-list>
 
             <div class="wide center padding-10">
-                <button class="button button-block button-assertive" ng-click="deleteUser()">Delete User</button>
-                <button class="button button-block button-assertive" ng-click="banUser()">Ban User</button>
+                <button class="button button-block button-assertive" ng-click="vm.deleteUser()">Delete User</button>
+                <button class="button button-block button-assertive" ng-click="vm.banUser()">Ban User</button>
             </div>
         </div>
     </ion-content>

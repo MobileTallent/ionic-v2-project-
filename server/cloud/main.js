@@ -1499,7 +1499,7 @@ Parse.Cloud.define('DeleteUser', function(request, response) {
     var user = request.user
     if (!user.get('admin'))
         return response.error('Must be an admin to delete a user')
-    var userId = user.params.userId
+    var userId = request.params.userId
     if (!userId)
         return response.error('userId parameter must be provided')
     new Parse.Query(Parse.User).get(userId, masterKey).then(function(user) {

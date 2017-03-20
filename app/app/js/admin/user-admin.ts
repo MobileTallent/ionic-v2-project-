@@ -23,36 +23,38 @@ module app {
 		}
 
 		public deleteUser() {
+			let myThis = this
 			this.$ionicPopup.confirm({
 				title: 'Confirm delete',
 				okText: 'Delete',
 				cancelText: 'Cancel'
 			}).then(function (res) {
 				if (res)
-					this.AppUtil.blockingCall(
-						this.AppService.deleteUser(this.user.id),
+					myThis.AppUtil.blockingCall(
+						myThis.AppService.deleteUser(myThis.user.id),
 						() => {
-							this.AppUtil.toastSimple('User deleted')
-							this.$log.info('Deleted user ' + this.user.id)
-							this.$ionicHistory.goBack()
+							myThis.AppUtil.toastSimple('User deleted')
+							myThis.$log.info('Deleted user ' + myThis.user.id)
+							myThis.$ionicHistory.goBack()
 						}
 					)
 			})
 		}
 
 		public banUser() {
+			let myThis = this
 			this.$ionicPopup.confirm({
 				title: 'Confirm ban',
 				okText: 'Ban',
 				cancelText: 'Cancel'
 			}).then(function (res) {
 				if (res)
-					this.AppUtil.blockingCall(
-						this.AppService.banUser(this.user.id),
+					myThis.AppUtil.blockingCall(
+						myThis.AppService.banUser(myThis.user.id),
 						() => {
-							this.AppUtil.toastSimple('User banned')
-							this.$log.info('Banned user ' + this.user.id)
-							this.$ionicHistory.goBack()
+							myThis.AppUtil.toastSimple('User banned')
+							myThis.$log.info('Banned user ' + myThis.user.id)
+							myThis.$ionicHistory.goBack()
 						}
 					)
 			})
