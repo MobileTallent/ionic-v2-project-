@@ -1047,8 +1047,8 @@ function onNotificationOpen(pnObj) {
                             }
                         }
                         // Notify the chat controller to scroll down
-                        if (newActiveMessage) {
-                            $log.debug('broadcasting newMessage')
+                        if (newActiveMessage !== null) {
+                            $log.log('broadcasting newMessage')
                             $rootScope.$broadcast('newMessage', newActiveMessage)
                         }
 
@@ -1083,7 +1083,8 @@ function onNotificationOpen(pnObj) {
                             if (message.sender !== server.getUserId())
                                 setChatRead(match.id, false)
 
-                            // Sort the matches by the newest messages at the top
+                            $rootScope.$broadcast('chatsUpdated')
+
                             matches.sort(function(a, b) {
                                 if (a.updatedAt.getTime() === b.updatedAt.getTime()) return 0
                                 return a.updatedAt.getTime() > b.updatedAt.getTime() ? -1 : 1

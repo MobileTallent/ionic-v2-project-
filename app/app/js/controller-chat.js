@@ -25,10 +25,21 @@ angular.module('controllers')
     function sort(chats) {
         $scope.settings = $localStorage.chatSettings || { sortBy: 'updated' }
         var sorted = chats
-        if ($scope.settings.sortBy === 'updatedAt')
-        // lodash _.sortyByOrder is replace with .orderBy in 4.0
-            sorted = _.sortByOrder(chats, ['updatedAt'], [false])
-        else if ($scope.settings.sortBy === 'name') {
+        if ($scope.settings.sortBy === 'updated') {
+            // lodash _.sortyByOrder is replace with .orderBy in 4.0
+            //sorted = _.sortByOrder(chats, ['updatedAt'], [false])
+            chats.sort(function(a, b) {
+                if (a.updatedAt.getTime() === b.updatedAt.getTime()) return 0
+                if (typeof a.lastMessageAt !== 'undefined' && typeof b.lastMessageAt !== 'undefined') {
+                    return a.lastMessageAt.getTime() > b.lastMessageAt.getTime() ? -1 : 1
+                } else if (typeof a.lastMessageAt === 'undefined' && typeof b.lastMessageAt !== 'undefined') {
+                    return a.updatedAt.getTime() > b.lastMessageAt.getTime() ? -1 : 1
+                } else if (typeof a.lastMessageAt !== 'undefined' && typeof b.lastMessageAt === 'undefined') {
+                    return a.lastMessageAt.getTime() > b.updatedAt.getTime() ? -1 : 1
+                }
+                return a.updatedAt.getTime() > b.updatedAt.getTime() ? -1 : 1
+            })
+        } else if ($scope.settings.sortBy === 'name') {
             _.forEach(sorted, chat => chat.name = chat.profile.name ? chat.profile.name.toLowerCase() : 'zzz')
             sorted = _.sortByOrder(chats, ['name'], [true])
         }
