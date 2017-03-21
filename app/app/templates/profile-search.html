@@ -140,7 +140,7 @@
                             {{profile.about}}
                         </div>
 
-                        <div ng-hide="profile.about == '' " id="match-search-readmore">
+                        <div ng-hide="(profile.about).length < 200 " id="match-search-readmore">
                             Read More
                         </div>
                     </div>
