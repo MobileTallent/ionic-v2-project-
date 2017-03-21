@@ -255,7 +255,6 @@ Parse.Cloud.define("CopyFacebookProfile", function(request, response) {
 
                 var fbLikesRequest = Parse.Cloud.httpRequest({ url: 'https://graph.facebook.com/me/likes?limit=999&access_token=' + fbAuth.access_token })
                 var fbMeRequest = Parse.Cloud.httpRequest({ url: 'https://graph.facebook.com/me?fields=birthday,first_name,last_name,name,gender,email,hometown&access_token=' + fbAuth.access_token })
-                console.log("FB access token: " + fbAuth.access_token)
                 Parse.Promise.when(fbLikesRequest, fbMeRequest)
                     .then(function(fbLikesResponse, fbMeResponse) {
 
@@ -367,13 +366,10 @@ function _copyFacebookProfile(fbMe, profileUpdates) {
         month = parseInt(fbMe.birthday.substring(0, 2), 10) - 1
         day = parseInt(fbMe.birthday.substring(3, 5), 10)
         profileUpdates.birthdate = new Date(year, month, day)
-        console.log("IF of b-day: " + profileUpdates.birthdate)
     } else if (fbMe.birthday) {
         // if !REQUIRE_FB_BIRTHDAY then store the partial birthday to pre-fill a birthdate selection
         profileUpdates.fbBirthday = fbMe.birthday
-        console.log("Else of b-day: " + profileUpdates.fbBirthday)
     }
-    console.log("FB B-day really: " + fbMe.birthday)
 
     // The user_hometown permission must be requested in the Facebook application settings, and in the facebook login
     // code in controller-signin for this to be populated
@@ -1586,6 +1582,15 @@ function deleteUser(response, user) {
 }
 
 
+Parse.Cloud.define('RebuildMatches', function(request, response) {
+    Parse.Cloud.useMasterKey()
+    rebuildMatches(request.user).then(function() {
+        response.success(null)
+    }, function() {
+        response.error()
+    })
+})
+
 /**
  * Convenience function to clear the database, e.g. before running integration tests.
  * To protect against accidentally running it on valuable data it checks for the integrationAppId
@@ -1655,6 +1660,47 @@ function notifyRemoveMatch(match, uids) {
             matchId: match.id
         }
     }, masterKey)
+}
+
+function rebuildMatches(user) {
+    var query1 = new Parse.Query('Match')
+        .equalTo('uid1', user.id)
+        .equalTo('state', 'M')
+        .limit(1000)
+    var query2 = new Parse.Query('Match')
+        .equalTo('uid2', user.id)
+        .equalTo('state', 'M')
+        .limit(1000)
+
+    return Parse.Query.or(query2, query1).limit(1000).select('objectId').find().then(function(result) {
+        var matches = []
+        _.each(result, function(match) { matches.push(match.id) })
+
+        if (!user.get('matches') || arraysEqual(user.get('matches'), matches)) {
+            return
+        }
+        console.log(JSON.stringify(user.get('matches')) + '   ' + JSON.stringify(matches))
+        console.log('Updating matches for ' + user.id + '. Length ' + user.get('matches').length + ' -> ' + matches.length)
+
+        user.set('matches', matches)
+        return user.save()
+    })
+}
+
+function arraysEqual(a, b) {
+    if (a === b) return true;
+    if (a == null || b == null) return false;
+    if (a.length != b.length) return false;
+
+    // If you don't care about the order of the elements inside
+    // the array, you should sort both arrays here.
+    a.sort()
+    b.sort()
+
+    for (var i = 0; i < a.length; ++i) {
+        if (a[i] !== b[i]) return false;
+    }
+    return true;
 }
 
 //var adminQuery = new Parse.Query(Parse.User)

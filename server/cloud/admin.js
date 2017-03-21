@@ -106,7 +106,7 @@ Parse.Cloud.define('DeletePhoto', function(request, response) {
             }
         })
     }).then(function(result) {
-        response.success()
+        response.success(null)
     }, function(error) {
         response.error(error)
     })
@@ -126,6 +126,7 @@ Parse.Cloud.define('BanUser', function(request, response) {
 
     var bannedUser = new Parse.User()
     bannedUser.id = bannedUserId
+    console.log('Banned User Id: ' + bannedUserId)
 
     var bannedUserQuery = new Parse.Query(Parse.User)
         .include('profile')
@@ -133,29 +134,27 @@ Parse.Cloud.define('BanUser', function(request, response) {
 
     // Close out all reports against this user
     var reportsQuery = new Parse.Query('Report')
-        .equalTo('reportedUser', bannedUser)
+        .equalTo('reportedUser', bannedUserId)
         .limit(1000)
         .find()
-
-    // Load the banned users mutual matches so we can remove the match from the other mutual match party and set the state to deleted
+        // Load the banned users mutual matches so we can remove the match from the other mutual match party and set the state to deleted
     var matches1Query = new Parse.Query('Match')
         .equalTo('uid1', bannedUserId)
         .equalTo('state', 'M')
         .limit(1000)
         .find()
+
     var matches2Query = new Parse.Query('Match')
         .equalTo('uid2', bannedUserId)
         .equalTo('state', 'M')
         .limit(1000)
         .find()
 
-
     Parse.Promise.when(bannedUserQuery, reportsQuery, matches1Query, matches2Query).then(function(bannedUser, reports, matches1, matches2) {
 
         // An array of all the Promises of database updates for this action
         var actions = []
-
-        // Set the banned flag on the user and disable the profile
+            // Set the banned flag on the user and disable the profile
         bannedUser.set('status', 'banned')
         bannedUser.set('matches', [])
         var profile = bannedUser.get('profile')
@@ -165,6 +164,7 @@ Parse.Cloud.define('BanUser', function(request, response) {
         // Set all un-actioned reports for the banned user to have the banned action
         _.each(reports, function(report) {
             if (!report.get('actionTaken')) {
+                Parse.Cloud.useMasterKey()
                 report.set('actionTaken', 'banned')
                 report.set('actionUser', request.user)
                 actions.push(report.save())
@@ -178,12 +178,13 @@ Parse.Cloud.define('BanUser', function(request, response) {
         _.each(matches1, function(match) {
             updateMatchAndUser(match, match.get('uid2'))
         })
+
         _.each(matches2, function(match) {
             updateMatchAndUser(match, match.get('uid1'))
         })
 
         function updateMatchAndUser(match, otherUserId) {
-
+            Parse.Cloud.useMasterKey()
             channels.push('user_' + otherUserId)
 
             match.set('state', 'D')
@@ -211,15 +212,10 @@ Parse.Cloud.define('BanUser', function(request, response) {
                 type: 'accountBanned'
             }
         }))
-
-        return Parse.Promise.when(actions)
-
-    }).then(function() {
-        response.success()
+        response.success(null)
     }, function(error) {
         response.error(error)
     })
-
 })
 
 Parse.Cloud.define('CloseReport', function(request, response) {
