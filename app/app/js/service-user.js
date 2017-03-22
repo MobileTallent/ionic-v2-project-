@@ -41,7 +41,7 @@ function onNotificationOpen(pnObj) {
     angular.module('service.app', ['ngCordova', 'service.parse', 'service.localdb'])
         .factory('AppService', function($rootScope, $timeout, $http, $cordovaFacebook, $cordovaGeolocation, $cordovaMedia,
             $log, $state, $q, $ionicHistory, ParseService, LocalDB, $localStorage, $interval,
-            $analytics, $translate, adMob, $cordovaBadge) {
+            $translate, adMob, $cordovaBadge) {
 
             var server = ParseService
 
@@ -172,7 +172,7 @@ function onNotificationOpen(pnObj) {
             }
 
             function facebookLogin(facebookResponse) {
-                $analytics.eventTrack('facebookLogin')
+                //$analytics.eventTrack('facebookLogin')
                 return server.facebookLogin(facebookResponse).then(user => {
                     service.userId = user.id
                     return postLogin(user)
@@ -180,7 +180,7 @@ function onNotificationOpen(pnObj) {
             }
 
             function linkedInLogin(authData) {
-                $analytics.eventTrack('linkedInLogin')
+                //$analytics.eventTrack('linkedInLogin')
                 return server.linkedInLogin(authData).then(user => {
                     service.userId = user.id
                     return postLogin(user)
@@ -188,7 +188,7 @@ function onNotificationOpen(pnObj) {
             }
 
             function signUp(email, password) {
-                $analytics.eventTrack('signupEmail')
+                //$analytics.eventTrack('signupEmail')
                 return server.signUp(email, password).then(user => {
                     service.userId = user.id
                     return postLogin(user)
@@ -196,7 +196,7 @@ function onNotificationOpen(pnObj) {
             }
 
             function logIn(email, password) {
-                $analytics.eventTrack('loginEmail')
+                //$analytics.eventTrack('loginEmail')
                 return server.logIn(email, password).then(user => {
                     service.userId = user.id
                     return postLogin(user)
@@ -216,6 +216,10 @@ function onNotificationOpen(pnObj) {
             function postLogin(user) {
                 service.user = user
                 LocalDB.userId = user.id
+                if (typeof analytics !== 'undefined') {
+                    analytics.setUserId(user.id)
+                    analytics.trackView("UserLogin Controller")
+                }
                 LocalDB.getProfiles().then(profiles => {
                     for (let profile of profiles)
                         profileCache[profile.id] = profile
@@ -452,7 +456,7 @@ function onNotificationOpen(pnObj) {
             }
 
             function requestPasswordReset(email) {
-                $analytics.eventTrack('passwordReset')
+                //$analytics.eventTrack('passwordReset')
                 return server.requestPasswordReset(email)
             }
 
@@ -711,7 +715,7 @@ function onNotificationOpen(pnObj) {
             }
 
             function logout() {
-                $analytics.eventTrack('logout')
+                //$analytics.eventTrack('logout')
                 service.userId = null
                 service.fbId = null
                 service.profile = null
@@ -752,7 +756,7 @@ function onNotificationOpen(pnObj) {
             }
 
             function deleteAccount() {
-                $analytics.eventTrack('deleteAccount')
+                //$analytics.eventTrack('deleteAccount')
                 isAcntDelete = true
                 return server.deleteAccount().then(
                     () => {
@@ -773,7 +777,7 @@ function onNotificationOpen(pnObj) {
              * @returns {Promise.<T>}
              */
             function processMatch(profile, liked) {
-                $analytics.eventTrack('swipe', { liked: liked ? 'true' : 'false' })
+                //$analytics.eventTrack('swipe', { liked: liked ? 'true' : 'false' })
                 return server.processProfile(profile, liked).then(function(match) {
                     $log.log('processed match action')
                         // If it's a mutual match then run a mutual match sync
@@ -792,7 +796,7 @@ function onNotificationOpen(pnObj) {
              * @returns {Promise.<T>}
              */
             function processPregnancy(profile, impregnate) {
-                $analytics.eventTrack('processPregnancy', { impregnate: impregnate ? 'true' : 'false' })
+                //$analytics.eventTrack('processPregnancy', { impregnate: impregnate ? 'true' : 'false' })
                 return server.processPregnancy(profile, impregnate).then(function(match) {
                     $log.log('processed impregnate action' + match)
                         // If it's a mutual match then run a mutual match sync
@@ -809,7 +813,7 @@ function onNotificationOpen(pnObj) {
              * @param matchId
              */
             function removeMatch(matchId) {
-                $analytics.eventTrack('removeMatch')
+                //$analytics.eventTrack('removeMatch')
                 $log.log('removeMatch ' + matchId)
                 return server.removeMatch(matchId).then(function(result) {
                     // remove the match from our local db and memory copy
@@ -855,7 +859,7 @@ function onNotificationOpen(pnObj) {
             }
 
             function updateProfileSearchResults() {
-                $analytics.eventTrack('searchProfiles')
+                //$analytics.eventTrack('searchProfiles')
                 return server.searchProfiles(service.profile).then(function(profiles) {
                     service.profileSearchResults = profiles
                     $rootScope.$broadcast('newProfileSearchResults')
@@ -1162,7 +1166,7 @@ function onNotificationOpen(pnObj) {
 
 
             function sendChatMessage(matchId, text, imageBase64, audioBase64) {
-                $analytics.eventTrack('chatMessage')
+                //$analytics.eventTrack('chatMessage')
                 var match = _.find(matches, { 'id': matchId })
                 match.id = matchId
                 var message = new ChatMessage()
@@ -1188,7 +1192,7 @@ function onNotificationOpen(pnObj) {
 
 
             function reportProfile(reason, profile, match) {
-                $analytics.eventTrack('reportProfile')
+                //$analytics.eventTrack('reportProfile')
                 $log.log('reporting profile ' + JSON.stringify(profile))
                 return server.reportProfile(reason, profile, match)
             }
@@ -1196,7 +1200,7 @@ function onNotificationOpen(pnObj) {
 
 
             function sendContactMessage(message) {
-                $analytics.eventTrack('contactMessage')
+                //$analytics.eventTrack('contactMessage')
                 return server.sendContactMessage(message)
             }
 

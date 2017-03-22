@@ -89,7 +89,8 @@
     "cordova-plugin-console",
     "cordova-sqlite-storage",
     "cordova-plugin-facebook4@1.7.1",
-    "cordova-plugin-splashscreen"
+    "cordova-plugin-splashscreen",
+    "https://github.com/danwilson/google-analytics-plugin.git"
   ],
   "cordovaPlatforms": [
     "android",

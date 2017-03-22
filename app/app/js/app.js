@@ -2,7 +2,7 @@ var platformReady, fbJsSdkLoaded
 
 var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUtil', 'templates', 'controllers', 'controllers.share', 'service.app',
         'ui.slider', 'ngImgCrop', 'ngAnimate', 'pascalprecht.translate', 'emoji', 'ImgCache', 'monospaced.elastic',
-        'ngStorage', 'angulartics.parse', 'SocialAuth', 'ngCookies', 'filters', 'chart.js'
+        'ngStorage', 'SocialAuth', 'ngCookies', 'filters', 'chart.js'
         // Add your own extra dependencies on the line below with the comma first to make merging updates easier
 
     ])
@@ -28,6 +28,12 @@ var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUt
             }, function() {
                 $log.warn('ImgCache init: error! Check the log for errors')
             })
+
+            if (typeof analytics !== 'undefined') {
+                analytics.startTrackerWithId("UA-94067520-1")
+            } else {
+                window.alert("Google Analytics Unavailable")
+            }
 
             // Store the app version in the root scope
             if (window.cordova && window.cordova['getAppVersion'])

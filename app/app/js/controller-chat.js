@@ -82,8 +82,7 @@ angular.module('controllers')
 
 .controller('ChatCtrl', function($scope, $log, $timeout, $interval, $translate, $ionicScrollDelegate, $state,
     $stateParams, $ionicHistory, $ionicNavBarDelegate, $ionicActionSheet, $ionicPopup,
-    $ionicLoading, AppService, AppUtil, $cordovaCamera, $cordovaFile, $analytics,
-    ImagesUtil, $cordovaClipboard) {
+    $ionicLoading, AppService, AppUtil, $cordovaCamera, $cordovaFile, ImagesUtil, $cordovaClipboard) {
 
     var translations
     $translate(['UNMATCHED', 'REMOVE_MATCH', 'REPORT', 'MATCH_OPTIONS', 'CANCEL', 'REMOVE_MATCH_ERROR', 'MATCH_REPORTED', 'WANT_TO_REMOVE_MATCH', 'REMOVE', 'MESSAGE_NOT_SENT', 'REQUEST_FAILED']).then(function(translationsResult) {
@@ -461,7 +460,7 @@ angular.module('controllers')
         $log.log('playing audio from ' + url)
         new Audio(url).play()
             // TODO look at using https://github.com/SidneyS/cordova-plugin-nativeaudio
-        $analytics.eventTrack('audio-play')
+            //$analytics.eventTrack('audio-play')
     }
 
     /**
