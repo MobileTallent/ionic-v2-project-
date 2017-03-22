@@ -1378,8 +1378,8 @@ function onNotificationOpen(pnObj) {
 
             function playSound(file) {
                 if (ionic.Platform.isWebView()) { // Avoid an error when running in a desktop browser
-                    var media = new Media(filePath(file), null, null, null)
-                    media.play(media)
+                    var media = new Media(filePath(file))
+                    media.play({ playAudioWhenScreenIsLocked: false })
                 }
             }
         })
