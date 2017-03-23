@@ -279,11 +279,6 @@
                 var msgJson = msg.toJSON()
 
                 db.transaction(function(tx) {
-                    if (service.userId !== msg.sender) {
-                        // update the read flag to unread if the message doesn't exist in the local db
-                        tx.executeSql('UPDATE match SET read = 0 WHERE EXISTS (SELECT 1 FROM chat_message WHERE id = ?)', [msg.id])
-                    }
-
                     // (id varchar primary key, chat_message text, chat_id varchar, created_at integer)
                     tx.executeSql('INSERT OR IGNORE INTO chat_message ' +
                         '(id, chat_message, chat_id, created_at) ' +
@@ -294,6 +289,14 @@
 
                     // If the message is newer then update the match updated_at
                     tx.executeSql('UPDATE match SET updated_at = ?, last_message = ? WHERE id = ? and ? > updated_at', [msg.createdAt.getTime(), msg.lastMessage, msg.match.id, msg.createdAt.getTime()])
+
+                    if (service.userId !== msg.sender && isNew) {
+                        // update the read flag to unread if the message doesn't exist in the local db
+                        tx.executeSql('UPDATE match SET read = 0 WHERE EXISTS (SELECT 1 FROM chat_message WHERE id = ?)', [msg.id])
+                    } else if (service.userId !== msg.sender && !isNew) {
+                        // update the read flag to unread if the message doesn't exist in the local db
+                        tx.executeSql('UPDATE match SET read = 0 WHERE NOT EXISTS (SELECT 1 FROM chat_message WHERE id = ?)', [msg.id])
+                    }
 
                 }, function(e) {
                     deferred.reject(convertError(e))
