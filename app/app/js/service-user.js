@@ -780,8 +780,14 @@ function onNotificationOpen(pnObj) {
                 //$analytics.eventTrack('swipe', { liked: liked ? 'true' : 'false' })
                 return server.processProfile(profile, liked).then(function(match) {
                     $log.log('processed match action')
-                        // If it's a mutual match then run a mutual match sync
+                    if (typeof analytics !== 'undefined') {
+                        analytics.trackView("Swipe Controller")
+                    }
+                    // If it's a mutual match then run a mutual match sync
                     if (match && match.state === 'M') {
+                        if (typeof analytics !== 'undefined') {
+                            analytics.trackView("Match Controller")
+                        }
                         synchronizeMutualMatches()
                     }
                 }, function(error) {
@@ -1167,6 +1173,9 @@ function onNotificationOpen(pnObj) {
 
             function sendChatMessage(matchId, text, imageBase64, audioBase64) {
                 //$analytics.eventTrack('chatMessage')
+                if (typeof analytics !== 'undefined') {
+                    analytics.trackView("SendMessage Controller")
+                }
                 var match = _.find(matches, { 'id': matchId })
                 match.id = matchId
                 var message = new ChatMessage()
@@ -1322,6 +1331,9 @@ function onNotificationOpen(pnObj) {
             }
 
             function getClinicsQuestion() {
+                if (typeof analytics !== 'undefined') {
+                    analytics.trackView("Become A Parent Controller")
+                }
                 return server.getClinicsQuestion()
             }
 

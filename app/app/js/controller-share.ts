@@ -30,6 +30,9 @@ module app {
 			this.shareStoreUrl = ionic.Platform.isAndroid() ? this.playStoreUrl : ionic.Platform.isIOS() ? this.itunesUrl : this.webStoreUrl
 			this.$cordovaSocialSharing.share(this.socialShareSubject, this.socialShareMessage, null, this.shareStoreUrl) // Share via native share sheet 
 				.then(() => {
+					if (typeof analytics !== 'undefined') {
+						analytics.trackView("Invite My Friends Controller")
+					}
 					this.$log.debug('Social share action complete')
 				}, error => {
 					this.$log.error('Social share action error ' + JSON.stringify(error))
@@ -38,7 +41,7 @@ module app {
 	}
 
 	ShareController.$inject = ['$log', '$cordovaSocialSharing', 'socialShareMessage', 'socialShareSubject',
-			'playStoreUrl', 'itunesUrl', 'webStoreUrl']
+		'playStoreUrl', 'itunesUrl', 'webStoreUrl']
 	angular.module('controllers.share', ['constants', 'ngCordova.plugins.socialSharing', 'ionic'])
-			.controller('ShareController', ShareController)
+		.controller('ShareController', ShareController)
 }
