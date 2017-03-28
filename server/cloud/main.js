@@ -1058,6 +1058,19 @@ Parse.Cloud.define("RemoveMatch", function(request, response) {
     })
 });
 
+Parse.Cloud.define("GetProfileOfSelectedUser", function(request, response) {
+    var profileId = request.params.profileId
+
+    var profileQuery = new Parse.Query("Profile")
+
+    profileQuery.get(profileId, masterKey).then(function(profile) {
+        response.success(_processProfile(profile))
+    }, function(error) {
+        console.log(JSON.stringify(error))
+        response.error(error)
+    })
+});
+
 
 
 /**

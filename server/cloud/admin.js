@@ -20,13 +20,13 @@ Parse.Cloud.define('GetReportedUsers', function(request, response) {
     // 'Photo'
     // 'Msg' Chat message
     // type (spam, offensive)
-
     new Parse.Query('Report')
+        .include('profile')
         .doesNotExist('actionTaken')
         .descending('createdAt')
         .find()
-        .then(function(result) {
-            response.success(_.map(result, report => report.toJSON()))
+        .then(function(reports) {
+            response.success(_.map(reports, report => report.toJSON()))
         }, function(error) {
             response.error(error)
         })
@@ -83,6 +83,7 @@ Parse.Cloud.define('DeletePhoto', function(request, response) {
 
         //console.log('report ' + JSON.stringify(report))
         //console.log('reportedBy ' + JSON.stringify(report.get('reportedBy')))
+        Parse.Cloud.useMasterKey()
         reportedUserId = report.get('reportedUser').id
 
         var profile = report.get('profile')
@@ -99,13 +100,13 @@ Parse.Cloud.define('DeletePhoto', function(request, response) {
         return profile.save()
 
     }).then(function(result) {
-        return Parse.Push.send({
+        Parse.Cloud.useMasterKey()
+        Parse.Push.send({
             channels: ['user_' + reportedUserId],
             data: {
                 type: 'reloadProfile'
             }
         })
-    }).then(function(result) {
         response.success(null)
     }, function(error) {
         response.error(error)
@@ -299,3 +300,57 @@ Parse.Cloud.define('LoadUser', function(request, response) {
         response.error(error)
     })
 })
+
+
+/**
+ * Process another users profile for security etc before returning it from a search or mutual match
+ */
+function _processProfile(profile) {
+
+    profile = profile.toJSON()
+
+    if (profile.birthdate) {
+        profile.age = _calculateAge(profile.birthdate)
+        delete profile.birthdate
+    }
+    if (profile.location)
+        delete profile.location.__type // &@(& Parse - converts latitude to _latitude otherwise
+    delete profile.notifyMatch
+    delete profile.notifyMessage
+    delete profile.ageFrom
+    delete profile.ageTo
+    delete profile.guys
+    delete profile.girls
+    delete profile.distance
+    delete profile.photosInReview
+    delete profile.distanceType
+    delete profile.error
+
+    return profile
+        // // http://stackoverflow.com/questions/25297590/saving-javascript-object-that-has-an-array-of-parse-files-causes-converting-cir
+        // var photos = profile.get('photos')
+        // photos = _.map(photos, function(file) {
+        // 	return {name: file.name, url: file.url(), __type: 'File'}
+        // })
+        // profile.set('photos', photos)
+}
+
+/**
+ * @param {Date} birthday
+ * @returns {number} age in years
+ */
+function _calculateAge(birthday) {
+    if (!birthday) return 0 // avoid exception from dodgy data
+    var birthdayTime
+    if (birthday.iso)
+        birthdayTime = new Date(birthday.iso).getTime()
+    else if (_.isDate(birthday))
+        birthdayTime = birthday.getTime()
+    else {
+        console.error('_calculateAge cant get birthday time from ', birthday)
+        console.log('_calculateAge cant get birthday time from' + birthday)
+    }
+    var ageDifMs = Date.now() - birthdayTime
+    var ageDate = new Date(ageDifMs) // miliseconds from epoch
+    return Math.abs(ageDate.getUTCFullYear() - 1970)
+}

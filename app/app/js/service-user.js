@@ -99,6 +99,7 @@ function onNotificationOpen(pnObj) {
                 goToNextLoginState: goToNextLoginState,
                 loadProfile: loadProfile,
                 getProfile: getProfile,
+                getProfileOfSelectedUser: getProfileOfSelectedUser,
                 getProfileById: getProfileById,
                 getProfileByUserId: getProfileByUserId,
                 getProfileByMatchId: getProfileByMatchId,
@@ -479,6 +480,14 @@ function onNotificationOpen(pnObj) {
                         service.profile = result
                         return service.profile
                     })
+            }
+
+            /**
+             * Get the profile for a unmatched selected user for reporting purposes.
+             * @returns {IProfile}
+             */
+            function getProfileOfSelectedUser(profileId) {
+                return server.getProfileOfSelectedUser(profileId)
             }
 
             /**

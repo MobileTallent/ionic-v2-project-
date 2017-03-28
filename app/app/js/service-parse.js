@@ -272,6 +272,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         copyFacebookProfile: copyFacebookProfile,
         getUserId: getUserId,
         getProfile: getProfile,
+        getProfileOfSelectedUser: getProfileOfSelectedUser,
         getProfileForMatch: getProfileForMatch,
         convertLocation: convertLocation,
         saveSettings: saveSettings,
@@ -522,6 +523,24 @@ angular.module('service.parse', ['constants', 'parse-angular'])
                 user.profile = profile
                 return profile
             }).catch(_unwrapError)
+    }
+
+    /**
+     * Loads the profile for the selected unmatched user, and attempts to create one if it doesn't exist by re-saving the user
+     * @param profileId the profileId to lookup 
+     * @returns {IPromise<Profile>} A promise which resolves to the profile of the selected unmatched user, or null if unavailable for reporting
+     */
+    function getProfileOfSelectedUser(profileId) {
+        return Parse.Cloud.run('GetProfileOfSelectedUser', { profileId: profileId })
+            .then(profile => {
+                profile = fromJSON(profile, 'Profile')
+                return profile
+            }).catch(_unwrapError)
+            //return new Parse.Query(Profile).get(profileId)
+
+        // var profileRequest = new Parse.Query(Profile)
+        // profileRequest.equalTo('objectId', profileId)
+        // return profileRequest.limit(1).find()
     }
 
 

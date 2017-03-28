@@ -11,6 +11,7 @@ module app {
 
 		saveProfile(updates:IProfile): ng.IPromise<IProfile>
 		getProfile(): IProfile
+		getProfileOfSelectedUser(profileId:string): IProfile
 		getProfileByUserId(id:string): IProfile
 		getProfilesWhoLikeMe(): ng.IPromise<IProfile[]>
 		processMatch(profile:IProfile, liked:boolean): ng.IPromise<IMatch>

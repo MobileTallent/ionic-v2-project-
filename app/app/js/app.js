@@ -32,7 +32,7 @@ var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUt
             if (typeof analytics !== 'undefined') {
                 analytics.startTrackerWithId("UA-94067520-1")
             } else {
-                window.alert("Google Analytics Unavailable")
+                console.log("Google Analytics Unavailable")
             }
 
             // Store the app version in the root scope
