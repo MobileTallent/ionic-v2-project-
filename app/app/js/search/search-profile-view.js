@@ -27,7 +27,7 @@ angular.module('ionicApp')
 		$scope.profileOptions = () => {
 			$ionicActionSheet.show({
 				destructiveText: translations.REPORT,
-				titleText: translations.MATCH_OPTIONS,
+				titleText: translations.INAPPROPRIATE_CONTENT,
 				cancelText: translations.CANCEL,
 				cancel: function () { },
 				destructiveButtonClicked: function (index) {

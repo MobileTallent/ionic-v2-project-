@@ -51,12 +51,157 @@
                         <p>* You still need to write a little about yourself.</p>
             </div>
             <br/>
-
-            <div class="text-align center padding-25">
-                <button class="button button-positive" ng-click="vm.saveProfile()">&nbsp;{{'SAVE' | translate}}&nbsp;</button>
-            </div>
-
         </div>
+
+
+                    <!--Self definition filter cards. -->
+
+            <div class="about-you-header"><b class="padding-5">About Why You're Here</b>
+
+
+                <div ng-init="isTierOneOpen = true; isTierTwoOpen = false; isTierThreeOpen = false;">
+                    <!--Tier one-->
+                    <div class="card" style="padding-right: 20px;padding-left: 20px; padding-top: 30px;" ng-show="isTierOneOpen">
+                        <ul>
+                            <!--The user selects ONE of the below-->
+
+                            <li class=" filter-radio-li">
+                                <div class="row">
+                                    <input type="radio" id="option-1" name="teir-1" />
+
+                                    <label class="col-80 center" style="margin-right: 5px;" for="option-1">I'm not quite ready but I'm certainly curious.</label>
+                                    <div class="col-20 center" style="vertical-align: middle;">
+                                        <div class="check"></div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class=" filter-radio-li">
+                                <div class=" row">
+                                    <input type="radio" id="option-2" name="teir-1" />
+
+                                    <label class="col-80 center" style="margin-right: 5px;" for="option-2">I'm ready, now, I'm pretty serious</label>
+                                    <div class="col-20 center" style="vertical-align: middle;">
+                                        <div class="check"></div>
+                                    </div>
+                                </div>
+                            </li>
+
+                        </ul>
+                        <div class="nav-button-row-filter-card">
+
+                            <div class="nav-button-container-center">
+                                <a class="button button-icon icon ion-arrow-right-a text-colour-energized" ng-click="isTierOneOpen = false; isTierTwoOpen = true;">
+
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+                    <!--Tier Two-->
+                    <div class="card" style="padding: 10px;" ng-show="isTierTwoOpen">
+                        <ul>
+                            <!--The user can select many options of the next three-->
+
+                            <li class="filter-card-li">
+                                <ion-checkbox class="checkbox-assertive item-checkbox-right item-text-wrap filter-checkbox checkbox-square">
+                                    <label class="checkbox-label">I/we have plenty of sperm.</label>
+                                </ion-checkbox>
+                            </li>
+
+
+                            <li class="filter-card-li">
+                                <ion-checkbox class="checkbox-assertive item-checkbox-right item-text-wrap filter-checkbox checkbox-square">
+                                    <label class="checkbox-label">I/we are good for eggs.</label>
+                                </ion-checkbox>
+                            </li>
+                            <li class="filter-card-li">
+                                <ion-checkbox class="checkbox-assertive item-checkbox-right item-text-wrap filter-checkbox checkbox-square">
+                                    <label class="checkbox-label">I/we have an embryo.</label>
+                                </ion-checkbox>
+                            </li>
+
+                            <li class="filter-card-li">
+                                <ion-checkbox class="checkbox-assertive item-checkbox-right item-text-wrap filter-checkbox checkbox-square">
+                                    <label class="checkbox-label">I/we have a womb.</label>
+                                </ion-checkbox>
+                            </li>
+
+                            <!--This options selects the preceeding three-->
+                            <li style="border-bottom: 1px solid #d1d1d1; margin: 5px;"></li>
+
+
+                             <li class="filter-radio-li">
+                                <div class=" row">
+                                    <input type="radio" id="option-4" name="teir-3" />
+
+                                    <label class="col-80 center" style="margin-right: 5px;" for="option-4">I need help with all of the above.</label>
+                                    <div class="col-20 center" style="vertical-align: middle;">
+                                        <div class="check"></div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="nav-button-row-filter-card">
+                            <div class="nav-button-container-left">
+                                <a class="button button-icon icon ion-arrow-left-a text-colour-energized" ng-click="isTierThreeOpen = false; isTierTwoOpen = false; isTierOneOpen = true"></a>
+                            </div>
+                            <div class="nav-button-container-right">
+                                <a class="button button-icon icon ion-arrow-right-a text-colour-energized" ng-click="isTierOneOpen = false; isTierTwoOpen = false; isTierThreeOpen = true;"></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Tier Three-->
+                    <div class="card" style="padding-right: 20px;padding-left: 20px; padding-top: 30px;" ng-show="isTierThreeOpen">
+                        <ul>
+                            <li class="filter-radio-li">
+                                <div class=" row">
+                                    <input type="radio" id="option-3" name="teir-3" />
+
+                                    <label class="col-80 center" style="margin-right: 5px;" for="option-3">I'm hoping for a child, I'd consider helping others if it felt right.</label>
+                                    <div class="col-20 center" style="vertical-align: middle;">
+                                        <div class="check"></div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class=" filter-radio-li">
+                                <div class=" row">
+                                    <input type="radio" id="option-5" name="teir-3" />
+
+                                    <label class="col-80 center" style="margin-right: 5px;" for="option-5">I'm solely here to help others with thier dream.</label>
+                                    <div class="col-20 center" style="vertical-align: middle;">
+                                        <div class="check"></div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class=" filter-radio-li">
+                                <div class=" row">
+                                    <input type="radio" id="option-6" name="teir-3" />
+
+                                    <label class="col-80 center" style="margin-right: 5px;" for="option-6">I'm hoping for a child and I'm not able to help others, sorry.</label>
+                                    <div class="col-20 center" style="vertical-align: middle;">
+                                        <div class="check"></div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <div class="nav-button-row-filter-card">
+                            <div class="nav-button-container-center">
+                                <a class="button button-icon icon ion-arrow-left-a text-colour-energized" ng-click="isTierOneOpen = false; isTierTwoOpen = true; isTierThreeOpen = false;"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-align center padding-25">
+                        <button class="button button-positive" ng-click="vm.saveProfile()">&nbsp;{{'SAVE' | translate}}&nbsp;</button>
+                    </div>
+
+                </div>
 
     </ion-content>
 </ion-view>

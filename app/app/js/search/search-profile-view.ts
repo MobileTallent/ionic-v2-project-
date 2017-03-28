@@ -11,7 +11,7 @@ module app {
 					private $ionicActionSheet, private AppUtil:AppUtil, private AppService:IAppService,
 					private $translate:ITranslateService) {
 
-			$translate(['REQUEST_FAILED', 'REPORT', 'MATCH_OPTIONS', 'CANCEL']).then(translationsResult => {
+			$translate(['REQUEST_FAILED', 'REPORT', 'INAPPROPRIATE_CONTENT', 'CANCEL']).then(translationsResult => {
 				this.translations = translationsResult
 			})
 			$scope.$on('$ionicView.beforeEnter', (event, data) => this.ionViewWillEnter())
@@ -37,7 +37,7 @@ module app {
 		profileOptions() {
 			this.$ionicActionSheet.show({
 				destructiveText: this.translations.REPORT,
-				titleText: this.translations.MATCH_OPTIONS,
+				titleText: this.translations.INAPPROPRIATE_CONTENT,
 				cancelText: this.translations.CANCEL,
 				cancel: function() {/**/},
 				destructiveButtonClicked: index => {

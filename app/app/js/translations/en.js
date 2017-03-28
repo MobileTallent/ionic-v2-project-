@@ -136,6 +136,7 @@ var TRANSLATION_EN = {
     'UNMATCHED': 'You were unmatched',
     'MATCH_REPORTED': 'Match reported',
     'WANT_TO_REMOVE_MATCH': 'Do you want to remove this match?',
+    'INAPPROPRIATE_CONTENT': 'Report user for inappropriate content',
 
     'COPY_TEXT': 'Copy text',
     'SAVE_IMAGE': 'Save image',
