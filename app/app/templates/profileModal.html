@@ -19,7 +19,7 @@
             <ion-slide ng-repeat="photo in vm.profile.photos track by $index">
                 <img ng-src="{{photo.url()}}" style="width:100%" />
             </ion-slide>
-            <ion-slide ng-if="!profile.photos.length">
+            <ion-slide ng-if="!vm.profile.photos.length">
                 <img src="img/generic_avatar.jpg" style="width:100%" />
             </ion-slide>
         </ion-slide-box>
