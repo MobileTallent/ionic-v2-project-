@@ -1334,8 +1334,8 @@ Parse.Cloud.define('AddFindUsReport', function(request, response) {
 /* Get Find Us Report for analysis*/
 Parse.Cloud.define('GetFindUsReport', function(request, response) {
     console.log('GetFindUsReport')
-    new Parse.Query(FindUsReport).find().then(function(result) {
-        console.log("Successs " + JSON.stringify(result))
+    new Parse.Query(FindUsReport).descending('createdAt').limit(10000).find().then(function(result) {
+        console.log("Successs " + result.length)
         response.success(result)
     }, function(error) {
         console.log("Erroorrr: " + JSON.stringify(error))
