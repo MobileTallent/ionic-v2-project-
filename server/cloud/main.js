@@ -1194,6 +1194,24 @@ Parse.Cloud.afterSave("ContactMessage", function(request) {
     })
 })
 
+Parse.Cloud.beforeSave('Report', function(request, response) {
+    request.object.set('reportedByUser', request.user)
+    request.object.setACL(new Parse.ACL())
+    response.success()
+})
+
+Parse.Cloud.afterSave("Report", function(request) {
+    var user = request.user
+    var report = request.object
+
+    var message = 'New Report Message from user ' + user.id + ' reporting another user ' + report.get('reportedUser') + '. Reason: ' + report.get('reason')
+    console.log("Sending report message " + message)
+
+    Email.sendAdminEmail('Reported User', message).then(function(result) {}, function(error) {
+        console.error('Error sending report message email: ' + error)
+    })
+})
+
 /* Add/Edit Clinic Questions */
 Parse.Cloud.define('AddClinicsQuestion', function(request, response) {
     console.log('AddClinicsQuestion')
