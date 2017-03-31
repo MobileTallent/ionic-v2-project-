@@ -299,6 +299,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
         // admin functions
         getReportedUsers: getReportedUsers,
+        getBannedUsers: getBannedUsers,
         getReportedUserDetails: getReportedUserDetails,
         deletePhoto: deletePhoto,
         banUser: banUser,
@@ -850,6 +851,12 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
     function getReportedUsers() {
         return Parse.Cloud.run('GetReportedUsers')
+            .then(reports => _.map(reports, toId))
+            .catch(_unwrapError)
+    }
+
+    function getBannedUsers() {
+        return Parse.Cloud.run('GetBannedUsers')
             .then(reports => _.map(reports, toId))
             .catch(_unwrapError)
     }

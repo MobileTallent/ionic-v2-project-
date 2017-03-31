@@ -138,6 +138,7 @@ function onNotificationOpen(pnObj) {
 
                 // Admin functions
                 getReportedUsers: getReportedUsers,
+                getBannedUsers: getBannedUsers,
                 getReportedUserDetails: getReportedUserDetails,
                 deletePhoto: deletePhoto,
                 banUser: banUser,
@@ -1290,6 +1291,10 @@ function onNotificationOpen(pnObj) {
 
             function getReportedUsers() {
                 return server.getReportedUsers()
+            }
+
+            function getBannedUsers() {
+                return server.getBannedUsers()
             }
 
             function getReportedUserDetails(report) {

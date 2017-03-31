@@ -17,6 +17,15 @@ angular.module('ionicApp').config(function($stateProvider) {
                 }
             }
         })
+        .state('menu.bannedUsers', {
+            url: "/bannedUsers",
+            views: {
+                'menuContent': {
+                    templateUrl: "admin/bannedUsers.html",
+                    controller: "BannedUsers"
+                }
+            }
+        })
         .state('menu.adminEmailSearch', {
             url: "/adminEmailSearch",
             views: {

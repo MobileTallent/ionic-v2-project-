@@ -8,8 +8,8 @@ module app {
 
 		public user: IUser
 
-		constructor(private $ionicPopup, private $log:ng.ILogService, private $scope:ng.IScope, private $ionicHistory,
-					private $state, private $stateParams, private AppService:IAppService, private AppUtil:AppUtil) {
+		constructor(private $ionicPopup, private $log: ng.ILogService, private $scope: ng.IScope, private $ionicHistory,
+			private $state, private $stateParams, private AppService: IAppService, private AppUtil: AppUtil) {
 
 			$scope.$on('$ionicView.beforeEnter', () => {
 				this.$log.log('UserAdmin ' + this.$stateParams.userId)
@@ -50,13 +50,15 @@ module app {
 			}).then(function (res) {
 				if (res)
 					myThis.AppUtil.blockingCall(
-						myThis.AppService.banUser(myThis.user.id),
+						myThis.AppService.reportProfile('admin reporting reasons', myThis.user.profile, null),
 						() => {
-							myThis.AppUtil.toastSimple('User banned')
-							myThis.$log.info('Banned user ' + myThis.user.id)
-							myThis.$ionicHistory.goBack()
-						}
-					)
+							myThis.AppService.banUser(myThis.user.id).then(
+								() => {
+									myThis.AppUtil.toastSimple('User banned')
+									myThis.$log.info('Banned user ' + myThis.user.id)
+									myThis.$ionicHistory.goBack()
+								})
+						})
 			})
 		}
 

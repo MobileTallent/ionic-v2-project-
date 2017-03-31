@@ -1,0 +1,21 @@
+<ion-view view-title="Banned Users" ng-controller="BannedUsers as vm">
+    <ion-nav-buttons side="right">
+        <i class="button button-icon icon ion-android-refresh" ng-click="vm.refresh()"></i>
+    </ion-nav-buttons>
+    <ion-content>
+        <div ng-show="!vm.reports.length" style="text-align: center">
+            <br/> None
+            <br/>
+        </div>
+        <div class="list">
+            <a class="item item-avatar" ng-repeat="report in vm.reports track by report.id" ng-click="vm.viewDetails(report)">
+                <img ng-src="{{::report.profile | profileImageUrl}}" img-cache>
+                <h2>{{::report.profile.name}}</h2>
+                <p>
+                    {{report.createdAt | date}}<br/> Source: {{report.reason}}<br/>
+                </p>
+            </a>
+        </div>
+
+    </ion-content>
+</ion-view>

@@ -32,6 +32,22 @@ Parse.Cloud.define('GetReportedUsers', function(request, response) {
         })
 })
 
+Parse.Cloud.define('GetBannedUsers', function(request, response) {
+    if (!checkAdmin(request, response))
+        return
+
+    new Parse.Query('Report')
+        .include('profile')
+        .equalTo('actionTaken', 'banned')
+        .descending('createdAt')
+        .find()
+        .then(function(reports) {
+            response.success(_.map(reports, report => report.toJSON()))
+        }, function(error) {
+            response.error(error)
+        })
+})
+
 Parse.Cloud.define('GetReportedUserDetails', function(request, response) {
     if (!checkAdmin(request, response))
         return

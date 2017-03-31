@@ -4,7 +4,7 @@ module app {
 	/**
 	 * Controller
 	 */
-	export class ReportedUsers {
+	export class BannedUsers {
 
 
 		private $log:ng.ILogService
@@ -49,7 +49,7 @@ module app {
 
 		public refresh() {
 			this.AppUtil.blockingCall(
-				this.AppService.getReportedUsers(),
+				this.AppService.getBannedUsers(),
 				reports => this.reports = reports
 			)
 		}
@@ -148,7 +148,7 @@ module app {
 
 	}
 
-	ReportedUsers.$inject = ['$log', '$rootScope', '$scope', '$q', '$state', '$ionicModal', '$ionicActionSheet',
+	BannedUsers.$inject = ['$log', '$rootScope', '$scope', '$q', '$state', '$ionicModal', '$ionicActionSheet',
 		'AppService', 'AppUtil', '$translate']
-	angular.module('controllers').controller('ReportedUsers', ReportedUsers)
+	angular.module('controllers').controller('BannedUsers', BannedUsers)
 }
