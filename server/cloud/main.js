@@ -622,6 +622,8 @@ Parse.Cloud.define("ProcessMatch", function(request, response) {
     var userId = request.user.id
     var otherUserId = request.params.otherUserId
     var liked = request.params.liked
+    var forceConnect = request.params.forceConnect
+
 
     if (otherUserId == null)
         return response.error('otherUserId was not provided')
@@ -629,7 +631,7 @@ Parse.Cloud.define("ProcessMatch", function(request, response) {
     if (liked == null)
         return response.error('liked was not provided')
 
-    console.log('params ', userId, otherUserId, liked)
+    console.log('params ', userId, otherUserId, liked, forceConnect)
 
     var match
     var mutualMatch = false
@@ -681,9 +683,16 @@ Parse.Cloud.define("ProcessMatch", function(request, response) {
             match.set('state', 'P') // P for pending - this user was the first one to swipe
         else if (match.get('u1action') == 'R' || match.get('u2action') == 'R')
             match.set('state', 'R') // R for rejected
-        else if (match.get('u1action') == 'L' && match.get('u2action') == 'L') {
+        else if (match.get('u1action') == 'L' && match.get('u2action') == 'L' && match.get('state') != 'M') {
             match.set('state', 'M') // M for mutual like
             match.set('matchedDate', new Date())
+        }
+
+        if (forceConnect) {
+            if (liked && match.get('state') != 'M')
+                match.set('state', 'M')
+            else if (!liked)
+                match.set('state', 'R')
         }
 
         return match

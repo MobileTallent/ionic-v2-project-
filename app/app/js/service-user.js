@@ -118,6 +118,7 @@ function onNotificationOpen(pnObj) {
                 removeMatchNotification: removeMatchNotification,
                 deleteUnmatched: deleteUnmatched,
                 processMatch: processMatch,
+                processMatchFromAdmin: processMatchFromAdmin,
                 processPregnancy: processPregnancy,
                 getMutualMatches: getMutualMatches,
                 getMatch: getMatch,
@@ -787,8 +788,7 @@ function onNotificationOpen(pnObj) {
              * @returns {Promise.<T>}
              */
             function processMatch(profile, liked) {
-                //$analytics.eventTrack('swipe', { liked: liked ? 'true' : 'false' })
-                return server.processProfile(profile, liked).then(function(match) {
+                return server.processProfile(profile, liked, false).then(function(match) {
                     $log.log('processed match action')
                     if (typeof analytics !== 'undefined') {
                         analytics.trackView("Swipe Controller")
@@ -804,6 +804,26 @@ function onNotificationOpen(pnObj) {
                     $log.error('error processing match ' + JSON.stringify(error))
                 })
             }
+
+            /**
+             * Process a like/pass on a profile from an admin POV
+             * @param profile
+             * @param {boolean} liked
+             * @param {boolean} forceConnect
+             * @returns {Promise.<T>}
+             */
+            function processMatchFromAdmin(profile, liked, forceConnect) {
+                return server.processProfile(profile, liked, forceConnect).then(function(match) {
+                    $log.log('processed match action from admin')
+
+                    if (match && match.state === 'M') {
+                        synchronizeMutualMatches()
+                    }
+                }, function(error) {
+                    $log.error('error processing match from admin' + JSON.stringify(error))
+                })
+            }
+
 
             /**
              * Process a pregnancy invitation on a profile

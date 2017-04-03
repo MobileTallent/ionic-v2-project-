@@ -617,11 +617,12 @@ angular.module('service.parse', ['constants', 'parse-angular'])
      * Processes a like/pass of a profile. If its a mutual match, then the Match object will be returned
      * @param {Profile} profile
      * @param {boolean} liked true if the user liked the profile, false if the user passed/rejected
+     * @param {boolean} forceConnect true if the action is from an admin wishing to establish connection
      * @returns {Promise<Match>} a promise resolving to a Match if it was a mutual match, else null
      */
-    function processProfile(profile, liked) {
+    function processProfile(profile, liked, forceConnect) {
         // TODO rename cloud function to ProcessProfile
-        return Parse.Cloud.run('ProcessMatch', { otherUserId: profile.uid, liked: liked })
+        return Parse.Cloud.run('ProcessMatch', { otherUserId: profile.uid, liked: liked, forceConnect: forceConnect })
             .then(match => fromJSON(match, 'Match')).catch(_unwrapError)
     }
 
