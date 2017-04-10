@@ -688,7 +688,7 @@ function onNotificationOpen(pnObj) {
                 var timeout = 10000
                 var q = $q.defer()
                     // If on Android then use the plugin which uses the Fused Location Provider
-                if (ionic.Platform.isAndroid() && cordova.plugins.locationServices) {
+                if (ionic.Platform.isAndroid() && typeof cordova !== 'undefined' && cordova.plugins.locationServices) {
 
                     $log.log('locationServices.geolocation.getCurrentPosition()')
                     cordova.plugins.locationServices.geolocation.getCurrentPosition(
