@@ -92,8 +92,8 @@
     "cordova-plugin-splashscreen",
     "https://github.com/danwilson/google-analytics-plugin.git",
     "cordova-plugin-request-location-accuracy",
-    "cordova-plugin-locationservices",
-    "cordova.plugins.diagnostic"
+    "cordova.plugins.diagnostic",
+    "cordova-plugin-locationservices"
   ],
   "cordovaPlatforms": [
     "android",
