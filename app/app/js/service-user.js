@@ -107,6 +107,7 @@ function onNotificationOpen(pnObj) {
                 saveProfile: saveProfile,
                 saveSettings: saveSettings,
                 enableDiscovery: enableDiscovery,
+                requestLocationServices: requestLocationServices,
                 getCurrentPosition: getCurrentPosition,
                 copyFacebookProfile: copyFacebookProfile,
                 setPhoto: setPhoto,
@@ -641,14 +642,79 @@ function onNotificationOpen(pnObj) {
                 return service.profile.birthdate && service.profile.name && service.profile.gender
             }
 
+            /**
+             * Checks if the location services (Google Play Location services on Android) are enabled, and if not enabled then
+             * asks the user to enable it.
+             * @return Promise<void>
+             */
+            function requestLocationServices() {
+                $log.log('requestLocationServices()')
 
+                if (!ionic.Platform.isWebView())
+                    return $q.resolve()
+
+                var q = $q.defer()
+                $log.log('locationAccuracy.request()')
+                cordova.plugins.locationAccuracy.request(
+                    function() {
+                        $log.log("locationAccuracy.request() = success")
+                        q.resolve()
+                    },
+                    function(error) {
+                        $log.log("locationAccuracy.request() = error: " + JSON.stringify(error))
+                        if (error) {
+                            // Android only
+                            if (error.code !== cordova.plugins.locationAccuracy.ERROR_USER_DISAGREED) {
+                                if (window.confirm("Failed to automatically set Location Mode to 'High Accuracy'. Would you like to switch to the Location Settings page and do this manually?")) {
+                                    $log.log('diagnostic.switchToLocationSettings()')
+                                    cordova.plugins.diagnostic.switchToLocationSettings()
+                                    $log.log('diagnostic.switchToLocationSettings() returned')
+                                }
+                            }
+                        }
+                        q.resolve()
+                    }, cordova.plugins.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY // REQUEST_PRIORITY_LOW_POWER //REQUEST_PRIORITY_BALANCED_POWER_ACCURACY // iOS will ignore this
+                )
+                return q.promise
+            }
+
+            /**
+             * Get the current location of the user. This check the app has permission to get the users location
+             * @return Promise<ILocation>
+             */
             function getCurrentPosition() {
                 // see http://stackoverflow.com/questions/3397585/navigator-geolocation-getcurrentposition-sometimes-works-sometimes-doesnt
                 $log.log('getCurrentPosition()')
-
                 var timeout = 10000
                 var q = $q.defer()
+                    // If on Android then use the plugin which uses the Fused Location Provider
+                if (ionic.Platform.isAndroid() && cordova.plugins.locationServices) {
 
+                    $log.log('locationServices.geolocation.getCurrentPosition()')
+                    cordova.plugins.locationServices.geolocation.getCurrentPosition(
+                        function(position) {
+                            $log.log('locationServices.geolocation.getCurrentPosition() = ' + JSON.stringify(position))
+                            if (!position || !position.coords) {
+                                q.reject('GEO_ERROR')
+                            } else {
+                                $log.log('latitude:' + position.coords.latitude + ', longitude: ' + position.coords.longitude)
+                                var geoPoint = server.convertLocation(position.coords.latitude, position.coords.longitude)
+                                q.resolve(geoPoint)
+                            }
+                        },
+                        function(error) {
+                            q.reject('GEO_ERROR')
+                            console.warn('locationServices error ' + JSON.stringify(error))
+                        }, {
+                            timeout: timeout,
+                            // priority: 102 // PRIORITY_BALANCED_POWER_ACCURACY
+                            // priority: 104 // PRIORITY_LOW_POWER
+                            priority: 100 // PRIORITY_HIGH_ACCURACY
+                        })
+                    return q.promise
+                }
+
+                $log.log('$cordovaGeolocation.getCurrentPosition()')
                 var geolocFail = function() {
                     $log.log('$cordovaGeolocation.getCurrentPosition did not return within the timeout')
                     q.reject('GEO_ERROR')

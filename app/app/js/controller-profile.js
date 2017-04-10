@@ -196,7 +196,7 @@ angular.module('controllers')
     $scope.logout = () => AppService.logout()
 })
 
-.controller('LocationSetupCtrl', function($scope, $translate, AppService, AppUtil, $ionicPopup) {
+.controller('LocationSetupCtrl', function($scope, $translate, AppService, AppUtil, $ionicPopup, $log) {
 
     var translations
     $translate(['SETTINGS_SAVE_ERROR', 'GPS_ERROR', 'SET_MAP_LOCATION']).then(function(translationsResult) {
@@ -246,12 +246,40 @@ angular.module('controllers')
     $scope.cancel = () => AppService.logout()
 
     $scope.$on('$ionicView.afterEnter', function(event) {
+        // Instruct the user to set their location on the map
         $ionicPopup.alert({
             title: translations.GPS_ERROR,
             template: translations.SET_MAP_LOCATION
         })
     })
 
+    // On iOS if the user has the location services off, then the initial request to get the location will fail
+    // but it will also open the users location settings. If the user then turns on the location services and
+    // returns to the app then we should try to get the location again, both when first arrive to this screen
+    // i.e. in $ionicView.beforeEnter, and then again on the resume listener
+    var checkLocation = function() {
+        $log.log('Checking for current position')
+        AppService.getCurrentPosition().then(function(location) {
+            $log.log('Found location ' + JSON.stringify(location))
+            AppUtil.toastSimple('Location found from GPS')
+            AppUtil.blockingCall(
+                AppService.saveProfile({ gps: false, location: { latitude: location.latitude, longitude: location.longitude } }),
+                () => AppService.goToNextLoginState(),
+                'SETTINGS_SAVE_ERROR'
+            )
+        }, function(error) {
+            $log.log('Couldn\'t get location on resume ' + error)
+        })
+    }
+
+    $scope.$on('$ionicView.beforeEnter', function(event) {
+        checkLocation()
+        document.addEventListener('resume', checkLocation)
+    })
+
+    $scope.$on('$ionicView.beforeLeave', function(event) {
+        document.removeEventListener('resume', checkLocation)
+    })
 })
 
 .controller('TermsOfUseCtrl', function($scope, AppService, AppUtil) {
