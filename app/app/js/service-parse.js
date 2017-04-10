@@ -23,7 +23,8 @@ var profileFields = [
     'location', 'gps',
     'enabled',
     'gender', 'guys', 'girls',
-    'ageFrom', 'ageTo'
+    'ageFrom', 'ageTo',
+    'personCategory', 'personType', 'personSperm', 'personEgg', 'personWomb', 'personEmbryo', 'personHelpLevel'
 ]
 
 var Profile = Parse.Object.extend({

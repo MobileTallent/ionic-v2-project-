@@ -26,6 +26,13 @@ module app {
 		public photos: ProfilePhoto[] = []
 		public photosInReview: ProfilePhoto[] = []
 		public about: string
+		public personCategory: string
+		public personType: string
+		public personSperm: boolean
+		public personEgg: boolean
+		public personWomb: boolean
+		public personEmbryo: boolean
+		public personHelpLevel: string
 
 		private $log: ng.ILogService
 		private $rootScope: app.IAppRootScope
@@ -63,12 +70,19 @@ module app {
 		private refresh() {
 			this.profile = this.AppService.getProfile()
 			this.about = this.profile.about
+			this.personCategory = this.profile.personCategory
+			this.personType = this.profile.personType
+			this.personSperm = this.profile.personSperm
+			this.personEgg = this.profile.personEgg
+			this.personWomb = this.profile.personWomb
+			this.personEmbryo = this.profile.personEmbryo
+			this.personHelpLevel = this.profile.personHelpLevel
 			this.photos = _.map(this.profile.photos, photo => new ProfilePhoto(photo))
 			this.photosInReview = this.profile.photosInReview
 				? _.map(this.profile.photosInReview, photo => new ProfilePhoto(photo))
 				: []
 
-			this.onRedirectToEditProfile()
+			this.onRedirectToEditProfile(false)
 		}
 
 
@@ -215,64 +229,59 @@ module app {
 		public saveProfile() {
 			let profileUpdate = <IProfile>{}
 			profileUpdate.about = this.about
-			this.AppUtil.blockingCall(
-				this.AppService.saveProfile(profileUpdate),
-				() => {
-					this.refresh()
-					this.$ionicHistory.nextViewOptions({
-						historyRoot: false,
-						disableBack: true
+			profileUpdate.personCategory = this.personCategory
+			if (this.personCategory === '3') {
+				profileUpdate.personType = '0'
+				profileUpdate.personSperm = false
+				profileUpdate.personEgg = false
+				profileUpdate.personWomb = false
+				profileUpdate.personEmbryo = false
+				profileUpdate.personHelpLevel = '0'
+			} else {
+				profileUpdate.personType = this.personType
+				profileUpdate.personSperm = this.personSperm
+				profileUpdate.personEgg = this.personEgg
+				profileUpdate.personWomb = this.personWomb
+				profileUpdate.personEmbryo = this.personEmbryo
+				profileUpdate.personHelpLevel = this.personHelpLevel
+			}
+
+			if (this.about)
+				this.AppUtil.blockingCall(
+					this.AppService.saveProfile(profileUpdate),
+					() => {
+						this.refresh()
+						this.$ionicHistory.nextViewOptions({
+							historyRoot: false,
+							disableBack: true
+						})
+						if (this.profile.about) {
+							this.$state.go('menu.profile')
+						}
 					})
-					if (this.profile.about) {
-						this.$state.go('menu.profile')
-					} 
-					
-
-				}
-			)
-
-
+			else
+				this.onRedirectToEditProfile(true);
 		}
+
 		/**
 		 * Custom go back
 		 */
-		// public myGoBack() {
-		// 	if (this.profile.about) {
-		// 		let profileUpdate = <IProfile>{}
-		// 		profileUpdate.about = this.about
-		// 		this.AppUtil.blockingCall(
-		// 			this.AppService.saveProfile(profileUpdate),
-		// 			() => {
-		// 				this.refresh()
-		// 				this.$ionicHistory.nextViewOptions({
-		// 					historyRoot: false,
-		// 					disableBack: true
-		// 				})
-		// 				this.$ionicHistory.goBack()
-		// 			}
-		// 		)
-		// 	} else {
-		// 		this.onRedirectToEditProfile();
-		// 	}
+		public myGoBack() {
+			if (this.profile.about)
+				this.$ionicHistory.goBack()
+			else
+				this.onRedirectToEditProfile(false);
+		}
 
-		// }
-
-		public onRedirectToEditProfile() {
-			if (!this.profile.about) {
+		public onRedirectToEditProfile(forceShow) {
+			if (!this.profile.about || forceShow) {
 				var alertPopup = this.$ionicPopup.alert({
 					title: 'We need more information',
 					cssClass: 'center',
 					template: 'Your "About Me" section is empty.</br> Everyone is looking for someone with a compatible vision. A deep description adds value to the community, tell us about you.'
-				});
-
+				})
 			}
-
 		}
-
-
-
-
-
 	}
 
 	ProfileEdit.$inject = ['$log', '$rootScope', '$scope', '$q', '$state', '$ionicActionSheet', '$cordovaCamera',

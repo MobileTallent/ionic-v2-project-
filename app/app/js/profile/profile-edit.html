@@ -1,7 +1,7 @@
 <ion-view view-title="{{'EDIT_PROFILE_TITLE' | translate}}" cache-view="false" ng-controller="ProfileEdit as vm">
 
     <ion-nav-bar class="bar-positive">
-        <ion-nav-back-button class="button-clear" ng-click="vm.saveProfile()">
+        <ion-nav-back-button class="button-clear" ng-click="vm.myGoBack()">
             <i class="icon ion-ios-arrow-back"></i>
         </ion-nav-back-button>
     </ion-nav-bar>
@@ -15,8 +15,7 @@
         </div>
         <div class="row">
             <div class="col col-33" ng-repeat="photo in vm.photos track by $index">
-                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}"
-                    class="profileImg">
+                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}" class="profileImg">
             </div>
             <div class="col col-33" id="addPhoto" ng-if="vm.canAddPhoto()">
                 <img ng-src="{{vm.NO_IMAGE}}" ng-click="vm.addPhoto()" class="profileImg" />
@@ -29,8 +28,7 @@
         </div>
         <div class="row" ng-if="vm.photosInReview.length">
             <div class="col col-33" ng-repeat="photo in vm.photosInReview track by $index">
-                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}"
-                    class="profileImg">
+                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}" class="profileImg">
             </div>
         </div>
 
@@ -40,9 +38,8 @@
             </div>
             <h5 class="about-you-info padding-5">{{'ABOUT_YOU' | translate}}</h5>
 
-            <div ng-class="{'red-border': vm.profile.about == vm.about || !vm.about}">
-                <textarea rows="6" class="wide input-grey text-size-18 padding-15 " placeholder="Type Here..." id="aboutYou" ng-model="vm.about"
-                    ng-keyup="vm.expandText()" ng-keydown="vm.expandText()">
+            <div ng-class="!vm.about ? 'red-border' : ''">
+                <textarea rows="6" class="wide input-grey text-size-18 padding-15 " placeholder="Type Here..." id="aboutYou" ng-model="vm.about" ng-keyup="vm.expandText()" ng-keydown="vm.expandText()">
                     </textarea>
 
             </div>
@@ -56,32 +53,28 @@
 
         <!--Self definition filter cards. -->
 
-        <div class="about-you-header hidden"><b class="padding-5">About Why You're Here</b>
-
-
+        <div class="about-you-header"><b class="padding-5">About Why You're Here</b>
             <div ng-init="isTierOneOpen = true; isTierTwoOpen = false; isTierThreeOpen = false;">
-
                 <!--Tier one-->
-                <div class="card" style="padding-right: 20px;padding-left: 20px; padding-top: 30px;" ng-show="isTierOneOpen">
+                <div class="card" ng-show="isTierOneOpen">
 
-                    <ion-radio ng-model="" ng-value="">Its just me for now.</ion-radio>
-                    <ion-radio ng-model="" ng-value="">I'm here with my partner.</ion-radio>
-
+                    <ion-radio name="category" ng-model="vm.personCategory" value="1">Its just me for now.</ion-radio>
+                    <ion-radio name="category" ng-model="vm.personCategory" value="2">I'm here with my partner.</ion-radio>
+                    <ion-radio name="category" ng-model="vm.personCategory" value="3">I represent an organization.</ion-radio>
 
                     <!--NAV BUTTONS-->
                     <div class="nav-button-row-filter-card">
                         <div class="nav-button-container-center">
-                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized" ng-click="isTierOneOpen = false; isTierTwoOpen = true;"></a>
+                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized" ng-hide="!vm.personCategory || vm.personCategory == '3'" ng-click="isTierOneOpen = false; isTierTwoOpen = true;"></a>
                         </div>
                     </div>
-
                 </div>
 
                 <!--Tier Two-->
                 <div class="card" style="padding: 10px;" ng-show="isTierTwoOpen">
 
-                    <ion-radio ng-model="" ng-value="">I'm not quite ready but I'm certainly curious</ion-radio>
-                    <ion-radio ng-model="" ng-value="">I'm ready now, I'm pretty serious.</ion-radio>
+                    <ion-radio name="personType" ng-model="vm.personType" value="1">I'm not quite ready but I'm certainly curious</ion-radio>
+                    <ion-radio name="personType" ng-model="vm.personType" value="2">I'm ready now, I'm pretty serious.</ion-radio>
 
                     <!--NAV BUTTONS-->
                     <div class="nav-button-row-filter-card">
@@ -89,20 +82,18 @@
                             <a class="button button-icon icon ion-arrow-left-a text-colour-energized" ng-click="isTierThreeOpen = false; isTierTwoOpen = false; isTierOneOpen = true"></a>
                         </div>
                         <div class="nav-button-container-right">
-                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized" ng-click="isTierOneOpen = false; isTierTwoOpen = false; isTierThreeOpen = true;"></a>
+                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized" ng-hide="!vm.personType || vm.personType == '0'" ng-click="isTierOneOpen = false; isTierTwoOpen = false; isTierThreeOpen = true;"></a>
                         </div>
                     </div>
-
                 </div>
 
                 <!--Tier Three-->
-                <div class="card" style="padding-right: 20px;padding-left: 20px; padding-top: 30px;" ng-show="isTierThreeOpen">
+                <div class="card" ng-show="isTierThreeOpen">
 
-                    <ion-toggle ng-model="" toggle-class="toggle-assertive">I have plenty of Sperm</ion-toggle>
-                    <ion-toggle ng-model="" toggle-class="toggle-assertive">I am good for eggs</ion-toggle>
-                    <ion-toggle ng-model="" toggle-class="toggle-assertive">I have a womb and plan to use it</ion-toggle>
-                    <ion-toggle ng-model="" toggle-class="toggle-assertive">I have an embryo in the freezer</ion-toggle>
-
+                    <ion-toggle ng-model="vm.personSperm" toggle-class="toggle-assertive">I have plenty of sperm</ion-toggle>
+                    <ion-toggle ng-model="vm.personEgg" toggle-class="toggle-assertive">I am good for eggs</ion-toggle>
+                    <ion-toggle ng-model="vm.personWomb" toggle-class="toggle-assertive">I have a womb and plan to use it</ion-toggle>
+                    <ion-toggle ng-model="vm.personEmbryo" toggle-class="toggle-assertive">I have an embryo in the freezer</ion-toggle>
 
                     <!--NAV BUTTONS-->
                     <div class="nav-button-row-filter-card">
@@ -110,29 +101,23 @@
                             <a class="button button-icon icon ion-arrow-left-a text-colour-energized" ng-click="isTierOneOpen = false; isTierTwoOpen = true; isTierThreeOpen = false; "></a>
                         </div>
                         <div class="nav-button-container-right">
-                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized" ng-click="isTierOneOpen = false; isTierTwoOpen = false; isTierThreeOpen = false; isTeirFourOpen = true"></a>
+                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized" ng-click="isTierOneOpen = false; isTierTwoOpen = false; isTierThreeOpen = false; isTierFourOpen = true"></a>
                         </div>
                     </div>
 
                 </div>
-                <div class="card" style="padding-right: 20px;padding-left: 20px; padding-top: 30px;" ng-show="isTierFourOpen">
-
-                    <ion-radio ng-model="" ng-value="">I'd consider helping someone maybe.</ion-radio>
-                    <ion-radio ng-model="" ng-value="">I'm primarily here to help others.</ion-radio>
-                    <ion-radio ng-model="" ng-value="">I'm not able to help others at all.</ion-radio>
-
+                <div class="card" ng-show="isTierFourOpen">
+                    <ion-radio name="personHelpLevel" ng-model="vm.personHelpLevel" value="1">I'd consider helping someone maybe.</ion-radio>
+                    <ion-radio name="personHelpLevel" ng-model="vm.personHelpLevel" value="2">I'm primarily here to help others.</ion-radio>
+                    <ion-radio name="personHelpLevel" ng-model="vm.personHelpLevel" value="3">I'm not able to help others at all.</ion-radio>
 
                     <!--NAV BUTTONS-->
                     <div class="nav-button-row-filter-card">
                         <div class="nav-button-container-center">
-                            <a class="button button-icon icon ion-arrow-left-a text-colour-energized" ng-click="isTierOneOpen = false; isTierTwoOpen = false; isTierThreeOpen = true; isTeirFourOpen = false "></a>
+                            <a class="button button-icon icon ion-arrow-left-a text-colour-energized" ng-click="isTierOneOpen = false; isTierTwoOpen = false; isTierThreeOpen = true; isTierFourOpen = false "></a>
                         </div>
                     </div>
-
                 </div>
-
-
-
             </div>
         </div>
 

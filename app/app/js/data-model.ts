@@ -146,6 +146,42 @@ module app {
 
 		/** Whether to play a sound on a new chat message */
 		notifyMessage: boolean
+
+		// Self Identification filters
+
+		/* Refers to the category of the person 
+		 * 1 - Individual
+		 * 2 - Partner
+		 * 3 - Organization
+		 * */
+		personCategory: string
+
+		/* Refers to the type of the person 
+		 * 0 - N/A or undefined
+		 * 1 - Curious
+		 * 2 - Serious
+		 * */
+		personType: string
+
+		/** If the user has a lot of sperm */
+		personSperm: boolean
+
+		/** If the user has eggs */
+		personEgg: boolean
+
+		/** If the user has womb */
+		personWomb: boolean
+
+		/** If the user has embryo */
+		personEmbryo: boolean
+		
+		/* Refers to the helping level of the person 
+		 * 0 - N/A or undefined
+		 * 1 - consider helping someone maybe
+		 * 2 - primarily here to help others
+		 * 3 - not able to help others at all
+		 * */
+		personHelpLevel: string
 	}
 
 	export interface IChat extends IBase {
