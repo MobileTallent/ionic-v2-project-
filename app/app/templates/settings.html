@@ -45,7 +45,7 @@
             </ul>
         </div>
 
-        <div class="card">
+        <div class="card hidden">
             <div class="list">
                 <div class="item item-divider">
                     Looking For:
@@ -90,19 +90,15 @@
                 <button class="button button-block button-positive hidden" ng-click="testPushNotification()">Test Push Notification</button>
                 <button class="button button-block button-stable" ng-click="deleteUnmatchedSwipes()">Reset Likes</button>
                 <button class="button button-block button-stable" ng-click="logout()" translate="LOGOUT"></button>
-                <button class="button button-block button-stable" ng-click="openModal()">Test Intro Modal</button>
             </div>
             <div class="wide center padding-10 red-text" ng-click="deleteAccount()">
                 {{'DELETE_ACCOUNT' | translate}}
             </div>
 
-
             <div class="wide center padding-10 bold" ng-click="debug()">
                 {{'VERSION' | translate}}: {{::(appVersion ? appVersion : 'N/A')}}
             </div>
         </div>
-
-
         <br />
     </ion-content>
 </ion-view>
