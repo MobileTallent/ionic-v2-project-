@@ -432,24 +432,17 @@ angular.module('controllers')
 .controller('SettingsCtrl', function($scope, $state, AppService, AppUtil, $log, $rootScope, $translate, $ionicHistory, $ionicActionSheet, env) {
 
     // The Profile fields on the discover page to save
-    var fields = ['enabled', 'guys', 'girls', 'ageFrom', 'ageTo', 'distance']
-
-    $scope.$on('$ionicView.beforeEnter', () => {
-        $scope.profile = AppService.getProfile().clone()
-        $scope.showMI = $scope.showKM = true
-    })
-
-    $scope.$on('$ionicView.enter', function(event) {
-        $scope.showMI = $scope.profile.distanceType === 'mi' ? true : false
-        $scope.showKM = $scope.profile.distanceType === 'km' ? true : false
-    })
-
+    var fields = ['enabled', 'guys', 'girls', 'ageFrom', 'ageTo', 'distance', 'LFSperm', 'LFEggs', 'LFWomb', 'LFEmbryo', 'LFNot', 'LFHelpM', 'LFHelpO']
     var translations
+
     $translate(['SETTINGS_SAVE_ERROR', 'DELETE', 'DELETE_ACCOUNT', 'CANCEL']).then(function(translationsResult) {
         translations = translationsResult
     })
 
     $scope.profile = AppService.getProfile().clone()
+
+    $scope.showMI = $scope.profile.distanceType === 'mi' ? true : false
+    $scope.showKM = $scope.profile.distanceType === 'km' ? true : false
     var dType = $scope.profile.distanceType
 
     $scope.setLanguage = (key) => {

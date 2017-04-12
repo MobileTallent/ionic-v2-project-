@@ -182,6 +182,30 @@ module app {
 		 * 3 - not able to help others at all
 		 * */
 		personHelpLevel: string
+
+		//Search Filters for the Self-Id cards
+
+		/** Looking for People with Sperm */
+		LFSperm: boolean
+
+		/** Looking for People with Eggs */
+		LFEggs: boolean
+
+		/** Looking for People with Womb */
+		LFWomb: boolean
+
+		/** Looking for People with Embryo */
+		LFEmbryo: boolean
+
+		/** Looking for People w/o any of the above */
+		LFNot: boolean
+
+		/** Looking for People who wants to help me */
+		LFHelpM: boolean
+
+		/** Looking for People whom I can help */
+		LFHelpO: boolean
+
 	}
 
 	export interface IChat extends IBase {
