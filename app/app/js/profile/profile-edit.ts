@@ -238,12 +238,12 @@ module app {
 				profileUpdate.personEmbryo = false
 				profileUpdate.personHelpLevel = '0'
 			} else {
-				profileUpdate.personType = this.personType
-				profileUpdate.personSperm = this.personSperm
-				profileUpdate.personEgg = this.personEgg
-				profileUpdate.personWomb = this.personWomb
-				profileUpdate.personEmbryo = this.personEmbryo
-				profileUpdate.personHelpLevel = this.personHelpLevel
+				profileUpdate.personType = this.personType ? this.personType : '0'
+				profileUpdate.personSperm = this.personSperm ? this.personSperm : false
+				profileUpdate.personEgg = this.personEgg ? this.personEgg : false
+				profileUpdate.personWomb = this.personWomb ? this.personWomb : false
+				profileUpdate.personEmbryo = this.personEmbryo ? this.personEmbryo : false
+				profileUpdate.personHelpLevel = this.personHelpLevel ? this.personHelpLevel : '0'
 			}
 
 			if (this.about)

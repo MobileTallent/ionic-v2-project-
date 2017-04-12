@@ -24,7 +24,8 @@ var profileFields = [
     'enabled',
     'gender', 'guys', 'girls',
     'ageFrom', 'ageTo',
-    'personCategory', 'personType', 'personSperm', 'personEgg', 'personWomb', 'personEmbryo', 'personHelpLevel'
+    'personCategory', 'personType', 'personSperm', 'personEgg', 'personWomb', 'personEmbryo', 'personHelpLevel',
+    'LFSperm', 'LFEggs', 'LFWomb', 'LFEmbryo', 'LFNot', 'LFHelpM', 'LFHelpO'
 ]
 
 var Profile = Parse.Object.extend({

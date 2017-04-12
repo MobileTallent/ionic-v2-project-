@@ -44,6 +44,25 @@
                 </li>
             </ul>
         </div>
+
+        <div class="card hidden">
+            <div class="list">
+                <div class="item item-divider">
+                    Looking For:
+                </div>
+
+                <ion-toggle ng-model="profile.LFSperm" toggle-class="toggle-assertive">People with Sperm</ion-toggle>
+                <ion-toggle ng-model="profile.LFEggs" toggle-class="toggle-assertive">People with Eggs</ion-toggle>
+                <ion-toggle ng-model="profile.LFWomb" toggle-class="toggle-assertive">People with a Womb</ion-toggle>
+                <ion-toggle ng-model="profile.LFEmbryo" toggle-class="toggle-assertive">People with a Frozen Embryo</ion-toggle>
+                <ion-toggle ng-model="profile.LFNot" toggle-class="toggle-assertive">People w/o any of the above</ion-toggle>
+
+                <ion-toggle ng-model="profile.LFHelpM" toggle-class="toggle-assertive">People who wants to help me</ion-toggle>
+                <ion-toggle ng-model="profile.LFHelpO" toggle-class="toggle-assertive">People whom I can help</ion-toggle>
+            </div>
+        </div>
+
+
         <div class="card">
             <div class="list">
 
@@ -76,13 +95,10 @@
                 {{'DELETE_ACCOUNT' | translate}}
             </div>
 
-
             <div class="wide center padding-10 bold" ng-click="debug()">
                 {{'VERSION' | translate}}: {{::(appVersion ? appVersion : 'N/A')}}
             </div>
         </div>
-
-
         <br />
     </ion-content>
 </ion-view>

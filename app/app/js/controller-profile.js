@@ -76,7 +76,7 @@ angular.module('controllers')
     }
 })
 
-.controller('AboutCtrl', function($scope, AppService, AppUtil, $sce) {
+.controller('AboutCtrl', function($scope, AppService, AppUtil, $sce, $ionicModal) {
     $scope.$on('$ionicView.beforeEnter', () => $scope.refreshAbout())
 
     $scope.refreshAbout = function() {
@@ -91,9 +91,24 @@ angular.module('controllers')
         if (data)
             return $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + data)
     }
+
+    $ionicModal.fromTemplateUrl('introWalkthrough.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });
+
+    $scope.openModal = function() {
+        $scope.modal.show();
+    };
+
+    $scope.closeModal = function() {
+        $scope.modal.hide();
+    };
 })
 
-.controller('FindUsCtrl', function($scope, $stateParams, AppService, AppUtil) {
+.controller('FindUsCtrl', function($scope, $stateParams, AppService, AppUtil, $ionicModal) {
     $scope.$on('$ionicView.beforeEnter', () => $scope.refreshFindUs())
     $scope.findUsList = null
     $scope.refreshFindUs = function() {
@@ -124,6 +139,18 @@ angular.module('controllers')
                 AppService.goToNextLoginState()
             })
     }
+
+    $ionicModal.fromTemplateUrl('introWalkthrough.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.modal = modal
+        $scope.modal.show()
+    })
+
+    $scope.closeModal = function() {
+        $scope.modal.hide();
+    };
 })
 
 .controller('ProfileSetupCtrl', function($scope, $state, $ionicHistory, AppService, AppUtil) {
@@ -429,27 +456,20 @@ angular.module('controllers')
 //     $scope.cancel = () => $scope.profile = AppService.getProfile($scope).clone()
 // })
 
-.controller('SettingsCtrl', function($scope, $state, AppService, AppUtil, $log, $rootScope, $translate, $ionicHistory, $ionicActionSheet, env) {
+.controller('SettingsCtrl', function($scope, $state, $ionicModal, AppService, AppUtil, $log, $rootScope, $translate, $ionicHistory, $ionicActionSheet, env) {
 
     // The Profile fields on the discover page to save
-    var fields = ['enabled', 'guys', 'girls', 'ageFrom', 'ageTo', 'distance']
-
-    $scope.$on('$ionicView.beforeEnter', () => {
-        $scope.profile = AppService.getProfile().clone()
-        $scope.showMI = $scope.showKM = true
-    })
-
-    $scope.$on('$ionicView.enter', function(event) {
-        $scope.showMI = $scope.profile.distanceType === 'mi' ? true : false
-        $scope.showKM = $scope.profile.distanceType === 'km' ? true : false
-    })
-
+    var fields = ['enabled', 'guys', 'girls', 'ageFrom', 'ageTo', 'distance', 'LFSperm', 'LFEggs', 'LFWomb', 'LFEmbryo', 'LFNot', 'LFHelpM', 'LFHelpO']
     var translations
+
     $translate(['SETTINGS_SAVE_ERROR', 'DELETE', 'DELETE_ACCOUNT', 'CANCEL']).then(function(translationsResult) {
         translations = translationsResult
     })
 
     $scope.profile = AppService.getProfile().clone()
+
+    $scope.showMI = $scope.profile.distanceType === 'mi' ? true : false
+    $scope.showKM = $scope.profile.distanceType === 'km' ? true : false
     var dType = $scope.profile.distanceType
 
     $scope.setLanguage = (key) => {
@@ -553,7 +573,6 @@ angular.module('controllers')
             }
         })
     }
-
 })
 
 .controller('ContactCtrl', function($scope, AppService, AppUtil, $translate) {
