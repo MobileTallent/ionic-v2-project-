@@ -84,11 +84,7 @@ module app {
                                 })
                                 console.log("Names length: " + arrayOfNames.length)
                             }
-                            
-                            
-                            console.log("Length of Users Grouped: " + a.length)
                     })
-                    //this.data[1] = this.chatsData
             })
         }
     }
