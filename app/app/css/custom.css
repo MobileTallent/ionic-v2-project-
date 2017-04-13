@@ -302,22 +302,3 @@ textarea { height: auto; }
     white-space: normal !important;
 }
 
-/* ------ ------ App setting and Discovery ------ ------- */
-.red-text{
-    color: red;
-}
-
-/* --- Discovery Preferences Slider  ---*/
-
-.custom-slider div.handle.low {
-    visibility: hidden;
-}
-
-.custom-slider div.slider-bar .selection {
-    left: 0px !important;
-}
-
-[slider] div.slider-bar .selection,
-slider div.slider-bar .selection {
-    background: #bf7fcc
-}

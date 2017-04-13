@@ -1,0 +1,27 @@
+@import 'colors.scss';
+
+/* --- Login --- */
+
+#login-background-image {
+    background-image: url("img/kids-edited.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+}
+
+.button.button-outline.button-light {
+    border-width: 2px;
+    padding: 0px;
+    margin-top: 45%;
+    border-color: #fff;
+}
+
+.social-facebook {
+    background-color: rgb(92, 119, 180);
+    color: white;
+}
+
+.social-linkedin {
+    background-color: rgb(0, 119, 181);
+    color: white;
+}
