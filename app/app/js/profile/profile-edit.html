@@ -50,17 +50,14 @@
             <div ng-hide="vm.profile.about != vm.about || vm.about" class="more-information-error">
                 <p>* You still need to write a little about yourself.</p>
             </div>
-            <br/>
         </div>
         <!--Badge Container-->
-        <div>
-            <div class="row">
-                <img />
-                <img />
-                <img />
-                <img />
+            <div class="badge-row">
+                <img ng-class="vm.personSperm ? 'badge-visible' : 'badge-hidden' " src="img/sperm_ic.svg">
+                <img ng-class="vm.personWomb ? 'badge-visible' : 'badge-hidden' " src="img/womb_ic.svg">
+                <img ng-class="vm.personEgg ? 'badge-visible' : 'badge-hidden' "  src="img/egg_ic.svg">
+                <img ng-class="vm.personEmbryo ? 'badge-visible' : 'badge-hidden' "  src="img/embryo_ic.svg">
             </div>
-        </div>
 
 
         <!--Self definition filter cards. -->
