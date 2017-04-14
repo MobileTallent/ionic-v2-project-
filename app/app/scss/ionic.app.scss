@@ -56,13 +56,49 @@ button.button.button-stable {
     background-color: rgb(221, 221, 221);
 }
 
+/* --- Login --- */
+
+@import 'login.scss';
+
 /* --- Settings --- */
 
 @import 'settings.scss';
 
+/* --- Match Search --- */
+
+@import 'matchSearch.scss';
+
 /* --- Profile edit --- */
 
 @import 'editProfile.scss';
+
+// Self Id current Badges - Used in edit profile and match search
+.badge-row{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    height: 70px;
+}
+.badge-visible{
+    // animation: slideInUp 500ms ease;
+    display: block !important;
+    width: 60px;    
+    height: 60px;
+    transition: all ease 300ms;
+}
+.badge-hidden{
+    position: absolute;
+    height: 0;
+    width: 0;
+    transition: all ease 300ms;   
+}
+.badge{
+    display: block !important;
+    width: 50px;    
+    height: 50px;
+}
 
 /* --- Walkthrough Modal --- */
 
@@ -96,6 +132,27 @@ button.button.button-stable {
     border-radius: 16px !important;
 }
 
+/* --- Text and Font --- */
+
+.bold {
+    font-weight: bold;
+}
+
+textarea {
+    padding: 3px;
+}
+
+.text-size-18 {
+    font-size: 18px;
+}
+
+.text-size-24 {
+    font-size: 24px;
+}
+
+.text-size-28 {
+    font-size: 28px;
+}
 
 
 
@@ -213,95 +270,6 @@ a.autolinker {
     height: 61px;
     box-shadow: 0px 0px 3px 0px rgba(155, 155, 155, 0.65);
 }
-
-
-/* --- Match Search --- */
-
-.profile-search-avatar {
-    width: 50%;
-    height: 50%;
-    border-radius: 360px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#match-search-background {
-    background-color: $calm !important;
-}
-
-#match-search-distance {
-    padding-top: 5px;
-    margin-bottom: 0;
-    text-align: center;
-    color: $match-search-text !important;
-    font-size: 16px;
-}
-
-#match-search-name {
-    padding-top: 10px;
-    text-align: center;
-    color: $match-search-text !important;
-    font-size: 24px;
-}
-
-#match-search-about-container {
-    height: 150px;
-    display: flex;
-    flex-direction: column;
-}
-
-#match-search-about {
-    flex: 3;
-    padding: 5px 10px;
-    color: $match-search-text !important;
-    font-size: 16px;
-    height: 80%;
-    overflow: hidden;
-}
-
-#match-search-readmore {
-    text-align: center;
-    flex: 1;
-    font-size: 16px;
-    color: $assertive;
-    padding-top: 10px;
-    margin-bottom: 0;
-}
-
-.td-card {
-    background: white;
-    border-radius: 8px;
-    height: 80%;
-}
-
-.yes-text {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    font-size: 30px;
-    color: rgb(111, 250, 111);
-    opacity: 0;
-}
-
-.no-text {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 30px;
-    color: rgb(255, 115, 115);
-    opacity: 0;
-}
-
-.swipe-reject:before,
-.swipe-reject {
-    color: white;
-}
-
-.swipe-accept:before,
-.swipe-accept {
-    color: white;
-}
-
 
 /* --- Action Sheets - Android --- */
 

@@ -54,27 +54,7 @@
 }
 
 
-/* --- Text and Font --- */
 
-.bold {
-    font-weight: bold;
-}
-
-textarea {
-    padding: 3px;
-}
-
-.text-size-18 {
-    font-size: 18px;
-}
-
-.text-size-24 {
-    font-size: 24px;
-}
-
-.text-size-28 {
-    font-size: 28px;
-}
 
 
 /* --- Chat --- */
