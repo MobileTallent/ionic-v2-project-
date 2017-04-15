@@ -93,7 +93,7 @@ button.button.button-stable {
     justify-content: space-around;
     align-items: center;
     flex-direction: row;
-    height: 70px;
+    // height: 65px;
 }
 .badge-visible{
     // animation: slideInUp 500ms ease;
@@ -103,7 +103,7 @@ button.button.button-stable {
     transition: all ease 300ms;
 }
 .badge-hidden{
-    position: absolute;
+    visibility: hidden;
     height: 0;
     width: 0;
     transition: all ease 300ms;   

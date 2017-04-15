@@ -51,6 +51,7 @@
                 <p>* You still need to write a little about yourself.</p>
             </div>
         </div>
+        </br>
         <!--Badge Container - styles located in ionic.app.scss--> 
             <div class="badge-row">
                 <img ng-class="vm.personSperm ? 'badge-visible' : 'badge-hidden' " src="img/sperm_ic.svg">
@@ -149,7 +150,7 @@
                     <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personSperm"
                         toggle-class="toggle-assertive">
                         <span ng-class=" !vm.personSperm ? 'toggle-text-active' : 'toggle-text-inactive' ">
-                            {{ !vm.personSperm ? "I need help with Sperm" : "I have have access to healthy Sperm" }}
+                            {{ !vm.personSperm ? "I need help with Sperm" : "I have have access to Sperm" }}
                         </span>
                     </ion-toggle>
 
