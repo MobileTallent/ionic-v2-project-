@@ -62,9 +62,20 @@ module app {
 			this.$translate = $translate
 			this.$ionicHistory = $ionicHistory
 			this.$ionicPopup = $ionicPopup
+			this.$scope.options = {
+				pagination: false
+			}
 
 			this.$scope.$on('$ionicView.beforeEnter', () => this.refresh())
 			this.$scope.$on('$ionicView.enter', () => this.expandText())
+			this.$scope.$on("$ionicSlides.sliderInitialized", function (event, data) {
+				// data.slider is the instance of Swiper
+				$scope.slider = data.slider
+			})
+
+			this.$scope.$on("$ionicSlides.slideChangeStart", function (event, data) {
+				console.log('Slide change is beginning')
+			})
 		}
 
 		private refresh() {
