@@ -241,7 +241,8 @@ module app {
 		public saveProfile() {
 			let profileUpdate = <IProfile>{}
 			profileUpdate.about = this.about
-			profileUpdate.personCategory = this.personCategory
+			profileUpdate.personCategory = this.personCategory ? this.personCategory : '0'
+			profileUpdate.hasSelfId = true
 			if (this.personCategory === '3') {
 				profileUpdate.personType = '0'
 				profileUpdate.personSperm = false
@@ -257,6 +258,24 @@ module app {
 				profileUpdate.personEmbryo = this.personEmbryo ? this.personEmbryo : false
 				profileUpdate.personHelpLevel = this.personHelpLevel ? this.personHelpLevel : '0'
 			}
+
+			let thingsIHave = ""
+			if (profileUpdate.personSperm)
+				thingsIHave += "S"
+			
+			if (profileUpdate.personEgg)
+				thingsIHave += "E"
+
+			if (profileUpdate.personWomb)
+				thingsIHave += "W"
+			
+			if (profileUpdate.personEmbryo)
+				thingsIHave += "Y"
+			
+			if(this.personCategory !== '3' && !profileUpdate.personSperm && !profileUpdate.personEgg && !profileUpdate.personWomb && !profileUpdate.personEmbryo)
+				thingsIHave += "X"
+
+			profileUpdate.thingsIHave = thingsIHave
 
 			if (this.about)
 				this.AppUtil.blockingCall(

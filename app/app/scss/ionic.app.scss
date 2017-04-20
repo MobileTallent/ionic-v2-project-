@@ -48,14 +48,13 @@ $chat-date-recieved:rgb(155, 155, 155);
 //***************************** Chat List
 $chats-odd: rgba(155, 155, 155, 0.10);
 $chats-even: rgba(155, 155, 155, 0.15);
-
 // Include all of Ionic
 @import "bower_components/ionic/scss/ionic";
-
 button.button,
 button.button.button-stable {
     background-color: rgb(221, 221, 221);
 }
+
 
 /* --- Login --- */
 
@@ -84,10 +83,8 @@ button.button.button-stable {
 /* --- Profile edit --- */
 
 @import 'profile-edit.scss';
-
 // Self Id current Badges - Used in edit profile and match search
-
-.badge-row{
+.badge-row {
     width: 100%;
     display: flex;
     justify-content: space-around;
@@ -95,27 +92,32 @@ button.button.button-stable {
     flex-direction: row;
     // height: 65px;
 }
-.id-badge-visible{
+
+.id-badge-visible {
     // animation: slideInUp 500ms ease;
     display: block !important;
-    width: 60px;    
+    width: 60px;
     height: 60px;
     transition: all ease 300ms;
 }
-.id-badge-hidden{
+
+.id-badge-hidden {
     visibility: hidden;
     height: 0;
     width: 0;
-    transition: all ease 300ms;   
+    transition: all ease 300ms;
 }
-.id-badge{
+
+.id-badge {
     display: block !important;
     width: 15%;
     height: 15%;
 }
-.id-no-badge{
-   visibility: hidden;
+
+.id-no-badge {
+    display: none;
 }
+
 
 /* --- Global Selectors --- */
 
@@ -144,6 +146,7 @@ button.button.button-stable {
     color: #fff;
     border-radius: 16px !important;
 }
+
 
 /* --- Text and Font --- */
 
@@ -224,5 +227,3 @@ textarea {
     font-size: 14px !important;
     color: $energized !important;
 }
-
-

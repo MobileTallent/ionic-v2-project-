@@ -24,8 +24,8 @@ var profileFields = [
     'enabled',
     'gender', 'guys', 'girls',
     'ageFrom', 'ageTo',
-    'personCategory', 'personType', 'personSperm', 'personEgg', 'personWomb', 'personEmbryo', 'personHelpLevel',
-    'LFSperm', 'LFEggs', 'LFWomb', 'LFEmbryo', 'LFNot', 'LFHelpM', 'LFHelpO'
+    'personCategory', 'personType', 'personSperm', 'personEgg', 'personWomb', 'personEmbryo', 'personHelpLevel', 'hasSelfId',
+    'LFSperm', 'LFEggs', 'LFWomb', 'LFEmbryo', 'LFNot', 'LFHelpM', 'LFHelpO', 'thingsIHave', 'LFSelfId'
 ]
 
 var Profile = Parse.Object.extend({
@@ -324,7 +324,9 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         addAboutJab: addAboutJab,
         getAboutJab: getAboutJab,
         getMatchesReport: getMatchesReport,
-        getChatMessageReport: getChatMessageReport
+        getChatMessageReport: getChatMessageReport,
+
+        getProfileNew: getProfileNew
     }
 
     return service
@@ -785,6 +787,16 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         report.match = match
             // $log.log('saving report ' + report.toJSON())
         return report.save()
+    }
+
+    function getProfileNew(searchParameters) {
+        if (!searchParameters)
+            $log.error('search parameters were not provided')
+            // Can't use a Parse object as a param, so copy the fields. Could copy only the required search fields.
+        var searchParams = {};
+        for (var i = 0; i < profileFields.length; i++)
+            searchParams[profileFields[i]] = searchParameters[profileFields[i]]
+        return Parse.Cloud.run('GetProfilesSpecial', searchParams).catch(_unwrapError)
     }
 
     /**

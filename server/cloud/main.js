@@ -425,7 +425,6 @@ Parse.Cloud.define("GetProfileForMatch", function(request, response) {
     })
 })
 
-
 /**
  * Load an array of mutual matches, with their profile, given an array of match ids
  */
@@ -527,6 +526,39 @@ function _calculateAge(birthday) {
     return Math.abs(ageDate.getUTCFullYear() - 1970)
 }
 
+/**
+ * A function to set all profiles for self-identification to default values.
+ */
+Parse.Cloud.define("GetProfilesSpecial", function(request, response) {
+    console.log("GetProfilesSpecial...")
+    var profile = request.params
+    var profileQuery = new Parse.Query("Profile")
+    profileQuery.doesNotExist("hasSelfId")
+
+    var resultsS
+    profileQuery.limit(150).find(masterKey).then(function(results) {
+        console.log("Number of profiles: " + results.length)
+        resultsS = results
+        _.each(results, function(profile) {
+            profile.set('personSperm', false)
+            profile.set('personEgg', false)
+            profile.set('personWomb', false)
+            profile.set('personEmbryo', false)
+            profile.set('thingsIHave', "X")
+            profile.set('hasSelfId', false)
+            profile.set('personType', "0")
+            profile.set('personHelpLevel', "0")
+            profile.set('personCategory', "0")
+        })
+        return Parse.Object.saveAll(results, masterKey)
+    }).then(function(profiles) {
+        response.success(resultsS)
+    }, function(error) {
+        console.log(JSON.stringify(error))
+        response.error(error)
+    })
+})
+
 
 /**
  * Search for new potential matches
@@ -566,6 +598,32 @@ Parse.Cloud.define("GetMatches", function(request, response) {
     profileQuery.lessThan("birthdate", birthdateTo)
     if (profile.ageTo !== MAX_AGE_PLUS)
         profileQuery.greaterThan("birthdate", birthdateFrom)
+
+    if (profile.LFSelfId) {
+        var regExString = "["
+        if (profile.LFSperm)
+            regExString += "S?"
+
+
+        if (profile.LFEggs)
+            regExString += "E?"
+
+
+        if (profile.LFWomb)
+            regExString += "W?"
+
+
+        if (profile.LFEmbryo)
+            regExString += "Y?"
+
+        if (profile.LFNot)
+            regExString += "X?"
+
+        regExString += "]+"
+
+        var regEx = new RegExp(regExString)
+        profileQuery.matches("thingsIHave", regEx)
+    }
 
     // TODO this will be have to be re-worked at some point as there is a maximum limit of 1000 with Parse
     // The next two sub queries select the user id's we don't want to match on, which is from

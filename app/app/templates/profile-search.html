@@ -114,8 +114,7 @@
             <td-cards>
                 <!-- ng-if="$index >= profiles.length -2" is to display only the top 2 cards in the DOM for performance -->
                 <!-- The profiles array is used like a stack, where the last item shows first -->
-                <td-card ng-if="$index >= profiles.length - 2" ng-show="profiles" ng-repeat="profile in profiles track by $index" ng-click="viewDetails(profile)"
-                    on-destroy="cardDestroyed($index)" on-transition-left="cardTransitionLeft(profile)" on-transition-right="cardTransitionRight(profile)"
+                <td-card ng-if="$index >= profiles.length - 2" ng-show="profiles" ng-repeat="profile in profiles track by $index" ng-click="viewDetails(profile)" on-destroy="cardDestroyed($index)" on-transition-left="cardTransitionLeft(profile)" on-transition-right="cardTransitionRight(profile)"
                     class="card-{{$index}}" ng-class="{'accepted-transform': profile.accepted, 'rejected-transform': profile.rejected}">
 
                     <div class="row image" ng-click="viewDetails(profile)">
@@ -144,10 +143,12 @@
                             Read More
                         </div>
                         <div class="badge-row">
-                            <img ng-class="true ? 'id-badge' : 'no-id-badge'" src="img/sperm_ic.svg">
-                            <img ng-class="true ? 'id-badge' : 'no-id-badge'" src="img/womb_ic.svg">
-                            <img ng-class="true ? 'id-badge' : 'no-id-badge'" src="img/egg_ic.svg">
-                            <img ng-class="true ? 'id-badge' : 'no-id-badge'" src="img/embryo_ic.svg">
+
+
+                            <img ng-class="profile.personSperm ? 'id-badge' : 'id-no-badge'" src="img/sperm_ic.svg">
+                            <img ng-class="profile.personWomb ? 'id-badge' : 'id-no-badge'" src="img/womb_ic.svg">
+                            <img ng-class="profile.personEgg ? 'id-badge' : 'id-no-badge'" src="img/egg_ic.svg">
+                            <img ng-class="profile.personEmbryo ? 'id-badge' : 'id-no-badge'" src="img/embryo_ic.svg">
                         </div>
                     </div>
 

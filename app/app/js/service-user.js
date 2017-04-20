@@ -163,7 +163,9 @@ function onNotificationOpen(pnObj) {
                 addAboutJab: addAboutJab,
                 getAboutJab: getAboutJab,
                 getMatchesReport: getMatchesReport,
-                getChatMessageReport: getChatMessageReport
+                getChatMessageReport: getChatMessageReport,
+
+                getProfileNew: getProfileNew
             }
 
             return service
@@ -1479,6 +1481,10 @@ function onNotificationOpen(pnObj) {
 
             function getChatMessageReport(numDays) {
                 return server.getChatMessageReport(numDays)
+            }
+
+            function getProfileNew() {
+                return server.getProfileNew(service.profile)
             }
 
             // Util functions

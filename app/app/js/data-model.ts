@@ -149,7 +149,11 @@ module app {
 
 		// Self Identification filters
 
+		/** If the user has set his self-Id */
+		hasSelfId: boolean
+
 		/* Refers to the category of the person 
+		 * 0 - N/A or undefined
 		 * 1 - Individual
 		 * 2 - Partner
 		 * 3 - Organization
@@ -174,7 +178,7 @@ module app {
 
 		/** If the user has embryo */
 		personEmbryo: boolean
-		
+
 		/* Refers to the helping level of the person 
 		 * 0 - N/A or undefined
 		 * 1 - consider helping someone maybe
@@ -184,6 +188,8 @@ module app {
 		personHelpLevel: string
 
 		//Search Filters for the Self-Id cards
+		/** Looking for People based on the Self Id Cards */
+		LFSelfId: boolean
 
 		/** Looking for People with Sperm */
 		LFSperm: boolean
@@ -205,6 +211,8 @@ module app {
 
 		/** Looking for People whom I can help */
 		LFHelpO: boolean
+
+		thingsIHave: string
 
 	}
 

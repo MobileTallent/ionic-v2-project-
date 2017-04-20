@@ -33,10 +33,10 @@
         <div class="padding-15">
             <h4 style="color:#666666" class="center">{{vm.profile.location | distance}} {{'AWAY' | translate}} </h4>
             <div class="badge-row">
-                <img ng-class="true ? 'id-badge' : 'no-id-badge'" src="img/sperm_ic.svg">
-                <img ng-class="true ? 'id-badge' : 'no-id-badge'" src="img/womb_ic.svg">
-                <img ng-class="true ? 'id-badge' : 'no-id-badge'" src="img/egg_ic.svg">
-                <img ng-class="true ? 'id-badge' : 'no-id-badge'" src="img/embryo_ic.svg">
+                <img ng-class="profile.personSperm ? 'id-badge' : 'id-no-badge'" src="img/sperm_ic.svg">
+                <img ng-class="profile.personWomb ? 'id-badge' : 'id-no-badge'" src="img/womb_ic.svg">
+                <img ng-class="profile.personEgg ? 'id-badge' : 'id-no-badge'" src="img/egg_ic.svg">
+                <img ng-class="profile.personEmbryo ? 'id-badge' : 'id-no-badge'" src="img/embryo_ic.svg">
             </div>
             <h4 style="color:#666666">About Me</h4>
             <div ng-show="vm.profile.about" style="color:#9B9B9B; white-space: pre-wrap;" class="text-size-18">
