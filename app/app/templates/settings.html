@@ -14,6 +14,9 @@
                     <ion-toggle ng-model="profile.guys" toggle-class="toggle-assertive" class="item-text-wrap">{{'GUYS' | translate}}</ion-toggle>
                     <ion-toggle ng-model="profile.girls" toggle-class="toggle-assertive" class="item-text-wrap">{{'GIRLS' | translate}}</ion-toggle>
 
+                    <div class="item item-divider">
+                       Show Me:
+                    </div>
                     <ion-checkbox ng-model="sperm" color="positive" class="item-checkbox-right">
                         <ion-label>People with Sperm</ion-label>
                     </ion-checkbox>
@@ -44,7 +47,7 @@
             <div class="settings-header" ng-click="showDiscovery = !showDiscovery">
                 Discovery
             </div>
-            <div class="item-accordian" ng-show="showDiscovery" ng-class="showDiscovery ? 'animated slideInDown' : '' ">
+            <div class="settings-dropdown" ng-show="showDiscovery" ng-class="showDiscovery ? 'animated slideInDown' : '' ">
                 <ul class="list custom">
                     <li>
                         <ion-toggle ng-model="profile.enabled" toggle-class="toggle-assertive">{{'DISCOVERABLE' | translate}}</ion-toggle>
@@ -86,7 +89,7 @@
             <div class="settings-header" ng-click="showAppSettings = !showAppSettings">
                 App Settings
             </div>
-            <div class="list" ng-show="showAppSettings" ng-class="showAppSettings ? 'animated slideInDown' : '' ">
+            <div class="list settings-dropdown" ng-show="showAppSettings" ng-class="showAppSettings ? 'animated slideInDown' : '' ">
 
                 <div class="item item-divider">
                     {{'NOTIFICATION_SOUND' | translate}}:

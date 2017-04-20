@@ -15,7 +15,8 @@
         </div>
         <div class="row">
             <div class="col col-33" ng-repeat="photo in vm.photos track by $index">
-                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}" class="profileImg">
+                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}"
+                    class="profileImg">
             </div>
             <div class="col col-33" id="addPhoto" ng-if="vm.canAddPhoto()">
                 <img ng-src="{{vm.NO_IMAGE}}" ng-click="vm.addPhoto()" class="profileImg" />
@@ -28,7 +29,8 @@
         </div>
         <div class="row" ng-if="vm.photosInReview.length">
             <div class="col col-33" ng-repeat="photo in vm.photosInReview track by $index">
-                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}" class="profileImg">
+                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}"
+                    class="profileImg">
             </div>
         </div>
 
@@ -39,7 +41,8 @@
             <h5 class="about-you-info padding-5">{{'ABOUT_YOU' | translate}}</h5>
 
             <div ng-class="!vm.about ? 'red-border' : ''">
-                <textarea rows="6" class="wide input-grey text-size-18 padding-15 " placeholder="Type Here..." id="aboutYou" ng-model="vm.about" ng-keyup="vm.expandText()" ng-keydown="vm.expandText()">
+                <textarea rows="6" class="wide input-grey text-size-18 padding-15 " placeholder="Type Here..." id="aboutYou" ng-model="vm.about"
+                    ng-keyup="vm.expandText()" ng-keydown="vm.expandText()">
                     </textarea>
 
             </div>
@@ -68,11 +71,17 @@
 
                             <input type="radio" name="category" ng-model="vm.personCategory" value="1" id="single" />
 
-                            <label class="col-80 center radio-label" for="single">It's just me for now</label>
+                            <label class="row" for="single">
+                                <span class="col-80 center radio-label">
+                                It's just me for now 
+                                </span>
+                                <div class="col-20 center" >
+                                    <div class="check" >
+                                    </div>
+                                </div>
+                            </label>
 
-                            <div class="col-20 center">
-                                <div class="check"></div>
-                            </div>
+
                         </div>
                     </div>
                     <div class="filter-radio">
@@ -80,11 +89,15 @@
 
                             <input type="radio" name="category" ng-model="vm.personCategory" value="2" id="partner" />
 
-                            <label class="col-80 center radio-label text-wrap" for="partner">I'm here with my partner</label>
+                            <label class="row" for="partner">
+                                <span class="col-80 center radio-label text-wrap">
+                                    I'm here with my partner
+                                </span>
 
-                            <div class="col-20 center">
-                                <div class="check"></div>
-                            </div>
+                                <div class="col-20 center">
+                                    <div class="check"></div>
+                                </div>
+                            </label>
                         </div>
                     </div>
                     <div class="filter-radio">
@@ -92,11 +105,15 @@
 
                             <input type="radio" name="category" ng-model="vm.personCategory" value="3" id="organization" />
 
-                            <label class="col-80 center radio-label text-wrap" for="organization">I represent an organization</label>
+                            <label class="row" for="organization">
+                                <span class="col-80 center radio-label text-wrap">
+                                    I represent an organization
+                                </span>
 
-                            <div class="col-20 center">
-                                <div class="check"></div>
-                            </div>
+                                <div class="col-20 center">
+                                    <div class="check"></div>
+                                </div>
+                            </label>
                         </div>
                     </div>
                     <div class="nav-button-row-filter-card">
@@ -113,30 +130,38 @@
 
                             <input type="radio" name="personType" ng-model="vm.personType" value="1" id="curious" />
 
-                            <label class="col-80 center radio-label" for="curious">I'm not quite ready for a baby, but I'm curious</label>
+                            <label class="row" for="curious">
+                                <span class="col-80 center radio-label">
+                                    I'm not quite ready for a baby, but I'm curious
+                                </span>                      
 
-                            <div class="col-20 center">
-                                <div class="check"></div>
-                            </div>
+                                <div class="col-20 center">
+                                    <div class="check"></div>
+                                </div>
+                            </label>
                         </div>
                     </div>
                     <div class="filter-radio">
                         <div class="row">
                             <input type="radio" name="personType" ng-model="vm.personType" value="2" id="serious" />
 
-                            <label class="col-80 center radio-label" for="serious">I'm ready now, I'm pretty serious</label>
-
-                            <div class="col-20 center">
-                                <div class="check"></div>
-                            </div>
+                            <label class="row" for="serious">
+                                <span class="col-80 center radio-label">
+                                    I'm ready now, I'm pretty serious
+                                </span>
+                            
+                                <div class="col-20 center">
+                                    <div class="check"></div>
+                                </div>
+                            </label>
                         </div>
                     </div>
                     <div class="nav-button-row-filter-card">
                         <div class="nav-button-container-left">
-                            <a class="button button-icon icon ion-arrow-left-a text-colour-energized"></a>
+                            <a class="button button-icon icon ion-arrow-left-a text-colour-energized" ng-click="vm.$scope.slider.slidePrev()"></a>
                         </div>
                         <div class="nav-button-container-right">
-                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized"></a>
+                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized" ng-click="vm.$scope.slider.slideNext()"></a>
                         </div>
                     </div>
                 </ion-slide-page>
@@ -144,36 +169,43 @@
                 <!--Tier Three-->
                 <ion-slide-page>
 
-                    <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personSperm" toggle-class="toggle-assertive">
+                    <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personSperm"
+                        toggle-class="toggle-assertive">
                         <span ng-class=" !vm.personSperm ? 'toggle-text-active' : 'toggle-text-inactive' ">
                             {{ !vm.personSperm ? "I need help with Sperm" : "I have have access to Sperm" }}
                         </span>
                     </ion-toggle>
 
 
-                    <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personEgg" toggle-class="toggle-assertive">
+                    <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personEgg"
+                        toggle-class="toggle-assertive">
                         <span ng-class=" !vm.personEgg ? 'toggle-text-active' : 'toggle-text-inactive' ">
                             {{ !vm.personEgg ? "I need help with an Egg" : "I'm good for an Egg" }}
                         </span>
                     </ion-toggle>
 
 
-                    <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personWomb" toggle-class="toggle-assertive">
+                    <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personWomb"
+                        toggle-class="toggle-assertive">
                         <span ng-class=" !vm.personWomb ? 'toggle-text-active' : 'toggle-text-inactive' ">
                             {{!vm.personWomb ? "I need help with a Womb" :  "I have a Womb" }}
                         </span>
                     </ion-toggle>
 
 
-                    <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personEmbryo" toggle-class="toggle-assertive">
+                    <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personEmbryo"
+                        toggle-class="toggle-assertive">
                         <span ng-class=" !vm.personEmbryo ? 'toggle-text-active' : 'toggle-text-inactive' ">
                             {{ !vm.personEmbryo ? "I need help with an Embryo"  : "I'm good for an Embryo" }}
                         </span>
                     </ion-toggle>
 
                     <div class="nav-button-row-filter-card">
-                        <div class="nav-button-container-center">
-                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized"></a>
+                        <div class="nav-button-container-left">
+                            <a class="button button-icon icon ion-arrow-left-a text-colour-energized" ng-click="vm.$scope.slider.slidePrev()"></a>
+                        </div>
+                        <div class="nav-button-container-right">
+                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized" ng-click="vm.$scope.slider.slideNext()"></a>
                         </div>
                     </div>
                 </ion-slide-page>
@@ -185,23 +217,36 @@
 
                             <input type="radio" name="personHelpLevel" ng-model="vm.personHelpLevel" value="1" id="considerHelping" />
 
-                            <label class="col-80 center radio-label" for="considerHelping">I'd consider helping someone maybe</label>
+                            <label class="row" for="considerHelping">
+                                <span class="col-80 center radio-label">
+                                    I'd consider helping someone maybe
+                                </span>
+                            
 
-                            <div class="col-20 center">
-                                <div class="check"></div>
-                            </div>
+                                <div class="col-20 center">
+                                    <div class="check"></div>
+                                </div>
+                            </label>
+                            
                         </div>
+
+                        
                     </div>
                     <div class="filter-radio">
                         <div class="row ">
 
                             <input type="radio" name="personHelpLevel" ng-model="vm.personHelpLevel" value="2" id="primarilyHelping" />
 
-                            <label class="col-80 center radio-label" for="primarilyHelping">I'm primarily here to help others</label>
+                            <label class="row" for="primarilyHelping">
 
-                            <div class="col-20 center">
-                                <div class="check"></div>
-                            </div>
+                                <span class="col-80 center radio-label">
+                                    I'm primarily here to help others
+                                </span>
+
+                                <div class="col-20 center">
+                                    <div class="check"></div>
+                                </div>
+                            </label>
                         </div>
                     </div>
                     <div class="filter-radio">
@@ -209,17 +254,21 @@
 
                             <input type="radio" name="personHelpLevel" ng-model="vm.personHelpLevel" value="3" id="notHelping" />
 
-                            <label class="col-80 center radio-label" for="notHelping">I'm not able to help others at all</label>
-
-                            <div class="col-20 center">
-                                <div class="check"></div>
-                            </div>
+                            <label class="row" for="notHelping">
+                                <span class="col-80 center radio-label">
+                                    I'm not able to help others at all
+                                </span>
+                            
+                                <div class="col-20 center">
+                                    <div class="check"></div>
+                                </div>
+                            </label>
                         </div>
                     </div>
 
                     <div class="nav-button-row-filter-card">
                         <div class="nav-button-container-center">
-                            <a class="button button-icon icon ion-arrow-left-a text-colour-energized"></a>
+                            <a class="button button-icon icon ion-arrow-left-a text-colour-energized" ng-click="vm.$scope.slider.slidePrev()"></a>
                         </div>
                     </div>
                 </ion-slide-page>

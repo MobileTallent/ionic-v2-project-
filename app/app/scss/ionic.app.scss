@@ -110,8 +110,9 @@ button.button.button-stable {
 }
 .badge{
     display: block !important;
-    width: 50px;    
-    height: 50px;
+}
+.no-badge{
+   visibility: hidden;
 }
 
 /* --- Global Selectors --- */

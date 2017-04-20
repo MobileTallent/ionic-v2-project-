@@ -82,7 +82,7 @@ div input[type=radio]{
     -webkit-transition: all 0.25s linear;
     transition: all 0.25s linear;
 }
-div div .check{
+label div .check{
     margin-top: 3px;
     background-color: #fff;
     border: 5px solid $assertive;
@@ -93,7 +93,7 @@ div div .check{
 	transition: background .15s linear;
 	-webkit-transition: background .15s linear;
 }
-input[type=radio]:checked ~ div .check {
+input[type=radio]:checked ~ label div .check {
     background-color: $assertive;
 }
 

@@ -63,7 +63,8 @@ module app {
 			this.$ionicHistory = $ionicHistory
 			this.$ionicPopup = $ionicPopup
 			this.$scope.options = {
-				pagination: false
+				pagination: false,
+				onlyExternal: true
 			}
 
 			this.$scope.$on('$ionicView.beforeEnter', () => this.refresh())
