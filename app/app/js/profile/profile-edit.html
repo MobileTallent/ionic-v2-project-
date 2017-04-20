@@ -35,7 +35,7 @@
         </div>
 
         <br/>
-        <div>
+        <div class="about-you-container">
             <div class="about-you-header"><b class="padding-5">About You</b>
             </div>
             <h5 class="about-you-info padding-5">{{'ABOUT_YOU' | translate}}</h5>
@@ -54,10 +54,10 @@
         </br>
         <!--Badge Container - styles located in ionic.app.scss-->
         <div class="badge-row">
-            <img ng-class="vm.personSperm ? 'badge-visible' : 'badge-hidden' " src="img/sperm_ic.svg">
-            <img ng-class="vm.personWomb ? 'badge-visible' : 'badge-hidden' " src="img/womb_ic.svg">
-            <img ng-class="vm.personEgg ? 'badge-visible' : 'badge-hidden' " src="img/egg_ic.svg">
-            <img ng-class="vm.personEmbryo ? 'badge-visible' : 'badge-hidden' " src="img/embryo_ic.svg">
+            <img ng-class="vm.personSperm ? 'id-badge-visible' : 'id-badge-hidden' " src="img/sperm_ic.svg">
+            <img ng-class="vm.personWomb ? 'id-badge-visible' : 'id-badge-hidden' " src="img/womb_ic.svg">
+            <img ng-class="vm.personEgg ? 'id-badge-visible' : 'id-badge-hidden' " src="img/egg_ic.svg">
+            <img ng-class="vm.personEmbryo ? 'id-badge-visible' : 'id-badge-hidden' " src="img/embryo_ic.svg">
         </div>
 
 
@@ -71,7 +71,7 @@
 
                             <input type="radio" name="category" ng-model="vm.personCategory" value="1" id="single" />
 
-                            <label class="row" for="single">
+                            <label class="row" for="single" ng-click="vm.$scope.slider.slideNext()">
                                 <span class="col-80 center radio-label">
                                 It's just me for now 
                                 </span>
@@ -85,7 +85,7 @@
                         </div>
                     </div>
                     <div class="filter-radio">
-                        <div class="row ">
+                        <div class="row">
 
                             <input type="radio" name="category" ng-model="vm.personCategory" value="2" id="partner" />
 
@@ -118,7 +118,7 @@
                     </div>
                     <div class="nav-button-row-filter-card">
                         <div class="nav-button-container-center">
-                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized" ng-click="vm.$scope.slider.slideNext()"></a>
+                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized large-icon" ng-click="vm.$scope.slider.slideNext()"></a>
                         </div>
                     </div>
                 </ion-slide-page>
@@ -158,10 +158,10 @@
                     </div>
                     <div class="nav-button-row-filter-card">
                         <div class="nav-button-container-left">
-                            <a class="button button-icon icon ion-arrow-left-a text-colour-energized" ng-click="vm.$scope.slider.slidePrev()"></a>
+                            <a class="button button-icon icon ion-arrow-left-a text-colour-energized large-icon" ng-click="vm.$scope.slider.slidePrev()"></a>
                         </div>
                         <div class="nav-button-container-right">
-                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized" ng-click="vm.$scope.slider.slideNext()"></a>
+                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized large-icon" ng-click="vm.$scope.slider.slideNext()"></a>
                         </div>
                     </div>
                 </ion-slide-page>
@@ -202,10 +202,10 @@
 
                     <div class="nav-button-row-filter-card">
                         <div class="nav-button-container-left">
-                            <a class="button button-icon icon ion-arrow-left-a text-colour-energized" ng-click="vm.$scope.slider.slidePrev()"></a>
+                            <a class="button button-icon icon ion-arrow-left-a text-colour-energized large-icon" ng-click="vm.$scope.slider.slidePrev()"></a>
                         </div>
                         <div class="nav-button-container-right">
-                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized" ng-click="vm.$scope.slider.slideNext()"></a>
+                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized large-icon" ng-click="vm.$scope.slider.slideNext()"></a>
                         </div>
                     </div>
                 </ion-slide-page>
@@ -227,10 +227,10 @@
                                     <div class="check"></div>
                                 </div>
                             </label>
-                            
+
                         </div>
 
-                        
+
                     </div>
                     <div class="filter-radio">
                         <div class="row ">
@@ -268,7 +268,7 @@
 
                     <div class="nav-button-row-filter-card">
                         <div class="nav-button-container-center">
-                            <a class="button button-icon icon ion-arrow-left-a text-colour-energized" ng-click="vm.$scope.slider.slidePrev()"></a>
+                            <a class="button button-icon icon ion-arrow-left-a text-colour-energized large-icon" ng-click="vm.$scope.slider.slidePrev()"></a>
                         </div>
                     </div>
                 </ion-slide-page>

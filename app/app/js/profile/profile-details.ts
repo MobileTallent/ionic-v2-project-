@@ -30,5 +30,6 @@ angular.module('ionicApp').directive('profileDetails', function(AppService:IAppS
 
 			$scope.isCurrentUser = profile.id === currentUserProfile.id
 		}
+
 	}
 });

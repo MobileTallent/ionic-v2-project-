@@ -15,23 +15,35 @@
                     <ion-toggle ng-model="profile.girls" toggle-class="toggle-assertive" class="item-text-wrap">{{'GIRLS' | translate}}</ion-toggle>
 
                     <div class="item item-divider">
-                       Show Me:
+                        Show Me:
                     </div>
                     <ion-checkbox ng-model="sperm" color="positive" class="item-checkbox-right">
-                        <ion-label>People with Sperm</ion-label>
+                        <ion-label class="row flex-center">
+                            <img ng-class="true ? 'id-badge-visible col-20' : 'id-badge-hidden' " src="img/sperm_ic.svg">
+                            <span class="col-80 padding-10">  People with Sperm</span>
+                        </ion-label>
                     </ion-checkbox>
 
                     <ion-checkbox ng-model="eggs" color="positive" class="item-checkbox-right">
-                        <ion-label>People with Eggs</ion-label>
+                        <ion-label class="row flex-center">
+                            <img ng-class="true ? 'id-badge-visible col-20' : 'id-badge-hidden' " src="img/egg_ic.svg"> 
+                            <span class="col-80 padding-10"> People with Eggs</span>
+                        </ion-label>
                     </ion-checkbox>
 
                     <ion-checkbox ng-model="womb" color="positive" class="item-checkbox-right">
-                        <ion-label>Peple with a Womb</ion-label>
+                        <ion-label class="row flex-center">
+                            <img ng-class="true ? 'id-badge-visible col-20' : 'id-badge-hidden' " src="img/womb_ic.svg">
+                            <span class="col-80 padding-10">  People with a Womb</span>
+                        </ion-label>
                     </ion-checkbox>
 
 
-                    <ion-checkbox ng-model="embryo" color="positive" class="item-checkbox-right">
-                        <ion-label>People with a frozen Embryo</ion-label>
+                    <ion-checkbox ng-model="embryo" color="positive" class="item-checkbox-right item-text-wrap">
+                        <ion-label class="row flex-center">
+                            <img ng-class="true ? 'id-badge-visible col-20' : 'id-badge-hidden' " src="img/embryo_ic.svg">
+                            <span class="col-80 padding-10">  People with a frozen Embryo</span>
+                        </ion-label>
                     </ion-checkbox>
 
                     <ion-checkbox ng-model="needAll" color="positive" class="item-checkbox-right item-text-wrap">
@@ -109,6 +121,14 @@
                 </div>
             </div>
 
+        </div>
+        <div class="card" ng-init="showHelp = false">
+            <div class="settings-header" ng-click="showHelp = !showHelp">
+                Help
+            </div>
+            <div class="list settings-dropdown padding-10" ng-show="showHelp" ng-class="showHelp ? 'animated slideInDown' : '' ">
+                <button class="button button-block help-button" ng-click="openModal()">Overview</button>
+            </div>
         </div>
         <div class="card">
             <div class="wide center padding-10">

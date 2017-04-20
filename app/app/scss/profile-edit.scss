@@ -13,7 +13,6 @@
 .input-grey {
     background-color: #F5F5F5;
 }
-
 .about-you-header {
     color: $energized;
     font-size: 18px;
@@ -117,6 +116,10 @@ input[type=radio]:checked ~ label{
 }
 
 /* --- nav button ---*/
+
+a.icon.large-icon::before {
+    font-size: 50px;
+}
 .nav-button-row-filter-card {
     display: flex;
     flex-direction: row;
