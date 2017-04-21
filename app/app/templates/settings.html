@@ -57,7 +57,7 @@
         </div>
 
 
-        <div class="card" ng-init="showDiscovery = false">
+        <div class="card">
             <div class="settings-header" ng-click="showDiscovery = !showDiscovery">
                 Discovery
             </div>
@@ -129,7 +129,7 @@
                 Help
             </div>
             <div class="list settings-dropdown padding-10" ng-show="showHelp" ng-class="showHelp ? 'animated slideInDown' : '' ">
-                <button class="button button-block help-button" ng-click="openModal()">Overview</button>
+                <button class="button button-block help-button" ng-click="showDiscovery = true; openModal()">Overview</button>
             </div>
         </div>
         <div class="card">
@@ -138,6 +138,7 @@
                 <button class="button button-block button-positive hidden" ng-click="testPushNotification()">Test Push Notification</button>
                 <button class="button button-block button-stable" ng-click="deleteUnmatchedSwipes()">Reset Likes</button>
                 <button class="button button-block button-stable" ng-click="logout()" translate="LOGOUT"></button>
+                <button class="button button-block button-positive hidden" ng-click="getProfilesNew()">Set Default Values</button>
             </div>
             <div class="wide center padding-10 red-text" ng-click="deleteAccount()">
                 {{'DELETE_ACCOUNT' | translate}}

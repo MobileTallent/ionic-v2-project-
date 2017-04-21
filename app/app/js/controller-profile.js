@@ -453,8 +453,12 @@ angular.module('controllers')
         translations = translationsResult
     })
 
-    $scope.profile = AppService.getProfile().clone()
+    $scope.$on('$ionicView.enter', function(event) {
+        $scope.showDiscovery = false
+    })
 
+    $scope.profile = AppService.getProfile().clone()
+    $scope.showDiscovery = true
     $scope.showMI = $scope.profile.distanceType === 'mi' ? true : false
     $scope.showKM = $scope.profile.distanceType === 'km' ? true : false
     var dType = $scope.profile.distanceType
@@ -576,15 +580,15 @@ angular.module('controllers')
         animation: 'slide-in-up'
     }).then(function(modal) {
         $scope.modal = modal;
-    });
+    })
 
     $scope.openModal = function() {
-        $scope.modal.show();
-    };
+        $scope.modal.show()
+    }
 
     $scope.closeModal = function() {
-        $scope.modal.hide();
-    };
+        $scope.modal.hide()
+    }
 
     $scope.debug = () => {
         console.log('debug...')
