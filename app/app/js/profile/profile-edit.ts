@@ -262,17 +262,17 @@ module app {
 			let thingsIHave = ""
 			if (profileUpdate.personSperm)
 				thingsIHave += "S"
-			
+
 			if (profileUpdate.personEgg)
 				thingsIHave += "E"
 
 			if (profileUpdate.personWomb)
 				thingsIHave += "W"
-			
+
 			if (profileUpdate.personEmbryo)
 				thingsIHave += "Y"
-			
-			if(this.personCategory !== '3' && !profileUpdate.personSperm && !profileUpdate.personEgg && !profileUpdate.personWomb && !profileUpdate.personEmbryo)
+
+			if (this.personCategory !== '3' && !profileUpdate.personSperm && !profileUpdate.personEgg && !profileUpdate.personWomb && !profileUpdate.personEmbryo)
 				thingsIHave += "X"
 
 			profileUpdate.thingsIHave = thingsIHave
@@ -312,6 +312,18 @@ module app {
 					template: 'Your "About Me" section is empty.</br> Everyone is looking for someone with a compatible vision. A deep description adds value to the community, tell us about you.'
 				})
 			}
+		}
+
+		public onClickBadgeInfo() {
+			var alertPopup = this.$ionicPopup.alert({
+				title: 'Self Identification Badges',
+				templateUrl: 'badgeInfo.html',
+				buttons: [{
+					text: 'Ok',
+					type: 'button-assertive',
+
+				}]
+			})
 		}
 	}
 

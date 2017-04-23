@@ -53,7 +53,7 @@
         </div>
         </br>
         <!--Badge Container - styles located in ionic.app.scss-->
-        <div class="badge-row">
+        <div class="badge-row" ng-click="vm.onClickBadgeInfo()">
             <img ng-class="vm.personSperm ? 'id-badge-visible' : 'id-badge-hidden' " src="img/sperm_ic.svg">
             <img ng-class="vm.personWomb ? 'id-badge-visible' : 'id-badge-hidden' " src="img/womb_ic.svg">
             <img ng-class="vm.personEgg ? 'id-badge-visible' : 'id-badge-hidden' " src="img/egg_ic.svg">
@@ -62,7 +62,8 @@
 
 
         <!--Self definition filter cards. -->
-        <div class="about-you-header"><b class="padding-5">About Why You're Here</b>
+        <div class="about-you-header">
+            <div class="padding-10"><b>About Why You're Here</b></div>
             <ion-slides class="filter-container" options="vm.$scope.options">
                 <!--Tier One-->
                 <ion-slide-page class="filter-page">
@@ -71,7 +72,7 @@
 
                             <input type="radio" name="category" ng-model="vm.personCategory" value="1" id="single" />
 
-                            <label class="row" for="single" ng-click="vm.$scope.slider.slideNext()">
+                            <label class="row" for="single" >
                                 <span class="col-80 center radio-label">
                                 It's just me for now 
                                 </span>

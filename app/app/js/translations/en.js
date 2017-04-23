@@ -51,7 +51,7 @@ var TRANSLATION_EN = {
     'TERMS_OF_USE': 'Terms of Use',
 
     //Menu
-    'MENU_PROFILE': 'Profile',
+    'MENU_PROFILE': 'My Profile',
     'MENU_MATCHES': 'Find Matches',
     'MENU_CHAT': 'Chat',
     'MENU_LIKED_ME': 'People Who Liked Me',

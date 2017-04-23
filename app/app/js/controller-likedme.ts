@@ -5,28 +5,30 @@ module app {
 	 */
 	export class LikedMe {
 
-		private $log:ng.ILogService
-		private $rootScope:app.IAppRootScope
-		private $scope:ng.IScope
+		private $log: ng.ILogService
+		private $rootScope: app.IAppRootScope
+		private $scope: ng.IScope
 		private $state
 		private $ionicModal
-		private AppService:IAppService
-		private AppUtil:AppUtil
+		private $ionicPopup
+		private AppService: IAppService
+		private AppUtil: AppUtil
 
-		public profiles:IProfile[]
+		public profiles: IProfile[]
 
 		private profileModal
 		public profile // The profile being viewed
 		public profileIndex // The index in profiles of the profile viewed
 
-		constructor($log:ng.ILogService, $rootScope:app.IAppRootScope, $scope:ng.IScope,
-					$state, $ionicModal, AppService:IAppService, AppUtil) {
+		constructor($log: ng.ILogService, $rootScope: app.IAppRootScope, $scope: ng.IScope,
+			$state, $ionicModal, $ionicPopup, AppService: IAppService, AppUtil) {
 			$log.info('LikedMe constructor')
 			this.$log = $log
 			this.$rootScope = $rootScope
 			this.$scope = $scope
 			this.$state = $state
 			this.$ionicModal = $ionicModal
+			this.$ionicPopup = $ionicPopup
 			this.AppService = AppService
 			this.AppUtil = AppUtil
 
@@ -54,7 +56,7 @@ module app {
 				.finally(() => this.$scope.$broadcast('scroll.refreshComplete'))
 		}
 
-		public view(index:number) {
+		public view(index: number) {
 			this.$log.debug('viewing profile who liked me at index ' + index)
 			this.profile = this.profiles[index]
 			this.profileIndex = index
@@ -71,7 +73,7 @@ module app {
 			this.process(false)
 		}
 
-		private process(liked:boolean) {
+		private process(liked: boolean) {
 			this.AppUtil.blockingCall(
 				this.AppService.processMatch(this.profile, liked),
 				() => {
@@ -86,8 +88,20 @@ module app {
 			this.profile = null
 		}
 
+		public onClickBadgeInfo() {
+			var alertPopup = this.$ionicPopup.alert({
+				title: 'Self Identification Badges',
+				templateUrl: 'badgeInfo.html',
+				buttons: [{
+					text: 'Ok',
+					type: 'button-assertive',
+
+				}]
+			})
+		}
+
 	}
 
-	LikedMe.$inject = ['$log', '$rootScope', '$scope', '$state', '$ionicModal', 'AppService', 'AppUtil']
+	LikedMe.$inject = ['$log', '$rootScope', '$scope', '$state', '$ionicModal','$ionicPopup', 'AppService', 'AppUtil']
 	angular.module('controllers').controller('LikedMe', LikedMe)
 }

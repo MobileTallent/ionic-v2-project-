@@ -16,6 +16,7 @@ angular.module('ionicApp').directive('profileDetails', function(AppService:IAppS
 			let currentUserProfile = AppService.getProfile()
 			let myLocation = currentUserProfile.location
 			let profile = <IProfile>$scope.profile
+			
 
 			// Calculate the distance between this profile location and the current users profile location
 			if (myLocation && profile.location) {
@@ -29,6 +30,18 @@ angular.module('ionicApp').directive('profileDetails', function(AppService:IAppS
 			}
 
 			$scope.isCurrentUser = profile.id === currentUserProfile.id
+
+			// $scope.onClickBadgeInfo = () => {
+            // var alertPopup = this.$ionicPopup.alert({
+            //     title: 'Self Identification Badges',
+            //     templateUrl: 'badgeInfo.html',
+            //     buttons: [{
+            //         text: 'Ok',
+            //         type: 'button-assertive',
+
+            //     }]
+            // })
+        }
 		}
 
 	}
