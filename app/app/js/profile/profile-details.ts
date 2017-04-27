@@ -4,7 +4,7 @@ import IAppService = app.IAppService
 /**
  * A directive to display the main details of a profile
  */
-angular.module('ionicApp').directive('profileDetails', function(AppService:IAppService) {
+angular.module('ionicApp').directive('profileDetails', function (AppService: IAppService) {
 	return {
 		restrict: 'E',
 		scope: {
@@ -12,11 +12,11 @@ angular.module('ionicApp').directive('profileDetails', function(AppService:IAppS
 		},
 		templateUrl: 'profile/profile-details.html',
 
-		controller: function($scope) {
+		controller: function ($scope) {
 			let currentUserProfile = AppService.getProfile()
 			let myLocation = currentUserProfile.location
 			let profile = <IProfile>$scope.profile
-			
+
 
 			// Calculate the distance between this profile location and the current users profile location
 			if (myLocation && profile.location) {
@@ -28,21 +28,7 @@ angular.module('ionicApp').directive('profileDetails', function(AppService:IAppS
 				// Show 1km/1m as a minimum‰
 				$scope.distance = (distanceString === '0' ? 1 : distanceString) + currentUserProfile.distanceType
 			}
-
 			$scope.isCurrentUser = profile.id === currentUserProfile.id
-
-			// $scope.onClickBadgeInfo = () => {
-            // var alertPopup = this.$ionicPopup.alert({
-            //     title: 'Self Identification Badges',
-            //     templateUrl: 'badgeInfo.html',
-            //     buttons: [{
-            //         text: 'Ok',
-            //         type: 'button-assertive',
-
-            //     }]
-            // })
-        }
 		}
-
 	}
-});
+})

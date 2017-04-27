@@ -1138,7 +1138,35 @@ Parse.Cloud.define("GetProfileOfSelectedUser", function(request, response) {
     })
 });
 
+Parse.Cloud.define('GetApplyBadgeUsers', function(request, response) {
+    var profileQuery = new Parse.Query("Profile")
+    profileQuery.equalTo('personCategory', '0')
+    profileQuery.descending('createdAt').limit(50).find().then(function(result) {
+        result = _.map(result, _processProfile)
+        response.success(result)
+    }, function(error) {
+        console.log(JSON.stringify(error))
+        response.error(error)
+    })
+})
 
+Parse.Cloud.define('SaveProfileForApplyBadge', function(request, response) {
+    console.log('SaveProfileForApplyBadge...')
+    var id = request.params.id
+    var profileChanges = request.params.profileChanges
+    if (!id) return response.error('id parameter is required')
+
+    var profileQuery = new Parse.Query("Profile")
+    profileQuery.get(id, masterKey).then(function(profile) {
+            return profile.save(profileChanges, masterKey)
+        }).then(function() {
+            response.success("Successfully saved badge")
+        }),
+        function(error) {
+            console.log(JSON.stringify(error))
+            response.error(error)
+        }
+})
 
 /**
  * Set the sender and members properties, and check the message is allowed to be sent

@@ -15,8 +15,7 @@
         </div>
         <div class="row">
             <div class="col col-33" ng-repeat="photo in vm.photos track by $index">
-                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}"
-                    class="profileImg">
+                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}" class="profileImg">
             </div>
             <div class="col col-33" id="addPhoto" ng-if="vm.canAddPhoto()">
                 <img ng-src="{{vm.NO_IMAGE}}" ng-click="vm.addPhoto()" class="profileImg" />
@@ -29,8 +28,7 @@
         </div>
         <div class="row" ng-if="vm.photosInReview.length">
             <div class="col col-33" ng-repeat="photo in vm.photosInReview track by $index">
-                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}"
-                    class="profileImg">
+                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}" class="profileImg">
             </div>
         </div>
 
@@ -41,8 +39,7 @@
             <h5 class="about-you-info padding-5">{{'ABOUT_YOU' | translate}}</h5>
 
             <div ng-class="!vm.about ? 'red-border' : ''">
-                <textarea rows="6" class="wide input-grey text-size-18 padding-15 " placeholder="Type Here..." id="aboutYou" ng-model="vm.about"
-                    ng-keyup="vm.expandText()" ng-keydown="vm.expandText()">
+                <textarea rows="6" class="wide input-grey text-size-18 padding-15 " placeholder="Type Here..." id="aboutYou" ng-model="vm.about" ng-keyup="vm.expandText()" ng-keydown="vm.expandText()">
                     </textarea>
 
             </div>
@@ -72,7 +69,7 @@
 
                             <input type="radio" name="category" ng-model="vm.personCategory" value="1" id="single" />
 
-                            <label class="row" for="single" >
+                            <label class="row" for="single">
                                 <span class="col-80 center radio-label">
                                 It's just me for now 
                                 </span>
@@ -119,7 +116,7 @@
                     </div>
                     <div class="nav-button-row-filter-card">
                         <div class="nav-button-container-center">
-                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized large-icon" ng-click="vm.$scope.slider.slideNext()"></a>
+                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized large-icon" ng-hide="!vm.personCategory || vm.personCategory == '3'" ng-click="vm.$scope.slider.slideNext()"></a>
                         </div>
                     </div>
                 </ion-slide-page>
@@ -170,32 +167,28 @@
                 <!--Tier Three-->
                 <ion-slide-page>
 
-                    <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personSperm"
-                        toggle-class="toggle-assertive">
+                    <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personSperm" toggle-class="toggle-assertive">
                         <span ng-class=" !vm.personSperm ? 'toggle-text-active' : 'toggle-text-inactive' ">
                             {{ !vm.personSperm ? "I need help with Sperm" : "I have have access to Sperm" }}
                         </span>
                     </ion-toggle>
 
 
-                    <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personEgg"
-                        toggle-class="toggle-assertive">
+                    <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personEgg" toggle-class="toggle-assertive">
                         <span ng-class=" !vm.personEgg ? 'toggle-text-active' : 'toggle-text-inactive' ">
                             {{ !vm.personEgg ? "I need help with an Egg" : "I'm good for an Egg" }}
                         </span>
                     </ion-toggle>
 
 
-                    <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personWomb"
-                        toggle-class="toggle-assertive">
+                    <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personWomb" toggle-class="toggle-assertive">
                         <span ng-class=" !vm.personWomb ? 'toggle-text-active' : 'toggle-text-inactive' ">
                             {{!vm.personWomb ? "I need help with a Womb" :  "I have a Womb" }}
                         </span>
                     </ion-toggle>
 
 
-                    <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personEmbryo"
-                        toggle-class="toggle-assertive">
+                    <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personEmbryo" toggle-class="toggle-assertive">
                         <span ng-class=" !vm.personEmbryo ? 'toggle-text-active' : 'toggle-text-inactive' ">
                             {{ !vm.personEmbryo ? "I need help with an Embryo"  : "I'm good for an Embryo" }}
                         </span>

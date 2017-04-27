@@ -279,6 +279,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         convertLocation: convertLocation,
         saveSettings: saveSettings,
         saveProfile: saveProfile,
+        saveProfileForApplyBadge: saveProfileForApplyBadge,
         saveFile: saveFile,
         searchProfiles: searchProfiles,
         getProfilesWhoLikeMe: getProfilesWhoLikeMe,
@@ -302,6 +303,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         // admin functions
         getReportedUsers: getReportedUsers,
         getBannedUsers: getBannedUsers,
+        getApplyBadgeUsers: getApplyBadgeUsers,
         getReportedUserDetails: getReportedUserDetails,
         deletePhoto: deletePhoto,
         banUser: banUser,
@@ -541,11 +543,6 @@ angular.module('service.parse', ['constants', 'parse-angular'])
                 profile = fromJSON(profile, 'Profile')
                 return profile
             }).catch(_unwrapError)
-            //return new Parse.Query(Profile).get(profileId)
-
-        // var profileRequest = new Parse.Query(Profile)
-        // profileRequest.equalTo('objectId', profileId)
-        // return profileRequest.limit(1).find()
     }
 
 
@@ -600,6 +597,10 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         }
 
         return profile.save(profileChanges)
+    }
+
+    function saveProfileForApplyBadge(profile, profileChanges) {
+        return Parse.Cloud.run('SaveProfileForApplyBadge', { id: profile.id, profileChanges: profileChanges }).catch(_unwrapError)
     }
 
     /**
@@ -876,6 +877,15 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             .catch(_unwrapError)
     }
 
+    function getApplyBadgeUsers() {
+        return Parse.Cloud.run('GetApplyBadgeUsers')
+            .then(profiles => _.map(profiles, profile => {
+                let profileLocal = fromJSON(profile, 'Profile')
+                return profileLocal
+            }))
+            .catch(_unwrapError)
+    }
+
     function getReportedUserDetails(report) {
         return Parse.Cloud.run('GetReportedUserDetails', { reportedBy: report.reportedBy.id, reportedUser: report.reportedUser.id })
             .then(report => toId)
@@ -946,13 +956,6 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
     function addFindUsReport(findUsVotes) {
         return Parse.Cloud.run('AddFindUsReport', { findUsVotes: findUsVotes }).catch(_unwrapError)
-            // findUsVotes.forEach(vote => {
-            //     var report = new FindUsReport()
-            //     report.name = vote.name
-            //     report.username = vote.username
-            //     report.checked = vote.checked
-            //     report.save()
-            // })
     }
 
     function getFindUsReport() {

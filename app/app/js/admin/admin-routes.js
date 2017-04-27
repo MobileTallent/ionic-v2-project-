@@ -26,6 +26,15 @@ angular.module('ionicApp').config(function($stateProvider) {
                 }
             }
         })
+        .state('menu.applyBadges', {
+            url: "/applyBadges",
+            views: {
+                'menuContent': {
+                    templateUrl: "admin/applyBadges.html",
+                    controller: "ApplyBadges"
+                }
+            }
+        })
         .state('menu.adminEmailSearch', {
             url: "/adminEmailSearch",
             views: {

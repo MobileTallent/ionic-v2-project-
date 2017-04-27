@@ -105,6 +105,7 @@ function onNotificationOpen(pnObj) {
                 getProfileByMatchId: getProfileByMatchId,
                 saveBirthdate: saveBirthdate,
                 saveProfile: saveProfile,
+                saveProfileForApplyBadge: saveProfileForApplyBadge,
                 saveSettings: saveSettings,
                 enableDiscovery: enableDiscovery,
                 requestLocationServices: requestLocationServices,
@@ -141,6 +142,7 @@ function onNotificationOpen(pnObj) {
                 // Admin functions
                 getReportedUsers: getReportedUsers,
                 getBannedUsers: getBannedUsers,
+                getApplyBadgeUsers: getApplyBadgeUsers,
                 getReportedUserDetails: getReportedUserDetails,
                 deletePhoto: deletePhoto,
                 banUser: banUser,
@@ -793,6 +795,16 @@ function onNotificationOpen(pnObj) {
                     })
             }
 
+            /**
+             * @param profile the profile of the user that is being edited by the admin
+             * @param profileChanges the changes to save, or null if a new profile
+             * @returns {IPromise<TResult>}
+             */
+            function saveProfileForApplyBadge(profile, profileChanges) {
+                $log.log('applying badge')
+                return server.saveProfileForApplyBadge(profile, profileChanges)
+            }
+
             function logout() {
                 //$analytics.eventTrack('logout')
                 service.userId = null
@@ -1383,6 +1395,10 @@ function onNotificationOpen(pnObj) {
 
             function getBannedUsers() {
                 return server.getBannedUsers()
+            }
+
+            function getApplyBadgeUsers() {
+                return server.getApplyBadgeUsers()
             }
 
             function getReportedUserDetails(report) {

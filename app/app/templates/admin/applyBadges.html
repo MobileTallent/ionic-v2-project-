@@ -1,0 +1,214 @@
+<ion-view view-title="Apply Badges" ng-controller="ApplyBadges as vm">
+    <ion-nav-buttons side="right">
+        <i class="button button-icon icon ion-android-refresh" ng-click="vm.refresh()"></i>
+    </ion-nav-buttons>
+    <ion-content>
+        <div ng-show="!vm.profiles.length" style="text-align: center">
+            <br/> All Users have set their Self Id...
+            <br/>
+        </div>
+        <div class="list">
+            <a class="item item-avatar" ng-repeat="profile in vm.profiles" ng-click="vm.viewDetails(profile)">
+                <img src="img/generic_avatar.jpg" ng-src="{{profile | profileImageUrl}}" img-cache>
+                <h2>{{profile.name}}</h2>
+                <p>
+                    {{profile.about}}
+                </p>
+            </a>
+        </div>
+    </ion-content>
+    <script id="applybadges.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar class="bar bar-header bar-positive">
+                <h1 class="title">Apply Badge on {{vm.profile.name}}</h1>
+                <button class="button button-clear button-primary" ng-click="vm.closeModal()">Cancel</button>
+            </ion-header-bar>
+            <ion-content class="padding">
+                <!--Self definition filter cards. -->
+                <div class="about-you-header">
+                    <div class="padding-10"><b>About Why You're Here</b></div>
+                    <ion-slides class="filter-container" options="vm.$scope.options">
+                        <!--Tier One-->
+                        <ion-slide-page class="filter-page">
+                            <div class="filter-radio">
+                                <div class="row ">
+                                    <input type="radio" name="category" ng-model="vm.personCategory" value="1" id="single" />
+                                    <label class="row" for="single">
+                                        <span class="col-80 center radio-label">
+                                            It's just me for now 
+                                        </span>
+                                        <div class="col-20 center" >
+                                            <div class="check" >
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filter-radio">
+                                <div class="row">
+                                    <input type="radio" name="category" ng-model="vm.personCategory" value="2" id="partner" />
+                                    <label class="row" for="partner">
+                                        <span class="col-80 center radio-label text-wrap">
+                                            I'm here with my partner
+                                        </span>
+                                        <div class="col-20 center">
+                                            <div class="check"></div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filter-radio">
+                                <div class="row ">
+                                    <input type="radio" name="category" ng-model="vm.personCategory" value="3" id="organization" />
+                                    <label class="row" for="organization">
+                                        <span class="col-80 center radio-label text-wrap">
+                                            I represent an organization
+                                        </span>
+                                        <div class="col-20 center">
+                                            <div class="check"></div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="nav-button-row-filter-card">
+                                <div class="nav-button-container-center">
+                                    <a class="button button-icon icon ion-arrow-right-a text-colour-energized large-icon" ng-hide="!vm.personCategory || vm.personCategory == '3'" ng-click="vm.$scope.slider.slideNext()"></a>
+                                </div>
+                            </div>
+                        </ion-slide-page>
+
+                        <!--Tier Two-->
+                        <ion-slide-page class="filter-page">
+                            <div class="filter-radio">
+                                <div class="row ">
+                                    <input type="radio" name="personType" ng-model="vm.personType" value="1" id="curious" />
+                                    <label class="row" for="curious">
+                                        <span class="col-80 center radio-label">
+                                            I'm not quite ready for a baby, but I'm curious
+                                        </span>                      
+
+                                        <div class="col-20 center">
+                                            <div class="check"></div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filter-radio">
+                                <div class="row">
+                                    <input type="radio" name="personType" ng-model="vm.personType" value="2" id="serious" />
+                                    <label class="row" for="serious">
+                                        <span class="col-80 center radio-label">
+                                            I'm ready now, I'm pretty serious
+                                        </span>
+                                    
+                                        <div class="col-20 center">
+                                            <div class="check"></div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="nav-button-row-filter-card">
+                                <div class="nav-button-container-left">
+                                    <a class="button button-icon icon ion-arrow-left-a text-colour-energized large-icon" ng-click="vm.$scope.slider.slidePrev()"></a>
+                                </div>
+                                <div class="nav-button-container-right">
+                                    <a class="button button-icon icon ion-arrow-right-a text-colour-energized large-icon" ng-click="vm.$scope.slider.slideNext()"></a>
+                                </div>
+                            </div>
+                        </ion-slide-page>
+
+                        <!--Tier Three-->
+                        <ion-slide-page>
+
+                            <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personSperm" toggle-class="toggle-assertive">
+                                <span ng-class=" !vm.personSperm ? 'toggle-text-active' : 'toggle-text-inactive' ">
+                            {{ !vm.personSperm ? "I need help with Sperm" : "I have have access to Sperm" }}
+                        </span>
+                            </ion-toggle>
+
+
+                            <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personEgg" toggle-class="toggle-assertive">
+                                <span ng-class=" !vm.personEgg ? 'toggle-text-active' : 'toggle-text-inactive' ">
+                            {{ !vm.personEgg ? "I need help with an Egg" : "I'm good for an Egg" }}
+                        </span>
+                            </ion-toggle>
+
+
+                            <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personWomb" toggle-class="toggle-assertive">
+                                <span ng-class=" !vm.personWomb ? 'toggle-text-active' : 'toggle-text-inactive' ">
+                            {{!vm.personWomb ? "I need help with a Womb" :  "I have a Womb" }}
+                        </span>
+                            </ion-toggle>
+
+
+                            <ion-toggle style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="item-text-wrap" ng-model="vm.personEmbryo" toggle-class="toggle-assertive">
+                                <span ng-class=" !vm.personEmbryo ? 'toggle-text-active' : 'toggle-text-inactive' ">
+                            {{ !vm.personEmbryo ? "I need help with an Embryo"  : "I'm good for an Embryo" }}
+                        </span>
+                            </ion-toggle>
+
+                            <div class="nav-button-row-filter-card">
+                                <div class="nav-button-container-left">
+                                    <a class="button button-icon icon ion-arrow-left-a text-colour-energized large-icon" ng-click="vm.$scope.slider.slidePrev()"></a>
+                                </div>
+                                <div class="nav-button-container-right">
+                                    <a class="button button-icon icon ion-arrow-right-a text-colour-energized large-icon" ng-click="vm.$scope.slider.slideNext()"></a>
+                                </div>
+                            </div>
+                        </ion-slide-page>
+
+                        <!--Tier Four-->
+                        <ion-slide-page class="filter-page">
+                            <div class="filter-radio">
+                                <div class="row ">
+                                    <input type="radio" name="personHelpLevel" ng-model="vm.personHelpLevel" value="1" id="considerHelping" />
+                                    <label class="row" for="considerHelping">
+                                        <span class="col-80 center radio-label">
+                                            I'd consider helping someone maybe
+                                        </span>
+                                        <div class="col-20 center">
+                                            <div class="check"></div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filter-radio">
+                                <div class="row ">
+                                    <input type="radio" name="personHelpLevel" ng-model="vm.personHelpLevel" value="2" id="primarilyHelping" />
+                                    <label class="row" for="primarilyHelping">
+                                        <span class="col-80 center radio-label">
+                                            I'm primarily here to help others
+                                        </span>
+                                        <div class="col-20 center">
+                                            <div class="check"></div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="filter-radio">
+                                <div class="row ">
+                                    <input type="radio" name="personHelpLevel" ng-model="vm.personHelpLevel" value="3" id="notHelping" />
+                                    <label class="row" for="notHelping">
+                                        <span class="col-80 center radio-label">
+                                            I'm not able to help others at all
+                                        </span>
+                                    
+                                        <div class="col-20 center">
+                                            <div class="check"></div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="nav-button-row-filter-card">
+                                <div class="nav-button-container-center">
+                                    <a class="button button-icon icon ion-arrow-left-a text-colour-energized large-icon" ng-click="vm.$scope.slider.slidePrev()"></a>
+                                </div>
+                            </div>
+                        </ion-slide-page>
+                    </ion-slides>
+                    <button class="button button-full button-positive" ng-click="vm.applyBadge()">Apply Badge</button>
+                </div>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+</ion-view>
