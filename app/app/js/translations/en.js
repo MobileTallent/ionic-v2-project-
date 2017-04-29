@@ -57,11 +57,11 @@ var TRANSLATION_EN = {
     'MENU_LIKED_ME': 'People Who Liked Me',
     'MENU_DISCOVERY': 'Discovery Preferences',
     'MENU_SETTINGS': 'Settings',
-    'MENU_CONTACT': 'Submit Feature Request',
+    'MENU_CONTACT': 'Send Your Feedback',
     'MENU_SHARE': 'Invite My Friends',
     'MENU_CO_PARENTS': 'My Co-Parents Shortlist',
     'ABOUT_JUST_A_BABY': 'About Just a Baby',
-    'BECOME_A_PARENT': 'Become a Parent',
+    'FAQ': 'FAQ',
     // Profile
     'PROFILE_SETUP_MSG': 'We need a couple more details',
     'BIRTH_DAY': 'Birth day',

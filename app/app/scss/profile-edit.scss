@@ -61,7 +61,7 @@ textarea { height: auto; }
     border-radius: 45px;
 }
 .filter-container{
-    height: 300px;
+    height: 330px;
 }
 
 /* --- Custom Radio button --- */
@@ -106,13 +106,15 @@ input[type=radio]:checked ~ label{
 .toggle-text-active{
     text-align: center;
     font-size: 12px !important;
-    color: $energized;
+    // color: $energized;
+    color: #d1d1d1;
     
 }
 .toggle-text-inactive{
     text-align: center;
     font-size: 12px !important;
-    color: $assertive;
+    // color: $assertive;
+    color: $energized;
 }
 
 /* --- nav button ---*/

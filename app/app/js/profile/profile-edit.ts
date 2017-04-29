@@ -63,7 +63,6 @@ module app {
 			this.$ionicHistory = $ionicHistory
 			this.$ionicPopup = $ionicPopup
 			this.$scope.options = {
-				pagination: false,
 				onlyExternal: true,
 				speed: 700
 			}
