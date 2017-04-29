@@ -64,7 +64,8 @@ module app {
 			this.$ionicPopup = $ionicPopup
 			this.$scope.options = {
 				pagination: false,
-				onlyExternal: true
+				onlyExternal: true,
+				speed: 700
 			}
 
 			this.$scope.$on('$ionicView.beforeEnter', () => this.refresh())
@@ -277,7 +278,7 @@ module app {
 
 			profileUpdate.thingsIHave = thingsIHave
 
-			if (this.about)
+			// if (this.about)
 				this.AppUtil.blockingCall(
 					this.AppService.saveProfile(profileUpdate),
 					() => {
@@ -290,18 +291,18 @@ module app {
 							this.$state.go('menu.profile')
 						}
 					})
-			else
-				this.onRedirectToEditProfile(true);
+			// else
+			// 	this.onRedirectToEditProfile(true);
 		}
 
 		/**
 		 * Custom go back
 		 */
 		public myGoBack() {
-			if (this.profile.about)
+			// if (this.profile.about)
 				this.$ionicHistory.goBack()
-			else
-				this.onRedirectToEditProfile(false);
+			// else
+			// 	this.onRedirectToEditProfile(false);
 		}
 
 		public onRedirectToEditProfile(forceShow) {

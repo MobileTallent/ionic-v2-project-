@@ -443,7 +443,7 @@ angular.module('controllers')
 //     $scope.cancel = () => $scope.profile = AppService.getProfile($scope).clone()
 // })
 
-.controller('SettingsCtrl', function($scope, $state, $ionicModal, AppService, AppUtil, $log, $rootScope, $translate, $ionicHistory, $ionicActionSheet, env) {
+.controller('SettingsCtrl', function($scope, $state, $ionicModal, $ionicPopup, AppService, AppUtil, $log, $rootScope, $translate, $ionicHistory, $ionicActionSheet, env) {
 
     // The Profile fields on the discover page to save
     var fields = ['enabled', 'guys', 'girls', 'ageFrom', 'ageTo', 'distance', 'LFSperm', 'LFEggs', 'LFWomb', 'LFEmbryo', 'LFNot', 'LFHelpM', 'LFHelpO', 'LFSelfId']
@@ -602,6 +602,14 @@ angular.module('controllers')
                 return true
             }
         })
+    }
+
+    $scope.filterInfoPopup = () => {
+        var infoPopup = $ionicPopup.alert({
+            title: 'Advanced Filter Options',
+            template: '<p class="center">To use this option you need to finalise your profile. This should take around 15 seconds.</p>'
+        });
+        infoPopup.then(() => $state.go('menu.profile-edit'));
     }
 })
 

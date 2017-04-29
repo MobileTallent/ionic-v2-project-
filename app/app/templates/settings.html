@@ -13,8 +13,9 @@
                     </div>-->
                     <ion-toggle ng-model="profile.guys" toggle-class="toggle-assertive" class="item-text-wrap">{{'GUYS' | translate}}</ion-toggle>
                     <ion-toggle ng-model="profile.girls" toggle-class="toggle-assertive" class="item-text-wrap">{{'GIRLS' | translate}}</ion-toggle>
-                    <ion-toggle ng-model="profile.LFSelfId" toggle-class="toggle-assertive" class="item-text-wrap">Self-Identification</ion-toggle>
-
+                    <div ng-click="filterInfoPopup()">
+                        <ion-toggle ng-model="profile.LFSelfId" toggle-class="toggle-assertive" class="item-text-wrap" ng-disabled="true" >Advanced Filters</ion-toggle>
+                    </div>
                     <div ng-show="profile.LFSelfId">
                         <div class="item item-divider">
                             Show Me:
@@ -49,7 +50,7 @@
                         </ion-checkbox>
 
                         <ion-checkbox ng-model="profile.LFNot" color="positive" class="item-checkbox-right item-text-wrap">
-                            <ion-label style="width: initial;">People without any of the above </ion-label>
+                            <ion-label style="width: initial;">People without any of the above and people with incomplete profiles</ion-label>
                         </ion-checkbox>
                     </div>
                 </ul>
