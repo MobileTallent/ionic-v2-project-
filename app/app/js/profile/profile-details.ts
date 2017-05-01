@@ -18,6 +18,24 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 			let profile = <IProfile>$scope.profile
 
 
+			//address and flags
+			if(profile.location._latitude && profile.location._longitude) {
+				let geocodingAPI = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+profile.location._latitude+","+profile.location._longitude+"&sensor=false&language=en";
+				let num;
+				
+				fetch(geocodingAPI)
+				.then(res => res.json())
+				.then((out) => {
+					profile.address = out['results'][0].formatted_address;
+					if (out['results'][6]) num = 6 
+					else if (out['results'][5]) num = 5 
+					else if (out['results'][4]) num = 4
+					profile.country = out['results'][num].formatted_address;
+					
+				})
+				.catch(err => console.error(err));
+			}
+
 			// Calculate the distance between this profile location and the current users profile location
 			if (myLocation && profile.location) {
 				let distance = GeoUtils.getDistanceFromLatLonInKm(profile.location.latitude, profile.location.longitude,
