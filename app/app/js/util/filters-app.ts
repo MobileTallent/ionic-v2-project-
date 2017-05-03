@@ -30,31 +30,6 @@ angular.module('ionicApp')
 
 			output += userProfile.distanceType
 
-			//address and flags
-			if(!ionic.Platform.isIOS() && userProfile.location.latitude && userProfile.location.longitude) {
-				let geocodingAPI = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+userProfile.location.latitude+","+userProfile.location.longitude+"&sensor=false&language=en";
-				let num;
-				let addArray;
-				
-				fetch(geocodingAPI)
-				.then(res => res.json())
-				.then((out) => {
-					userProfile.address = out['results'][0].formatted_address;
-					if (out['results'][8]) num = 8 
-					else if (out['results'][7]) num = 7 
-					else if (out['results'][6]) num = 6 
-					else if (out['results'][5]) num = 5 
-					else if (out['results'][4]) num = 4
-					userProfile.country = out['results'][num].formatted_address;
-
-					userProfile.address = out['results'][0].formatted_address
-					addArray = userProfile.address.split(',')
-					userProfile.country = addArray.slice(-1).pop().trim()
-					
-				})
-				.catch(err => console.error(err));
-			}
-
 			return output
 
 
