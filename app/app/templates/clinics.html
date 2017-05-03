@@ -11,9 +11,9 @@
                         <i class="icon" ng-class="showItem{{item.id}} ? 'ion-minus' : 'ion-plus'"></i> &nbsp; <b>{{item.question}}</b>
                     </ion-item>
                     <ion-item class="item-accordion" style="white-space: pre-wrap; font-size: 14px;" ng-show="showItem{{item.id}}" ng-class="showItem{{item.id}} ? 'animated slideInUp' : ''">
-                        <div class="video-container" ng-class="item.video ? '' : 'hidden'">
+                        <!--<div class="video-container" ng-class="item.video ? '' : 'hidden'">
                             <iframe width="560" height="315" ng-src="{{trustSrcurl(item.video)}}" frameborder="0" allowfullscreen></iframe>
-                        </div>
+                        </div>-->
                         {{item.answer}}
                     </ion-item>
                 </div>

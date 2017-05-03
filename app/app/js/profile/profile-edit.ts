@@ -243,6 +243,7 @@ module app {
 			profileUpdate.about = this.about
 			profileUpdate.personCategory = this.personCategory ? this.personCategory : '0'
 			profileUpdate.hasSelfId = true
+			// Please comment on this logic. 
 			if (this.personCategory === '3') {
 				profileUpdate.personType = '0'
 				profileUpdate.personSperm = false

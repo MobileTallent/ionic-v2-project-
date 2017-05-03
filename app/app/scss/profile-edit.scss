@@ -51,7 +51,7 @@ textarea { height: auto; }
     justify-content: center;
     flex-direction: column;
     padding: 10px;
-    height: 250px;
+    height: 325px;
 }
 .filter-radio{
     display: block;
@@ -61,7 +61,7 @@ textarea { height: auto; }
     border-radius: 45px;
 }
 .filter-container{
-    height: 330px;
+    height: 400px;
 }
 
 /* --- Custom Radio button --- */
@@ -107,7 +107,7 @@ input[type=radio]:checked ~ label{
     text-align: center;
     font-size: 12px !important;
     // color: $energized;
-    color: #d1d1d1;
+    color: $energized;
     
 }
 .toggle-text-inactive{
