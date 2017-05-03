@@ -48,7 +48,7 @@
 
         <!--Self definition filter cards. -->
         <div class="about-you-header">
-            
+
             <ion-slides class="filter-container" options="vm.$scope.options">
                 <!--Tier One-->
                 <ion-slide-page class="filter-page">
@@ -121,7 +121,7 @@
 
                             <label class="row" for="curious">
                                 <span class="col-80 center radio-label">
-                                    I'm not quite ready for a baby, but I'm curious
+                                    I'm not ready for a baby, but I'm curious
                                 </span>                      
 
                                 <div class="col-20 center">
@@ -158,8 +158,8 @@
                 <!--Tier Three-->
                 <ion-slide-page>
                     <div class="padding-10"><b>How could you help make a baby?</b></div>
-                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap" ng-model="vm.personSperm"
-                        toggle-class="toggle-assertive">
+                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap"
+                        ng-model="vm.personSperm" toggle-class="toggle-assertive">
                         <span ng-class=" !vm.personSperm ? 'toggle-text-active' : 'toggle-text-inactive' ">
                             <!--{{ !vm.personSperm ? "I need help with Sperm" : "I have have access to Sperm" }}-->
                             I have Sperm
@@ -167,8 +167,8 @@
                     </ion-checkbox>
 
 
-                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap" ng-model="vm.personEgg"
-                        toggle-class="toggle-assertive">
+                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap"
+                        ng-model="vm.personEgg" toggle-class="toggle-assertive">
                         <span ng-class=" !vm.personEgg ? 'toggle-text-active' : 'toggle-text-inactive' ">
                             <!--{{ !vm.personEgg ? "I need help with an Egg" : "I'm good for an Egg" }}-->
                             I have Eggs
@@ -176,8 +176,8 @@
                     </ion-checkbox>
 
 
-                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap" ng-model="vm.personWomb"
-                        toggle-class="toggle-assertive">
+                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap"
+                        ng-model="vm.personWomb" toggle-class="toggle-assertive">
                         <span ng-class=" !vm.personWomb ? 'toggle-text-active' : 'toggle-text-inactive' ">
                             <!--{{!vm.personWomb ? "I need help with a Womb" :  "I have a Womb" }}-->
                             I have a Womb
@@ -185,8 +185,8 @@
                     </ion-checkbox>
 
 
-                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap" ng-model="vm.personEmbryo"
-                        toggle-class="toggle-assertive">
+                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap"
+                        ng-model="vm.personEmbryo" toggle-class="toggle-assertive">
                         <span ng-class=" !vm.personEmbryo ? 'toggle-text-active' : 'toggle-text-inactive' ">
                             <!--{{ !vm.personEmbryo ? "I need help with an Embryo"  : "I'm good for an Embryo" }}-->
                             I have a frozen Embryo
@@ -243,7 +243,7 @@
 
                             <label class="row" for="considerHelping">
                                 <span class="col-80 center radio-label">
-                                    I'd consider helping someone maybe
+                                    I’m here for myself and my baby and I may consider helping someone.
                                 </span>
                             
 
@@ -264,7 +264,7 @@
                             <label class="row" for="primarilyHelping">
 
                                 <span class="col-80 center radio-label">
-                                    I'm primarily here to help others
+                                    I’m only here to help others. I’m not looking for my own baby.
                                 </span>
 
                                 <div class="col-20 center">
@@ -280,7 +280,7 @@
 
                             <label class="row" for="notHelping">
                                 <span class="col-80 center radio-label" >
-                                    I'm not able to help others at all
+                                    I’m not able to help others at all. I’m only here for myself and my baby.
                                 </span>
                             
                                 <div class="col-20 center">
@@ -316,8 +316,11 @@
                         </div>-->
                     </div>
                     <div class="nav-button-row-filter-card">
-                        <div class="nav-button-container-center">
+                        <div class="nav-button-container-left">
                             <a class="button button-icon icon ion-arrow-left-a text-colour-energized large-icon" ng-click="vm.$scope.slider.slidePrev()"></a>
+                        </div>
+                        <div class="nav-button-container-right">
+                            <button class="button button-positive" ng-click="vm.saveProfile()">Finish</button>
                         </div>
                     </div>
                 </ion-slide-page>
@@ -346,8 +349,8 @@
         <ion-radio name="personHelpLevel" ng-model="vm.personHelpLevel" value="3">I'm not able to help others at all.</ion-radio>-->
 
 
-        <div class="text-align center padding-25">
+        <!--<div class="text-align center padding-25">
             <button class="button button-positive" ng-click="vm.saveProfile()">Finish</button>
-        </div>
+        </div>-->
     </ion-content>
 </ion-view>
