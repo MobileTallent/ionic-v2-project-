@@ -617,6 +617,10 @@ angular.module('controllers')
         });
         infoPopup.then(() => $state.go('menu.profile-edit'));
     }
+
+    $scope.goToEditProfile = () => {
+        $state.go('menu.profile-edit');
+    }
 })
 
 .controller('ContactCtrl', function($scope, AppService, AppUtil, $translate) {
