@@ -140,6 +140,12 @@ angular.module('controllers')
     };
 })
 
+.controller('WalkThruCtrl', function($scope, AppService, AppUtil) {
+    $scope.closeModal = function() {
+        AppService.goToNextLoginState()
+    }
+})
+
 .controller('ProfileSetupCtrl', function($scope, $state, $ionicHistory, AppService, AppUtil) {
     // The user will be sent here from AppService.goToNextLoginState() if AppService.isProfileValid() returns false
     $scope.$on('$ionicView.beforeEnter', function(event) {

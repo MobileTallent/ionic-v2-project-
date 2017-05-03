@@ -579,11 +579,7 @@ function onNotificationOpen(pnObj) {
 
                 if (isAcntNew) {
                     isAcntNew = false
-                    $ionicHistory.nextViewOptions({
-                        historyRoot: true,
-                        disableBack: true
-                    })
-                    $state.go('findUs', { username: user.profile.name })
+                    go('walkthru')
                     return
                 }
 

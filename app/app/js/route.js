@@ -16,6 +16,11 @@ angular.module('ionicApp').config(function($stateProvider, $urlRouterProvider) {
             templateUrl: 'profileSetup.html',
             controller: 'ProfileSetupCtrl'
         })
+        .state('walkthru', {
+            url: '/walkthru',
+            templateUrl: 'introWalkthrough.html',
+            controller: 'WalkThruCtrl'
+        })
         .state('findUs', {
             url: '/findUs',
             templateUrl: "findUs.html",

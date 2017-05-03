@@ -31,4 +31,10 @@
     <div ng-show="profile.about" style="color:#9B9B9B; white-space: pre-wrap;" class="text-size-18">
         {{profile.about}}
     </div>
+    <h4 ng-show="profile.address" style="color:#666666">Address</h4>
+    <div ng-show="profile.address" style="color:#9B9B9B; white-space: pre-wrap;" class="text-size-18">
+        {{profile.address}}
+        <br>
+        <img ng-src="img/flags/{{profile.country}}.png">
+    </div>
 </div>
