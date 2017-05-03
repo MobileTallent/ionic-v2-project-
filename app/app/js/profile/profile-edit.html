@@ -107,8 +107,8 @@
                         <div class="nav-button-container-center">
                             <a class="button button-icon icon ion-arrow-right-a text-colour-energized large-icon" ng-hide="!vm.personCategory || vm.personCategory == '3'"
                                 ng-click="vm.$scope.slider.slideNext()"></a>
-                            <a ng-show="!vm.personCategory || vm.personCategory == '3'" class="text-colour-energized" style="text-align: center; font-size: 12px;">Please register your interest by emailing paul@justababy.com and we will be in touch.</a>
                         </div>
+                        <a ng-show="!vm.personCategory || vm.personCategory == '3'" class="text-colour-energized" style="text-align: center; font-size: 12px;">Please register your interest by emailing paul@justababy.com and we will be in touch.</a>
                     </div>
                 </ion-slide-page>
 
@@ -243,8 +243,8 @@
                             <input type="radio" name="personHelpLevel" ng-model="vm.personHelpLevel" value="1" id="considerHelping" />
 
                             <label class="row" for="considerHelping">
-                                <span class="col-80 center radio-label">
-                                    I’m here for myself and my baby and I may consider helping someone.
+                                <span class="col-80 center radio-label text-size-18">
+                                    Maybe
                                 </span>
                             
 
@@ -264,8 +264,8 @@
 
                             <label class="row" for="primarilyHelping">
 
-                                <span class="col-80 center radio-label">
-                                    I’m only here to help others. I’m not looking for my own baby.
+                                <span class="col-80 center radio-label text-size-18">
+                                    Yes
                                 </span>
 
                                 <div class="col-20 center">
@@ -280,8 +280,8 @@
                             <input type="radio" name="personHelpLevel" ng-model="vm.personHelpLevel" value="3" id="notHelping" />
 
                             <label class="row" for="notHelping">
-                                <span class="col-80 center radio-label" >
-                                    I’m not able to help others at all. I’m only here for myself and my baby.
+                                <span class="col-80 center radio-label text-size-18" >
+                                    No
                                 </span>
                             
                                 <div class="col-20 center">
