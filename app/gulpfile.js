@@ -62,10 +62,7 @@ var paths = {
     images: ['./app/img/**'],
     lib: ['./bower_components/**/*.js'], // used in the watch
     // bowerFiles doesn't include some files, not sure why yet, so manually include them here
-    libJs: ['bower_components/ionic/js/ionic.bundle.js'
-            ,'bower_components/ngImgCrop/compile/minified/ng-img-crop.js'
-            ,'bower_components/parse-angular-patch/parse-angular.js'
-    ], // files which aren't in the bower main config
+    libJs: ['bower_components/ionic/js/ionic.bundle.js', 'bower_components/ngImgCrop/compile/minified/ng-img-crop.js', 'bower_components/parse-angular-patch/parse-angular.js'], // files which aren't in the bower main config
     libCss: ['bower_components/ngImgCrop/compile/minified/ng-img-crop.css', 'bower_components/angular-slider/slider.css'], // files which aren't in the bower main config
     templates: ['./app/templates/**/*.html', './app/js/**/*.html'],
     fonts: [
@@ -88,14 +85,14 @@ gulp.task('prodBuild', ['setProdEnv', 'sass', 'css', 'ts-lint', 'compile-ts', 'g
  * This task copies these files and removes the .template extension (leaving the .xml, .js, .json etc extensions)
  * Existing files will not be over-written
  */
-gulp.task('init', function (done) {
+gulp.task('init', function(done) {
 
-    gulp.src(paths.initTemplates, {base: './'})
-        .pipe(rename(function (path) {
+    gulp.src(paths.initTemplates, { base: './' })
+        .pipe(rename(function(path) {
             // create the new file by striping the .template extension
             var newPath = path.dirname + '/' + path.basename
-            // don't over-write files as we probably already have config values in them
-            if(!fs.existsSync(newPath)) {
+                // don't over-write files as we probably already have config values in them
+            if (!fs.existsSync(newPath)) {
                 path.extname = ''
                 console.log(newPath)
             }
@@ -111,12 +108,12 @@ gulp.task('init', function (done) {
 // See http://geekindulgence.com/environment-variables-in-angularjs-and-ionic/ for more info on this task
 // At the command line, to use the QA config run:
 // gulp --env qa
-gulp.task('envConfig', function (done) {
-    if(!env)
+gulp.task('envConfig', function(done) {
+    if (!env)
         env = args.env || 'dev'
     console.log('Environment: ' + env)
 
-    if(env === 'dev') {
+    if (env === 'dev') {
         uglify = gutil.noop
         console.log('Disabling uglifying. Do not release dev builds to the app stores')
     }
@@ -125,17 +122,17 @@ gulp.task('envConfig', function (done) {
     var config = JSON.parse(fs.readFileSync(configFile))
 
     var envConfig = config[env]
-    
-    if(!envConfig)
+
+    if (!envConfig)
         throw 'No configuration found in ' + configFile + ' for env ' + env
 
-    if(!config.parseMount.endsWith('/')) {
+    if (!config.parseMount.endsWith('/')) {
         console.log('parseMount config value should end with /')
         envConfig.parseMount = envConfig.parseMount + '/'
     }
 
     // Write out the constants.js file with all the required values in the configuration json
-    var properties = ['appName','parseAppId','parseMount','gcpBrowserKey','playStoreUrl','itunesUrl', 'webStoreUrl', 'facebookAppId','linkedInId','linkedInSecret','socialShareMessage', 'socialShareSubject', 'adMob']
+    var properties = ['appName', 'parseAppId', 'parseMount', 'gcpBrowserKey', 'playStoreUrl', 'itunesUrl', 'webStoreUrl', 'smartStoreUrl', 'facebookAppId', 'linkedInId', 'linkedInSecret', 'socialShareMessage', 'socialShareSubject', 'adMob']
 
     var constants = 'angular.module("constants", [])\n'
     properties.forEach(function(prop) {
@@ -150,9 +147,10 @@ gulp.task('envConfig', function (done) {
 
     // Copy the custom Android application class with the app id and server url configured
     var replacePatterns = [
-        {match: 'parseAppId', replacement: config.parseAppId},
-        {match: 'serverUrl', replacement: envConfig.serverUrl},
-        {match: 'parseMount', replacement: config.parseMount}]
+        { match: 'parseAppId', replacement: config.parseAppId },
+        { match: 'serverUrl', replacement: envConfig.serverUrl },
+        { match: 'parseMount', replacement: config.parseMount }
+    ]
     var java = gulp.src('./app/config/CustomApplication.java')
         .pipe(replace({ patterns: replacePatterns }))
         .pipe(gulp.dest('./platforms/android/src/org/apache/cordova'))
@@ -168,9 +166,9 @@ function updateFacebookIds() {
 
     var jsonFormat = { 'indent_char': '\t', 'indent_size': 1 }
 
-    var facebookAndroid = gulp.src('./plugins/android.json', {base: './'})
+    var facebookAndroid = gulp.src('./plugins/android.json', { base: './' })
         .pipe(jsonEditor(function(json) {
-            if(json.installed_plugins['com.phonegap.plugins.facebookconnect'] && json.config_munge.files['res/values/facebookconnect.xml']) {
+            if (json.installed_plugins['com.phonegap.plugins.facebookconnect'] && json.config_munge.files['res/values/facebookconnect.xml']) {
                 var array = json.config_munge.files['res/values/facebookconnect.xml'].parents['/*']
                 array[0].xml = '<string name=\"fb_app_id\">' + config.facebookAppId + '</string>'
                 array[1].xml = '<string name=\"fb_app_name\">' + config.facebookAppName + '</string>'
@@ -183,9 +181,9 @@ function updateFacebookIds() {
         }, jsonFormat))
         .pipe(gulp.dest('.'))
 
-    var facebookIOS = gulp.src('./plugins/ios.json', {base: './'})
+    var facebookIOS = gulp.src('./plugins/ios.json', { base: './' })
         .pipe(jsonEditor(function(json) {
-            if(json.installed_plugins['com.phonegap.plugins.facebookconnect'] && json.config_munge.files['*-Info.plist']) {
+            if (json.installed_plugins['com.phonegap.plugins.facebookconnect'] && json.config_munge.files['*-Info.plist']) {
                 var parents = json.config_munge.files['*-Info.plist'].parents
                 parents.FacebookAppID[0].xml = '<string>' + config.facebookAppId + '</string>'
                 parents.FacebookDisplayName[0].xml = '<string>' + config.facebookAppName + '</string>'
@@ -204,7 +202,7 @@ function updateFacebookIds() {
 
 
 
-gulp.task('setProdEnv', function (done) {
+gulp.task('setProdEnv', function(done) {
     console.log('Setting env to prod ')
     env = 'prod'
     done()
@@ -219,9 +217,9 @@ gulp.task('setProdEnv', function (done) {
 gulp.task('sass', function(done) {
     gulp.src(paths.sass)
         .pipe(plumber({ errorHandler: onError }))
-        .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(sourcemaps.init({ loadMaps: true }))
         .pipe(sass())
-        .pipe(minifyCss({keepSpecialComments: 0}))
+        .pipe(minifyCss({ keepSpecialComments: 0 }))
         .pipe(sourcemaps.write('/maps'))
         .pipe(gulp.dest('./www/'))
         .on('end', done);
@@ -260,7 +258,7 @@ gulp.task('lib', function(done) {
         .pipe(filter('**/*.js'))
         //.pipe(print())
         .pipe(plumber({ errorHandler: onError }))
-        .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(sourcemaps.init({ loadMaps: true }))
         //.pipe(angularFilesort())
         .pipe(concat('lib.js'))
         .pipe(ngAnnotate())
@@ -277,8 +275,8 @@ gulp.task('js', ['envConfig'], function(done) {
     var stream = gulp.src(paths.js)
         //.pipe(print())
         .pipe(plumber({ errorHandler: onError }))
-        .pipe(sourcemaps.init({loadMaps: true}));
-    if(env === 'prod')
+        .pipe(sourcemaps.init({ loadMaps: true }));
+    if (env === 'prod')
         stream.pipe(removeCode({ production: true }));
 
     stream.pipe(babel({}))
@@ -296,13 +294,13 @@ gulp.task('js', ['envConfig'], function(done) {
 /**
  * Generates the app.d.ts references file dynamically from all application *.ts files.
  */
-gulp.task('gen-ts-refs', function () {
+gulp.task('gen-ts-refs', function() {
     var target = gulp.src(paths.tsAppReferences);
-    var sources = gulp.src(paths.ts, {read: false});
+    var sources = gulp.src(paths.ts, { read: false });
     return target.pipe(inject(sources, {
         starttag: '//{',
         endtag: '//}',
-        transform: function (filepath) {
+        transform: function(filepath) {
             return '/// <reference path="../..' + filepath + '" />';
         }
     })).pipe(gulp.dest(paths.tsTypings));
@@ -311,18 +309,19 @@ gulp.task('gen-ts-refs', function () {
 /**
  * Lint all custom TypeScript files.
  */
-gulp.task('ts-lint', function () {
+gulp.task('ts-lint', function() {
     return gulp.src(paths.ts).pipe(tslint()).pipe(tslint.report('prose'));
 });
 
 /**
  * Compile TypeScript and include references to library and app .d.ts files.
  */
-gulp.task('compile-ts', function () {
-    var sourceTsFiles = [paths.ts,                //path to typescript files
-        paths.tsLibDefinitions, //reference to library .d.ts files
-        paths.tsAppReferences,     //reference to app.d.ts files
-        paths.tsTestsExclusion] // exclude the test files
+gulp.task('compile-ts', function() {
+    var sourceTsFiles = [paths.ts, //path to typescript files
+            paths.tsLibDefinitions, //reference to library .d.ts files
+            paths.tsAppReferences, //reference to app.d.ts files
+            paths.tsTestsExclusion
+        ] // exclude the test files
 
     var tsResult = gulp.src(sourceTsFiles)
         .pipe(sourcemaps.init())
@@ -350,7 +349,7 @@ gulp.task('compile-ts', function () {
 gulp.task('templates', function(done) {
     gulp.src(paths.templates)
         .pipe(minifyHtml({ empty: true, spare: true, quotes: true }))
-        .pipe(ngHtml2Js({ moduleName: 'templates'}))
+        .pipe(ngHtml2Js({ moduleName: 'templates' }))
         .pipe(concat('templates.js'))
         .pipe(uglify())
         .pipe(gulp.dest('./www/'))
@@ -389,7 +388,7 @@ gulp.task('autotest', function() {
 gulp.task('fonts', function() {
     return gulp.src(paths.fonts)
         //.pipe(print())
-        .pipe(rename({dirname: ''}))
+        .pipe(rename({ dirname: '' }))
         .pipe(gulp.dest('./www/fonts/'));
 });
 
@@ -402,7 +401,7 @@ gulp.task('images', function() {
         .pipe(cache(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true })))
         .pipe(gulp.dest('./www/img/'))
         //.pipe(notify({ message: 'Images task complete' }))
-        ;
+    ;
 });
 
 
@@ -422,14 +421,14 @@ gulp.task('http', function() {
 
     var port = 8100
     http.createServer(
-        ecstatic({ root: __dirname + '/www' })
-    ).listen(port)
+            ecstatic({ root: __dirname + '/www' })
+        ).listen(port)
         .on('listening', function() {
             console.log('http server running at http://localhost:' + port)
 
             browserSync.init({
                 proxy: "http://localhost:8100"
-            }, { ui: { port: 8200 }})
+            }, { ui: { port: 8200 } })
 
             gulp.watch("www/*.css").on('change', function(change) {
                 console.log('streaming ' + change.path)
@@ -459,7 +458,7 @@ gulp.task('git-check', function(done) {
     done();
 });
 
-var onError = function (err) {
+var onError = function(err) {
     gutil.beep();
     console.log(err);
 };
