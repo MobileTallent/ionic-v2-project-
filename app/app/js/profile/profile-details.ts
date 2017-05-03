@@ -19,18 +19,17 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 
 
 			//address and flags
-			if(profile.location._latitude && profile.location._longitude) {
-				let geocodingAPI = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+profile.location._latitude+","+profile.location._longitude+"&sensor=false&language=en";
+			if(!ionic.Platform.isIOS() && profile.location.latitude && profile.location.longitude) {
+				let geocodingAPI = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+profile.location.latitude+","+profile.location.longitude+"&sensor=false&language=en";
 				let num;
+				let addArray
 				
 				fetch(geocodingAPI)
 				.then(res => res.json())
 				.then((out) => {
 					profile.address = out['results'][0].formatted_address;
-					if (out['results'][6]) num = 6 
-					else if (out['results'][5]) num = 5 
-					else if (out['results'][4]) num = 4
-					profile.country = out['results'][num].formatted_address;
+					addArray = profile.address.split(',')
+					profile.country = addArray.slice(-1).pop().trim()
 					
 				})
 				.catch(err => console.error(err));

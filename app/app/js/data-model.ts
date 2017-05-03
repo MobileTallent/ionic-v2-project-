@@ -114,6 +114,9 @@ module app {
 		/** The geo location of the user */
 		location: ILocation
 
+		address: string
+
+		country: string
 
 		// Search filters
 
