@@ -70,9 +70,10 @@ angular.module('controllers')
         })
     }
 
-
-
-    $scope.$on('newProfileSearchResults', () => $scope.profiles = AppService.getProfileSearchResults())
+    $scope.$on('newProfileSearchResults', () => {
+        $scope.profiles = AppService.getProfileSearchResults()
+        getFlag()
+    })
 
     $scope.searchAgain = () => {
         $scope.profiles = null

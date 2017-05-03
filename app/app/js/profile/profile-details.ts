@@ -28,23 +28,25 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 				fetch(geocodingAPI)
 					.then(res => res.json())
 					.then((out) => {
-						profile.address = out['results'][0].formatted_address;
-						addArray = profile.address.split(',')
+						if (out['results'][0]) {
+							profile.address = out['results'][0].formatted_address;
+							addArray = profile.address.split(',')
 
-						if (out['results'][8]) num = 8
-						else if (out['results'][7]) num = 7
-						else if (out['results'][6]) num = 6
-						else if (out['results'][5]) num = 5
-						else if (out['results'][4]) num = 4
-						else if (out['results'][3]) num = 3
-						else if (out['results'][2]) num = 2
-						else if (out['results'][1]) num = 1
-						addComp = out['results'][num].address_components
+							if (out['results'][8]) num = 8
+							else if (out['results'][7]) num = 7
+							else if (out['results'][6]) num = 6
+							else if (out['results'][5]) num = 5
+							else if (out['results'][4]) num = 4
+							else if (out['results'][3]) num = 3
+							else if (out['results'][2]) num = 2
+							else if (out['results'][1]) num = 1
+							addComp = out['results'][num].address_components
 
-						if (addComp.length == 1)
-							profile.country = out['results'][num].formatted_address
-						else
-							profile.country = addArray.slice(-1).pop().trim()
+							if (addComp.length == 1)
+								profile.country = out['results'][num].formatted_address
+							else
+								profile.country = addArray.slice(-1).pop().trim()
+						}
 					})
 					.catch(err => console.error(err));
 			}
