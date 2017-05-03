@@ -20,7 +20,10 @@
 </div>
 
 <div class="padding-15">
-    <h4 style="color:#666666" class="center">{{distance}} {{'AWAY' | translate}}</h4>
+    <div style="color:#666666;justify-content: center;" class="center badge-row">
+        <img ng-show="profile.address" ng-src="img/flags/{{profile.country}}.png">
+        <div style="margin-left: 5px;">{{distance}} {{'AWAY' | translate}}</div>
+    </div>
     <div class="badge-row" ng-click="onClickBadgeInfo()">
         <img ng-class="profile.personSperm ? 'id-badge' : 'id-no-badge'" src="img/sperm_ic.svg">
         <img ng-class="profile.personWomb ? 'id-badge' : 'id-no-badge'" src="img/womb_ic.svg">
@@ -30,11 +33,5 @@
     <h4 style="color:#666666">About Me</h4>
     <div ng-show="profile.about" style="color:#9B9B9B; white-space: pre-wrap;" class="text-size-18">
         {{profile.about}}
-    </div>
-    <h4 ng-show="profile.address" style="color:#666666">Address</h4>
-    <div ng-show="profile.address" style="color:#9B9B9B; white-space: pre-wrap;" class="text-size-18">
-        {{profile.address}}
-        <br>
-        <img ng-src="img/flags/{{profile.country}}.png">
     </div>
 </div>

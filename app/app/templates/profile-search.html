@@ -132,7 +132,10 @@
                     </div>
 
                     <div class="row">
-                        <p class="horizontal-center" id="match-search-distance">{{profile.location | distance}} {{'AWAY' | translate}}</p>
+                        <div style="color:#666666;justify-content: center;" class="center badge-row">
+                            <img ng-show="profile.address" ng-src="img/flags/{{profile.country}}.png">
+                            <div style="margin-left: 5px;">{{profile.location | distance}} {{'AWAY' | translate}}</div>
+                        </div>
                     </div>
                     <div id="match-search-about-container">
                         <div id="match-search-about">
