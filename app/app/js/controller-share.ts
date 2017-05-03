@@ -44,7 +44,7 @@ module app {
 	}
 
 	ShareController.$inject = ['$log', '$cordovaSocialSharing', 'socialShareMessage', 'socialShareSubject',
-		'playStoreUrl', 'itunesUrl', 'webStoreUrl']
+		'playStoreUrl', 'itunesUrl', 'webStoreUrl', 'smartStoreUrl']
 	angular.module('controllers.share', ['constants', 'ngCordova.plugins.socialSharing', 'ionic'])
 		.controller('ShareController', ShareController)
 }
