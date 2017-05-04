@@ -20,7 +20,7 @@ var profileFields = [
     'photos', 'photosInReview',
     'notifyMatch', 'notifyMessage',
     'distance', 'distanceType',
-    'location', 'gps',
+    'location', 'gps', 'country', 'address',
     'enabled',
     'gender', 'guys', 'girls',
     'ageFrom', 'ageTo',
@@ -577,12 +577,6 @@ angular.module('service.parse', ['constants', 'parse-angular'])
     }
 
     function saveProfile(profile, profileChanges) {
-
-        if (profileChanges && profileChanges.location) {
-            // Convert to the Parse GeoPoint type
-            profileChanges.location = convertLocation(profileChanges.location.latitude, profileChanges.location.longitude)
-        }
-
         // Workaround for re-saving file objects. Is this still required?
         // See http://stackoverflow.com/questions/25297590/saving-javascript-object-that-has-an-array-of-parse-files-causes-converting-cir
         if (profileChanges && profileChanges.photos) {
@@ -594,6 +588,45 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             profileChanges.photosInReview = _.map(profileChanges.photosInReview, file => {
                 return { name: file.name, url: file.url(), __type: 'File' }
             })
+        }
+
+        if (profileChanges && profileChanges.location) {
+            // Convert to the Parse GeoPoint type
+            profileChanges.location = convertLocation(profileChanges.location.latitude, profileChanges.location.longitude)
+
+            //address and flags
+            if (!ionic.Platform.isIOS() && profileChanges.location.latitude && profileChanges.location.longitude) {
+                let geocodingAPI = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + profileChanges.location.latitude + "," + profileChanges.location.longitude + "&sensor=false&language=en";
+                let num = 0
+                let addArray
+                let addComp
+
+                fetch(geocodingAPI)
+                    .then(res => res.json())
+                    .then((out) => {
+                        if (out['results'][0]) {
+                            profileChanges.address = out['results'][0].formatted_address
+                            addArray = profileChanges.address.split(',')
+
+                            if (out['results'][8]) num = 8
+                            else if (out['results'][7]) num = 7
+                            else if (out['results'][6]) num = 6
+                            else if (out['results'][5]) num = 5
+                            else if (out['results'][4]) num = 4
+                            else if (out['results'][3]) num = 3
+                            else if (out['results'][2]) num = 2
+                            else if (out['results'][1]) num = 1
+                            addComp = out['results'][num].address_components
+
+                            if (addComp.length == 1)
+                                profileChanges.country = out['results'][num].formatted_address
+                            else
+                                profileChanges.country = addArray.slice(-1).pop().trim()
+                        }
+                        return profile.save(profileChanges)
+                    })
+                    .catch(err => console.error(err));
+            }
         }
 
         return profile.save(profileChanges)
