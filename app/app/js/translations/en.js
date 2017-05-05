@@ -61,7 +61,7 @@ var TRANSLATION_EN = {
     'MENU_SHARE': 'Invite My Friends',
     'MENU_CO_PARENTS': 'My Co-Parents Shortlist',
     'ABOUT_JUST_A_BABY': 'About Just a Baby',
-    'FAQ': 'FAQ',
+    'FAQ': 'FAQs',
     // Profile
     'PROFILE_SETUP_MSG': 'We need a couple more details',
     'BIRTH_DAY': 'Birth day',
