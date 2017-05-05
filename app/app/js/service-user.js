@@ -167,7 +167,11 @@ function onNotificationOpen(pnObj) {
                 getMatchesReport: getMatchesReport,
                 getChatMessageReport: getChatMessageReport,
 
-                getProfileNew: getProfileNew
+                getProfileNew: getProfileNew,
+
+                //service-provider functions
+                getServiceProviders: getServiceProviders,
+                addServiceProvider:addServiceProvider
             }
 
             return service
@@ -1498,6 +1502,18 @@ function onNotificationOpen(pnObj) {
             function getProfileNew() {
                 return server.getProfileNew(service.profile)
             }
+
+
+            //Service Provider functions
+            function getServiceProviders() {
+                return server.getServiceProviders()
+            }
+
+            function addServiceProvider(serviceProvider) {
+                return server.addServiceProvider(serviceProvider)
+            }
+
+
 
             // Util functions
 

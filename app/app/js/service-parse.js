@@ -148,6 +148,17 @@ var FindUsReport = Parse.Object.extend({
     attrs: findUsReportFields
 })
 
+/**
+ * @typedef {Object} ServiceProvider
+ * @property {string} name - the name of Service Provider
+ * @property {string} country - the country of Service Provider
+*/
+
+var ServiceProviderFields = ['name', 'country']
+var ServiceProvider = Parse.Object.extend({
+    className: "ServiceProvider",
+    attrs: ServiceProviderFields
+})
 
 enhance(Parse.User.prototype, userFields)
 enhance(Profile.prototype, profileFields)
@@ -159,6 +170,7 @@ enhance(ClinicsQuestion.prototype, clinicsQuestionFields)
 enhance(FindUs.prototype, findUsFields)
 enhance(FindUsReport.prototype, findUsReportFields)
 enhance(AboutJab.prototype, aboutJabFields)
+enhance(ServiceProvider.prototype, ServiceProviderFields)
 
 function enhance(prototype, fields) {
     for (var i = 0; i < fields.length; i++) {
@@ -328,7 +340,11 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         getMatchesReport: getMatchesReport,
         getChatMessageReport: getChatMessageReport,
 
-        getProfileNew: getProfileNew
+        getProfileNew: getProfileNew,
+
+        //service-provider functions
+        getServiceProviders: getServiceProviders
+
     }
 
     return service
@@ -1014,6 +1030,19 @@ angular.module('service.parse', ['constants', 'parse-angular'])
     function getChatMessageReport(numDays) {
         return Parse.Cloud.run('GetChatMessageReport', { numDays: numDays }).catch(_unwrapError)
     }
+
+
+    //Service Provider functions
+    function getServiceProviders() {
+        return Parse.Cloud.run('GetServiceProviders')
+            .then(reports => _.map(service_providers, toId))
+            .catch(_unwrapError)
+    }
+
+    function addServiceProviders(serviceProvider) {
+        return Parse.Cloud.run('AddServiceProviders', { serviceProvider: serviceProvider }).catch(_unwrapError)
+    }
+
 
     // Private functions
 
