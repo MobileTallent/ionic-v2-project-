@@ -463,6 +463,10 @@ angular.module('controllers')
         $scope.showDiscovery = false
     })
 
+    $scope.$on('$ionicView.leave', function() {
+        $scope.save()
+    })
+
     $scope.profile = AppService.getProfile().clone()
         //$scope.profile.LFNot = typeof $scope.profile.LFNot !== 'undefined' ? $scope.profile.LFNot : true
     $scope.showDiscovery = true
@@ -502,7 +506,7 @@ angular.module('controllers')
                     historyRoot: true,
                     disableBack: true
                 });
-                $state.go('menu.home')
+                // $state.go('menu.home')
 
             }, 'SETTINGS_SAVE_ERROR'
         )
