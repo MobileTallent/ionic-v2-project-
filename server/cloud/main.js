@@ -10,6 +10,7 @@ var ClinicsQuestion = Parse.Object.extend("ClinicsQuestion")
 var FindUs = Parse.Object.extend("FindUs")
 var FindUsReport = Parse.Object.extend("FindUsReport")
 var AboutJab = Parse.Object.extend("AboutJab")
+var ServiceProvider = Parse.Object.extend("ServiceProvider")
 
 var _ = require('underscore')
 
@@ -18,6 +19,7 @@ require('./linkedin.js')
     //require('./migrations.js')
     //require('./jobs.js')
 require('./admin.js')
+require('./service-provider.js')
 require('./video.js')
 
 var Email = require('./email.js')
