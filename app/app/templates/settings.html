@@ -116,7 +116,7 @@
 
         <div class="card" ng-init="showAppSettings = false">
             <div class="settings-header" ng-click="showAppSettings = !showAppSettings">
-                App Settings
+                Sound Settings
             </div>
             <div class="list settings-dropdown" ng-show="showAppSettings" ng-class="showAppSettings ? 'animated slideInDown' : '' ">
 
@@ -128,14 +128,14 @@
 
                 <ion-toggle ng-model="profile.notifyMessage" toggle-class="toggle-assertive">{{'NEW_MESSAGE' | translate}}</ion-toggle>
 
-                <div class="item item-divider">
+                <!--<div class="item item-divider">
                     {{'LANGUAGE' | translate}}:
                 </div>
 
                 <div style="width:100%;padding:5px;">
                     <button ng-click="setLanguage('en')" class="button button-small button-stable">English</button>
                     <button ng-click="setLanguage('de')" class="button button-small button-stable">Deutch</button>
-                </div>
+                </div>-->
             </div>
 
         </div>
@@ -144,8 +144,10 @@
                 Help
             </div>
             <div class="list settings-dropdown padding-10" ng-show="showHelp" ng-class="showHelp ? 'animated slideInDown' : '' ">
-                <button class="button button-block help-button" ng-click="showDiscovery = true; openModal()">Overview</button>
+                <button class="button button-block help-button" ng-click="showDiscovery = true; openIntroModal()">App Introduction</button>
+                <button class="button button-block help-button" ng-click="showDiscovery = true; openTosModal()">Terms of Use</button>
             </div>
+            
         </div>
         <div class="card">
             <div class="wide center padding-10">
