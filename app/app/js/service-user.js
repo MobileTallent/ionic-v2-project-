@@ -167,7 +167,13 @@ function onNotificationOpen(pnObj) {
                 getMatchesReport: getMatchesReport,
                 getChatMessageReport: getChatMessageReport,
 
-                getProfileNew: getProfileNew
+                getProfileNew: getProfileNew,
+
+                //service-provider functions
+                getServiceProviders: getServiceProviders,
+                addServiceProvider:addServiceProvider,
+                delServiceProvider:delServiceProvider,
+                setServiceProvider:setServiceProvider
             }
 
             return service
@@ -1499,8 +1505,26 @@ function onNotificationOpen(pnObj) {
                 return server.getProfileNew(service.profile)
             }
 
-            // Util functions
 
+            //Service Provider functions
+            function getServiceProviders() {
+                return server.getServiceProviders()
+            }
+
+            function addServiceProvider(serviceProvider) {
+                return server.addServiceProvider(serviceProvider)
+            }
+
+            function delServiceProvider(id) {
+                return server.delServiceProvider(id)
+            }
+            
+            function setServiceProvider(is_set, user) {
+                return server.setServiceProvider(is_set, user)
+            }
+
+
+            // Util functions
             function filePath(file) {
                 if (ionic.Platform.isIOS())
                     return file

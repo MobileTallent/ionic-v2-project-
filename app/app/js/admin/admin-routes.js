@@ -107,4 +107,84 @@ angular.module('ionicApp').config(function($stateProvider) {
                 }
             }
         })
-})
+        .state('menu.adminServiceProviders', {
+            url: "/serviceProviders/",
+            views: {
+                'menuContent': {
+                    templateUrl: "admin/service-providers/service-providers.html"
+                }
+            }
+        })
+        .state('menu.adminServiceProvider', {
+            url: "/serviceProvider/",
+            params: { 'provider':null },
+            views: {
+                'menuContent': {
+                    templateUrl: "admin/service-providers/service-provider.html"
+                }
+            }
+        })
+        .state('menu.adminInfoCards', {
+            url: "/infoCards/",
+            params: { 'info_cards':null },
+            views: {
+                'menuContent': {
+                    templateUrl: "admin/service-providers/info-cards.html"
+                }
+            }
+        })
+        .state('menu.adminInfoCard', {
+            url: "/infoCard/",
+            params: { 'card':null },
+            views: {
+                'menuContent': {
+                    templateUrl: "admin/service-providers/info-card.html"
+                }
+            }
+        })
+        .state('menu.adminServices', {
+            url: "/services/",
+            params: { 'services':null },
+            views: {
+                'menuContent': {
+                    templateUrl: "admin/service-providers/services.html"
+                }
+            }
+        })
+        .state('menu.adminService', {
+            url: "/service/",
+            params: { 'service':null },
+            views: {
+                'menuContent': {
+                    templateUrl: "admin/service-providers/service.html"
+                }
+            }
+        })
+        .state('menu.adminHotBeds', {
+            url: "/hotbeds/",
+            params: { 'hotbeds':null },
+            views: {
+                'menuContent': {
+                    templateUrl: "admin/service-providers/hotbeds.html"
+                }
+            }
+        })
+        .state('menu.adminHotBed', {
+            url: "/hotbed/",
+            params: { 'hotbed':null },
+            views: {
+                'menuContent': {
+                    templateUrl: "admin/service-providers/hotbed.html"
+                }
+            }
+        })
+        .state('menu.adminUsers', {
+            url: "/users/",
+            params: { 'users':null },
+            views: {
+                'menuContent': {
+                    templateUrl: "admin/service-providers/users.html"
+                }
+            }
+        })
+}) 

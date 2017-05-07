@@ -1,0 +1,16 @@
+<ion-view view-title="Service Providers" ng-controller="ServiceProviders as vm">
+
+    <ion-content>
+
+        <div ng-show="!vm.service_providers.length" style="text-align: center;font-family:'Avenir Next LT Pro Regular';font-size:18px">
+            <br/>
+            {{'No results' | translate}}<br/>
+        </div>
+        <div class="list">
+            <a class="item item-avatar" ng-repeat="provider in vm.service_providers track by provider.id" ui-sref="^.adminServiceProvider({provider : provider})">
+                <img style="top: 16px;left: 16px;max-width: 40px !important;max-height: 40px !important;" ng-src="{{provider.image_cover}}">
+                <h2>{{::provider.name}}</h2>
+                <p>{{::provider.country}}</p>
+            </a>
+    </ion-content>
+</ion-view>

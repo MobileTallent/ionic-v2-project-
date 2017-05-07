@@ -11,6 +11,7 @@
                 <b>Premium:</b> {{vm.user.premium ? 'Yes' : 'No'}}<br/>
                 <b>Credits:</b> {{vm.user.credits}}<br/>
                 <b>Created:</b> {{vm.user.createdAt}}<br/>
+                <b>Service Provider:</b> {{vm.user.serviceProvider}}<br/>
             </div>
 
             <div ng-if="!vm.user.profile.photos">No profile photos</div>
@@ -29,6 +30,7 @@
                 <button class="button button-block button-assertive" ng-click="vm.deleteUser()">Delete User</button>
                 <button class="button button-block button-assertive" ng-click="vm.banUser()">Ban User</button>
                 <button class="button button-block button-assertive" ng-click="vm.connectUser()" ng-show="!vm.isMatch">Connect User</button>
+                <button class="button button-block button-assertive" ng-click="vm.upgradeToServiceProvider()" ng-show="!vm.user.serviceProvider">Upgrade to Service Provider</button>
             </div>
         </div>
     </ion-content>
