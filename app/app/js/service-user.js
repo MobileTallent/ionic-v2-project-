@@ -171,7 +171,9 @@ function onNotificationOpen(pnObj) {
 
                 //service-provider functions
                 getServiceProviders: getServiceProviders,
-                addServiceProvider:addServiceProvider
+                addServiceProvider:addServiceProvider,
+                delServiceProvider:delServiceProvider,
+                setServiceProvider:setServiceProvider
             }
 
             return service
@@ -1513,10 +1515,16 @@ function onNotificationOpen(pnObj) {
                 return server.addServiceProvider(serviceProvider)
             }
 
+            function delServiceProvider(id) {
+                return server.delServiceProvider(id)
+            }
+            
+            function setServiceProvider(is_set, user) {
+                return server.setServiceProvider(is_set, user)
+            }
 
 
             // Util functions
-
             function filePath(file) {
                 if (ionic.Platform.isIOS())
                     return file

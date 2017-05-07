@@ -84,6 +84,37 @@ module app {
 						})
 			})
 		}
+
+		public upgradeToServiceProvider() {
+			let myThis = this
+			this.$ionicPopup.confirm({
+				title: 'Confirm upgrade',
+				okText: 'Upgrade',
+				cancelText: 'Cancel'
+			}).then(function (res) {
+				if (res)
+					myThis.AppUtil.blockingCall(
+						myThis.AppService.setServiceProvider(true, myThis.user.id),
+						() => {		
+
+							let service_provider = {
+								'name': myThis.user.profile.name + "'s Provider",
+								'country': myThis.user.profile.country,
+								'uid': myThis.user.id,
+								'image_cover' : myThis.user.profile.photos[0]._url,
+								'email': myThis.user.getEmail(),
+								'phone_number':'',
+								'balance': 0
+							}
+
+							myThis.AppService.addServiceProvider(service_provider).then(
+								() => {
+									myThis.AppUtil.toastSimple('User upgraded')
+									myThis.$ionicHistory.goBack()
+								})
+						})
+			})
+		}
 	}
 
 	UserAdmin.$inject = ['$ionicPopup', '$log', '$scope', '$ionicHistory', '$state', '$stateParams', 'AppService', 'AppUtil']
