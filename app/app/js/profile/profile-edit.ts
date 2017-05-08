@@ -300,7 +300,8 @@ module app {
 		 */
 		public myGoBack() {
 			// if (this.profile.about)
-				this.$ionicHistory.goBack()
+				this.saveProfile();
+				// this.$ionicHistory.goBack()
 			// else
 			// 	this.onRedirectToEditProfile(false);
 		}
