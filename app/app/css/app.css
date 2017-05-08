@@ -5,6 +5,10 @@
     font-weight: normal;
     src: local('fonts/Avenir Next LT Pro Regular'), url('../fonts/AvenirNextLTPro-Regular.woff') format('woff');
 }
+@font-face {
+    font-family: 'LunchBoxBold';
+    src: local('fonts/Kimmy Design - LunchBoxBold'), url('../fonts/Kimmy Design - LunchBoxBold.otf') format('otf');
+}
 
 .rotate90 {
     transform:rotate(90deg);

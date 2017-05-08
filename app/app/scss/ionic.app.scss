@@ -19,22 +19,26 @@ $dark:                            #444 !default;
 //$ionicons-font-path: "../lib/ionic/fonts" !default;
 $ionicons-font-path: "fonts" !default;
 //***************************** Ionic Color Override
-$positive: rgba(187, 225, 213, 0.69);
-
 /* Main Theme */
+// $positive: rgba(187, 225, 213, 0.69);
 
-$energized: rgb(43, 172, 143);
+
+//Main Green
+$positive: #3BAA9A;
+//Secondary Green
+$calm: #B8F4E1;
+//Primary Purple
+$assertive: #92278A;
 
 /*strong green */
+$energized: #3BAA9A;
 
 // $calm: rgba(187, 225, 213, 0.35);
-$calm: rgb(231, 245, 240);
-
-/* soft Green */
-
-$assertive: rgb(191, 127, 204);
-
+// $calm: rgb(231, 245, 240);
 /*purple*/
+// $assertive: rgb(191, 127, 204);
+
+
 
 //***************************** Profile Search
 $match-search-text: rgb(130, 156, 148);
@@ -79,6 +83,10 @@ button.button.button-stable {
 /* --- Match Search --- */
 
 @import 'profile-search.scss';
+
+/* --- Profile Details --- */
+
+@import 'profile-details.scss';
 
 /* --- Profile edit --- */
 
