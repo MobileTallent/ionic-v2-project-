@@ -121,7 +121,7 @@ module app {
 			profileUpdate.thingsIHave = thingsIHave
 
 			this.AppUtil.blockingCall(
-				this.AppService.saveProfileForApplyBadge(this.profile, profileUpdate),
+				this.AppService.saveProfileForSomeReason(this.profile, profileUpdate),
 				() => {
 					this.closeModal()
 					this.AppUtil.toastSimple("Badge Applied Successfully")

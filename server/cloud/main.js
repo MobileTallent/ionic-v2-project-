@@ -561,6 +561,23 @@ Parse.Cloud.define("GetProfilesSpecial", function(request, response) {
     })
 })
 
+/**
+ * A function to get all profiles with no country set
+ */
+Parse.Cloud.define("GetProfilesNoCountry", function(request, response) {
+    console.log("GetProfilesNoCountry...")
+    var profileQuery = new Parse.Query("Profile")
+    profileQuery.doesNotExist("country")
+
+    profileQuery.limit(150).find(masterKey).then(function(results) {
+        console.log("Number of profiles: " + results.length)
+        results = _.map(results, _processProfile)
+        response.success(results)
+    }, function(error) {
+        console.log(JSON.stringify(error))
+        response.error(error)
+    })
+})
 
 /**
  * Search for new potential matches
@@ -1152,8 +1169,8 @@ Parse.Cloud.define('GetApplyBadgeUsers', function(request, response) {
     })
 })
 
-Parse.Cloud.define('SaveProfileForApplyBadge', function(request, response) {
-    console.log('SaveProfileForApplyBadge...')
+Parse.Cloud.define('SaveProfileForSomeReason', function(request, response) {
+    console.log('SaveProfileForSomeReason...')
     var id = request.params.id
     var profileChanges = request.params.profileChanges
     if (!id) return response.error('id parameter is required')

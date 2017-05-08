@@ -105,7 +105,7 @@ function onNotificationOpen(pnObj) {
                 getProfileByMatchId: getProfileByMatchId,
                 saveBirthdate: saveBirthdate,
                 saveProfile: saveProfile,
-                saveProfileForApplyBadge: saveProfileForApplyBadge,
+                saveProfileForSomeReason: saveProfileForSomeReason,
                 saveSettings: saveSettings,
                 enableDiscovery: enableDiscovery,
                 requestLocationServices: requestLocationServices,
@@ -138,6 +138,7 @@ function onNotificationOpen(pnObj) {
                 deleteAccount: deleteAccount,
 
                 testPushNotification: testPushNotification,
+                getProfilesNoCountry: getProfilesNoCountry,
 
                 // Admin functions
                 getReportedUsers: getReportedUsers,
@@ -802,9 +803,9 @@ function onNotificationOpen(pnObj) {
              * @param profileChanges the changes to save, or null if a new profile
              * @returns {IPromise<TResult>}
              */
-            function saveProfileForApplyBadge(profile, profileChanges) {
+            function saveProfileForSomeReason(profile, profileChanges) {
                 $log.log('applying badge')
-                return server.saveProfileForApplyBadge(profile, profileChanges)
+                return server.saveProfileForSomeReason(profile, profileChanges)
             }
 
             function logout() {
@@ -1387,6 +1388,10 @@ function onNotificationOpen(pnObj) {
 
             function testPushNotification() {
                 return server.testPushNotification()
+            }
+
+            function getProfilesNoCountry() {
+                return server.getProfilesNoCountry()
             }
 
             // Admin user functions

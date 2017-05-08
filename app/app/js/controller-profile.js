@@ -572,6 +572,53 @@ angular.module('controllers')
             })
     }
 
+    $scope.setCountry = () => {
+        console.log('setCountry...')
+
+        AppUtil.blockingCall(
+            AppService.getProfilesNoCountry(),
+            results => {
+                console.log('Results found: ' + results.length)
+                _.forEach(results, function(profile) {
+                    //address and flags
+                    if (!ionic.Platform.isIOS() && profile.location.latitude && profile.location.longitude) {
+                        let geocodingAPI = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + profile.location.latitude + "," + profile.location.longitude + "&sensor=false&language=en";
+                        let num = 0
+                        let addArray
+                        let addComp
+
+                        fetch(geocodingAPI)
+                            .then(res => res.json())
+                            .then((out) => {
+                                var profileUpdate = {}
+                                if (out['results'][0]) {
+                                    profileUpdate.address = out['results'][0].formatted_address
+                                    addArray = profileUpdate.address.split(',')
+
+                                    if (out['results'][8]) num = 8
+                                    else if (out['results'][7]) num = 7
+                                    else if (out['results'][6]) num = 6
+                                    else if (out['results'][5]) num = 5
+                                    else if (out['results'][4]) num = 4
+                                    else if (out['results'][3]) num = 3
+                                    else if (out['results'][2]) num = 2
+                                    else if (out['results'][1]) num = 1
+                                    addComp = out['results'][num].address_components
+
+                                    if (addComp.length == 1)
+                                        profileUpdate.country = out['results'][num].formatted_address
+                                    else
+                                        profileUpdate.country = addArray.slice(-1).pop().trim()
+
+                                    AppService.saveProfileForSomeReason(profile, profileUpdate)
+                                }
+                            })
+                            .catch(err => console.error(err))
+                    }
+                })
+            })
+    }
+
     function doDelete() {
         AppUtil.blockingCall(
             AppService.deleteAccount()

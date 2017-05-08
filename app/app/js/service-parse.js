@@ -297,7 +297,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         convertLocation: convertLocation,
         saveSettings: saveSettings,
         saveProfile: saveProfile,
-        saveProfileForApplyBadge: saveProfileForApplyBadge,
+        saveProfileForSomeReason: saveProfileForSomeReason,
         saveFile: saveFile,
         searchProfiles: searchProfiles,
         getProfilesWhoLikeMe: getProfilesWhoLikeMe,
@@ -317,6 +317,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         deleteAccount: deleteAccount,
 
         testPushNotification: testPushNotification,
+        getProfilesNoCountry: getProfilesNoCountry,
 
         // admin functions
         getReportedUsers: getReportedUsers,
@@ -653,12 +654,11 @@ angular.module('service.parse', ['constants', 'parse-angular'])
                     .catch(err => console.error(err));
             }
         }
-
         return profile.save(profileChanges)
     }
 
-    function saveProfileForApplyBadge(profile, profileChanges) {
-        return Parse.Cloud.run('SaveProfileForApplyBadge', { id: profile.id, profileChanges: profileChanges }).catch(_unwrapError)
+    function saveProfileForSomeReason(profile, profileChanges) {
+        return Parse.Cloud.run('SaveProfileForSomeReason', { id: profile.id, profileChanges: profileChanges }).catch(_unwrapError)
     }
 
     /**
@@ -918,6 +918,13 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
     function testPushNotification() {
         return Parse.Cloud.run('TestPushNotification').catch(_unwrapError)
+    }
+
+    function getProfilesNoCountry() {
+        return Parse.Cloud.run('GetProfilesNoCountry').then(profiles => _.map(profiles, profile => {
+            profile = fromJSON(profile, 'Profile')
+            return profile
+        })).catch(_unwrapError)
     }
 
 
