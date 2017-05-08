@@ -6,9 +6,10 @@
  * @property {string[]} matches - an array of the ids of the Match objects that are a mutual match
  * @property {boolean} premium - if the user has a premium account (e.g. from in-app purchase/subscription)
  * @property {number} credits - the number of credits the user has (e.g. from in-app purchase)
+ * @property {boolean} serviceProvider - if the user service provider
  */
 var userFields = [
-    'emailVerified', 'admin', 'matches', 'profile', 'status', 'premium', 'credits'
+    'emailVerified', 'admin', 'matches', 'profile', 'status', 'premium', 'credits', 'serviceProvider'
 ]
 
 // See IProfile in data-model.ts
@@ -148,6 +149,22 @@ var FindUsReport = Parse.Object.extend({
     attrs: findUsReportFields
 })
 
+/**
+ * @typedef {Object} ServiceProvider
+ * @property {string} name - the name of Service Provider
+ * @property {string} country - the country of Service Provider
+ * @property {string} uid - User promary account
+ * @property {string} image_cover - Provider main picture
+ * @property {string} email - user email
+ * @property {string} phone_number - user phone_number
+ * @property {number} balance - service provider balance
+*/
+
+var ServiceProviderFields = ['name', 'country', 'uid', 'image_cover', 'email', 'balance', 'phone_number']
+var ServiceProvider = Parse.Object.extend({
+    className: "ServiceProvider",
+    attrs: ServiceProviderFields
+})
 
 enhance(Parse.User.prototype, userFields)
 enhance(Profile.prototype, profileFields)
@@ -159,6 +176,7 @@ enhance(ClinicsQuestion.prototype, clinicsQuestionFields)
 enhance(FindUs.prototype, findUsFields)
 enhance(FindUsReport.prototype, findUsReportFields)
 enhance(AboutJab.prototype, aboutJabFields)
+enhance(ServiceProvider.prototype, ServiceProviderFields)
 
 function enhance(prototype, fields) {
     for (var i = 0; i < fields.length; i++) {
@@ -328,7 +346,14 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         getMatchesReport: getMatchesReport,
         getChatMessageReport: getChatMessageReport,
 
-        getProfileNew: getProfileNew
+        getProfileNew: getProfileNew,
+
+        //service-provider functions
+        getServiceProviders: getServiceProviders,
+        addServiceProvider: addServiceProvider,
+        delServiceProvider: delServiceProvider,
+        setServiceProvider: setServiceProvider
+
     }
 
     return service
@@ -1014,6 +1039,25 @@ angular.module('service.parse', ['constants', 'parse-angular'])
     function getChatMessageReport(numDays) {
         return Parse.Cloud.run('GetChatMessageReport', { numDays: numDays }).catch(_unwrapError)
     }
+
+
+    //Service Provider functions
+    function getServiceProviders() {
+        return Parse.Cloud.run('GetServiceProviders').catch(_unwrapError)
+    }
+
+    function addServiceProvider(serviceProvider) {
+        return Parse.Cloud.run('AddServiceProvider', { serviceProvider: serviceProvider }).catch(_unwrapError)
+    }
+
+    function delServiceProvider(id) {
+        return Parse.Cloud.run('DelServiceProvider', { id: id }).catch(_unwrapError)
+    }
+
+    function setServiceProvider(is_set, user) {
+        return Parse.Cloud.run('SetServiceProvider', { is_set:is_set, user: user }).catch(_unwrapError)
+    }
+
 
     // Private functions
 
