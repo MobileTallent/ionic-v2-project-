@@ -569,7 +569,7 @@ Parse.Cloud.define("GetProfilesNoCountry", function(request, response) {
     var profileQuery = new Parse.Query("Profile")
     profileQuery.doesNotExist("country")
 
-    profileQuery.limit(150).find(masterKey).then(function(results) {
+    profileQuery.descending('createdAt').limit(150).find(masterKey).then(function(results) {
         console.log("Number of profiles: " + results.length)
         results = _.map(results, _processProfile)
         response.success(results)
