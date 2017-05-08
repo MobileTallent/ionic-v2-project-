@@ -452,8 +452,9 @@ angular.module('controllers')
 .controller('SettingsCtrl', function($scope, $state, $ionicModal, $ionicPopup, AppService, AppUtil, $log, $rootScope, $translate, $ionicHistory, $ionicActionSheet, env) {
 
     // The Profile fields on the discover page to save
-    var fields = ['enabled', 'guys', 'girls', 'ageFrom', 'ageTo', 'distance', 'LFSperm', 'LFEggs', 'LFWomb', 'LFEmbryo', 'LFNot', 'LFHelpM', 'LFHelpO', 'LFSelfId']
+    var fields = ['enabled', 'guys', 'girls', 'ageFrom', 'ageTo', 'notifyMatch', 'notifyMessage', 'distanceType', 'distance', 'LFSperm', 'LFEggs', 'LFWomb', 'LFEmbryo', 'LFNot', 'LFHelpM', 'LFHelpO', 'LFSelfId']
     var translations
+    var isLogout = false
 
     $translate(['SETTINGS_SAVE_ERROR', 'DELETE', 'DELETE_ACCOUNT', 'CANCEL']).then(function(translationsResult) {
         translations = translationsResult
@@ -463,8 +464,9 @@ angular.module('controllers')
         $scope.showDiscovery = false
     })
 
-    $scope.$on('$ionicView.leave', function() {
-        $scope.save()
+    $scope.$on('$ionicView.beforeLeave', function() {
+        if (!isLogout)
+            $scope.save()
     })
 
     $scope.profile = AppService.getProfile().clone()
@@ -480,6 +482,7 @@ angular.module('controllers')
     }
 
     $scope.save = () => {
+        AppService.clearProfileSearchResults()
         if (dType != $scope.profile.distanceType && $scope.profile.distanceType == 'mi') {
             $scope.profile.distance *= 0.621371
             $scope.profile.distance = Math.floor($scope.profile.distance)
@@ -491,27 +494,15 @@ angular.module('controllers')
         dType = $scope.profile.distanceType
 
         AppUtil.blockingCall(
-
-            AppService.saveSettings($scope.profile),
-            () => $scope.profile = AppService.getProfile().clone()
-
-        )
-
-        AppUtil.blockingCall(
             AppService.saveProfile(_.pick($scope.profile, fields)),
             () => {
-
-                AppService.clearProfileSearchResults()
                 $ionicHistory.nextViewOptions({
                     historyRoot: true,
                     disableBack: true
-                });
-                // $state.go('menu.home')
-
+                })
+                $scope.profile = AppService.getProfile().clone()
             }, 'SETTINGS_SAVE_ERROR'
         )
-
-
     }
 
     $scope.cancel = function() {
@@ -520,6 +511,7 @@ angular.module('controllers')
 
 
     $scope.logout = function() {
+        isLogout = true
         AppService.logout()
     }
 
