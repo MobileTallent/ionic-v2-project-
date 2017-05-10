@@ -125,8 +125,7 @@ angular.module('ionicApp').config(function($stateProvider) {
             }
         })
         .state('menu.adminInfoCards', {
-            url: "/infoCards/",
-            params: { 'info_cards':null },
+            url: "/infoCards/:pid",
             views: {
                 'menuContent': {
                     templateUrl: "admin/service-providers/info-cards.html"

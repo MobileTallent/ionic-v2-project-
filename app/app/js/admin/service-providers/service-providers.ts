@@ -24,7 +24,7 @@ module app {
                 })
 			
 		}
-
+		
 	}
 
 	ServiceProviders.$inject = ['$scope', 'AppUtil', 'AppService']
