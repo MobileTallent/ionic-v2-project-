@@ -33,46 +33,8 @@ angular.module('controllers')
         }
     })
 
-    function getFlag() {
-        _.forEach($scope.profiles, function(profile) {
-            //address and flags
-            if (!ionic.Platform.isIOS() && !profile.country && profile.location.latitude && profile.location.longitude) {
-                let geocodingAPI = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + profile.location.latitude + "," + profile.location.longitude + "&sensor=false&language=en";
-                let num = 0
-                let addArray
-                let addComp
-
-                fetch(geocodingAPI)
-                    .then(res => res.json())
-                    .then((out) => {
-                        if (out['results'][0]) {
-                            profile.address = out['results'][0].formatted_address
-                            addArray = profile.address.split(',')
-
-                            if (out['results'][8]) num = 8
-                            else if (out['results'][7]) num = 7
-                            else if (out['results'][6]) num = 6
-                            else if (out['results'][5]) num = 5
-                            else if (out['results'][4]) num = 4
-                            else if (out['results'][3]) num = 3
-                            else if (out['results'][2]) num = 2
-                            else if (out['results'][1]) num = 1
-                            addComp = out['results'][num].address_components
-
-                            if (addComp.length == 1)
-                                profile.country = out['results'][num].formatted_address
-                            else
-                                profile.country = addArray.slice(-1).pop().trim()
-                        }
-                    })
-                    .catch(err => console.error(err));
-            }
-        })
-    }
-
     $scope.$on('newProfileSearchResults', () => {
         $scope.profiles = AppService.getProfileSearchResults()
-        getFlag()
     })
 
     $scope.searchAgain = () => {
@@ -98,8 +60,6 @@ angular.module('controllers')
                     $timeout(() => $scope.profiles = result, MIN_SEARCH_TIME - elapsed)
                 else
                     $scope.profiles = result
-
-                getFlag()
             }, error => {
                 $log.log('updateProfileSearchResults error ' + JSON.stringify(error))
                 $scope.profiles = []
