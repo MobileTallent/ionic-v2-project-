@@ -24,7 +24,7 @@
                     <h2>{{vm.card.question}}</h2>
                     <img ng-if="vm.card.type=='image'" class="full-image" ng-src="{{vm.card.image}}">
                     <div ng-if="vm.card.type=='video'"  class="video-container">
-                        <iframe ng-src="{{vm.card.video}}" frameborder="0" width="560" height="315"></iframe>
+                        <iframe  ng-if="vm.card.video_url && vm.card.type=='video'" ng-src="{{vm.card.video_url}}" frameborder="0" width="560" height="315"></iframe>
                     </div>
                     <h3>{{vm.card.answer}}</h3>
                 <div class="item">
@@ -33,7 +33,7 @@
                             <p style="margin-top: 0px;">Created at</p>
                         </div>
                         <div class="col">
-                            <p style="margin-top: 0px;">{{vm.card.created_at}}</p>
+                            <p style="margin-top: 0px;">{{vm.card.createdAt | date:'dd MMM yyyy'}}</p>
                         </div>
                     </div>
                     <div class="row">
@@ -64,7 +64,10 @@
                     </div>
                 </div>
             </div>
-
         </div>
+        <div class="wide center padding-10">
+                <button class="button button-block button-assertive" ng-click="vm.delInfoCard(vm.card)">Delete Card</button>
+        </div>
+
     </ion-content>
 </ion-view>

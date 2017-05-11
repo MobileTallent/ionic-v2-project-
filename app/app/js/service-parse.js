@@ -166,6 +166,27 @@ var ServiceProvider = Parse.Object.extend({
     attrs: ServiceProviderFields
 })
 
+/**
+ * @typedef {Object} InfoCard
+ * @property {string} pid - service provider id
+ * @property {string} title - the title of Info Card
+ * @property {string} question - the main question of Info Card
+ * @property {string} answer - answer for question
+ * @property {string} image - image cover
+ * @property {string} video - video cover
+ * @property {string} type - type of card
+ * @property {object} audience - audiengs object with {tags:[]} array
+ * @property {object} options - options object {frequency, age_from, age_to}
+ * @property {number} shows - shows 
+ * @property {number} clicks - clicks
+*/
+
+var InfoCardFields = ['pid', 'title', 'question', 'answer', 'image', 'video', 'type', 'audience', 'options', 'shows', 'clicks']
+var InfoCard = Parse.Object.extend({
+    className: "InfoCard",
+    attrs: InfoCardFields
+})
+
 enhance(Parse.User.prototype, userFields)
 enhance(Profile.prototype, profileFields)
 enhance(Match.prototype, matchFields)
@@ -177,6 +198,7 @@ enhance(FindUs.prototype, findUsFields)
 enhance(FindUsReport.prototype, findUsReportFields)
 enhance(AboutJab.prototype, aboutJabFields)
 enhance(ServiceProvider.prototype, ServiceProviderFields)
+enhance(InfoCard.prototype, InfoCardFields)
 
 function enhance(prototype, fields) {
     for (var i = 0; i < fields.length; i++) {
@@ -353,7 +375,10 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         getServiceProviders: getServiceProviders,
         addServiceProvider: addServiceProvider,
         delServiceProvider: delServiceProvider,
-        setServiceProvider: setServiceProvider
+        setServiceProvider: setServiceProvider,
+        getInfoCards: getInfoCards,
+        addInfoCard: addInfoCard,
+        delInfoCard: delInfoCard
 
     }
 
@@ -1063,6 +1088,18 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
     function setServiceProvider(is_set, user) {
         return Parse.Cloud.run('SetServiceProvider', { is_set:is_set, user: user }).catch(_unwrapError)
+    }
+
+    function getInfoCards(pid) {
+        return Parse.Cloud.run('GetInfoCards', { provider_id: pid }).catch(_unwrapError)
+    }
+
+    function addInfoCard(infoCard) {
+        return Parse.Cloud.run('AddInfoCard', { infoCard: infoCard }).catch(_unwrapError)
+    }
+
+    function delInfoCard(id) {
+        return Parse.Cloud.run('DelInfoCard', { id: id }).catch(_unwrapError)
     }
 
 
