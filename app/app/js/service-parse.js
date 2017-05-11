@@ -187,6 +187,26 @@ var InfoCard = Parse.Object.extend({
     attrs: InfoCardFields
 })
 
+/**
+ * @typedef {Object} PrService - service provider internal service
+ * @property {string} pid - service provider id
+ * @property {string} title - the title of Info Card
+ * @property {boolean} active - active/inactive
+ * @property {string} spiel - service description
+ * @property {object} audience - audiengs object with {tags:[]} array
+ * @property {string} image - image cover
+ * @property {string} video - video cover
+ * @property {number} price - service price 
+ * @property {number} shows - shows 
+ * @property {number} clicks - clicks
+*/
+
+var PrServiceFields = ['pid', 'title', 'active', 'spiel', 'audience', 'image', 'video', 'price', 'shows', 'clicks']
+var PrService = Parse.Object.extend({
+    className: "PrService",
+    attrs: PrServiceFields
+})
+
 enhance(Parse.User.prototype, userFields)
 enhance(Profile.prototype, profileFields)
 enhance(Match.prototype, matchFields)
@@ -199,6 +219,7 @@ enhance(FindUsReport.prototype, findUsReportFields)
 enhance(AboutJab.prototype, aboutJabFields)
 enhance(ServiceProvider.prototype, ServiceProviderFields)
 enhance(InfoCard.prototype, InfoCardFields)
+enhance(PrService.prototype, PrServiceFields)
 
 function enhance(prototype, fields) {
     for (var i = 0; i < fields.length; i++) {
@@ -378,8 +399,10 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         setServiceProvider: setServiceProvider,
         getInfoCards: getInfoCards,
         addInfoCard: addInfoCard,
-        delInfoCard: delInfoCard
-
+        delInfoCard: delInfoCard,
+        getPrServices: getPrServices,
+        addPrService: addPrService,
+        delPrService: delPrService
     }
 
     return service
@@ -1100,6 +1123,18 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
     function delInfoCard(id) {
         return Parse.Cloud.run('DelInfoCard', { id: id }).catch(_unwrapError)
+    }
+
+    function getPrServices(pid) {
+        return Parse.Cloud.run('GetPrServices', { provider_id: pid }).catch(_unwrapError)
+    }
+
+    function addPrService(prService) {
+        return Parse.Cloud.run('AddPrService', { prService: prService }).catch(_unwrapError)
+    }
+
+    function delPrService(id) {
+        return Parse.Cloud.run('DelPrService', { id: id }).catch(_unwrapError)
     }
 
 

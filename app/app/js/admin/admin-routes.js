@@ -142,8 +142,7 @@ angular.module('ionicApp').config(function($stateProvider) {
             }
         })
         .state('menu.adminServices', {
-            url: "/services/",
-            params: { 'services':null },
+            url: "/services/:pid",
             views: {
                 'menuContent': {
                     templateUrl: "admin/service-providers/services.html"

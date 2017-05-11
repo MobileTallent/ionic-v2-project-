@@ -177,7 +177,10 @@ function onNotificationOpen(pnObj) {
                 setServiceProvider: setServiceProvider,
                 getInfoCards: getInfoCards,
                 addInfoCard: addInfoCard,
-                delInfoCard: delInfoCard
+                delInfoCard: delInfoCard,
+                getPrServices: getPrServices,
+                addPrService: addPrService,
+                delPrService: delPrService
 
             }
 
@@ -1542,6 +1545,18 @@ function onNotificationOpen(pnObj) {
 
             function delInfoCard(id) {
                 return server.delInfoCard(id)
+            }
+
+            function getPrServices(pid) {
+                return server.getPrServices(pid)
+            }
+
+            function addPrService(prService) {
+                return server.addPrService(prService)
+            }
+
+            function delPrService(id) {
+                return server.delPrService(id)
             }
 
 

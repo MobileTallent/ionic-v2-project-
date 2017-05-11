@@ -41,7 +41,7 @@
                             <p style="margin-top: 0px;">Created at</p>
                         </div>
                         <div class="col">
-                            <p style="margin-top: 0px;">{{vm.service.created_at}}</p>
+                            <p style="margin-top: 0px;">{{vm.service.createdAt | date:'dd MMM yyyy'}}</p>
                         </div>
                     </div>
                     <div class="row">
@@ -83,6 +83,8 @@
             </div>
 
         </div>
-
+         <div class="wide center padding-10">
+                <button class="button button-block button-assertive" ng-click="vm.delPrService(vm.service)">Delete service</button>
+        </div>
     </ion-content>
 </ion-view>
