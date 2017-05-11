@@ -1,6 +1,7 @@
 var ServiceProvider = Parse.Object.extend("ServiceProvider")
 var InfoCard = Parse.Object.extend("InfoCard")
 var PrService = Parse.Object.extend("PrService")
+var HotBed = Parse.Object.extend("HotBed")
 
 /* Get Service Providers */
 Parse.Cloud.define('GetServiceProviders', function(request, response) {
@@ -204,6 +205,68 @@ Parse.Cloud.define('DelPrService', function(request, response) {
             return pr_service.destroy()
         }).then(function() {
             response.success("Successfully deleted internal service!")
+        }),
+        function(error) {
+            console.log(JSON.stringify(error))
+            response.error(error)
+        }
+})
+
+/* Get HotBeds */
+Parse.Cloud.define('GetHotBeds', function(request, response) {
+    var provider_id = request.params.provider_id
+    if (!provider_id)
+        return response.error('provider_id parameter must be provided')
+        
+    new Parse.Query(HotBed)
+        .limit(1000)
+        .equalTo("pid", provider_id)
+        .descending('createdAt')
+        .find()
+        .then(function(result) {
+        console.log("Successs " + JSON.stringify(result))
+        response.success(result)
+    }, function(error) {
+        console.log("Erroorrr: " + JSON.stringify(error))
+        response.error(error)
+    })
+})
+
+/* Add/Edit HotBed */
+Parse.Cloud.define('AddHotBed', function(request, response) {
+
+    var HotBedData = request.params.hotBed
+
+    if (!HotBedData)
+        return response.error('HotBedData parameter must be provided')
+
+    var hb = new HotBed()
+    if (HotBedData.id) {
+        hb.id = HotBedData.id
+        delete HotBedData.id
+    }
+
+    hb.save(HotBedData).then(function(result) {
+        console.log("Success saving hotbed")
+        response.success("Success saving hotbed")
+    }, function(error) {
+        console.log("Error saving internal hotbed")
+        response.error(error)
+    })
+})
+
+/* Del HotBed */
+Parse.Cloud.define('DelHotBed', function(request, response) {
+
+    var id = request.params.id
+    if (!id) return response.error('id parameter is required')
+
+    new Parse.Query(HotBed)
+    .get(id)
+    .then(function(hot_bed) {
+            return hot_bed.destroy()
+        }).then(function() {
+            response.success("Successfully deleted Hotbed!")
         }),
         function(error) {
             console.log(JSON.stringify(error))

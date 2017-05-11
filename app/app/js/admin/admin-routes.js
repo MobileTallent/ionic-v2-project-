@@ -159,8 +159,7 @@ angular.module('ionicApp').config(function($stateProvider) {
             }
         })
         .state('menu.adminHotBeds', {
-            url: "/hotbeds/",
-            params: { 'hotbeds':null },
+            url: "/hotbeds/:pid",
             views: {
                 'menuContent': {
                     templateUrl: "admin/service-providers/hotbeds.html"

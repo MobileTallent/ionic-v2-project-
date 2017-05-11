@@ -207,6 +207,21 @@ var PrService = Parse.Object.extend({
     attrs: PrServiceFields
 })
 
+/**
+ * @typedef {Object} HotBed - service provider hotbed
+ * @property {string} pid - service provider id
+ * @property {string} title - the title of HotBed
+ * @property {boolean} active - active/inactive
+ * @property {string} comments - hotbeds description
+ * @property {object} location - location object with {"name":string, "lat":string, "lon":string}
+*/
+
+var HotBedFields = ['pid', 'title', 'active', 'comments', 'location']
+var HotBed = Parse.Object.extend({
+    className: "HotBed",
+    attrs: HotBedFields
+})
+
 enhance(Parse.User.prototype, userFields)
 enhance(Profile.prototype, profileFields)
 enhance(Match.prototype, matchFields)
@@ -220,6 +235,7 @@ enhance(AboutJab.prototype, aboutJabFields)
 enhance(ServiceProvider.prototype, ServiceProviderFields)
 enhance(InfoCard.prototype, InfoCardFields)
 enhance(PrService.prototype, PrServiceFields)
+enhance(HotBed.prototype, HotBedFields)
 
 function enhance(prototype, fields) {
     for (var i = 0; i < fields.length; i++) {
@@ -402,7 +418,10 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         delInfoCard: delInfoCard,
         getPrServices: getPrServices,
         addPrService: addPrService,
-        delPrService: delPrService
+        delPrService: delPrService,
+        getHotBeds: getHotBeds,
+        addHotBed: addHotBed,
+        delHotBed: delHotBed
     }
 
     return service
@@ -1135,6 +1154,18 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
     function delPrService(id) {
         return Parse.Cloud.run('DelPrService', { id: id }).catch(_unwrapError)
+    }
+
+    function getHotBeds(pid) {
+        return Parse.Cloud.run('GetHotBeds', { provider_id: pid }).catch(_unwrapError)
+    }
+
+    function addHotBed(hotBed) {
+        return Parse.Cloud.run('AddHotBed', { hotBed: hotBed }).catch(_unwrapError)
+    }
+
+    function delHotBed(id) {
+        return Parse.Cloud.run('DelHotBed', { id: id }).catch(_unwrapError)
     }
 
 

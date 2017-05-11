@@ -180,7 +180,10 @@ function onNotificationOpen(pnObj) {
                 delInfoCard: delInfoCard,
                 getPrServices: getPrServices,
                 addPrService: addPrService,
-                delPrService: delPrService
+                delPrService: delPrService,
+                getHotBeds: getHotBeds,
+                addHotBed: addHotBed,
+                delHotBed: delHotBed
 
             }
 
@@ -1557,6 +1560,18 @@ function onNotificationOpen(pnObj) {
 
             function delPrService(id) {
                 return server.delPrService(id)
+            }
+
+            function getHotBeds(pid) {
+                return server.getHotBeds(pid)
+            }
+
+            function addHotBed(hotBed) {
+                return server.addHotBed(hotBed)
+            }
+
+            function delHotBed(id) {
+                return server.delHotBed(id)
             }
 
 
