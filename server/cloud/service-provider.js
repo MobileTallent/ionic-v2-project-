@@ -1,5 +1,6 @@
 var ServiceProvider = Parse.Object.extend("ServiceProvider")
 var InfoCard = Parse.Object.extend("InfoCard")
+var PrService = Parse.Object.extend("PrService")
 
 /* Get Service Providers */
 Parse.Cloud.define('GetServiceProviders', function(request, response) {
@@ -129,7 +130,7 @@ Parse.Cloud.define('AddInfoCard', function(request, response) {
     })
 })
 
-/* Del Service Provider*/
+/* Del Info Card */
 Parse.Cloud.define('DelInfoCard', function(request, response) {
 
     var id = request.params.id
@@ -141,6 +142,68 @@ Parse.Cloud.define('DelInfoCard', function(request, response) {
             return info_card.destroy()
         }).then(function() {
             response.success("Successfully deleted info card!")
+        }),
+        function(error) {
+            console.log(JSON.stringify(error))
+            response.error(error)
+        }
+})
+
+/* Get Internal Provider Service */
+Parse.Cloud.define('GetPrServices', function(request, response) {
+    var provider_id = request.params.provider_id
+    if (!provider_id)
+        return response.error('provider_id parameter must be provided')
+        
+    new Parse.Query(PrService)
+        .limit(1000)
+        .equalTo("pid", provider_id)
+        .descending('createdAt')
+        .find()
+        .then(function(result) {
+        console.log("Successs " + JSON.stringify(result))
+        response.success(result)
+    }, function(error) {
+        console.log("Erroorrr: " + JSON.stringify(error))
+        response.error(error)
+    })
+})
+
+/* Add/Edit Internal Provider Service */
+Parse.Cloud.define('AddPrService', function(request, response) {
+
+    var PrServiceData = request.params.prService
+
+    if (!PrServiceData)
+        return response.error('PrServiceData parameter must be provided')
+
+    var ps = new PrService()
+    if (PrServiceData.id) {
+        ps.id = PrServiceData.id
+        delete PrServiceData.id
+    }
+
+    ps.save(PrServiceData).then(function(result) {
+        console.log("Success saving internal service")
+        response.success("Success saving internal service")
+    }, function(error) {
+        console.log("Error saving internal service")
+        response.error(error)
+    })
+})
+
+/* Del Internal Provider Service */
+Parse.Cloud.define('DelPrService', function(request, response) {
+
+    var id = request.params.id
+    if (!id) return response.error('id parameter is required')
+
+    new Parse.Query(PrService)
+    .get(id)
+    .then(function(pr_service) {
+            return pr_service.destroy()
+        }).then(function() {
+            response.success("Successfully deleted internal service!")
         }),
         function(error) {
             console.log(JSON.stringify(error))
