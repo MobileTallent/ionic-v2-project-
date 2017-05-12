@@ -7,14 +7,40 @@ module app {
 	export class Service {
 
 		public service
+		public enquiries
 
-		constructor(private $state, private $stateParams, private $sce, private $ionicPopup, private AppUtil, private AppService, private $ionicHistory) {
+		constructor(private $scope, private $state, private $stateParams, private $sce, private $ionicPopup, private AppUtil, private AppService, private $ionicHistory) {
 			this.service = this.$stateParams.service
 			if(this.service.video) this.service.video = this.$sce.trustAsResourceUrl(this.service.video)
 			console.log(this.service)
+			$scope.$on('$ionicView.beforeEnter', () => this.refresh())
 		}
 
-		public delPrService(service) {
+		public refresh() {
+			this.AppUtil.blockingCall(
+                this.AppService.getEnquiries(null, this.service.id, false),
+                enquiries => {
+                    console.log('enquiries', enquiries);
+                    this.enquiries = enquiries
+            	}
+			)
+
+			// let enquire = {		
+			// 	'sid':'mALMsFKrCk',
+			// 	'pid':'NKZHO5IiQH',
+			// 	'uid':'1cEp7yJZnp',
+			//  'message':'I want enquire this service, very good service! i need it.',
+			// 	'name':'Nick',
+			// 	'image_cover':'http://tandemvillas.ru/img/dummy_profile.jpg'
+			// }
+
+			// 				this.AppService.addEnquire(enquire).then(
+			// 					() => {
+			// 						console.log('added!')
+			// 					})
+		}
+
+ 		public delPrService(service) {
 			let myThis = this
 			this.$ionicPopup.confirm({
 				title: 'Confirm delete',
@@ -34,6 +60,6 @@ module app {
 		}
 	}
 	
-	Service.$inject = ['$state', '$stateParams', '$sce', '$ionicPopup', 'AppUtil', 'AppService', '$ionicHistory']
+	Service.$inject = ['$scope', '$state', '$stateParams', '$sce', '$ionicPopup', 'AppUtil', 'AppService', '$ionicHistory']
 	angular.module('controllers').controller('Service', Service)
 }

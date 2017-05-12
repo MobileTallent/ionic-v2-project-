@@ -222,6 +222,22 @@ var HotBed = Parse.Object.extend({
     attrs: HotBedFields
 })
 
+/**
+ * @typedef {Object} Enquire - service provider hotbed
+ * @property {string} pid - service provider id
+ * @property {string} uid - User id
+ * @property {string} sid - Service id
+ * @property {string} name - User name
+ * @property {string} message - User description on book service
+ * @property {string} image_cover - User Image cover
+*/
+
+var EnquireFields = ['pid', 'uid', 'sid', 'name', 'message', 'image_cover']
+var Enquire = Parse.Object.extend({
+    className: "Enquire",
+    attrs: EnquireFields
+})
+
 enhance(Parse.User.prototype, userFields)
 enhance(Profile.prototype, profileFields)
 enhance(Match.prototype, matchFields)
@@ -236,6 +252,7 @@ enhance(ServiceProvider.prototype, ServiceProviderFields)
 enhance(InfoCard.prototype, InfoCardFields)
 enhance(PrService.prototype, PrServiceFields)
 enhance(HotBed.prototype, HotBedFields)
+enhance(Enquire.prototype, EnquireFields)
 
 function enhance(prototype, fields) {
     for (var i = 0; i < fields.length; i++) {
@@ -410,6 +427,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
         //service-provider functions
         getServiceProviders: getServiceProviders,
+        getServiceProviderLengths: getServiceProviderLengths,
         addServiceProvider: addServiceProvider,
         delServiceProvider: delServiceProvider,
         setServiceProvider: setServiceProvider,
@@ -421,7 +439,10 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         delPrService: delPrService,
         getHotBeds: getHotBeds,
         addHotBed: addHotBed,
-        delHotBed: delHotBed
+        delHotBed: delHotBed,
+        getEnquiries: getEnquiries,
+        addEnquire: addEnquire,
+        delEnquire: delEnquire
     }
 
     return service
@@ -1120,6 +1141,10 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         return Parse.Cloud.run('GetServiceProviders').catch(_unwrapError)
     }
 
+    function getServiceProviderLengths(provider_id) {
+        return Parse.Cloud.run('GetServiceProviderLengths', { provider_id: provider_id }).catch(_unwrapError)
+    }
+
     function addServiceProvider(serviceProvider) {
         return Parse.Cloud.run('AddServiceProvider', { serviceProvider: serviceProvider }).catch(_unwrapError)
     }
@@ -1168,6 +1193,17 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         return Parse.Cloud.run('DelHotBed', { id: id }).catch(_unwrapError)
     }
 
+    function getEnquiries(pid, sid, unique_user) {
+        return Parse.Cloud.run('GetEnquiries', { provider_id: pid, service_id: sid, unique_user:unique_user }).catch(_unwrapError)
+    }
+
+    function addEnquire(enquire) {
+        return Parse.Cloud.run('AddEnquire', { enquire: enquire }).catch(_unwrapError)
+    }
+
+    function delEnquire(id) {
+        return Parse.Cloud.run('DelEnquire', { id: id }).catch(_unwrapError)
+    }
 
     // Private functions
 

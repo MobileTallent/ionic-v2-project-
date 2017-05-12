@@ -7,9 +7,21 @@ module app {
 	export class ServiceProvider {
 
 		public provider
+		public lengths
 
-		constructor(private $state, private $stateParams, private AppUtil, private AppService, private $ionicHistory, private $ionicPopup) {
+		constructor(private $scope, private $state, private $stateParams, private AppUtil, private AppService, private $ionicHistory, private $ionicPopup) {
 			this.provider = this.$stateParams.provider
+			$scope.$on('$ionicView.beforeEnter', () => this.refresh())
+		}	
+
+		public refresh() {
+			this.AppUtil.blockingCall(
+                this.AppService.getServiceProviderLengths(this.provider.id),
+                lengths => {
+                    console.log('lengths', lengths);
+                    this.lengths = lengths
+            	}
+			)
 		}
 
 		public delServiceProvider(provider) {
@@ -33,6 +45,6 @@ module app {
 		}
 	}
 
-	ServiceProvider.$inject = ['$state', '$stateParams', 'AppUtil', 'AppService', '$ionicHistory', '$ionicPopup']
+	ServiceProvider.$inject = ['$scope', '$state', '$stateParams', 'AppUtil', 'AppService', '$ionicHistory', '$ionicPopup']
 	angular.module('controllers').controller('ServiceProvider', ServiceProvider)
 }

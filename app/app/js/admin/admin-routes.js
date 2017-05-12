@@ -176,8 +176,7 @@ angular.module('ionicApp').config(function($stateProvider) {
             }
         })
         .state('menu.adminUsers', {
-            url: "/users/",
-            params: { 'users':null },
+            url: "/users/:pid",
             views: {
                 'menuContent': {
                     templateUrl: "admin/service-providers/users.html"

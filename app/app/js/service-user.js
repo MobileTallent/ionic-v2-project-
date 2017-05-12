@@ -172,6 +172,7 @@ function onNotificationOpen(pnObj) {
 
                 //service-provider functions
                 getServiceProviders: getServiceProviders,
+                getServiceProviderLengths: getServiceProviderLengths,
                 addServiceProvider: addServiceProvider,
                 delServiceProvider: delServiceProvider,
                 setServiceProvider: setServiceProvider,
@@ -183,7 +184,10 @@ function onNotificationOpen(pnObj) {
                 delPrService: delPrService,
                 getHotBeds: getHotBeds,
                 addHotBed: addHotBed,
-                delHotBed: delHotBed
+                delHotBed: delHotBed,
+                getEnquiries: getEnquiries,
+                addEnquire: addEnquire,
+                delEnquire: delEnquire
 
             }
 
@@ -265,6 +269,9 @@ function onNotificationOpen(pnObj) {
 
                 if (user.admin)
                     $rootScope.isAdmin = true
+                if (user.serviceProvider)
+                    $rootScope.serviceProvider = true
+                    
                 $log.log('logged in with ' + JSON.stringify(user))
 
                 server.getTwilioToken().then(
@@ -1526,6 +1533,10 @@ function onNotificationOpen(pnObj) {
                 return server.getServiceProviders()
             }
 
+            function getServiceProviderLengths(provider_id) {
+                return server.getServiceProviderLengths(provider_id)
+            }
+
             function addServiceProvider(serviceProvider) {
                 return server.addServiceProvider(serviceProvider)
             }
@@ -1573,6 +1584,19 @@ function onNotificationOpen(pnObj) {
             function delHotBed(id) {
                 return server.delHotBed(id)
             }
+
+            function getEnquiries(pid, sid, unique_user) {
+                return server.getEnquiries(pid, sid, unique_user)
+            }
+
+            function addEnquire(enquire) {
+                return server.addEnquire(enquire)
+            }
+
+            function delEnquire(id) {
+                return server.delEnquire(id)
+            }
+
 
 
             // Util functions
