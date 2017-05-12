@@ -10,7 +10,7 @@ module app {
 		public hotbed
         public map 
 
-		constructor(private $state, private $stateParams, private $scope) {
+		constructor(private $state, private $stateParams, private $scope, private $sce, private $ionicPopup, private AppUtil, private AppService, private $ionicHistory) {
 			this.hotbed = this.$stateParams.hotbed
 			console.log(this.hotbed);
 
@@ -38,9 +38,28 @@ module app {
 			})
 
 		}
+
+        public delHotBed(hot_bed) {
+			let myThis = this
+			this.$ionicPopup.confirm({
+				title: 'Confirm delete',
+				okText: 'Delete',
+				cancelText: 'Cancel'
+			}).then(function (res) {
+				if (res)
+					myThis.AppUtil.blockingCall(
+							myThis.AppService.delHotBed(hot_bed.id),
+								() => {
+									myThis.AppUtil.toastSimple('HotBed deleted')
+									myThis.$ionicHistory.goBack();
+								}
+							)
+						
+			})
+		}
 	}
 
-	HotBed.$inject = ['$state', '$stateParams', '$scope']
+	HotBed.$inject = ['$state', '$stateParams', '$scope', '$sce', '$ionicPopup', 'AppUtil', 'AppService', '$ionicHistory']
 	angular.module('controllers').controller('HotBed', HotBed)
 	
 }

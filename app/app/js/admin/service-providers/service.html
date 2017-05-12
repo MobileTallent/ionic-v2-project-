@@ -41,7 +41,7 @@
                             <p style="margin-top: 0px;">Created at</p>
                         </div>
                         <div class="col">
-                            <p style="margin-top: 0px;">{{vm.service.created_at}}</p>
+                            <p style="margin-top: 0px;">{{vm.service.createdAt | date:'dd MMM yyyy'}}</p>
                         </div>
                     </div>
                     <div class="row">
@@ -63,18 +63,18 @@
                     </div>
 
                     <a class="item item-avatar" 
-                       ng-repeat="enquire in vm.service.enquires track by enquire.id"
+                       ng-repeat="enquire in vm.enquiries track by enquire.id"
                        ui-sref="^.userAdmin({userId : enquire.uid})"
                     />
-                        <img style="top: 16px;left: 16px;max-width: 40px !important;max-height: 40px !important;" src="img/generic_avatar.jpg">
+                        <img style="top: 16px;left: 16px;max-width: 40px !important;max-height: 40px !important;" ng-src="{{enquire.image_cover}}">
                         <div class="row" style="padding:0px;">
                             <div class="col" style="padding:0px;">
                                     <h2>{{::enquire.name}}</h2>
-                                    <p>{{::enquire.message}}</p>
+                                    <p style="max-width:200px">{{::enquire.message}}</p>
                             </div>
                             <div class="col" style="padding:0px;">
                                 <span class="item-note">
-                                    {{::enquire.created_at}}
+                                    {{::enquire.createdAt | date:'dd MMM yyyy H:mm'}}
                                 </span>
                             </div>
                         </div>
@@ -83,6 +83,8 @@
             </div>
 
         </div>
-
+         <div class="wide center padding-10">
+                <button class="button button-block button-assertive" ng-click="vm.delPrService(vm.service)">Delete service</button>
+        </div>
     </ion-content>
 </ion-view>

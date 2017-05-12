@@ -142,8 +142,7 @@ angular.module('ionicApp').config(function($stateProvider) {
             }
         })
         .state('menu.adminServices', {
-            url: "/services/",
-            params: { 'services':null },
+            url: "/services/:pid",
             views: {
                 'menuContent': {
                     templateUrl: "admin/service-providers/services.html"
@@ -160,8 +159,7 @@ angular.module('ionicApp').config(function($stateProvider) {
             }
         })
         .state('menu.adminHotBeds', {
-            url: "/hotbeds/",
-            params: { 'hotbeds':null },
+            url: "/hotbeds/:pid",
             views: {
                 'menuContent': {
                     templateUrl: "admin/service-providers/hotbeds.html"
@@ -178,8 +176,7 @@ angular.module('ionicApp').config(function($stateProvider) {
             }
         })
         .state('menu.adminUsers', {
-            url: "/users/",
-            params: { 'users':null },
+            url: "/users/:pid",
             views: {
                 'menuContent': {
                     templateUrl: "admin/service-providers/users.html"

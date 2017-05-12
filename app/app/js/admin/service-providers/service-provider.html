@@ -57,31 +57,31 @@
                 </a>
                 <a class="item item-icon-left item-icon-right" ui-sref="^.adminInfoCards({pid : vm.provider.id})">
                     <i class="item-note icon ion-social-buffer-outline"></i>
-                    <span class="badge badge-assertive" style="right: 60px;">{{vm.provider.info_cards.length}}</span>
+                    <span class="badge badge-assertive" style="right: 60px;">{{vm.lengths.infocards}}</span>
                     Info cards
                     <span class="item-note">
                         <i class="icon ion-chevron-right"></i>
                     </span>
                 </a>
-                <a class="item item-icon-left item-icon-right" ui-sref="^.adminServices({services : vm.provider.services})">
+                <a class="item item-icon-left item-icon-right" ui-sref="^.adminServices({pid : vm.provider.id})">
                     <i class="item-note icon ion-ios-keypad-outline"></i>
-                    <span class="badge badge-assertive" style="right: 60px;">{{vm.provider.services.length}}</span>
+                    <span class="badge badge-assertive" style="right: 60px;">{{vm.lengths.services}}</span>
                     Services
                     <span class="item-note">
                         <i class="icon ion-chevron-right"></i>
                     </span>
                 </a>
-                <a class="item item-icon-left item-icon-right" ui-sref="^.adminHotBeds({hotbeds : vm.provider.hotbeds})">
+                <a class="item item-icon-left item-icon-right" ui-sref="^.adminHotBeds({pid : vm.provider.id})">
                     <i class="item-note icon ion-ios-albums-outline"></i>
-                    <span class="badge badge-assertive" style="right: 60px;">{{vm.provider.hotbeds.length}}</span>
+                    <span class="badge badge-assertive" style="right: 60px;">{{vm.lengths.hotbeds}}</span>
                     HotBeds
                     <span class="item-note">
                         <i class="icon ion-chevron-right"></i>
                     </span>
                 </a>
-                <a class="item item-icon-left item-icon-right" ui-sref="^.adminUsers({users : vm.provider.users})">
+                <a class="item item-icon-left item-icon-right" ui-sref="^.adminUsers({pid : vm.provider.id})">
                     <i class="item-note icon ion-ios-people-outline"></i>
-                    <span class="badge badge-assertive" style="right: 60px;">{{vm.provider.users.length}}</span>
+                    <span class="badge badge-assertive" style="right: 60px;">{{vm.lengths.users}}</span>
                     Users
                     <span class="item-note">
                         <i class="icon ion-chevron-right"></i>

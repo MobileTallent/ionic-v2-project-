@@ -172,12 +172,22 @@ function onNotificationOpen(pnObj) {
 
                 //service-provider functions
                 getServiceProviders: getServiceProviders,
+                getServiceProviderLengths: getServiceProviderLengths,
                 addServiceProvider: addServiceProvider,
                 delServiceProvider: delServiceProvider,
                 setServiceProvider: setServiceProvider,
                 getInfoCards: getInfoCards,
                 addInfoCard: addInfoCard,
-                delInfoCard: delInfoCard
+                delInfoCard: delInfoCard,
+                getPrServices: getPrServices,
+                addPrService: addPrService,
+                delPrService: delPrService,
+                getHotBeds: getHotBeds,
+                addHotBed: addHotBed,
+                delHotBed: delHotBed,
+                getEnquiries: getEnquiries,
+                addEnquire: addEnquire,
+                delEnquire: delEnquire
 
             }
 
@@ -259,6 +269,9 @@ function onNotificationOpen(pnObj) {
 
                 if (user.admin)
                     $rootScope.isAdmin = true
+                if (user.serviceProvider)
+                    $rootScope.serviceProvider = true
+                    
                 $log.log('logged in with ' + JSON.stringify(user))
 
                 server.getTwilioToken().then(
@@ -1520,6 +1533,10 @@ function onNotificationOpen(pnObj) {
                 return server.getServiceProviders()
             }
 
+            function getServiceProviderLengths(provider_id) {
+                return server.getServiceProviderLengths(provider_id)
+            }
+
             function addServiceProvider(serviceProvider) {
                 return server.addServiceProvider(serviceProvider)
             }
@@ -1543,6 +1560,43 @@ function onNotificationOpen(pnObj) {
             function delInfoCard(id) {
                 return server.delInfoCard(id)
             }
+
+            function getPrServices(pid) {
+                return server.getPrServices(pid)
+            }
+
+            function addPrService(prService) {
+                return server.addPrService(prService)
+            }
+
+            function delPrService(id) {
+                return server.delPrService(id)
+            }
+
+            function getHotBeds(pid) {
+                return server.getHotBeds(pid)
+            }
+
+            function addHotBed(hotBed) {
+                return server.addHotBed(hotBed)
+            }
+
+            function delHotBed(id) {
+                return server.delHotBed(id)
+            }
+
+            function getEnquiries(pid, sid, unique_user) {
+                return server.getEnquiries(pid, sid, unique_user)
+            }
+
+            function addEnquire(enquire) {
+                return server.addEnquire(enquire)
+            }
+
+            function delEnquire(id) {
+                return server.delEnquire(id)
+            }
+
 
 
             // Util functions

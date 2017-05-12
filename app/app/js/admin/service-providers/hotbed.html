@@ -6,8 +6,8 @@
             <div class="list card">
                 <div class="item">
                     <h2>{{vm.hotbed.title}}</h2>
-                    <p ng-if="vm.service.active">Active</p>
-                    <p ng-if="!vm.service.active">Disabled</p>
+                    <p ng-if="vm.hotbed.active">Active</p>
+                    <p ng-if="!vm.hotbed.active">Disabled</p>
                 </div>
                 <div class="item item-body">
                     <div class="row">
@@ -23,7 +23,7 @@
                             <p style="margin-top: 0px;">Created at</p>
                         </div>
                         <div class="col">
-                            <p style="margin-top: 0px;">{{vm.hotbed.created_at}}</p>
+                            <p style="margin-top: 0px;">{{vm.hotbed.createdAt | date:'dd MMM yyyy'}}</p>
                         </div>
                     </div>
                     <div class="row">
@@ -41,6 +41,10 @@
                 </div>
             </div>
 
+        </div>
+
+        <div class="wide center padding-10">
+                <button class="button button-block button-assertive" ng-click="vm.delHotBed(vm.hotbed)">Delete HotBed</button>
         </div>
 
     </ion-content>

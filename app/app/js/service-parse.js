@@ -187,6 +187,57 @@ var InfoCard = Parse.Object.extend({
     attrs: InfoCardFields
 })
 
+/**
+ * @typedef {Object} PrService - service provider internal service
+ * @property {string} pid - service provider id
+ * @property {string} title - the title of Info Card
+ * @property {boolean} active - active/inactive
+ * @property {string} spiel - service description
+ * @property {object} audience - audiengs object with {tags:[]} array
+ * @property {string} image - image cover
+ * @property {string} video - video cover
+ * @property {number} price - service price 
+ * @property {number} shows - shows 
+ * @property {number} clicks - clicks
+*/
+
+var PrServiceFields = ['pid', 'title', 'active', 'spiel', 'audience', 'image', 'video', 'price', 'shows', 'clicks']
+var PrService = Parse.Object.extend({
+    className: "PrService",
+    attrs: PrServiceFields
+})
+
+/**
+ * @typedef {Object} HotBed - service provider hotbed
+ * @property {string} pid - service provider id
+ * @property {string} title - the title of HotBed
+ * @property {boolean} active - active/inactive
+ * @property {string} comments - hotbeds description
+ * @property {object} location - location object with {"name":string, "lat":string, "lon":string}
+*/
+
+var HotBedFields = ['pid', 'title', 'active', 'comments', 'location']
+var HotBed = Parse.Object.extend({
+    className: "HotBed",
+    attrs: HotBedFields
+})
+
+/**
+ * @typedef {Object} Enquire - service provider hotbed
+ * @property {string} pid - service provider id
+ * @property {string} uid - User id
+ * @property {string} sid - Service id
+ * @property {string} name - User name
+ * @property {string} message - User description on book service
+ * @property {string} image_cover - User Image cover
+*/
+
+var EnquireFields = ['pid', 'uid', 'sid', 'name', 'message', 'image_cover']
+var Enquire = Parse.Object.extend({
+    className: "Enquire",
+    attrs: EnquireFields
+})
+
 enhance(Parse.User.prototype, userFields)
 enhance(Profile.prototype, profileFields)
 enhance(Match.prototype, matchFields)
@@ -199,6 +250,9 @@ enhance(FindUsReport.prototype, findUsReportFields)
 enhance(AboutJab.prototype, aboutJabFields)
 enhance(ServiceProvider.prototype, ServiceProviderFields)
 enhance(InfoCard.prototype, InfoCardFields)
+enhance(PrService.prototype, PrServiceFields)
+enhance(HotBed.prototype, HotBedFields)
+enhance(Enquire.prototype, EnquireFields)
 
 function enhance(prototype, fields) {
     for (var i = 0; i < fields.length; i++) {
@@ -373,13 +427,22 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
         //service-provider functions
         getServiceProviders: getServiceProviders,
+        getServiceProviderLengths: getServiceProviderLengths,
         addServiceProvider: addServiceProvider,
         delServiceProvider: delServiceProvider,
         setServiceProvider: setServiceProvider,
         getInfoCards: getInfoCards,
         addInfoCard: addInfoCard,
-        delInfoCard: delInfoCard
-
+        delInfoCard: delInfoCard,
+        getPrServices: getPrServices,
+        addPrService: addPrService,
+        delPrService: delPrService,
+        getHotBeds: getHotBeds,
+        addHotBed: addHotBed,
+        delHotBed: delHotBed,
+        getEnquiries: getEnquiries,
+        addEnquire: addEnquire,
+        delEnquire: delEnquire
     }
 
     return service
@@ -1078,6 +1141,10 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         return Parse.Cloud.run('GetServiceProviders').catch(_unwrapError)
     }
 
+    function getServiceProviderLengths(provider_id) {
+        return Parse.Cloud.run('GetServiceProviderLengths', { provider_id: provider_id }).catch(_unwrapError)
+    }
+
     function addServiceProvider(serviceProvider) {
         return Parse.Cloud.run('AddServiceProvider', { serviceProvider: serviceProvider }).catch(_unwrapError)
     }
@@ -1102,6 +1169,41 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         return Parse.Cloud.run('DelInfoCard', { id: id }).catch(_unwrapError)
     }
 
+    function getPrServices(pid) {
+        return Parse.Cloud.run('GetPrServices', { provider_id: pid }).catch(_unwrapError)
+    }
+
+    function addPrService(prService) {
+        return Parse.Cloud.run('AddPrService', { prService: prService }).catch(_unwrapError)
+    }
+
+    function delPrService(id) {
+        return Parse.Cloud.run('DelPrService', { id: id }).catch(_unwrapError)
+    }
+
+    function getHotBeds(pid) {
+        return Parse.Cloud.run('GetHotBeds', { provider_id: pid }).catch(_unwrapError)
+    }
+
+    function addHotBed(hotBed) {
+        return Parse.Cloud.run('AddHotBed', { hotBed: hotBed }).catch(_unwrapError)
+    }
+
+    function delHotBed(id) {
+        return Parse.Cloud.run('DelHotBed', { id: id }).catch(_unwrapError)
+    }
+
+    function getEnquiries(pid, sid, unique_user) {
+        return Parse.Cloud.run('GetEnquiries', { provider_id: pid, service_id: sid, unique_user:unique_user }).catch(_unwrapError)
+    }
+
+    function addEnquire(enquire) {
+        return Parse.Cloud.run('AddEnquire', { enquire: enquire }).catch(_unwrapError)
+    }
+
+    function delEnquire(id) {
+        return Parse.Cloud.run('DelEnquire', { id: id }).catch(_unwrapError)
+    }
 
     // Private functions
 
