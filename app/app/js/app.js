@@ -35,6 +35,28 @@ var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUt
                 console.log("Google Analytics Unavailable")
             }
 
+            // Branch
+            $ionicPlatform.on('deviceready', function() {
+                branchInit()
+            });
+
+            $ionicPlatform.on('resume', function() {
+                branchInit()
+            });
+
+            function branchInit() {
+                // Branch initialization
+                if (typeof Branch !== 'undefined') {
+                    Branch.initSession(function(data) {
+                        // read deep link data on click
+                    }).then(function(res) {
+                        //alert('Response: ' + JSON.stringify(res))
+                    }).catch(function(err) {
+                        alert('Error: ' + JSON.stringify(err))
+                    })
+                }
+            }
+
             // Store the app version in the root scope
             if (window.cordova && window.cordova['getAppVersion'])
                 window.cordova['getAppVersion'].getVersionNumber().then(version => {

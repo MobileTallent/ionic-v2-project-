@@ -249,5 +249,24 @@
         },
         "is_top_level": true,
         "variables": {}
+    },
+    "es6-promise-plugin": {
+        "source": {
+            "type": "registry",
+            "id": "es6-promise-plugin"
+        },
+        "is_top_level": false,
+        "variables": {}
+    },
+    "branch-cordova-sdk": {
+        "source": {
+            "type": "registry",
+            "id": "branch-cordova-sdk"
+        },
+        "is_top_level": true,
+        "variables": {
+            "BRANCH_KEY": "key_live_cfFrFIoOjTPIZEyQQZ2nkgnfEups99Tf",
+            "URI_SCHEME": "justababy"
+        }
     }
 }
