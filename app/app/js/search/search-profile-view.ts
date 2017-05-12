@@ -68,7 +68,7 @@ module app {
 				this.branchUniversalObj.generateShortUrl(analyticsLink, properties1).then(res => {
 					linkToBeShared = JSON.stringify(res.url)
 					var message = 'Check out this profile: '
-					var profileShare = "Hey, I found this Just a Baby user with the following story:" + "\n\"" + this.profile.about + "\"\nSee for yourself by clicking here:"
+					var profileShare = "Hey I found this person with the following story on the new App:" + "\n\"" + this.profile.about + "\"\nSee for yourself by clicking here:"
 					this.$cordovaSocialSharing.share(profileShare, message, null, linkToBeShared) // Share via native share sheet 
 						.then(() => {
 							if (typeof analytics !== 'undefined') {
