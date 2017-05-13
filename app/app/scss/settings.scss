@@ -30,10 +30,10 @@ slider div.slider-bar .selection {
     border-top: solid $assertive 3px;
 }
 .help-button {
-    border: solid $calm 3px;
+    border: solid #444 1px;
     border-radius: 10px;
     background-color: white !important;
-    color: $energized;
+    color: #444;
 }
 button.button.help-button:active{
     border-color: $energized !important;
