@@ -77,7 +77,7 @@
     <branch-key value="key_live_cfFrFIoOjTPIZEyQQZ2nkgnfEups99Tf" />
     <uri-scheme value="justababy" />
     <link-domain value="khz5.app.link" />
-    <ios-team-release value="PW4Q8885U7" />
+    <ios-team-release value="RPD5XZB46Z" />
   </branch-config>
   <plugin name="com.phonegap.parsepushplugin" spec="https://github.com/taivo/parse-push-plugin#a2e696aa27dcc0df7c7a4669caa3d0c0a5ffdaf2">
     <variable name="GCM_SENDER_ID" value="702079786951"/>
