@@ -369,6 +369,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         getUserId: getUserId,
         getProfile: getProfile,
         getProfileOfSelectedUser: getProfileOfSelectedUser,
+        getProfileOfSelectedUserNoParsing: getProfileOfSelectedUserNoParsing,
         getProfileForMatch: getProfileForMatch,
         convertLocation: convertLocation,
         saveSettings: saveSettings,
@@ -647,7 +648,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
     }
 
     /**
-     * Loads the profile for the selected unmatched user, and attempts to create one if it doesn't exist by re-saving the user
+     * Loads the profile for the selected unmatched user with parsing it to the Profile Parse Object
      * @param profileId the profileId to lookup 
      * @returns {IPromise<Profile>} A promise which resolves to the profile of the selected unmatched user, or null if unavailable for reporting
      */
@@ -657,6 +658,15 @@ angular.module('service.parse', ['constants', 'parse-angular'])
                 profile = fromJSON(profile, 'Profile')
                 return profile
             }).catch(_unwrapError)
+    }
+
+    /**
+     * Loads the profile for the selected unmatched user without parsing it to Parse Object
+     * @param profileId the profileId to lookup 
+     * @returns {IPromise<Profile>} A promise which resolves to the profile of the selected unmatched user, or null if unavailable for reporting
+     */
+    function getProfileOfSelectedUserNoParsing(profileId) {
+        return Parse.Cloud.run('GetProfileOfSelectedUser', { profileId: profileId }).catch(_unwrapError)
     }
 
 

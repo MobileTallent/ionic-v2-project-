@@ -6,7 +6,7 @@ var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUt
         // Add your own extra dependencies on the line below with the comma first to make merging updates easier
 
     ])
-    .run(function($ionicPlatform, AppService, ImgCache, $rootScope, $log, appName, env, gcpBrowserKey) {
+    .run(function($ionicPlatform, AppService, ImgCache, $rootScope, $log, appName, env, gcpBrowserKey, $state) {
         $rootScope.appName = appName
 
         $ionicPlatform.ready(function() {
@@ -49,8 +49,13 @@ var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUt
                 if (typeof Branch !== 'undefined') {
                     Branch.initSession(function(data) {
                         // read deep link data on click
-                    }).then(function(res) {
-                        //alert('Response: ' + JSON.stringify(res))
+                        if (data && data["+clicked_branch_link"] && data.$canonical_identifier && AppService.getProfile()) {
+                            AppService.getProfileOfSelectedUserNoParsing(data.$canonical_identifier).then(profile => {
+                                $state.go('menu.search-profile-view', { profile: profile })
+                            })
+                        } else if (data && data["+clicked_branch_link"] && data.$canonical_identifier && !AppService.getProfile()) {
+                            AppService.branchProfileId = data.$canonical_identifier
+                        }
                     }).catch(function(err) {
                         alert('Error: ' + JSON.stringify(err))
                     })
