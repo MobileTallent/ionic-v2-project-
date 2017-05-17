@@ -20,16 +20,16 @@ module app {
 			$translate(['REQUEST_FAILED', 'REPORT', 'INAPPROPRIATE_CONTENT', 'CANCEL']).then(translationsResult => {
 				this.translations = translationsResult
 			})
-			if (this.AppService.branchProfileId) {
-				this.branchProfileId = this.AppService.branchProfileId
-				this.AppService.branchProfileId = ''
-			}
 			$scope.$on('$ionicView.beforeEnter', (event, data) => this.ionViewWillEnter())
 		}
 
 		ionViewWillEnter() {
 			this.profile = this.$stateParams['profile']
 			this.$scope['profile'] = this.profile
+			if (this.AppService.branchProfileId) {
+				this.branchProfileId = this.AppService.branchProfileId
+				this.AppService.branchProfileId = ''
+			}
 			this.AppService.getProfileOfSelectedUser(this.profile.objectId).then(profilePointer => {
 				this.profilePointer = profilePointer
 
@@ -92,14 +92,17 @@ module app {
 			return profile.objectId === this
 		}
 
-		getMatchProfile(){
+		getMatchProfile() {
 			let match = null
 			if (this.branchProfileId) {
 				let matchIndex = this.AppService.getProfileSearchResults().findIndex(this.checkProfile, this.profilePointer.id)
-				match = this.AppService.getProfileSearchResults().splice(matchIndex, 1)[0]
+				if (matchIndex > 0)
+					match = this.AppService.getProfileSearchResults().splice(matchIndex, 1)[0]
+				else
+					match = this.profile
 			} else
 				match = this.AppService.getProfileSearchResults().pop()
-			
+
 			return match
 		}
 

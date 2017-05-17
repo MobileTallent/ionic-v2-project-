@@ -51,6 +51,7 @@ var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUt
                         // read deep link data on click
                         if (data && data["+clicked_branch_link"] && data.$canonical_identifier && AppService.getProfile()) {
                             AppService.getProfileOfSelectedUserNoParsing(data.$canonical_identifier).then(profile => {
+                                AppService.branchProfileId = data.$canonical_identifier
                                 $state.go('menu.search-profile-view', { profile: profile })
                             })
                         } else if (data && data["+clicked_branch_link"] && data.$canonical_identifier && !AppService.getProfile()) {
