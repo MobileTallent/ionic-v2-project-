@@ -1,0 +1,45 @@
+<ion-side-menus enable-menu-with-back-views="false">
+
+    <!-- Could re-enable drag-content when this issue is resolved https://github.com/driftyco/ionic/issues/3511 -->
+    <ion-side-menu-content edge-drag-threshold="true" drag-content="true">
+        <ion-nav-bar class="bar-positive">
+            <ion-nav-back-button>
+            </ion-nav-back-button>
+
+            <ion-nav-buttons side="left">
+                <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+
+        <ion-nav-view name="menuContent"></ion-nav-view>
+
+    </ion-side-menu-content>
+
+    <ion-side-menu side="left" id="menu-left">
+        <ion-header-bar class="bar-positive">
+            <h1 class="title">Menu</h1>
+        </ion-header-bar>
+        <ion-content>
+            <ul class="list menu-list">
+                <!-- Note each link has the 'menu-close' attribute so the menu auto closes when clicking on one of these links -->
+                <a ng-controller="ShareController as shareCtrl" ng-click="shareCtrl.share()" class="item energized" menu-close><i class="icon ion-android-share-alt"></i> {{'MENU_SHARE' | translate}}</a>
+                <a ui-sref="menu.profile" class="item energized" menu-close><i class="icon ion-ios-person-outline"></i> {{'MENU_PROFILE' | translate}}</a>
+                 <a ui-sref="menu.sharevidhome" class="item energized" menu-close><i class="icon ion-android-share-alt"> {{'SHARE_VIDEO' | translate}}</a>
+                <a ui-sref="menu.home" class="item energized" menu-close><i class="icon ion-ios-people-outline"></i> {{'MENU_MATCHES' | translate}}</a>
+                <a ui-sref="menu.chats" class="item energized" menu-close><i class="icon ion-ios-chatbubble-outline"></i> {{'MENU_CHAT' | translate}} <unread-chats-badge/></a>
+                <a ui-sref="menu.likedMe" class="item energized" menu-close><i class="icon ion-ios-checkmark-outline"></i> {{'MENU_LIKED_ME' | translate}}</a>
+                <!--<a ui-sref="menu.relationship" class="item energized" menu-close><i class="icon ion-ios-heart-outline"></i> My Co-Parent Shortlist</a>-->
+                <a ui-sref="menu.clinics" class="item energized" menu-close><i class="icon ion-ios-rose-outline"></i> {{'FAQ' | translate}}</a>
+                <!--<a ui-sref="menu.discovery" class="item energized" menu-close><i class="icon ion-ios-search-strong"></i> {{'MENU_DISCOVERY' | translate}}</a>-->
+                <a ui-sref="menu.location" class="item energized" menu-close><i class="icon ion-ios-location-outline"></i> {{'LOCATION' | translate}}</a>
+                <a ui-sref="menu.settings" class="item energized" menu-close><i class="icon ion-ios-cog-outline"></i> {{'MENU_SETTINGS' | translate}}</a>
+                <a ui-sref="menu.contact" class="item energized" menu-close><i class="icon ion-ios-email-outline"></i> {{'MENU_CONTACT' | translate}}</a>
+                <a ui-sref="menu.about" class="item energized" menu-close><i class="icon ion-ios-information-outline"></i> {{'ABOUT_JUST_A_BABY' | translate}}</a>
+                <a ng-if="isAdmin" ui-sref="menu.adminMenu" class="item" menu-close><i class="icon ion-ios-email"></i> {{'ADMIN' | translate}}</a>
+                
+            </ul>
+        </ion-content>
+    </ion-side-menu>
+
+</ion-side-menus>

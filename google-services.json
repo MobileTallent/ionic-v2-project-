@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "452547796078",
+    "firebase_url": "https://delta-entry-140214.firebaseio.com",
+    "project_id": "delta-entry-140214",
+    "storage_bucket": "delta-entry-140214.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452547796078:android:4d6d4b9ee9c3bb65",
+        "android_client_info": {
+          "package_name": "co.justababy.appsandbox"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "452547796078-ii02puo0f6h9a6h73nl0p5a4j17vslg2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.justababy.appsandbox",
+            "certificate_hash": "e3fc7a786eea87754ba59385628e68facfedd6d1"
+          }
+        },
+        {
+          "client_id": "452547796078-gls90asv8l33kf4ncnveic4tq5t7gg8i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.justababy.appsandbox",
+            "certificate_hash": "3b37159fd6decfee4dde5873b299d789677af327"
+          }
+        },
+        {
+          "client_id": "452547796078-opitmmebdv7bii2k816s60csrombeh06.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "452547796078-78ioi11ll968so4dinlilu3q30lcsh2v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzG94VRsLeYExhRAafPlBmiPi0UwhA45k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "452547796078-opitmmebdv7bii2k816s60csrombeh06.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,17 @@
+angular.module("constants", [])
+  .constant("appName", "Just a Baby")
+  .constant("parseAppId", "11111111122444")
+  .constant("parseMount", "/parse/")
+  .constant("gcpBrowserKey", "AIzaSyCUgT951OiYF4TmpR-lcpPd9zJ_NVBpoow")
+  .constant("playStoreUrl", "http://goo.gl/6fQnJC")
+  .constant("itunesUrl", "https://goo.gl/438VwP")
+  .constant("webStoreUrl", "http://justababy.co")
+  .constant("facebookAppId", "1219040608124053")
+  .constant("linkedInId", "")
+  .constant("linkedInSecret", "")
+  .constant("socialShareMessage", "With Just-a-Baby, you know you’re meeting people who are ready to help you start your new journey.")
+  .constant("socialShareSubject", "Download the App now.")
+  .constant("adMob", {"android":{"banner":"","interstitial":""},"ios":{"banner":"","interstitial":""}})
+  .constant("serverUrl", "https://justababy-prod.appspot.com")
+  .constant("env", "prod");
+var FACEBOOK_APP_ID = "1219040608124053";

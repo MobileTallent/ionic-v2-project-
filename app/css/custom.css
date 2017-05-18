@@ -1,0 +1,128 @@
+/* --- padding --- */
+
+.no-padding {
+    padding: 0px;
+}
+
+.padding-5 {
+    padding: 5px;
+}
+
+.padding-10 {
+    padding: 10px;
+}
+
+.padding-15 {
+    padding: 15px;
+}
+
+.padding-20 {
+    padding: 20px;
+}
+
+.padding-25 {
+    padding: 25px;
+}
+
+.padding-left-right {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+/* --- Positioning and Display ---*/
+
+.hidden {
+    display: none;
+}
+
+.center {
+    text-align: center;
+}
+.horizontal-center{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.wide {
+    width: 100%;
+}
+
+.cf {
+    clear: both !important;
+}
+
+
+
+
+
+
+
+
+/* ---------- Profile -----------*/
+
+#profile-name-banner {
+    background-color: rgba(187, 225, 213, 0.69);
+    border: 1px solid rgba(187, 225, 213, 0.69);
+    border-radius: 16px;
+    padding: 20px 15px;
+    margin-top: 10px
+}
+
+
+
+
+/* --------- My Relationships ---------------*/
+
+.list .item.item-accordion {
+    line-height: 26px;
+    padding-bottom: 0;
+}
+
+.list .item.item-accordion.ng-hide {
+    line-height: 0px;
+}
+
+.list .item.item-accordion.ng-hide-add,
+.list .item.item-accordion.ng-hide-remove {
+    display: block !important;
+}
+
+
+/* --- Set Location ---*/
+
+
+/* For the google map */
+
+.scroll {
+    height: 100%;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+
+/* --- clinics --- */
+
+.clinic-container {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 10px;
+    border-radius: 25px;
+    border-color: '#fff';
+}
+
+.clinic-container .item.item-accordion {
+    padding-top: 10px !important;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.wrap-space {
+    white-space: normal !important;
+}
+
