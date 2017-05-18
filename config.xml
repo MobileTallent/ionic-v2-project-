@@ -85,7 +85,7 @@
     <plugin name="cordova-plugin-console" spec="^1.0.7" />
     <plugin name="cordova-plugin-device" spec="^1.1.6" />
     <plugin name="cordova-plugin-facebook4" spec="^1.7.4">
-        <variable name="APP_ID" value="173189389851023" />
+        <variable name="APP_ID" value="1219040608124053" />
         <variable name="APP_NAME" value="Just A Baby" />
     </plugin>
     <plugin name="cordova-plugin-fcm" spec="^2.1.1" />
