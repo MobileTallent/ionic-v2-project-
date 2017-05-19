@@ -120,8 +120,8 @@ var TRANSLATION_EN = {
     'GPS_ERROR': 'Unable to get GPS location',
     'SET_MAP_LOCATION': 'Please set your location on the map and press save',
 
-    'NO_MATCHES': 'You don\'t have any matches yet.',
-    'START_SWIPING': 'Start swiping',
+    'NO_MATCHES': 'You don\'t have any matches yet',
+    'START_SWIPING': 'Start swiping ',
     'MATCHES_LOAD_ERROR': 'Unable to load matches',
     // New Match
     'ITS_A_MATCH': 'It\'s A Match',
