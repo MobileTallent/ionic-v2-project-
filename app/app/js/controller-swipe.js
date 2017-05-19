@@ -142,6 +142,23 @@ angular.module('controllers')
     }
 })
 
+.directive('readMore', function($timeout) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+
+            var getHeightAbout = function() {
+                var eleRead = element[0].firstChild
+                if (eleRead.scrollHeight <= eleRead.offsetHeight) {
+                    var readBtn = element[0].children[1]
+                    angular.element(readBtn).addClass('hidden')
+                }
+            }
+            $timeout(getHeightAbout, 0)
+        }
+    }
+})
+
 
 .controller('MatchProfileCtrl', function($scope, $translate, AppService, AppUtil,
     $state, $stateParams, $ionicHistory, $ionicActionSheet, $ionicPopup,

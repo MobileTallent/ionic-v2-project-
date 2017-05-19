@@ -135,12 +135,12 @@
                             <div style="margin-left: 5px;">{{profile.location | distance}} {{'AWAY' | translate}}</div>
                         </div>
                     </div>
-                    <div id="match-search-about-container">
+                    <div id="match-search-about-container" read-more>
                         <div id="match-search-about">
                             {{profile.about}}
                         </div>
 
-                        <div ng-hide="(profile.about).length < 200 " id="match-search-readmore">
+                        <div id="match-search-readmore">
                             Read More
                         </div>
                         <div class="badge-row">
