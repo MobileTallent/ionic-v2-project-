@@ -84,6 +84,7 @@ function onNotificationOpen(pnObj) {
                 profile: null,
                 profileSearchResults: null,
                 twilioAccessToken: null,
+                branchProfileId: '',
                 // methods
                 init: init,
                 facebookLogin: facebookLogin,
@@ -100,6 +101,7 @@ function onNotificationOpen(pnObj) {
                 loadProfile: loadProfile,
                 getProfile: getProfile,
                 getProfileOfSelectedUser: getProfileOfSelectedUser,
+                getProfileOfSelectedUserNoParsing: getProfileOfSelectedUserNoParsing,
                 getProfileById: getProfileById,
                 getProfileByUserId: getProfileByUserId,
                 getProfileByMatchId: getProfileByMatchId,
@@ -514,11 +516,19 @@ function onNotificationOpen(pnObj) {
             }
 
             /**
-             * Get the profile for a unmatched selected user for reporting purposes.
+             * Get the profile for a unmatched selected user for reporting purposes with parsing to Profile Parse Object
              * @returns {IProfile}
              */
             function getProfileOfSelectedUser(profileId) {
                 return server.getProfileOfSelectedUser(profileId)
+            }
+
+            /**
+             * Get the profile for a unmatched selected user w/o parsing
+             * @returns {IProfile}
+             */
+            function getProfileOfSelectedUserNoParsing(profileId) {
+                return server.getProfileOfSelectedUserNoParsing(profileId)
             }
 
             /**
@@ -622,6 +632,12 @@ function onNotificationOpen(pnObj) {
                 startSynchronisation()
 
                 go('menu.home')
+
+                if (service.branchProfileId) {
+                    service.getProfileOfSelectedUserNoParsing(service.branchProfileId).then(profile => {
+                        $timeout($state.go('menu.search-profile-view', { profile: profile }), 2500)
+                    })
+                }
             }
 
             function go(state) {

@@ -4,7 +4,7 @@ import IAppService = app.IAppService
 /**
  * A directive to display the main details of a profile
  */
-angular.module('ionicApp').directive('profileDetails', function (AppService: IAppService) {
+angular.module('ionicApp').directive('profileDetails', function (AppService: IAppService, $ionicPopup) {
 	return {
 		restrict: 'E',
 		scope: {
@@ -62,6 +62,17 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 				$scope.distance = (distanceString === '0' ? 1 : distanceString) + currentUserProfile.distanceType
 			}
 			$scope.isCurrentUser = profile.id === currentUserProfile.id
+			$scope.onClickBadgeInfo = () => {
+				var alertPopup = $ionicPopup.alert({
+					title: 'Self Identification Badges',
+					templateUrl: 'badgeInfo.html',
+					buttons: [{
+						text: 'Ok',
+						type: 'button-assertive',
+
+					}]
+				})
+			}
 		}
 	}
 })
