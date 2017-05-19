@@ -34,8 +34,8 @@ module app {
 							// 	'image':'http://mspmentor.net/site-files/mspmentor.net/files/uploads/2014/11/Services.jpg',
 							// 	'video':'',
 							// 	'price': 20,
-							// 	'shows': 0,
-							// 	'clicks': 0
+							//  "clicks":{"summary":0,"by_days":[{"summary":0,"by_days":[]}]},
+							// 	"shows":{"summary":0}
 							// }
 
 							// this.AppService.addPrService(service).then(

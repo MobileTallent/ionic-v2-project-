@@ -177,8 +177,8 @@ var ServiceProvider = Parse.Object.extend({
  * @property {string} type - type of card
  * @property {object} audience - audiengs object with {tags:[]} array
  * @property {object} options - options object {frequency, age_from, age_to}
- * @property {number} shows - shows 
- * @property {number} clicks - clicks
+ * @property {object} shows - shows  with {summary:number}
+ * @property {object} clicks - clicks with {summary:number,by_days:[{date:date,summary:number}]}
 */
 
 var InfoCardFields = ['pid', 'title', 'question', 'answer', 'image', 'video', 'type', 'audience', 'options', 'shows', 'clicks']
@@ -197,8 +197,8 @@ var InfoCard = Parse.Object.extend({
  * @property {string} image - image cover
  * @property {string} video - video cover
  * @property {number} price - service price 
- * @property {number} shows - shows 
- * @property {number} clicks - clicks
+ * @property {object} shows - shows  with {summary:number}
+ * @property {object} clicks - clicks with {summary:number,by_days:[{date:date,summary:number}]}
 */
 
 var PrServiceFields = ['pid', 'title', 'active', 'spiel', 'audience', 'image', 'video', 'price', 'shows', 'clicks']
@@ -428,6 +428,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
         //service-provider functions
         getServiceProviders: getServiceProviders,
+        getMyServiceProvider: getMyServiceProvider,
         getServiceProviderLengths: getServiceProviderLengths,
         addServiceProvider: addServiceProvider,
         delServiceProvider: delServiceProvider,
@@ -1149,6 +1150,10 @@ angular.module('service.parse', ['constants', 'parse-angular'])
     //Service Provider functions
     function getServiceProviders() {
         return Parse.Cloud.run('GetServiceProviders').catch(_unwrapError)
+    }
+
+    function getMyServiceProvider(userId) {
+        return Parse.Cloud.run('GetMyServiceProvider', {userId: userId}).catch(_unwrapError)
     }
 
     function getServiceProviderLengths(provider_id) {

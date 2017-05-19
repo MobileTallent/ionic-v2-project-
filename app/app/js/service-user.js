@@ -79,6 +79,7 @@ function onNotificationOpen(pnObj) {
                 // fields
                 isLoggedIn: false,
                 user: null,
+                service_provider: null,
                 userId: '',
                 fbId: '',
                 profile: null,
@@ -174,6 +175,7 @@ function onNotificationOpen(pnObj) {
 
                 //service-provider functions
                 getServiceProviders: getServiceProviders,
+                getMyServiceProvider: getMyServiceProvider,
                 getServiceProviderLengths: getServiceProviderLengths,
                 addServiceProvider: addServiceProvider,
                 delServiceProvider: delServiceProvider,
@@ -269,12 +271,16 @@ function onNotificationOpen(pnObj) {
                     return refreshUnreadCount()
                 }).then(null, error => $log.error('Error loading local db data ' + JSON.stringify(error)))
 
-                if (user.admin)
-                    $rootScope.isAdmin = true
-                if (user.serviceProvider)
-                    $rootScope.serviceProvider = true
-                    
                 $log.log('logged in with ' + JSON.stringify(user))
+
+                if (user.admin) 
+                    $rootScope.isAdmin = true
+                if (user.serviceProvider) {
+                    $rootScope.serviceProvider = true
+                    server.getMyServiceProvider(user.id).then(provider => {
+                        service.service_provider = provider
+                    })
+                }
 
                 server.getTwilioToken().then(
                     result => {
@@ -1547,6 +1553,13 @@ function onNotificationOpen(pnObj) {
             //Service Provider functions
             function getServiceProviders() {
                 return server.getServiceProviders()
+            }
+
+            function getMyServiceProvider(userId) {
+                return server.getMyServiceProvider(userId).then(provider => {
+                    service.service_provider = provider
+                    return service.profile
+                })
             }
 
             function getServiceProviderLengths(provider_id) {

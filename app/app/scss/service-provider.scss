@@ -1,0 +1,160 @@
+@import 'colors.scss';
+
+#service-provider {
+
+    .item-avatar>img:first-child {
+        max-width: 40px!important;
+        max-height: 40px!important;
+        top: 16px;
+        left: 16px;
+    }
+}
+
+#sp-menu {
+
+    .sidemenu {
+        
+        .profile {
+            background: #f8f8f8;
+            padding-top: 30px;
+            border-bottom: 1px solid #d8d8d8;
+            margin-bottom: 10px;
+            display: flex;
+            padding: 10px;
+            padding-right:20px;
+            padding-left:0px;
+            justify-content: center;
+            background: $positive;
+
+            img {
+                display: block;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                margin-right: 15px;
+            }
+
+            div.names {
+                line-height: 0px;
+
+                h2 {
+                    margin-top: 7px;
+                    margin-bottom: 10px;
+                    font-size: 18px;
+                    font-weight: 900;
+                    color: #fff;
+                    font-family: 'Avenir Next LT Pro Regular', 'Helvetica Neue', Helvetica;
+                }
+                
+                span {
+                    font-family: 'Avenir Next LT Pro Regular', 'Helvetica Neue', Helvetica;
+                    font-weight: 900;
+                    font-size: 15px;
+                    color:#fff;
+                }
+            }
+            
+
+        }
+        .menu-items {
+            border-bottom: 1px solid #f8f8f8;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            .menu-title {
+                padding: 10px;
+                padding-left: 15px;
+                font-size: 12px;
+                color: #999999;
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+            .menu-item {
+                display: -webkit-box;
+                display: -webkit-flex;
+                display: -moz-box;
+                display: -moz-flex;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-pack: start;
+                -ms-flex-pack: start;
+                -webkit-justify-content: flex-start;
+                -moz-justify-content: flex-start;
+                justify-content: flex-start;
+                padding: 10px;
+                padding-left:15px;
+
+                .text-center {
+                    -webkit-box-pack: center;
+                    -ms-flex-pack: center;
+                    -webkit-justify-content: center;
+                    -moz-justify-content: center;
+                    justify-content: center;
+                }
+
+                .icon {
+                    color: #999999;
+                    font-size: 22px;
+                    width: 22px;
+                }
+
+                span.text {
+                    margin-left: 10px;
+                    font-size: 17px;
+                }
+                .menu-count {
+                    font-size: 17px;
+                    color: #999999;
+                    position: absolute;
+                    right:15px;
+                }
+            }
+        }
+    }
+
+}
+
+#home-page {
+    #first-list-home {
+        span.item-note {
+            position: absolute;
+            font-size: 16px;
+            right: 16px;
+            top: 28px;
+        }
+    }
+}
+
+
+#welcome-page {
+    background-image: url("img/corporate.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+
+    .app-name {
+				font-family: 'LunchBoxBold', 'Helvetica Neue', Helvetica;
+				font-size: 48px;
+				color: #ffffff;
+				padding-top: 190px;
+				text-align: center;
+				z-index: 2
+	}
+    .app-subname {
+                font-family: 'Avenir Next LT Pro Regular', 'Helvetica Neue', Helvetica;
+                font-size: 22px;
+                color: #ffffff;
+                padding-top: 30px;
+                text-align: center;
+                position: relative;
+                z-index: 200;
+    }
+    #login-status {
+				color: #ffffff;
+				bottom: 10px;
+				text-align: center;
+				width: 100%;
+				position: fixed;
+				font-family: 'Avenir Next LT Pro Regular', 'Helvetica Neue', Helvetica;
+				z-index: 2;
+	}
+}

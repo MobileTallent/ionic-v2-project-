@@ -1,6 +1,6 @@
 var platformReady, fbJsSdkLoaded
 
-var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUtil', 'templates', 'controllers', 'controllers.share', 'service.app',
+var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUtil', 'templates', 'controllers', 'controllers.share', 'service.app', 'service-provider',
         'ui.slider', 'ngImgCrop', 'ngAnimate', 'pascalprecht.translate', 'emoji', 'ImgCache', 'monospaced.elastic',
         'ngStorage', 'SocialAuth', 'ngCookies', 'filters', 'chart.js'
         // Add your own extra dependencies on the line below with the comma first to make merging updates easier
