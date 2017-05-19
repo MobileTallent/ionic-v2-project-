@@ -20,6 +20,22 @@ Parse.Cloud.define('GetServiceProviders', function(request, response) {
     })
 })
 
+/* Get My Service Provider */
+Parse.Cloud.define('GetMyServiceProvider', function(request, response) {
+    var userId = request.params.userId
+
+    new Parse.Query(ServiceProvider)
+        .equalTo("uid", userId)
+        .first()
+        .then(function(result) {
+        console.log("Successs " + JSON.stringify(result))
+        response.success(result)
+    }, function(error) {
+        console.log("Erroorrr: " + JSON.stringify(error))
+        response.error(error)
+    })
+})
+
 /* Get Service Provider Length of contents */
 Parse.Cloud.define('GetServiceProviderLengths', function(request, response) {
     var provider_id = request.params.provider_id
