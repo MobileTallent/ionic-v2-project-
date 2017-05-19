@@ -16,7 +16,7 @@
                     opacity: 0;
                 }
             }
-            
+
             .imgOverlay {
                 position: absolute;
                 margin-left: auto;
@@ -24,7 +24,7 @@
                 left: 0;
                 right: 0;
             }
-            
+
             .imgCircle {
                 width: 150px;
                 height: 150px;
@@ -32,7 +32,7 @@
                 -webkit-border-radius: 150px;
                 -moz-border-radius: 150px;
             }
-            
+
             .verticalAlign {
                 position: relative;
                 top: 50%;
@@ -40,7 +40,7 @@
                 width: 100%;
                 margin: 0 auto;
             }
-            
+
             .fade-out {
                 animation-name: 'fade_out_animation';
                 animation-duration: 2000ms;
@@ -112,7 +112,8 @@
             <td-cards>
                 <!-- ng-if="$index >= profiles.length -2" is to display only the top 2 cards in the DOM for performance -->
                 <!-- The profiles array is used like a stack, where the last item shows first -->
-                <td-card ng-if="$index >= profiles.length - 2" ng-show="profiles" ng-repeat="profile in profiles track by $index" ng-click="viewDetails(profile)" on-destroy="cardDestroyed($index)" on-transition-left="cardTransitionLeft(profile)" on-transition-right="cardTransitionRight(profile)"
+                <td-card ng-if="$index >= profiles.length - 2" ng-show="profiles" ng-repeat="profile in profiles track by $index" ng-click="viewDetails(profile)"
+                    on-destroy="cardDestroyed($index)" on-transition-left="cardTransitionLeft(profile)" on-transition-right="cardTransitionRight(profile)"
                     class="card-{{$index}}" ng-class="{'accepted-transform': profile.accepted, 'rejected-transform': profile.rejected}">
 
                     <div class="row image" ng-click="viewDetails(profile)">
@@ -162,12 +163,15 @@
                             <i class="icon ion-close swipe-button swipe-reject"></i>
                         </a>
                     </div>
-                    <div class="col col-33 col-offset-33">
-
+                    <div class="col col-33">
+                        <a class="button button-icon" ng-click="share()">
+                            <i class="icon ion-android-share-alt share-profile-icon"></i>
+                        </a>
+                    </div>
+                    <div class="col col-33">
                         <a class="button button-icon" ng-click="accept()">
                             <i class="icon ion-checkmark swipe-button swipe-accept"></i>
                         </a>
-
                     </div>
                 </div>
             </div>

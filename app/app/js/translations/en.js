@@ -100,7 +100,7 @@ var TRANSLATION_EN = {
     'GIRLS': 'Girls',
     'SEARCH_DISTANCE': 'Search distance',
     'AGED_BETWEEN': 'Aged between',
-    'SETTINGS_TITLE': 'App Settings',
+    'SETTINGS_TITLE': 'Settings',
     'NOTIFICATION_SOUND': 'Notification Sound',
     'NEW_MATCH': 'New match',
     'NEW_MESSAGE': 'New message',
