@@ -104,3 +104,8 @@
     font-size:50px !important;
     display:block !important;
 }
+
+.unread-messages {
+    animation: wobble;
+    animation-iteration-count: infinite;
+}
