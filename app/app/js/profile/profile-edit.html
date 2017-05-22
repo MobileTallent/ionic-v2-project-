@@ -40,8 +40,8 @@
         <!--Badge Container - styles located in ionic.app.scss-->
         <div class="badge-row" ng-click="vm.onClickBadgeInfo()">
             <img ng-class="vm.personSperm ? 'id-badge-visible' : 'id-badge-hidden' " src="img/sperm_ic.svg">
-            <img ng-class="vm.personWomb ? 'id-badge-visible' : 'id-badge-hidden' " src="img/womb_ic.svg">
             <img ng-class="vm.personEgg ? 'id-badge-visible' : 'id-badge-hidden' " src="img/egg_ic.svg">
+            <img ng-class="vm.personWomb ? 'id-badge-visible' : 'id-badge-hidden' " src="img/womb_ic.svg">
             <img ng-class="vm.personEmbryo ? 'id-badge-visible' : 'id-badge-hidden' " src="img/embryo_ic.svg">
         </div>
 
@@ -161,6 +161,11 @@
                     <div class="padding-10"><b>Tell us about you</b></div>
                     <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap"
                         ng-model="vm.personSperm" toggle-class="toggle-assertive">
+
+                        <div class="self-id-badge-checkbox">
+                            <img src="img/sperm_ic.svg">
+                        </div>
+
                         <span ng-class=" !vm.personSperm ? 'toggle-text-active' : 'toggle-text-inactive' ">
                             <!--{{ !vm.personSperm ? "I need help with Sperm" : "I have have access to Sperm" }}-->
                             I have sperm
@@ -170,6 +175,11 @@
 
                     <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap"
                         ng-model="vm.personEgg" toggle-class="toggle-assertive">
+
+                        <div class="self-id-badge-checkbox">
+                            <img src="img/egg_ic.svg">
+                        </div>
+
                         <span ng-class=" !vm.personEgg ? 'toggle-text-active' : 'toggle-text-inactive' ">
                             <!--{{ !vm.personEgg ? "I need help with an Egg" : "I'm good for an Egg" }}-->
                             I have eggs
@@ -179,6 +189,11 @@
 
                     <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap"
                         ng-model="vm.personWomb" toggle-class="toggle-assertive">
+
+                        <div class="self-id-badge-checkbox">
+                            <img src="img/womb_ic.svg">
+                        </div>
+
                         <span ng-class=" !vm.personWomb ? 'toggle-text-active' : 'toggle-text-inactive' ">
                             <!--{{!vm.personWomb ? "I need help with a Womb" :  "I have a Womb" }}-->
                             I have a womb
@@ -188,6 +203,11 @@
 
                     <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap"
                         ng-model="vm.personEmbryo" toggle-class="toggle-assertive">
+
+                        <div class="self-id-badge-checkbox">
+                            <img src="img/embryo_ic.svg">
+                        </div>
+
                         <span ng-class=" !vm.personEmbryo ? 'toggle-text-active' : 'toggle-text-inactive' ">
                             <!--{{ !vm.personEmbryo ? "I need help with an Embryo"  : "I'm good for an Embryo" }}-->
                             I have a frozen embryo

@@ -39,8 +39,8 @@ module app {
 							// 		"age_from":"25",
 							// 		"age_to":"35"
 							// 	},
-							// 	"shows":"0",
-							// 	"clicks":"0"
+							// 	"clicks":{"summary":0,"by_days":[{"summary":0,"by_days":[]}]},
+							// 	"shows":{"summary":0}
 							// }
 
 							// this.AppService.addInfoCard(info_card).then(

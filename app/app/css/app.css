@@ -235,3 +235,23 @@ left: 0;
 width: 100%;
 height: 100%;
 }
+
+.unread-chats-badge {
+    background-color: #D32F2F !important;
+    border-width: 1px !important;
+    border-color: white !important;
+    border-style: solid !important;
+    font-weight: 200 !important;
+    padding: 0px;
+    font-size: 12px !important;
+}
+
+.unread-chats-menu-badge {
+    background-color: #D32F2F !important;
+    border-color: white !important;
+    border-style: solid !important;
+    font-weight: 500 !important;
+    border-radius: 50px !important;
+    padding: 3px 7px !important;
+    font-size: 18px;
+}

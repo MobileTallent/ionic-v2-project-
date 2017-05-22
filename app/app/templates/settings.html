@@ -2,7 +2,7 @@
     <ion-content>
 
         <div class="card" ng-init="showSearchFilter = false">
-            <div class="settings-header" ng-click="showSearchFilter = !showSearchFilter">
+            <div class="settings-header" ng-click="showSearchFilter = !showSearchFilter; showDiscovery = false; showAppSettings = false; showHelp = false; ">
                 Search Filters
             </div>
 
@@ -73,7 +73,7 @@
 
 
         <div class="card">
-            <div class="settings-header" ng-click="showDiscovery = !showDiscovery">
+            <div class="settings-header" ng-click="showDiscovery = !showDiscovery; showSearchFilter = false; showAppSettings = false; showHelp = false; ">
                 Discovery
             </div>
             <div class="settings-dropdown" ng-show="showDiscovery" ng-class="showDiscovery ? 'animated slideInDown' : '' ">
@@ -115,7 +115,7 @@
 
 
         <div class="card" ng-init="showAppSettings = false">
-            <div class="settings-header" ng-click="showAppSettings = !showAppSettings">
+            <div class="settings-header" ng-click="showAppSettings = !showAppSettings; showSearchFilter = false; showDiscovery = false; showHelp = false; ">
                 Sound Settings
             </div>
             <div class="list settings-dropdown" ng-show="showAppSettings" ng-class="showAppSettings ? 'animated slideInDown' : '' ">
@@ -140,7 +140,7 @@
 
         </div>
         <div class="card" ng-init="showHelp = false">
-            <div class="settings-header" ng-click="showHelp = !showHelp">
+            <div class="settings-header" ng-click="showHelp = !showHelp; showSearchFilter = false; showDiscovery = false; showAppSettings = false; ">
                 Help
             </div>
             <div class="list settings-dropdown padding-10" ng-show="showHelp" ng-class="showHelp ? 'animated slideInDown' : '' ">

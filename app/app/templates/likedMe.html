@@ -4,8 +4,8 @@
 		<ion-refresher pulling-text="{{'PULL_TO_REFRESH' | translate}}" on-refresh="vm.refresh()">
 		</ion-refresher>
 
-		<div ng-if="!vm.profiles.length" class="center energized">
-			<br/> {{'NO_LIKES' | translate}}
+		<div ng-if="!vm.profiles.length" class="center inital-chat-message-box">
+			<p class="chat-inital-message">{{'NO_LIKES' | translate}}</p>
 		</div>
 
 		<div class="list" style="padding:10px;">
