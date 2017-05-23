@@ -1,7 +1,7 @@
 angular.module('controllers')
 
 .controller('ProfileSearch', function($log, $scope, $state, $timeout, $translate, $ionicSideMenuDelegate,
-    TDCardDelegate, AppService, AppUtil, $ionicModal, $ionicPopup, $cordovaSocialSharing) {
+    TDCardDelegate, AppService, AppUtil, $ionicModal, $ionicPopup) {
 
     var translations
     $translate(['MATCHES_LOAD_ERROR']).then(function(translationsResult) {
@@ -123,19 +123,6 @@ angular.module('controllers')
         $timeout(() => $scope.profiles.pop(), 340)
     }
 
-    $scope.share = () => {
-        var profileShare = "Hey I found this person with the following story on the new App:" + "\n\"" + profile.about + "\"\nSee for yourself by clicking here:"
-        $cordovaSocialSharing.share(profileShare, null, null, this.linkToBeShared) // Share via native share sheet 
-            .then(() => {
-                if (typeof analytics !== 'undefined') {
-                    analytics.trackView("Share This Profile")
-                }
-                $log.debug('Social share action complete')
-            }, error => {
-                $log.error('Social share action error ' + JSON.stringify(error))
-            })
-    }
-
     // matches are swiped off from the end of the $scope.profiles array (i.e. popped)
     $scope.cardDestroyed = (index) => $scope.profiles.splice(index, 1)
 
@@ -172,7 +159,7 @@ angular.module('controllers')
 
 .controller('MatchProfileCtrl', function($scope, $translate, AppService, AppUtil,
     $state, $stateParams, $ionicHistory, $ionicActionSheet, $ionicPopup,
-    matchProfile) {
+    matchProfile, $cordovaSocialSharing) {
     //$cordovaFacebook.api()
     //{user-id}?fields=context.fields%28mutual_friends%29
     var translations
@@ -181,6 +168,49 @@ angular.module('controllers')
     })
 
     $scope.matchProfile = matchProfile
+    $scope.linkToBeShared = ''
+
+    $scope.$on('$ionicView.beforeEnter', () => {
+        if (typeof Branch !== 'undefined') {
+            // only canonicalIdentifier is required
+            var properties = {
+                canonicalIdentifier: $scope.matchProfile.id,
+                canonicalUrl: 'https://justababy.com/',
+                title: 'A brand new way to make babies. Start your journey today.',
+                contentDescription: 'Just a Baby is a brand new app connecting people who want to make a baby. We can help you find a surrogate, partner, co-parent, sperm or egg donor - or find someone that needs your help to have a baby.',
+                contentImageUrl: $scope.matchProfile.photoUrl
+            }
+
+            // create a branchUniversalObj variable to reference with other Branch methods
+            Branch.createBranchUniversalObject(properties).then(res => {
+                this.branchUniversalObj = res
+
+                var analyticsLink = {
+                    channel: 'facebook',
+                    feature: 'sharing',
+                    campaign: 'JustaBaby',
+                    tags: ['JustaBaby', 'justababy']
+                }
+
+                // optional fields
+                var properties1 = {
+                    $desktop_url: 'https://justababy.com/',
+                    $android_url: 'https://play.google.com/store/apps/details?id=co.justababy.app',
+                    $ios_url: 'https://itunes.apple.com/us/app/just-a-baby/id1147759844?mt=8',
+                    profileId: $scope.matchProfile.id
+                }
+                if (this.branchUniversalObj) {
+                    this.branchUniversalObj.generateShortUrl(analyticsLink, properties1).then(res => {
+                        $scope.linkToBeShared = JSON.stringify(res.url)
+                    }).catch(function(err) {
+                        alert('Error on Generating URL: ' + JSON.stringify(err))
+                    })
+                }
+            }).catch(function(err) {
+                alert('Error on Branch: ' + JSON.stringify(err))
+            })
+        }
+    })
 
     $scope.profileOptions = () => {
         $ionicPopup.show({
@@ -214,33 +244,16 @@ angular.module('controllers')
         )
     }
 
-    function report() {
-        AppUtil.blockingCall(
-            AppService.reportProfile('profile', $scope.matchProfile), // should pass in the match too
-            () => {
-                $ionicPopup.confirm({
-                    title: translations.MATCH_REPORTED,
-                    template: translations.WANT_TO_REMOVE_MATCH,
-                    okText: translations.REMOVE,
-                    cancelText: translations.CANCEL
-                }).then(function(res) {
-                    if (res)
-                        unmatch()
-                })
-            }
-        )
+    $scope.share = () => {
+        var profileShare = "Hey I found this person with the following story on the new App:" + "\n\"" + $scope.matchProfile.about + "\"\nSee for yourself by clicking here:"
+        $cordovaSocialSharing.share(profileShare, null, null, $scope.linkToBeShared) // Share via native share sheet 
+            .then(() => {
+                if (typeof analytics !== 'undefined') {
+                    analytics.trackView("Share This Profile")
+                }
+            }, error => {
+                //log error
+                console.error('Social share action error ' + JSON.stringify(error))
+            })
     }
-
-    function unmatch() {
-        AppUtil.blockingCall(
-            AppService.removeMatch($stateParams.matchId),
-            () => {
-                $ionicHistory.nextViewOptions({
-                    historyRoot: true,
-                    disableBack: true
-                })
-                $state.go('menu.chats')
-            }, 'REMOVE_MATCH_ERROR'
-        )
-    }
-});
+})
