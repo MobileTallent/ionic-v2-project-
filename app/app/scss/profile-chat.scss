@@ -32,7 +32,8 @@ at the bottom as the textarea resizes */
     position: relative;
     height: 100%;
     width: 50px;
-    top: 7px;
+    top: 8px;
+    padding-left: 8px;
 }
 
 .footer-btn {
@@ -75,7 +76,11 @@ img.profile-pic.circle {
 }
 
 .message {
-    font-size: 14px;
+    font-size: 16px;
+}
+
+.message-box {
+    padding: 4px;
 }
 
 .message-detail {
@@ -164,7 +169,7 @@ td-card {
 
 .bar-footer textarea {
     resize: none;
-    height: 25px;
+    height: 24px !important;
 }
 
 .item-input-wrapper {
