@@ -1,0 +1,47 @@
+<ion-view title="Hot Bed" ng-controller="SpHotBed as vm">
+
+    <ion-content>
+        <div ng-if="vm.hot_bed">
+
+            <div class="list card">
+                <div class="item">
+                    <h2>{{vm.hot_bed.title}}</h2>
+                    <p ng-if="vm.hot_bed.active">Active</p>
+                    <p ng-if="!vm.hot_bed.active">Disabled</p>
+                </div>
+                <div class="item item-body">
+                    <div class="row">
+                        <div class="col">
+                            <p style="margin-top: 0px;">Comments</p>
+                        </div>
+                        <div class="col">
+                            <p style="margin-top: 0px;">{{vm.hot_bed.comments}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p style="margin-top: 0px;">Created at</p>
+                        </div>
+                        <div class="col">
+                            <p style="margin-top: 0px;">{{vm.hot_bed.createdAt | date:'dd MMM yyyy'}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p style="margin-top: 0px;">Geolocation name</p>
+                        </div>
+                        <div class="col">
+                            <p style="margin-top: 0px;">{{vm.hot_bed.location.name}}</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="item item-body">
+                    <!-- Geolocation -->
+                    <div id="map3" data-tap-disabled="true" style="height:300px;"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </ion-content>
+</ion-view>

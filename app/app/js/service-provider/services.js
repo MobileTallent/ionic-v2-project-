@@ -12,7 +12,9 @@
                 services: null,
                 hot_beds: null,
                 enquiries: null,
+                provider_questions: null,
                 // methods
+                addServiceProvider: addServiceProvider,
                 getMyServiceProvider: getMyServiceProvider,
                 getInfoCards: getInfoCards,
                 addInfoCard: addInfoCard,
@@ -24,13 +26,22 @@
                 addHotBed: addHotBed,
                 delHotBed: delHotBed,
                 getEnquiries: getEnquiries,
-                addEnquire: addEnquire
+                getUnreadEnquiries: getUnreadEnquiries,
+                markEnquireAsRead: markEnquireAsRead,
+                addEnquire: addEnquire,
+                getProviderQuestions: getProviderQuestions,
+                getUsers: getUsers
 
             }
 
             return service
 
             //Service Provider functions
+
+            function addServiceProvider(service_provider) {
+                return server.addServiceProvider(service_provider)
+            }
+
             function getMyServiceProvider(userId) {
                 return server.getMyServiceProvider(userId).then(provider => {
                     service.service_provider = provider
@@ -78,8 +89,28 @@
                 return server.getEnquiries(service.provider_id, sid, unique_user)
             }
 
+            function getUnreadEnquiries() {
+                var count = 0
+                for (var i=0;i<service.enquiries.length;i++) {
+                    if(service.enquiries[i].has_read==false) count ++
+                }
+                $rootScope.unread_enquiries = count;
+            }
+
+            function markEnquireAsRead(eid) {
+                return server.markEnquireAsRead(eid)
+            }
+
             function addEnquire(enquire) {
                 return server.addEnquire(enquire)
+            }
+
+            function getProviderQuestions() {
+                return server.getProviderQuestions()
+            }
+            
+            function getUsers(audience) {
+                return server.getUsers(audience)
             }
 
         })

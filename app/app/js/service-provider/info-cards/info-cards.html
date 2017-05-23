@@ -1,16 +1,31 @@
-<ion-view title="Info Cards" id="page6" class="background-calm">
+<ion-view title="Info Cards" class="background-calm" ng-controller="SpInfoCards as vm">
   <ion-nav-buttons side="right" class="has-header">
-    <button class="button icon ion-android-add"> Add</button>
+    <i class="button button-icon icon ion-ios-plus-outline" ng-click="vm.addInfoCardModal.show()"></i>
   </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
-    <div id="infoCards-markdown19" class="show-list-numbers-and-dots">
-      <p style="color:#000000;font-size:13px;">Add your
-        <strong>Info Cards</strong> cards for showing on matches. Select better options to provide your services and create interest to your company</p>
+    <ion-refresher on-refresh="vm.doRefresh()"></ion-refresher>
+     <div class="list card">
+        <div class="item item-body">
+          <div class="show-list-numbers-and-dots">
+            <p style="margin-top:0px;color:#632985;">Add your Info Cards cards for showing on matches. Select better options to provide your services and create interest to your company</p>
+          </div>
+        </div>
     </div>
-    <ion-list id="infoCards-list11">
-      <ion-item id="infoCards-list-item56" ui-sref="sp.add-card">Card #1
-        <span class="item-note">Edit/Remove</span>
+
+    <ion-list show-delete="false" can-swipe="true">
+      <ion-item ng-if="!vm.info_cards.length">
+        Info Cards don't found
+      </ion-item>
+      <ion-item class="item item-avatar" 
+                ui-sref="sp.view-card({'info_card':info_card})" 
+                ng-repeat="info_card in vm.info_cards">
+        <img style="top: 16px;left: 16px;max-width: 40px !important;max-height: 40px !important;" ng-src="{{info_card.image}}">
+        {{info_card.title}}
+        <p>{{::info_card.question}}</p>
+          <ion-option-button class="button-balanced icon ion-edit" ng-click="vm.editInfoCard(info_card)"></ion-option-button>
+          <ion-option-button class="button-assertive icon ion-trash-a" ng-click="vm.deleteInfoCard(info_card.id)"></ion-option-button>
       </ion-item>
     </ion-list>
-  </ion-content>
+
+  </ion-content> 
 </ion-view>

@@ -27,17 +27,22 @@ module app {
 
 			// let enquire = {		
 			// 	'sid':'mALMsFKrCk',
-			// 	'pid':'NKZHO5IiQH',
+			// 	'pid':'Kq91GI2OHd',
 			// 	'uid':'1cEp7yJZnp',
-			//  'message':'I want enquire this service, very good service! i need it.',
+			//  	'message':'I want enquire this service, very good service! i need it.',
+			// 	'service_name':'Test service #1',
 			// 	'name':'Nick',
-			// 	'image_cover':'http://tandemvillas.ru/img/dummy_profile.jpg'
+			// 	'image_cover':'http://tandemvillas.ru/img/dummy_profile.jpg',
+			// 	'has_read':false,
+			// 	'u_email':'test@test.com',
+			// 	'u_phone':'+79000000000',
+			// 	'u_skype':'test.id'
 			// }
 
-			// 				this.AppService.addEnquire(enquire).then(
-			// 					() => {
-			// 						console.log('added!')
-			// 					})
+			// this.AppService.addEnquire(enquire).then(
+			// 	() => {
+			// 		console.log('added!')
+			// 	})
 		}
 
  		public delPrService(service) {

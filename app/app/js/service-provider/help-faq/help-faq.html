@@ -1,30 +1,17 @@
-<ion-view title="Help &amp; FAQ" id="page29">
-  <ion-content padding="true" class="has-header">
-    <div id="helpFAQ-markdown18" class="show-list-numbers-and-dots">
-      <p style="color:#000000;">Became a parents page copy</p>
-    </div>
-    <ion-list id="helpFAQ-list24">
-      <ion-item class="item-icon-right" id="helpFAQ-list-item155">Get referral from GP
-        <i class="icon ion-chevron-down icon-accessory"></i>
-      </ion-item>
-      <ion-item class="item-icon-right" id="helpFAQ-list-item156">Fertility &amp; Approach Planning
-        <i class="icon ion-chevron-down icon-accessory"></i>
-      </ion-item>
-      <ion-item class="item-icon-right" id="helpFAQ-list-item157">Blood Tests &amp; Screening
-        <i class="icon ion-chevron-down icon-accessory"></i>
-      </ion-item>
-      <ion-item class="item-divider" id="helpFAQ-list-item-divider20"> </ion-item>
-    </ion-list>
-    <ion-list id="helpFAQ-list25">
-      <ion-item class="item-icon-right" id="helpFAQ-list-item161" href="tel:55511122211">+55511122211
-        <i class="icon ion-ios-telephone-outline"></i>
-      </ion-item>
-      <ion-item class="item-icon-right" id="helpFAQ-list-item162">support@justababy.com
-        <i class="icon ion-ios-email-outline"></i>
-      </ion-item>
-      <ion-item class="item-icon-right" id="helpFAQ-list-item163">Skype ID
-        <i class="icon ion-social-skype-outline"></i>
-      </ion-item>
-    </ion-list>
-  </ion-content>
-</ion-view>
+<ion-view cache-view="false" ng-controller="SpFaq as vm">
+    <ion-nav-title>FAQ's</ion-nav-title>
+    <ion-content>
+        <ion-list>
+            <div ng-repeat="item in vm.provider_questions" class="clinic-container">
+                <div ng-click="showItem{{item.id}} = !showItem{{item.id}}">
+                    <ion-item style="text-align: center; color: rgb(43, 172, 143);" class="item-calm wrap-space" ng-class="{active: showItem{{item.id}}}">
+                        <i class="icon" ng-class="showItem{{item.id}} ? 'ion-minus' : 'ion-plus'"></i> &nbsp; <b>{{item.question}}</b>
+                    </ion-item>
+                    <ion-item class="item-accordion" style="white-space: pre-wrap; font-size: 14px;" ng-show="showItem{{item.id}}" ng-class="showItem{{item.id}} ? 'animated slideInUp' : ''">
+                        {{item.answer}}
+                    </ion-item>
+                </div>
+            </div>
+        </ion-list>
+    </ion-content>
+</ion-view> 

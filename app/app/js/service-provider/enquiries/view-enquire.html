@@ -1,47 +1,58 @@
-<ion-view title="View Enquire" id="page35" class="background-calm" ng-controller="SpEnquire as vm">
+<ion-view title="View Enquire" class="background-calm" ng-controller="SpEnquire as vm">
   <ion-content padding="true" class="has-header">
-    <div class="list card" id="viewEnquire-card27">
-      <ion-item class="item-avatar" id="viewEnquire-list-item147">
-        <h2>Costumer #1</h2>
-        <p>22 y.o.</p>
+    <div class="list card">
+      <ion-item class="item-avatar">
+
+        <img style="top: 16px;left: 16px;max-width: 40px !important;max-height: 40px !important;" ng-src="{{vm.enquire.image_cover}}">
+        <div style="float:left;">
+          <h2>{{vm.enquire.name}}</h2>
+          <p>{{vm.user.profile.age}} y.o.</p>
+        </div>
+        <span class="item-note">
+              {{vm.enquire.createdAt | date:'dd MMM yyyy HH:mm'}}
+        </span>
       </ion-item>
-      <ion-item class="item-divider" id="viewEnquire-list-item-divider16"> Profile description</ion-item>
-      <div class="item item-body" id="viewEnquire-list-item-container39">
-        <div id="viewEnquire-markdown26" class="show-list-numbers-and-dots">
-          <p style="margin-top:0px;color:#000000;font-size:12px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+      <ion-item class="item-divider">Profile description</ion-item>
+      <div class="item item-body">
+        <div class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#000000;font-size:12px;">{{vm.user.profile.about}}</p>
         </div>
       </div>
-      <ion-item class="item-divider" id="viewEnquire-list-item-divider28"> Enquire details</ion-item>
-      <div class="item item-body" id="viewEnquire-list-item-container43">
-        <div id="viewEnquire-markdown32" class="show-list-numbers-and-dots">
-          <p style="margin-top:0px;color:#000000;font-size:15px;">Service #1</p>
+      <ion-item class="item-divider">Enquire details</ion-item>
+      <div class="item item-body">
+        <div class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#000000;font-size:15px;">{{vm.enquire.service_name}}</p>
         </div>
-        <div id="viewEnquire-markdown20" class="show-list-numbers-and-dots">
-          <p style="margin-top:0px;color:#000000;font-size:12px;">Short message</p>
+        <div class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#000000;font-size:12px;">{{vm.enquire.message}}</p>
         </div>
       </div>
-      <ion-item class="item-divider" id="viewEnquire-list-item-divider34"> Contacts</ion-item>
-      <div class="item item-body" id="viewEnquire-list-item-container42">
-        <ion-list id="viewEnquire-list30">
-          <ion-item class="item-icon-right" id="viewEnquire-list-item165" href="tel:55511122211">+55511122211
+      <ion-item class="item-divider" ng-if="vm.enquire.u_phone || vm.enquire.u_email || vm.enquire.u_skype"> Contacts</ion-item>
+      <div class="item item-body" ng-if="vm.enquire.u_phone || vm.enquire.u_email || vm.enquire.u_skype">
+        <ion-list>
+          <ion-item ng-if="vm.enquire.u_phone" class="item-icon-right" href="tel:{{vm.enquire.u_phone}}">
+            {{vm.enquire.u_phone}}
             <i class="icon ion-ios-telephone-outline"></i>
           </ion-item>
-          <ion-item class="item-icon-right" id="viewEnquire-list-item166">romwtb@gmail.com
+          <ion-item ng-if="vm.enquire.u_email" class="item-icon-right">
+            {{vm.enquire.u_email}}
             <i class="icon ion-ios-email-outline"></i>
           </ion-item>
-          <ion-item class="item-icon-right" id="viewEnquire-list-item171">Skype ID
+          <ion-item ng-if="vm.enquire.u_skype" class="item-icon-right">
+            {{vm.enquire.u_skype}}
             <i class="icon ion-social-skype-outline"></i>
           </ion-item>
         </ion-list>
       </div>
-      <ion-item class="item-divider" id="viewEnquire-list-item-divider30"> Profile pictures</ion-item>
-      <div class="item item-body" id="viewEnquire-list-item-container41">
-        <ion-slides disable-side-menu-drag="" options="{'loop': true}" slider="slider5" delegate-handle="slider5" id="viewEnquire-slider5" style="width:calc(100% + 20px);height:150px;margin-left:-10px;">
-          <ion-slide-page id="viewEnquire-slide27" style="background:url(&quot;img/avfsZwJT9WGsBj982ul1_kitten1.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
-          <ion-slide-page id="viewEnquire-slide28" style="background:url(&quot;img/gHd5vedGQJu4s4qsPQvr_kitten2.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
-          <ion-slide-page id="viewEnquire-slide29" style="background:url(&quot;img/WE6rB9dZRTiIWQlP5qsA_kitten3.jpg&quot;) no-repeat center;background-size:cover;"></ion-slide-page>
-        </ion-slides>
-      </div>
+        <ion-item class="item-divider"> Profile pictures</ion-item>
+        <ion-item>
+            <div ng-if="!vm.user.profile.photos">No profile photos</div>
+            <ion-list show-delete="true">
+                <ion-item ng-repeat="photo in vm.user.profile.photos" class="item-thumbnail-left">
+                    <img ng-src="{{photo.url()}}">
+                </ion-item>
+            </ion-list>
+        </ion-item>
     </div>
   </ion-content>
 </ion-view>

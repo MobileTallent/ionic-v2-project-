@@ -31,7 +31,7 @@
           <div class="menu-item energized" menu-close ui-sref='sp.enquiries'>
             <i class="icon ion-android-done-all"></i>
             <span class="text">Incoming Enquiries</span>
-            <span class="menu-count">6</span>
+            <span class="menu-count" ng-if="$root.unread_enquiries>0">{{$root.unread_enquiries}}</span>
           </div>
 
           <h2 class="menu-title">My provider</h2>
@@ -41,14 +41,14 @@
             <span class="text">My Services</span>
           </div>
 
-          <div class="menu-item energized" menu-close ui-sref='sp.info-cards-welcome'>
+          <div class="menu-item energized" menu-close ui-sref='sp.info-cards'>
             <i class="icon ion-social-buffer-outline"></i>
             <span class="text">Info Cards</span>
           </div>
 
-          <div class="menu-item energized" menu-close ui-sref='sp.hotbedspopup'>
+          <div class="menu-item energized" menu-close ui-sref='sp.hot-beds'>
             <i class="icon ion-ios-albums-outline"></i>
-            <span class="text">HotBeds</span>
+            <span class="text">Hotbeds</span>
           </div>
 
           <div class="menu-item energized" menu-close ui-sref='sp.users'>

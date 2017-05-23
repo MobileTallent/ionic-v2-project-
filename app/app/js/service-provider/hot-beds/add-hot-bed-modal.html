@@ -1,0 +1,53 @@
+<ion-modal-view>
+
+            <ion-header-bar class="bar bar-header bar-positive">
+                <h1 class="title">{{vm.modalText}} Hotbed</h1>
+                <button class="button button-clear button-primary" ng-click="vm.close()">Cancel</button>
+            </ion-header-bar>
+            <ion-content class="padding">
+                <form name="hotbedsForm" novalidate ng-submit="vm.addHotBed(hotbedsForm)">
+                    <div class="list">
+                        <!-- Title -->
+                        <label class="item item-input" 
+                               ng-class="{ 'has-errors' : hotbedsForm.title.$invalid, 'no-errors' : hotbedsForm.title.$valid}">
+                            <input name="title" 
+                                   ng-model="vm.hot_bed.title" 
+                                   ng-required="true" 
+                                   type="text" 
+                                   placeholder="Title" 
+                            />
+                        </label>
+                        <!-- Active -->
+                        <ion-toggle 
+                                ng-init="vm.hot_bed.active = true"
+                                toggle-class="toggle-positive" 
+                                ng-model="vm.hot_bed.active"  
+                                ng-checked="true">
+                                    Active
+                        </ion-toggle>
+                        <!-- Comments -->
+                        <label class="item item-input" 
+                               ng-class="{ 'has-errors' : hotbedsForm.comments.$invalid, 'no-errors' : hotbedsForm.comments.$valid}">
+                            <textarea name="comments" 
+                                      ng-model="vm.hot_bed.comments" 
+                                      ng-required="true" 
+                                      ng-maxlength="200"
+                                      type="text" 
+                                      placeholder="Write a comments about your hotbed" 
+                                      rows="7" 
+                                      class="wide">
+                            </textarea>
+                        </label>
+                        <!--Location-->
+                        <div class="item item-devider">Hotbed Location</div>
+                        <ion-radio ng-model="vm.info_card_my_location" name="my_location" ng-checked="true" ng-value="true">Use my location</ion-radio>
+                        
+                        <label class="item"
+                             ng-show="(hotbedsForm.title.$error || hotbedsForm.comments) && vm.submitted">
+                            <i class="ion-information-circled"></i> Fill-in all fields!
+                        </label>
+                        <button class="button button-full button-positive">Save</button>
+                    </div>
+                </form>
+            </ion-content>
+        </ion-modal-view>

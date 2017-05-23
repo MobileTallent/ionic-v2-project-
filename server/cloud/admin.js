@@ -10,6 +10,14 @@ function checkAdmin(request, response) {
     Parse.Cloud.useMasterKey()
     return true
 }
+function checkServiceProvider(request, response) {
+    if (!request.user.get('serviceProvider')) {
+        response.error('You do not have provider permission')
+        return false
+    }
+    Parse.Cloud.useMasterKey()
+    return true
+}
 
 Parse.Cloud.define('GetReportedUsers', function(request, response) {
     if (!checkAdmin(request, response))
@@ -303,7 +311,7 @@ Parse.Cloud.define('SearchUsersByName', function(request, response) {
 
 
 Parse.Cloud.define('LoadUser', function(request, response) {
-    if (!checkAdmin(request, response))
+    if (!checkAdmin(request, response) && !checkServiceProvider(request, response))
         return
 
     var userId = request.params.userId

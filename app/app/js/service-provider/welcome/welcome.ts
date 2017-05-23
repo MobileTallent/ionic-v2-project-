@@ -42,7 +42,14 @@ module app {
 
 			}).then(function(enquiries){
 				console.log(enquiries)
+				myThis.status = "Waiting for FAQ"
 				myThis.SpService.enquiries = enquiries
+				myThis.SpService.getUnreadEnquiries()
+				return myThis.SpService.getProviderQuestions()
+				
+			}).then(function(provider_questions){
+				console.log(provider_questions)
+				myThis.SpService.provider_questions = provider_questions
 				myThis.afterLoading()
 			})
 			

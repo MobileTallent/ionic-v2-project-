@@ -3,6 +3,8 @@ var InfoCard = Parse.Object.extend("InfoCard")
 var PrService = Parse.Object.extend("PrService")
 var HotBed = Parse.Object.extend("HotBed")
 var Enquire = Parse.Object.extend("Enquire")
+var ProviderQuestion = Parse.Object.extend("ProviderQuestion")
+var Profile = Parse.Object.extend("Profile")
 
 /* Get Service Providers */
 Parse.Cloud.define('GetServiceProviders', function(request, response) {
@@ -457,3 +459,116 @@ Parse.Cloud.define('DelEnquire', function(request, response) {
             response.error(error)
         }
 })
+
+/* Set Enquire as readed */
+Parse.Cloud.define('MarkEnquireAsRead', function(request, response) {
+    var eid = request.params.id
+    if (!eid)
+        return response.error('Enquire id parameter must be provided')
+    
+    var selectedEnquireQuery = new Parse.Query(Enquire)
+    .get(eid)
+
+    Parse.Promise.when(selectedEnquireQuery).then(function(selectedEnquire) {
+        selectedEnquire.set('has_read', true)
+        selectedEnquire.save()
+        response.success(null)
+    }, function(error) {
+        response.error(error)
+    })
+
+})
+
+/* Get Provider Question */
+Parse.Cloud.define('GetProviderQuestions', function(request, response) {
+        new Parse.Query(ProviderQuestion)
+        .limit(1000)
+        .ascending('position')
+        .find()
+        .then(function(result) {
+            console.log("Successs " + JSON.stringify(result))
+            response.success(result)
+        }, function(error) {
+            console.log("Erroorrr: " + JSON.stringify(error))
+            response.error(error)
+        })
+})
+
+/* Add/Edit Provider Question */
+Parse.Cloud.define('AddProviderQuestions', function(request, response) {
+
+    console.log('AddProviderQuestions')
+    var providerQuestionData = request.params.question
+
+    if (!providerQuestionData)
+        return response.error('providerQuestionData parameter must be provided')
+
+    var pq = new ProviderQuestion()
+    if (providerQuestionData.id) {
+        pq.id = providerQuestionData.id
+        delete providerQuestionData.id
+    }
+
+    pq.save(providerQuestionData).then(function(result) {
+        console.log("Success saving provider question")
+        response.success("Success saving provider question")
+    }, function(error) {
+        console.log("Error saving provider question")
+        response.error(error)
+    })
+})
+
+/* Del Provider Question */
+Parse.Cloud.define('DelProviderQuestions', function(request, response) {
+
+    console.log('DelProviderQuestions')
+    var id = request.params.id
+    if (!id) return response.error('id parameter is required')
+
+    var providerQuery = new Parse.Query(ProviderQuestion);
+    providerQuery.get(id, masterKey).then(function(providerQuestion) {
+            return providerQuestion.destroy()
+        }).then(function() {
+            response.success("Successfully deleted question!")
+        }),
+        function(error) {
+            console.log(JSON.stringify(error))
+            response.error(error)
+        }
+})
+
+
+/* Get Users */
+Parse.Cloud.define("GetUsers", function(request, response) {
+    // We need to use the master key to load the other users profiles
+    var audience = request.params.audience
+
+   
+    if(audience=='all') {
+        new Parse.Query(Profile)
+        .limit(1000)
+        .equalTo("enabled", true)
+        .find({useMasterKey:true})
+        .then(function(result) {
+            console.log("Successs " + JSON.stringify(result))
+            response.success(result)
+        }, function(error) {
+            console.log("Erroorrr: " + JSON.stringify(error))
+            response.error(error)
+        })
+    } else {
+         new Parse.Query(Profile)
+        .limit(10000)
+        .equalTo(audience, true)
+        .find({useMasterKey:true})
+        .then(function(result) {
+            console.log("Successs " + JSON.stringify(result))
+            response.success(result)
+        }, function(error) {
+            console.log("Erroorrr: " + JSON.stringify(error))
+            response.error(error)
+        })
+    }
+
+
+});

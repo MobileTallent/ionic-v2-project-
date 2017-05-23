@@ -156,11 +156,13 @@ var FindUsReport = Parse.Object.extend({
  * @property {string} uid - User promary account
  * @property {string} image_cover - Provider main picture
  * @property {string} email - user email
- * @property {string} phone_number - user phone_number
+ * @property {string} phone_number - provider phone_number
+ * @property {string} skype_id - provider skype_id
  * @property {number} balance - service provider balance
+ * @property {number} spiel - service spiel
 */
 
-var ServiceProviderFields = ['name', 'country', 'uid', 'image_cover', 'email', 'balance', 'phone_number']
+var ServiceProviderFields = ['name', 'country', 'uid', 'image_cover', 'email', 'balance', 'phone_number', 'skype_id', 'spiel']
 var ServiceProvider = Parse.Object.extend({
     className: "ServiceProvider",
     attrs: ServiceProviderFields
@@ -227,16 +229,31 @@ var HotBed = Parse.Object.extend({
  * @property {string} pid - service provider id
  * @property {string} uid - User id
  * @property {string} sid - Service id
+ * @property {string} service_name - Service name
  * @property {string} name - User name
  * @property {string} message - User description on book service
  * @property {string} image_cover - User Image cover
+ * @property {boolean} has_read - Has read by provider or not
 */
 
-var EnquireFields = ['pid', 'uid', 'sid', 'name', 'message', 'image_cover']
+var EnquireFields = ['pid', 'uid', 'sid', 'service_name', 'name', 'message', 'image_cover', 'has_read', 'u_email', 'u_phone', 'u_skype']
 var Enquire = Parse.Object.extend({
     className: "Enquire",
     attrs: EnquireFields
 })
+
+/**
+ * @typedef {Object} ProviderQuestion
+ * @property {string} answer - the answer
+ * @property {string} question - the question
+ * @property {number} position - the position of the question
+ */
+var providerQuestionFields = ['answer', 'question', 'position']
+var ProviderQuestion = Parse.Object.extend({
+    className: "ProviderQuestion",
+    attrs: providerQuestionFields
+})
+
 
 enhance(Parse.User.prototype, userFields)
 enhance(Profile.prototype, profileFields)
@@ -253,6 +270,7 @@ enhance(InfoCard.prototype, InfoCardFields)
 enhance(PrService.prototype, PrServiceFields)
 enhance(HotBed.prototype, HotBedFields)
 enhance(Enquire.prototype, EnquireFields)
+enhance(ProviderQuestion.prototype, providerQuestionFields)
 
 function enhance(prototype, fields) {
     for (var i = 0; i < fields.length; i++) {
@@ -444,7 +462,12 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         delHotBed: delHotBed,
         getEnquiries: getEnquiries,
         addEnquire: addEnquire,
-        delEnquire: delEnquire
+        delEnquire: delEnquire,
+        markEnquireAsRead: markEnquireAsRead,
+        getProviderQuestions: getProviderQuestions,
+        addProviderQuestions: addProviderQuestions,
+        delProviderQuestions: delProviderQuestions,
+        getUsers: getUsers
     }
 
     return service
@@ -1218,6 +1241,26 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
     function delEnquire(id) {
         return Parse.Cloud.run('DelEnquire', { id: id }).catch(_unwrapError)
+    }
+
+    function markEnquireAsRead(id) {
+        return Parse.Cloud.run('MarkEnquireAsRead', { id: id }).catch(_unwrapError)
+    }
+
+    function getProviderQuestions() {
+        return Parse.Cloud.run('GetProviderQuestions').catch(_unwrapError)
+    }
+
+    function addProviderQuestions(question) {
+        return Parse.Cloud.run('AddProviderQuestions', { question: question }).catch(_unwrapError)
+    }
+
+    function delProviderQuestions(id) {
+        return Parse.Cloud.run('DelProviderQuestions', { id: id }).catch(_unwrapError)
+    }
+
+    function getUsers(audience) {
+        return Parse.Cloud.run('GetUsers', {audience:audience}).catch(_unwrapError)
     }
 
     // Private functions
