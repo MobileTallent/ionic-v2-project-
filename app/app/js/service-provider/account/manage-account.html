@@ -1,11 +1,14 @@
-<ion-view title="Manage account" id="page3" class="background-calm">
+<ion-view title="Manage account" class="background-calm" ng-controller="SpManageAccount as vm">
   <ion-content padding="true" class="has-header">
-    <ion-list id="manageAccount-list7">
+    <ion-list>
       <ion-item class="item-avatar item-icon-right" ui-sref="sp.edit-account">
-        <img src="img/example-avatar.jpeg">
-        <h2>Romanovsky corp.</h2>
-        <p>Corporate account
-          <br> Thailand</p>
+        <img ng-src="{{vm.service_provider.image_cover}}">
+        <h2>{{vm.service_provider.name}}</h2>
+        <p>
+          Corporate account
+          <br> 
+          {{vm.service_provider.country}}
+        </p>
         <i class="icon ion-edit"></i>
       </ion-item>
       <ion-item class="item-icon-right" ui-sref="sp.account-contacts">Organisation's Primary Contacts
@@ -15,16 +18,13 @@
     <ion-list>
       <ion-item class="item-divider"></ion-item>
       <ion-item class="item-icon-right" ui-sref="sp.account-balance">Balance
-        <span class="item-note">$156</span>
+        <span class="item-note">${{vm.service_provider.balance}}</span>
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
       <ion-item class="item-icon-right" ui-sref="sp.account-branches">Branches
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
       <ion-item class="item-icon-right" ui-sref="sp.account-video">Main Organisation Video
-        <i class="icon ion-chevron-right icon-accessory"></i>
-      </ion-item>
-      <ion-item class="item-icon-right" ui-sref="sp.account-spiel">Organisation Spiel
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
       <ion-item class="item-icon-right" ui-sref="sp.account-users">Manage users

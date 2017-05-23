@@ -73,14 +73,6 @@ angular.module('sp.routes', [])
       }
     }
   })
-  .state('sp.account-spiel', {
-    url: '/account-spiel',
-    views: {
-      'menuContent': {
-        templateUrl: 'service-provider/account/spiel.html'
-      }
-    }
-  })
   .state('sp.account-users', {
     url: '/account-users',
     views: {
@@ -121,23 +113,16 @@ angular.module('sp.routes', [])
     url: '/my-services',
     views: {
       'menuContent': {
-        templateUrl: 'service-provider/services/my-services.html'
+        templateUrl: 'service-provider/services/services.html'
       }
     }
   })
   .state('sp.view-service', {
     url: '/view-service',
+    params: {service:null},
     views: {
       'menuContent': {
-        templateUrl: 'service-provider/services/view-service.html'
-      }
-    }
-  })
-  .state('sp.service-spiel', {
-    url: '/service-spiel',
-    views: {
-      'menuContent': {
-        templateUrl: 'service-provider/services/service-spiel.html'
+        templateUrl: 'service-provider/services/service.html'
       }
     }
   })
@@ -153,23 +138,16 @@ angular.module('sp.routes', [])
       }
     }
   })
-  .state('sp.add-card', {
-    url: '/add-card',
+  .state('sp.view-card', {
+    url: '/view-card',
+    params: {info_card:null},
     views: {
       'menuContent': {
-        templateUrl: 'service-provider/info-cards/add-card.html'
+        templateUrl: 'service-provider/info-cards/info-card.html'
       }
     }
   })
-  .state('sp.info-cards-welcome', {
-    url: '/info-cards-welcome',
-    views: {
-      'menuContent': {
-        templateUrl: 'service-provider/info-cards/info-cards-welcome.html'
-      }
-    }
-  })
-
+ 
 
   // Enquires
   .state('sp.enquiries', {
@@ -182,6 +160,7 @@ angular.module('sp.routes', [])
   })
   .state('sp.view-enquire', {
     url: '/view-enquire',
+    params: {'enquire':null},
     views: {
       'menuContent': {
         templateUrl: 'service-provider/enquiries/view-enquire.html'
@@ -208,22 +187,16 @@ angular.module('sp.routes', [])
       }
     }
   })
-  .state('sp.edit-hotbed', {
-    url: '/edit-hotbed',
+  .state('sp.view-hotbed', {
+    url: '/view-hotbed',
+    params: {'hot_bed':null},
     views: {
       'menuContent': {
-        templateUrl: 'service-provider/hot-beds/edit-hotbed.html'
+        templateUrl: 'service-provider/hot-beds/hot-bed.html'
       }
     }
   })
-  .state('sp.hotbedspopup', {
-    url: '/hot-beds-first',
-    views: {
-      'menuContent': {
-        templateUrl: 'service-provider/hot-beds/hotbeds-popup.html'
-      }
-    }
-  })
+
 
   //Settings
   .state('sp.help-faq', {

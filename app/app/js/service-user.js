@@ -191,7 +191,10 @@ function onNotificationOpen(pnObj) {
                 delHotBed: delHotBed,
                 getEnquiries: getEnquiries,
                 addEnquire: addEnquire,
-                delEnquire: delEnquire
+                delEnquire: delEnquire,
+                getProviderQuestions: getProviderQuestions,
+                addProviderQuestions: addProviderQuestions,
+                delProviderQuestions: delProviderQuestions
 
             }
 
@@ -1625,6 +1628,20 @@ function onNotificationOpen(pnObj) {
             function delEnquire(id) {
                 return server.delEnquire(id)
             }
+
+            function getProviderQuestions() {
+                return server.getProviderQuestions()
+            }
+
+            function addProviderQuestions(question) {
+                return server.addProviderQuestions(question)
+            }
+
+            function delProviderQuestions(id) {
+                return server.delProviderQuestions(id)
+            }
+
+            
 
 
 

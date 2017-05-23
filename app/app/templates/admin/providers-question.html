@@ -1,0 +1,83 @@
+<ion-view view-title="Service Provider Questions" ng-controller="ProviderQuestion as vm">
+    <ion-nav-buttons side="right">
+        <i class="button button-icon icon ion-ios-plus-outline" ng-click="vm.clinicsModal.show()"></i>
+    </ion-nav-buttons>
+    <ion-content>
+
+        <ion-list show-delete="false" can-swipe="true">
+            <ion-item ng-repeat="item in vm.clinicQuestions">
+                <h2>{{item.position}} - {{item.question}}</h2>
+                <p>{{item.answer}}</p>
+                <ion-option-button class="button-balanced icon ion-edit" ng-click="vm.editClinicsQuestion(item)"></ion-option-button>
+                <ion-option-button class="button-assertive icon ion-trash-a" ng-click="vm.deleteClinicsQuestion(item.id)"></ion-option-button>
+            </ion-item>
+        </ion-list>
+
+    </ion-content>
+    <script id="templates/modal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar class="bar bar-header bar-positive">
+                <h1 class="title">{{vm.modalText}} Question</h1>
+                <button class="button button-clear button-primary" ng-click="vm.close()">Cancel</button>
+            </ion-header-bar>
+            <ion-content class="padding">
+                <style>
+                    .error-container {
+                        margin: 5px 0;
+                    }
+                    
+                    .error-container:last-child {
+                        margin: 5px 0 0;
+                    }
+                    
+                    .error {
+                        padding: 10px 16px;
+                        font-family: "Arial Black", Gadget, sans-serif;
+                        font-size: 11px;
+                        text-transform: uppercase;
+                        color: #555;
+                        vertical-align: middle;
+                    }
+                    
+                    .error i {
+                        font-size: 24px;
+                        color: #B83E2C;
+                        vertical-align: middle;
+                    }
+                    
+                    .last-error-container>.error {
+                        padding: 10px 16px 0;
+                    }
+                    
+                    .has-errors {
+                        border-bottom: 3px solid #B83E2C;
+                    }
+                    
+                    .no-errors {
+                        border-bottom: 3px solid green;
+                    }
+                </style>
+                <form name="clinicsForm" novalidate ng-submit="vm.addClinicsQuestion(clinicsForm)">
+                    <div class="list">
+                        <label class="item item-input" ng-class="{ 'has-errors' : clinicsForm.question.$invalid, 'no-errors' : clinicsForm.question.$valid}">
+                            <input name="question" ng-model="vm.clinicQuestion.question" ng-required="true" type="text" placeholder="Question">
+                        </label>
+
+                        <label class="item item-input" ng-class="{ 'has-errors' : clinicsForm.answer.$invalid, 'no-errors' : clinicsForm.answer.$valid}">
+                            <textarea name="answer" ng-model="vm.clinicQuestion.answer" ng-required="true" type="text" placeholder="Answer" rows="10" class="wide"></textarea>
+                        </label>
+
+                        <label class="item item-input" ng-class="{ 'has-errors' : clinicsForm.position.$invalid, 'no-errors' : clinicsForm.position.$valid}">
+                            <input name="position" ng-model="vm.clinicQuestion.position" ng-required="true" type="number" placeholder="Position">
+                        </label>
+
+                        <div class="error-container last-error-container" ng-show="(clinicsForm.question.$error || clinicsForm.answer.$error || clinicsForm.position.$error) && vm.submitted" ng-messages="clinicsForm.answer.$error">
+                            <i class="ion-information-circled"></i> Fill-in all fields!
+                        </div>
+                        <button class="button button-full button-positive">Save</button>
+                    </div>
+                </form>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+</ion-view>

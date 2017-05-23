@@ -75,6 +75,22 @@ angular.module('ionicApp').config(function($stateProvider) {
                 }
             }
         })
+        .state('menu.adminProvidersFaq', {
+            url: "/adminProvidersFaq/",
+            views: {
+                'menuContent': {
+                    templateUrl: "admin/providers-question.html"
+                }
+            }
+        })
+        .state('menu.adminFaq', {
+            url: "/adminFaq/",
+            views: {
+                'menuContent': {
+                    templateUrl: "admin/admin-faq.html"
+                }
+            }
+        })
         .state('menu.adminAbout', {
             url: "/adminAbout/",
             views: {
