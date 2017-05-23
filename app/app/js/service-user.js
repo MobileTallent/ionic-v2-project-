@@ -273,7 +273,7 @@ function onNotificationOpen(pnObj) {
 
                 $log.log('logged in with ' + JSON.stringify(user))
 
-                if (user.admin) 
+                if (user.admin)
                     $rootScope.isAdmin = true
                 if (user.serviceProvider) {
                     $rootScope.serviceProvider = true
@@ -628,7 +628,7 @@ function onNotificationOpen(pnObj) {
                     return
                 }
 
-                if (!service.profile.about) {
+                if (!service.profile.about || service.profile.about < 10 || !service.profile.hasSelfId) {
                     $state.go('menu.profile-edit')
                     return
                 }
@@ -1573,7 +1573,7 @@ function onNotificationOpen(pnObj) {
             function delServiceProvider(id) {
                 return server.delServiceProvider(id)
             }
-            
+
             function setServiceProvider(is_set, user) {
                 return server.setServiceProvider(is_set, user)
             }
