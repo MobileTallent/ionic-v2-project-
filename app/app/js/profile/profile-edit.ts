@@ -207,7 +207,7 @@ module app {
 								this.AppUtil.toastSimple('Access to photo gallery denied')
 								this.$log.error('$cordovaCamera.getPicture error ' + JSON.stringify(error))
 							} else {
-								this.AppUtil.toastSimpleTranslate('PHOTO_ERROR')
+								//this.AppUtil.toastSimpleTranslate('PHOTO_ERROR')
 								this.$log.error('$cordovaCamera.getPicture error ' + JSON.stringify(error))
 							}
 
