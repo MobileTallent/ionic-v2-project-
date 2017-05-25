@@ -16,8 +16,8 @@ var _ = require('underscore')
 
 var config = require('../config.js')
 require('./linkedin.js')
-//require('./migrations.js')
-//require('./jobs.js')
+    //require('./migrations.js')
+    //require('./jobs.js')
 require('./admin.js')
 require('./service-provider.js')
 require('./video.js')
@@ -766,9 +766,10 @@ Parse.Cloud.define("ProcessMatch", function(request, response) {
         }
 
         if (forceConnect) {
-            if (liked && match.get('state') != 'M')
+            if (liked && match.get('state') != 'M') {
                 match.set('state', 'M')
-            else if (!liked)
+                match.set('matchedDate', new Date())
+            } else if (!liked)
                 match.set('state', 'R')
         }
 

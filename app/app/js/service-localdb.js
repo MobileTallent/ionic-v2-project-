@@ -206,8 +206,8 @@
 
                 db.transaction(function(tx) {
                     // (id varchar primary key, match text, other_user_id varchar, other_profile_id varchar, updated_at integer, read integer)'
-                    tx.executeSql('INSERT OR REPLACE INTO match (id, match, other_user_id, other_profile_id, updated_at, read) ' +
-                        'VALUES (?,?,?,?,?,?)', [match.id, JSON.stringify(matchJson), profile.uid, profile.id, match.updatedAt.getTime(), 0])
+                    tx.executeSql('INSERT OR REPLACE INTO match (id, match, other_user_id, other_profile_id, updated_at, last_message, read) ' +
+                        'VALUES (?,?,?,?,?,?,?)', [match.id, JSON.stringify(matchJson), profile.uid, profile.id, match.updatedAt.getTime(), match.lastMessage, 0])
 
                     // (id varchar primary key, profile text, user_id varchar)
                     tx.executeSql('INSERT OR REPLACE INTO profile (id, profile, user_id) ' +
