@@ -50,7 +50,6 @@ module app {
 						var analyticsLink = {
 							channel: 'facebook',
 							feature: 'sharing',
-							campaign: 'JustaBaby',
 							tags: ['JustaBaby', 'justababy']
 						}
 
@@ -65,13 +64,14 @@ module app {
 							this.branchUniversalObj.generateShortUrl(analyticsLink, properties1).then(res => {
 								this.linkToBeShared = JSON.stringify(res.url)
 							}).catch(function (err) {
-								this.$log.error('Error: ' + JSON.stringify(err))
+								alert('Error in Branch URL: ' + JSON.stringify(err))
 							})
 						}
 					}).catch(function (err) {
-						this.$log.error('Error: ' + JSON.stringify(err))
+						alert('Error in creating Uni Obj: ' + JSON.stringify(err))
 					})
-				}
+				} else
+					alert("No Branch on IOS - undefined")
 			})
 		}
 
