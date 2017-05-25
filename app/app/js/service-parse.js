@@ -215,7 +215,7 @@ var PrService = Parse.Object.extend({
  * @property {string} title - the title of HotBed
  * @property {boolean} active - active/inactive
  * @property {string} comments - hotbeds description
- * @property {object} location - location object with {"name":string, "lat":string, "lon":string}
+ * @property {object} location - location object with {"name":string, "lat":string, "lon":string, "manual":boolean}
 */
 
 var HotBedFields = ['pid', 'title', 'active', 'comments', 'location']

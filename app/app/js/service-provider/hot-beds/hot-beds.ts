@@ -1,3 +1,5 @@
+/// <reference path="../../../../../typings/globals/google.maps/index.d.ts" />
+
 module app {
 
     export class SpHotBeds {
@@ -7,8 +9,9 @@ module app {
         private addHotBedModal
         private modalText = "New "
         private submitted = false;
-        private info_card_my_location = true;
         public userProfile
+        public map
+        public info_card_my_location = 'true'
 
         constructor(private $log, private $scope, private $ionicModal, private $ionicPopup, public AppService, public AppUtil, public SpService) {
             this.hot_beds = this.SpService.hot_beds
@@ -21,6 +24,66 @@ module app {
                 scope: $scope,
                 animation: 'slide-in-up'
             }).then(modal => this.addHotBedModal = modal)
+
+        }
+
+        public changeSetLoc() {
+
+                if(!this.hot_bed["location"]) {
+                    this.hot_bed['location'] = {
+                        "name":this.userProfile.address, 
+                        "lat":this.userProfile.location.latitude, 
+                        "lon":this.userProfile.location.longitude,
+                        "manual":false
+                    }
+                }
+
+                if(this.hot_bed["location"]["manual"]) {
+                 //setting map functions
+                    let myLatlng = new google.maps.LatLng(this.hot_bed['location'].lat, this.hot_bed['location'].lon)
+                    let mapOptions = {
+                        center: myLatlng,
+                        zoom: 11,
+                        zoomControlOptions: {
+                            position: google.maps.ControlPosition.RIGHT_TOP
+                        },
+                        mapTypeId: google.maps.MapTypeId.ROADMAP,
+                        mapTypeControl: false,
+                        streetViewControl: false,
+                        disableDoubleClickZoom: true
+                    }
+                    this.map = new google.maps.Map(document.getElementById("map4"), mapOptions)
+                    this.map.setCenter(myLatlng)
+                    let marker = new google.maps.Marker({
+                        position: myLatlng,
+                        draggable: true,
+                        map: this.map,
+                        title: this.hot_bed.title
+                    })
+
+                    let This = this
+                    google.maps.event.addListener(marker, "mouseup", function(event) {
+
+                        let ltt = this.position.lat();
+                        let lgg = this.position.lng();
+
+                        var geocodingAPI = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+ltt+","+lgg+"&sensor=false&language=en";
+
+                        fetch(geocodingAPI)
+                        .then(res => res.json())
+                        .then((out) => {
+                            This.hot_bed['location'] = {
+                                "name":out.results[0].formatted_address, 
+                                "lat":out.results[0].geometry.location.lat, 
+                                "lon":out.results[0].geometry.location.lng,
+                                "manual":true
+                            }
+                        })
+                        .catch(err => console.error(err));
+                        
+                    });
+
+                }
         }
 
         public doRefresh(){
@@ -37,10 +100,7 @@ module app {
             this.submitted = true
             if (form.$valid) {
                 this.hot_bed['pid'] = this.SpService.provider_id
-                
-                //get my location
-                this.hot_bed['location'] = {"name":this.userProfile.address, "lat":this.userProfile.location.latitude, "lon":this.userProfile.location.longitude}
-                
+
                 console.log('hot_bed before send', this.hot_bed)
                 this.AppUtil.blockingCall(
                     this.SpService.addHotBed(this.hot_bed),
@@ -83,12 +143,13 @@ module app {
 
         public close() {
             this.modalText = "New "
-            //this.hot_bed = {type:'image',options:{frequency:50,age_from:18,age_to:55}}
+            this.hot_bed = {}
+            this.map = null
             this.addHotBedModal.hide()
         }
 
         public resetForm(form) {
-            //this.hot_bed = {type:'image',options:{frequency:50,age_from:18,age_to:55}}
+            this.hot_bed = {}
             this.submitted = false
             this.addHotBedModal.hide()
             form.$setPristine()

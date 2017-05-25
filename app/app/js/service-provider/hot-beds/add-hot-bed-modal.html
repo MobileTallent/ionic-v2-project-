@@ -39,15 +39,42 @@
                             </textarea>
                         </label>
                         <!--Location-->
-                        <div class="item item-devider">Hotbed Location</div>
-                        <ion-radio ng-model="vm.info_card_my_location" name="my_location" ng-checked="true" ng-value="true">Use my location</ion-radio>
-                        
+                    </div>
+                    <ion-list>
+                        <ion-radio ng-model="vm.hot_bed.location.manual" 
+                                   ng-change="vm.changeSetLoc()"   
+                                   name="my_location"
+                                   ng-value="false">
+                                Use my location
+                        </ion-radio>
+                        <label class="item" 
+                               ng-show="!vm.hot_bed.location.manual">
+                            <p><small style="white-space: normal;">{{vm.hot_bed.location.name}}</small></p>
+                            <p>Latitude : <small>{{vm.hot_bed.location.lat}}</small></p>
+                            <p>Longitude : <small>{{vm.hot_bed.location.lon}}</small></p>
+                        </label>
+                        <ion-radio ng-model="vm.hot_bed.location.manual" 
+                                   ng-change="vm.changeSetLoc()" 
+                                   name="my_location" 
+                                   ng-value="true">
+                                Set manually
+                        </ion-radio>
+                        <label class="item" style="padding:0px;" ng-show="vm.hot_bed.location.manual">
+                            <div id="map4" data-tap-disabled="true" style="height:300px;"></div>
+                        </label>
+                        <label class="item" ng-show="vm.hot_bed.location.manual">
+                            <p><small style="white-space: normal;">{{vm.hot_bed.location.name}}</small></p>
+                            <p>Latitude : <small>{{vm.hot_bed.location.lat}}</small></p>
+                            <p>Longitude : <small>{{vm.hot_bed.location.lon}}</small></p>
+                        </label>
+
+
                         <label class="item"
                              ng-show="(hotbedsForm.title.$error || hotbedsForm.comments) && vm.submitted">
                             <i class="ion-information-circled"></i> Fill-in all fields!
                         </label>
                         <button class="button button-full button-positive">Save</button>
-                    </div>
+                    </ion-list>
                 </form>
             </ion-content>
         </ion-modal-view>
