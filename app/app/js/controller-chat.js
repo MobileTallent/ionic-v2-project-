@@ -167,6 +167,7 @@ angular.module('controllers')
 
         // this is just used by the report() function at the moment
         $scope.match = AppService.getMatch($stateParams.matchId)
+        $scope.matchDate = $scope.match.matchedDate ? $scope.match.matchedDate : $scope.match.createdAt
     })
 
 

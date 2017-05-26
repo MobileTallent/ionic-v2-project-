@@ -11,7 +11,7 @@
     <ion-content has-bouncing="true" class="has-header has-footer" delegate-handle="userMessageScroll">
 
         <div class="item chat-header assertive">
-            {{::'MATCHED_ON' | translate}} {{::match.updatedAt | dateFormat:'d mmm yyyy'}}
+            {{::'MATCHED_ON' | translate}} {{::matchDate | dateFormat:'d mmm yyyy'}}
         </div>
 
         <div ng-show="doneLoading == true" ng-repeat="message in messages track by message.id" class="message-wrapper" on-hold="onMessageHold($event, $index, message)">
