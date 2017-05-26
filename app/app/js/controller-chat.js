@@ -114,6 +114,7 @@ angular.module('controllers')
         // TODO if we've come by $stateParams.profileId then $stateParams.matchId will be null
         $log.log('$stateParams.matchId ' + $stateParams.matchId)
         $scope.match = AppService.getMatch($stateParams.matchId)
+        $scope.matchDate = $scope.match.matchedDate ? $scope.match.matchedDate : $scope.match.createdAt
         AppService.getProfileByMatchId($stateParams.matchId).then((result) => {
             $log.log('match profile ' + JSON.stringify(result))
             $scope.matchProfile = result
@@ -167,7 +168,6 @@ angular.module('controllers')
 
         // this is just used by the report() function at the moment
         $scope.match = AppService.getMatch($stateParams.matchId)
-        $scope.matchDate = $scope.match.matchedDate ? $scope.match.matchedDate : $scope.match.createdAt
     })
 
 
