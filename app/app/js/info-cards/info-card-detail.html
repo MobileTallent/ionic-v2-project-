@@ -1,0 +1,37 @@
+<ion-view view-title="{{vm.card.title}}" ng-controller="InfoCardDetail as vm">
+    <ion-nav-buttons side="right">
+        <i class="button button-icon icon ion-checkmark" ng-click="vm.got_infocard();"></i>
+    </ion-nav-buttons>
+
+    <ion-content style="background-color:#e7f5f0;">
+        
+        <img ng-if="vm.card.type=='image'" ng-src="{{vm.card.image}}" style="width:100%"/>
+        <div ng-if="vm.card.type=='video'"  class="video-container">
+            <iframe ng-src="{{vm.card.video}}" frameborder="0" width="560" height="315"></iframe>
+        </div>
+
+        <div class="about-you-header text-center padding-15">
+            <b>{{vm.card.question}}</b>
+        </div>
+        <div class="padding-15" style="padding-top:0px;">
+            <h4 style="color:#666666" class="center">{{vm.card.answer}}</h4>
+        </div>
+
+        <div class="list" style="margin-top:15px;">
+            <div class="item item-divider" style="font-weight: 400;font-size: 13px;text-align: center;">
+                Services you might be interesting
+            </div>
+            <a class="item item-icon-right" 
+               ng-repeat="service in vm.services track by service.id" 
+               ui-sref="^.service-detail({service : service})"
+               ng-if="service.active">
+                <span class="badge badge-assertive" style="right: 60px;">$ {{service.price}}</span>
+                {{service.title}}
+                <span class="item-note">
+                    <i class="icon ion-chevron-right"></i>
+                </span>
+            </a>
+        </div>
+        
+    </ion-content>
+</ion-view>

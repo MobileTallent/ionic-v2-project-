@@ -1,0 +1,24 @@
+<ion-view view-title="{{vm.service.title}}" ng-controller="ServiceDetail as vm">
+
+    <ion-content style="background-color:#e7f5f0;">
+        
+        <img ng-if="vm.service.image" ng-src="{{vm.service.image}}" style="width:100%"/>
+        <div ng-if="vm.service.video"  class="video-container">
+            <iframe ng-src="{{vm.service.video}}" frameborder="0" width="560" height="315"></iframe>
+        </div>
+
+
+     <div class="card padding-15">
+            <h4 style="color:#666666;display:flex;justify-content:space-between;">
+                Service #1
+                <span class="badge badge-assertive">$ {{vm.service.price}}</span>
+            </h4>
+            <div class="padding-15">
+                <h5 style="color:#666666" class="center">{{vm.service.spiel}}</h5>
+            </div>
+            <input type="text" placeholder="E-mail" style="padding:15px;font-size:18px;" class="wide input-grey">
+            <textarea placeholder="Description..." rows="4" style="margin-top:10px;" class="wide input-grey text-size-18 padding-15 margin-top-10"></textarea>
+            <button class="button button-block button-assertive" ng-click="vm.get_service();">Get service</button>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,66 @@
+<ion-modal-view>
+
+            <ion-header-bar class="bar bar-header bar-positive">
+                <h1 class="title" style="color:#444;">Filters for cards</h1>
+                <button class="button button-clear button-primary" ng-click="filtersClose()">Cancel</button>
+            </ion-header-bar>
+            <ion-content class="padding">
+
+                <div class="item item-divider">
+                    Deck cards types
+                </div>
+                <ion-checkbox class="checkbox-positive" ng-model="filters.profile_cards">Profile cards</ion-checkbox>
+                <ion-checkbox class="checkbox-royal" ng-model="filters.info_cards">Info cards</ion-checkbox>
+
+                <div class="item item-divider">
+                    Deck size: {{filters.deck_size}} cards
+                </div>
+                <label class="item custom-slider" style="height: 60px">
+                            <slider floor="50" 
+                                    ceiling="200" 
+                                    ng-model-low="50" 
+                                    ng-model-high="filters.deck_size">
+                            </slider>
+                </label>
+
+                <div class="item item-divider" ng-show="filters.profile_cards && filters.info_cards">
+                    Cards ratio: {{filters.cards_ratio}}/1
+                </div>
+                <label ng-show="filters.profile_cards && filters.info_cards" 
+                       class="item custom-slider" 
+                       style="height: 60px">
+                            <slider floor="1" 
+                                    ceiling="{{filters.deck_size-1}}" 
+                                    ng-model-low="1" 
+                                    ng-model-high="filters.cards_ratio">
+                            </slider>
+                </label>
+
+                <div class="item item-divider">
+                    Deck summary schema
+                </div>
+                <style>
+                    .cell-schema {
+                        width:25px;
+                        height:25px;
+                        background:#3baa9a;
+                    }
+                    .cell-schema.info {
+                        background:#886aea;
+                    }
+                </style>
+                <div class="item" style="display: flex;flex-wrap: wrap;">
+                       <div class="cell-schema"
+                            ng-class="{'info':(ind=='info' || !filters.profile_cards)}"
+                            ng-hide="$index > (filters.deck_size-1)"
+                            ng-repeat="ind in makeSumarryArray(filters.deck_size) track by $index">
+                       </div>
+                </div>
+
+                <button ng-click="filtersClose()" 
+                        ng-disabled="!filters.profile_cards && !filters.info_cards" 
+                        class="button button-full button-positive">
+                   Apply
+                </button>
+            </ion-content>
+        </ion-modal-view>

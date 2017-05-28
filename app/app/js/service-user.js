@@ -117,6 +117,7 @@ function onNotificationOpen(pnObj) {
                 setPhoto: setPhoto,
                 getProfileSearchResults: getProfileSearchResults,
                 updateProfileSearchResults: updateProfileSearchResults,
+                TestEnvCards:TestEnvCards,
                 getProfilesWhoLikeMe: getProfilesWhoLikeMe,
                 getProfilesWhoWantsToHaveARelationshipWithMe: getProfilesWhoWantsToHaveARelationshipWithMe,
                 clearProfileSearchResults: clearProfileSearchResults,
@@ -1022,6 +1023,18 @@ function onNotificationOpen(pnObj) {
             function updateProfileSearchResults() {
                 //$analytics.eventTrack('searchProfiles')
                 return server.searchProfiles(service.profile).then(function(profiles) {
+                    service.profileSearchResults = profiles
+                    $rootScope.$broadcast('newProfileSearchResults')
+                    return service.profileSearchResults
+                })
+            }
+
+            /*
+            //Test envieronment for showing card logic functions 
+            */
+            function TestEnvCards(filters) {
+                //$analytics.eventTrack('searchProfiles')
+                return server.testEnvSearchProfiles(service.profile, filters).then(function(profiles) {
                     service.profileSearchResults = profiles
                     $rootScope.$broadcast('newProfileSearchResults')
                     return service.profileSearchResults

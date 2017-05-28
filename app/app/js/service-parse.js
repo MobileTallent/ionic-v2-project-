@@ -395,6 +395,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         saveProfileForSomeReason: saveProfileForSomeReason,
         saveFile: saveFile,
         searchProfiles: searchProfiles,
+        testEnvSearchProfiles: testEnvSearchProfiles,
         getProfilesWhoLikeMe: getProfilesWhoLikeMe,
         getProfilesWhoWantsToHaveARelationshipWithMe: getProfilesWhoWantsToHaveARelationshipWithMe,
         processProfile: processProfile,
@@ -839,6 +840,17 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         for (var i = 0; i < profileFields.length; i++)
             searchParams[profileFields[i]] = searchParameters[profileFields[i]]
         return Parse.Cloud.run('GetMatches', searchParams).catch(_unwrapError)
+    }
+
+    function testEnvSearchProfiles(searchParameters, filters) {
+        if (!searchParameters)
+            $log.error('search parameters were not provided')
+            // Can't use a Parse object as a param, so copy the fields. Could copy only the required search fields.
+        var searchParams = {};
+        for (var i = 0; i < profileFields.length; i++)
+            searchParams[profileFields[i]] = searchParameters[profileFields[i]]
+        searchParams['filters'] = filters;
+        return Parse.Cloud.run('TestEnvGetMatches', searchParams).catch(_unwrapError)
     }
 
     /**
