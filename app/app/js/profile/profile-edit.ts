@@ -242,7 +242,7 @@ module app {
 			let profileUpdate = <IProfile>{}
 			profileUpdate.about = this.about
 			profileUpdate.personCategory = this.personCategory ? this.personCategory : '0'
-			
+
 			// Please comment on this logic. 
 			if (this.personCategory === '3') {
 				profileUpdate.personType = '0'
@@ -259,7 +259,7 @@ module app {
 				profileUpdate.personEmbryo = this.personEmbryo ? this.personEmbryo : false
 				profileUpdate.personHelpLevel = this.personHelpLevel ? this.personHelpLevel : '0'
 			}
-			profileUpdate.hasSelfId = profileUpdate.personCategory != '0'? true : false
+			profileUpdate.hasSelfId = profileUpdate.personCategory != '0' ? true : false
 
 			let thingsIHave = ""
 			if (profileUpdate.personSperm)
@@ -280,18 +280,18 @@ module app {
 			profileUpdate.thingsIHave = thingsIHave
 
 			// if (this.about)
-				this.AppUtil.blockingCall(
-					this.AppService.saveProfile(profileUpdate),
-					() => {
-						this.refresh()
-						this.$ionicHistory.nextViewOptions({
-							historyRoot: false,
-							disableBack: true
-						})
-						if (this.profile.about) {
-							this.$state.go('menu.profile')
-						}
+			this.AppUtil.blockingCall(
+				this.AppService.saveProfile(profileUpdate),
+				() => {
+					this.refresh()
+					this.$ionicHistory.nextViewOptions({
+						historyRoot: false,
+						disableBack: true
 					})
+					if (this.profile.about && this.profile.about.length >= 10) {
+						this.$state.go('menu.profile')
+					}
+				})
 			// else
 			// 	this.onRedirectToEditProfile(true);
 		}
@@ -301,10 +301,10 @@ module app {
 		 */
 		public myGoBack() {
 			// if (this.profile.about)
-				this.saveProfile();
-				// this.$ionicHistory.goBack()
+			this.saveProfile()
+			// this.$ionicHistory.goBack()
 			// else
-			// 	this.onRedirectToEditProfile(false);
+			// 	this.onRedirectToEditProfile(false)
 		}
 
 		public onRedirectToEditProfile(forceShow) {
@@ -315,6 +315,12 @@ module app {
 					template: 'Your "About Me" section is empty.</br> Everyone is looking for someone with a compatible vision. A deep description adds value to the community, tell us about you.'
 				})
 			}
+			else if (this.profile.about && this.profile.about.length < 10)
+				var alertPopup = this.$ionicPopup.alert({
+					title: 'We need more information',
+					cssClass: 'center',
+					template: 'Your profile could be better, please give it some more thought.'
+				})
 		}
 
 		public onClickBadgeInfo() {
