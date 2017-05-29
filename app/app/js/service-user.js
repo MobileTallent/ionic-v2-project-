@@ -631,7 +631,7 @@ function onNotificationOpen(pnObj) {
                     return
                 }
 
-                if (!service.profile.about || service.profile.about < 10 || !service.profile.hasSelfId) {
+                if (!service.profile.about || service.profile.about.length < 10 || !service.profile.hasSelfId) {
                     $state.go('menu.profile-edit')
                     return
                 }
@@ -1641,7 +1641,7 @@ function onNotificationOpen(pnObj) {
                 return server.delProviderQuestions(id)
             }
 
-            
+
 
 
 
