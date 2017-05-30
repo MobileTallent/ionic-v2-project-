@@ -1,0 +1,61 @@
+<ion-view title="Cards deck settings" ng-controller="CardsDeckSettings as vm">
+
+    <ion-content class="padding">
+        <div class="item item-divider">
+                    Deck cards types
+        </div>
+                <ion-checkbox class="checkbox-positive" ng-model="vm.cards_settings.profile_cards">Profile cards</ion-checkbox>
+                <ion-checkbox class="checkbox-royal" ng-model="vm.cards_settings.info_cards">Info cards</ion-checkbox>
+
+                <div class="item item-divider">
+                    Deck size: {{vm.cards_settings.deck_size}} cards
+                </div>
+                <label class="item custom-slider" style="height: 60px">
+                            <slider floor="50" 
+                                    ceiling="200" 
+                                    ng-model-low="50" 
+                                    ng-model-high="vm.cards_settings.deck_size">
+                            </slider>
+                </label>
+
+                <div class="item item-divider" ng-show="vm.cards_settings.profile_cards && vm.cards_settings.info_cards">
+                    Cards ratio: {{vm.cards_settings.cards_ratio}}/1
+                </div>
+                <label ng-show="vm.cards_settings.profile_cards && vm.cards_settings.info_cards" 
+                       class="item custom-slider" 
+                       style="height: 60px">
+                            <slider floor="1" 
+                                    ceiling="{{vm.cards_settings.deck_size-1}}" 
+                                    ng-model-low="1" 
+                                    ng-model-high="vm.cards_settings.cards_ratio">
+                            </slider>
+                </label>
+
+                <div class="item item-divider">
+                    Deck summary schema
+                </div>
+                <style>
+                    .cell-schema {
+                        width:25px;
+                        height:25px;
+                        background:#3baa9a;
+                    }
+                    .cell-schema.info {
+                        background:#886aea;
+                    }
+                </style>
+                <div class="item" style="display: flex;flex-wrap: wrap;">
+                       <div class="cell-schema"
+                            ng-class="{'info':(ind=='info' || !vm.cards_settings.profile_cards)}"
+                            ng-hide="$index > (vm.cards_settings.deck_size-1)"
+                            ng-repeat="ind in vm.makeSumarryArray(vm.cards_settings.deck_size) track by $index">
+                       </div>
+                </div>
+
+                <button ng-click="vm.save()" 
+                        ng-disabled="!vm.cards_settings.profile_cards && !vm.cards_settings.info_cards" 
+                        class="button button-full button-positive">
+                   Save
+                </button>
+    </ion-content>
+</ion-view>

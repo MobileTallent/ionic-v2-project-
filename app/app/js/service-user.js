@@ -194,7 +194,9 @@ function onNotificationOpen(pnObj) {
                 delEnquire: delEnquire,
                 getProviderQuestions: getProviderQuestions,
                 addProviderQuestions: addProviderQuestions,
-                delProviderQuestions: delProviderQuestions
+                delProviderQuestions: delProviderQuestions,
+                getCardsDeckSettings: getCardsDeckSettings,
+                addCardsDeckSettings: addCardsDeckSettings
 
             }
 
@@ -1641,6 +1643,13 @@ function onNotificationOpen(pnObj) {
                 return server.delProviderQuestions(id)
             }
 
+            function getCardsDeckSettings(){
+                return server.getCardsDeckSettings()
+            }
+
+            function addCardsDeckSettings(deckSettings) {
+                return server.addCardsDeckSettings(deckSettings)
+            }
 
 
 

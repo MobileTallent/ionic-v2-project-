@@ -1,4 +1,4 @@
-/// <reference path="../../../../typings/globals/google.maps/index.d.ts" />
+/// <reference path="../../../typings/globals/google.maps/index.d.ts" />
 
 module app {
 
