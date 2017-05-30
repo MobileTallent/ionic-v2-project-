@@ -83,9 +83,9 @@ module app {
 		}
 
 		public close() {
-			this.profileModal.hide()
 			this.profileIndex = null
 			this.profile = null
+			this.profileModal.hide()
 		}
 
 		public onClickBadgeInfo() {

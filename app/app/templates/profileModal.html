@@ -14,8 +14,7 @@
     </ion-header-bar>
 
     <ion-content>
-
-        <ion-slide-box show-pager="true" does-continue="true">
+        <ion-slide-box show-pager="true">
             <ion-slide ng-repeat="photo in vm.profile.photos track by $index">
                 <img ng-src="{{photo.url()}}" style="width:100%" />
             </ion-slide>
