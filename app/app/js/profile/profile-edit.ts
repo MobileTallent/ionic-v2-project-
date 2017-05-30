@@ -72,6 +72,8 @@ module app {
 			this.$scope.$on("$ionicSlides.sliderInitialized", function (event, data) {
 				// data.slider is the instance of Swiper
 				$scope.slider = data.slider
+				if (!$scope.vm.profile.about || $scope.vm.profile.about.match(/\S+/g).length < 10)
+					$scope.slider.slideTo(4)
 			})
 
 			this.$scope.$on("$ionicSlides.slideChangeStart", function (event, data) {
@@ -283,14 +285,15 @@ module app {
 			this.AppUtil.blockingCall(
 				this.AppService.saveProfile(profileUpdate),
 				() => {
-					this.refresh()
+					//this.refresh()
 					this.$ionicHistory.nextViewOptions({
 						historyRoot: false,
 						disableBack: true
 					})
-					if (this.profile.about && this.profile.about.length >= 10) {
+					if (profileUpdate.about)
 						this.$state.go('menu.profile')
-					}
+					else
+						this.refresh()
 				})
 			// else
 			// 	this.onRedirectToEditProfile(true);
@@ -315,7 +318,7 @@ module app {
 					template: 'Your "About Me" section is empty.</br> Everyone is looking for someone with a compatible vision. A deep description adds value to the community, tell us about you.'
 				})
 			}
-			else if (this.profile.about && this.profile.about.length < 10)
+			else if (this.profile.about && this.profile.about.match(/\S+/g).length < 10)
 				var alertPopup = this.$ionicPopup.alert({
 					title: 'We need more information',
 					cssClass: 'center',
