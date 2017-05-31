@@ -1,0 +1,366 @@
+<ion-view view-with-bg id="login-background-image" cache-view="false">
+    <ion-content padding="true" class="center">
+        <style>
+            ul {
+                list-style: disc;
+                padding-left: 20px;
+            }
+            
+            li {
+                text-align: left;
+                padding: 5px;
+                display: list-item;
+            }
+            
+            #terms-of-use-card {
+                margin-top: 50%;
+                opacity: 0.80;
+            }
+            
+            #terms-of-use-card.topZero {
+                margin-top: 10%;
+            }
+            
+            .platform-android #terms-of-use-card.topZero {
+                opacity: 1;
+            }
+        </style>
+        <div class="card" id="terms-of-use-card" ng-class="isPrivacyOpen || isTermsOpen ? 'topZero' : ''">
+            <div class="item item-text-wrap">
+                <h1 class="title center positive">{{'TERMS_OF_USE' | translate}}</h1>
+                <div>
+                    <p>
+                        By continuing, you agree to <b> <a href="javascript:void(0)" ng-click="isTermsOpen = !isTermsOpen; isPrivacyOpen =false; isClickedOnce=true;">terms of service</a></b> and
+                        <b><a href="javascript:void(0)" ng-click="isPrivacyOpen = !isPrivacyOpen; isTermsOpen =false;isClickedOnce=true;">EULA</a></b>.<br>
+                    </p>
+                </div>
+                <div ng-show="isTermsOpen" ng-class="isTermsOpen ? 'animated slideInUp' : (isClickedOnce && isTermsOpen || !isPrivacyOpen ? 'animated slideOutDown' : '')">
+                    <h1>Terms of Service</h1>
+                    <p>Last updated: April 19th  2017<br><br>
+					These terms are valid until June 30th 2017 after which point they may be updated.  If they are not updated on said date, then these terms will stay in effect until they are updated.<br><br>
+
+					Please read these Terms of Service ("Terms", "Terms of Service") carefully before using the Just a Baby mobile application (the "Service") operated by Just a Baby ("us", "we", or "our").<br><br>
+					
+					Your access to and use of the Service is conditioned on your acceptance of and compliance with these Terms. 
+					These Terms apply to all visitors, users and others who access or use the Service. You warrant that you are at least 18-years-old and you are legally capable of entering into binding contracts. 
+					If you are under 18-years-old, you warrant that you have obtained consent from your parent or guardian and they agree to be bound by these Terms on your behalf.<br><br>
+					
+					By accessing or using the Service you agree to be bound by these Terms. If you disagree with any part of the terms then you may not access the Service.<br><br>
+
+                   
+                    <p><strong>Accounts</strong></p>
+                    When you create an account with us, you must provide us information that is accurate, complete, and current at all times. Failure to do so constitutes a breach of the Terms, 
+					which may result in immediate termination of your account on our Service.<br><br>
+					
+					You are responsible for safeguarding the password that you use to access the Service and for any activities or actions under your password, 
+					whether your password is with our Service or a third-party service.<br><br>
+					
+					You agree not to disclose your password to any third party. You agree to be fully responsible for activities that relate to your account or your password. 
+					You must notify us immediately upon becoming aware of any breach of security or unauthorized use of your account.<br><br>
+
+                    
+					<p><strong>Links To Other Web Sites</strong></p>
+                    
+					Our Service may contain links to third-party web sites or services that are not owned or controlled by Just a Baby.<br><br>
+					
+					Just a Baby has no control over, and assumes no responsibility for, the content, privacy policies, or practices of any third party web sites or services. 
+					You further acknowledge and agree that Just a Baby shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused 
+					by or in connection with use of or reliance on any such content, goods or services available on or through any such web sites or services.<br><br>
+					
+					We only provide links to external websites as a convenience, and the inclusion of such a link to external websites do not imply our endorsement of those websites. 
+					You acknowledge and agree that when you access other websites on the Internet, you do so at your own risk.<br><br>
+					
+					We strongly advise you to read the terms and conditions and privacy policies of any third-party web sites or services that you visit.<br><br>
+
+                    
+					<p><strong>Termination</strong></p>
+                    We may terminate or suspend your account immediately, without prior notice or liability, for any reason whatsoever, 
+					including without limitation if you breach the Terms.<br><br>
+					
+					Upon termination, your right to use the Service will immediately cease. If you wish to terminate your account, 
+					you may simply discontinue using the Service.<br><br>
+					
+					All provisions of the Terms which by their nature should survive termination shall survive termination, including, without limitation, 
+					ownership provisions, warranty disclaimers, indemnity and limitations of liability.<br><br>
+					
+					We shall not be liable to you or any third party for any claims or damages arising out of any termination or 
+					suspension or any other actions taken by us in connection therewith.<br><br>
+					
+					If applicable law requires us to provide notice of termination or cancellation, we may give prior or subsequent notice by posting it on 
+					the Service or by sending a communication to any address (email or otherwise) that we have for you in our records.<br><br>
+
+                    
+					<p><strong>Governing Law</strong></p>
+					These Terms shall be governed and construed in accordance with the laws of New South Wales, Australia, 
+					without regard to its conflict of law provisions.<br><br>
+					
+					Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. 
+					If any provision of these Terms is held to be invalid or unenforceable by a court, the remaining provisions of these 
+					Terms will remain in effect. These Terms constitute the entire agreement between us regarding our Service, and supersede 
+					and replace any prior agreements we might have between us regarding the Service.<br><br>
+
+					
+					<p><strong>Deleting your Account</strong></p>
+					You may delete your account at any stage by going into the settings page and pressing “Delete your account”.  
+					This will then delete your account, your connection and all information we have about you.<br><br>
+
+					
+					<p><strong>Information we collect about you</strong></p>
+					We may collect Personal Information, including Sensitive Data, and other information. Personal Information means information 
+					that would allow us to determine your actual identity, and be able to contact you and or any living person using the app. 
+					Sensitive Data includes information, comments or content (e.g. photographs, video, profile, lifestyle) that you optionally 
+					provide that may reveal your ethnicity, nationality, religion and/or sexual orientation. By providing Sensitive Data to 
+					us, you consent to the collection, use and disclosure of Sensitive Data as permitted by applicable privacy laws. We may 
+					also collect your geolocation information with your consent. By using the Service, you are authorizing us to gather, parse 
+					and retain data related to the provision of the Service. When you provide personal information through our Service, 
+					the information may be sent to servers located in the United States and countries around the world.<br><br>
+
+					
+					<p><strong>Information you provide</strong></p>
+					To log in to Just a Baby, you will use your Facebook credentials. As part of this integration with Facebook, 
+					this means we store your name, age, gender, email address, photos and other information which could be used to identify you.<br><br>
+
+					
+					<p><strong>Information Collected by 3rd parties for advertising purposes and provision of useful information</strong></p>
+					We allow service providers to provide targeted useful information and offer services to help our community.  
+					These service providers can track if you have requested more information about their services.  
+					Furthermore they can offer their information and services to targeted groups of users based on age, 
+					biological profile (Sperm/Egg/Womb/Embryo) and geological location.<br><br>
+
+					
+					<p><strong>How we may use the information we collect</strong></p>
+					We may communicate directly with you via email or via Just a Baby app Chat, to discuss your satisfaction with the service 
+					and feedback you may have, media interview opportunities, and/or casting opportunities for TV shows which Just a Baby may 
+					be involved with<br><br>
+					
+					We may allow 3rd party publicists to contact you via Just a Baby chat, to request interviews.<br><br>
+					
+					To improve our service and manage our business.<br><br>
+					
+					To perform research related to Just a Baby<br><br>
+					
+					To track advertising which is of interest to you<br><br>
+					
+					Via analytics tools, how you use the product<br><br>
+
+					
+					<p><strong>How We Share Your Information</strong></p>
+					When you register with Just a Baby, your profile will be viewable by other users of Just a Baby.   
+					Any user can view your profile, and potentially share your viewable information with any 3rd party, via services 
+					such as SMS, WhatsApp, Email, Skype, etc.   Further we provide functionality which allows sharing of people’s profiles information.<br><br>
+
+					
+					<p><strong>Safety</strong></p>
+					As with any online community there are a number of risks, further if you’re planning on having a baby with someone, 
+					there are additional issues around which to take extra caution.   It is your responsibility to keep yourself safe at all times.  
+					You need to always use common sense and never make assumptions about anyone’s intentions.   There are dangerous people in 
+					the world, everywhere, there are no exceptions to that, so always be extremely careful.<br><br>
+					
+					You should always be careful when meeting anyone new, meet in public places, and always bring friends along with you.  Your safety is 
+					your concern and we are unable to vouch for anyone using the service.<br><br>
+					
+					You should always ask for a police check from whoever you meet online.<br><br>
+					
+					You should consult a family lawyer and obtain independent legal advice before proceeding with any conception activities.<br><br>
+					
+					You should always consult your doctor for appropriate screening, before you proceed with any conception activities.<br><br>
+					
+					You should see a family therapist before you proceed with any conception activities.<br><br>
+					You should always report any suspicious profiles, chats or activities by contacting Just a Baby or reporting people via 
+					the inbuilt reporting functionality within the app.<br><br>
+
+					
+					<p><strong>International Privacy Issues</strong></p>
+					Our primary data centres are in Australian and the United States.<br><br>
+					
+					If you are from the European Union or other regions with laws governing data collection and use, please be aware 
+					that you are agreeing to the transfer of your personal data, including sensitive data, by Just a Baby from your 
+					region to countries which do not have data protection laws that provide the same level of protection that exists in 
+					countries in the European Economic Area, including Australia and the United States.  By providing your personal information, 
+					you consent to any transfer and processing in accordance with this Policy.<br><br>
+
+					
+					<p><strong>Children’s Privacy</strong></p>
+					Our app is rated 18+ and is intended only for adults.  We do not knowingly collect, use or store any personal information about children.<br><br>
+
+					
+					<p><strong>Changes</strong></p>
+					We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material we will try to 
+					provide at least 15 days notice prior to any new terms taking effect.<br><br>
+					
+					It is your sole responsibility to periodically check these Terms for any changes. If you do not agree with any of the changes to 
+					these Terms, it is your sole responsibility to stop using the Service. Your continued use of the Service will be deemed as your 
+					acceptance thereof.<br><br>
+					
+					
+					<p><strong>Legal Warning</strong></p>
+					Any surrogates, sperm donors, egg donors or people seeking surrogacy or donor services from others, should seek legal advice prior 
+					to placing any messages indicating a desire to participate in such activities because legislation differs from place to place and 
+					in many jurisdictions you may find yourself in violation of the law.<br><br>
+					
+					Members residing in ACT, Australian Capital Territory, it is forbidden for you to seek a surrogate through Just-a-Baby due to Section 
+					43 of the Parentage Act. You may be in violation of the law with punishments including imprisonment.<br><br>
+					
+					
+					<p><strong>Members Only</strong></p>
+					Just a Baby is a private community. Once you download and install the app, you become a Just-a-Baby member. 
+					We reserve the right to delete member profiles and/or block individuals at our discretion for any reason whatsoever and with no 
+					explanation. It is not a public forum.<br><br>
+
+					
+					<p><strong>Contact Us</strong></p>
+                    <p>If you have any questions about these Terms, please contact us at media@justababy.com.</p>
+                </div>
+
+                <div ng-show="isPrivacyOpen" ng-class="isPrivacyOpen ? 'animated slideInUp' : (isClickedOnce && !isTermsOpen || isPrivacyOpen ? 'animated slideOutDown' : '')">
+                    <h2>Just a Baby {{::(appVersion ? appVersion : 'N/A')}}</h2>
+                    <h3>Copyright (c) 2016 Just a Baby</h3>
+
+                    <p><b>
+						*** END USER LICENSE AGREEMENT ***
+					</b></p>
+
+                    <p>
+                        IMPORTANT: PLEASE READ THIS LICENSE CAREFULLY BEFORE USING THIS SOFTWARE.
+                    </p>
+
+                    <h2>1. LICENSE</h2>
+
+                    <p>
+                        By receiving, opening the file package, and/or using Just a Baby {{::(appVersion ? appVersion : 'N/A')}}("Software") containing this software, you agree that this End User User License Agreement(EULA) is a legally binding and valid contract and agree
+                        to be bound by it. You agree to abide by the intellectual property laws and all of the terms and conditions of this Agreement.
+                    </p>
+
+                    <p>
+                        Unless you have a different license agreement signed by Just a Baby your use of Just a Baby {{::(appVersion ? appVersion : 'N/A')}} indicates your acceptance of this license agreement and warranty.
+                    </p>
+
+                    <p>
+                        Subject to the terms of this Agreement, Just a Baby grants to you a limited, non-exclusive, non-transferable license, without right to sub-license, to use Just a Baby {{::(appVersion ? appVersion : 'N/A')}} in accordance with this Agreement and any other
+                        written agreement with Just a Baby. Just a Baby does not transfer the title of Just a Baby {{::(appVersion ? appVersion : 'N/A')}} to you; the license granted to you is not a sale. This agreement is a binding legal agreement between
+                        Just a Baby and the purchasers or users of Just a Baby {{::(appVersion ? appVersion : 'N/A')}}.
+                    </p>
+
+                    <p>
+                        If you do not agree to be bound by this agreement, remove Just a Baby {{::(appVersion ? appVersion : 'N/A')}} from your computer now and, if applicable, promptly return to Just a Baby by mail any copies of Just a Baby {{::(appVersion ? appVersion : 'N/A')}}
+                        and related documentation and packaging in your possession.
+                    </p>
+
+                    <h2>2. DISTRIBUTION</h2>
+
+                    <p>
+                        Just a Baby {{::(appVersion ? appVersion : 'N/A')}} and the license herein granted shall not be copied, shared, distributed, re-sold, offered for re-sale, transferred or sub-licensed in whole or in part except that you may make one copy for archive purposes
+                        only. For information about redistribution of Just a Baby {{::(appVersion ? appVersion : 'N/A')}} contact Just a Baby.
+                    </p>
+
+                    <h2>3. USER AGREEMENT</h2>
+
+                    <h3>3.1 Use</h3>
+
+                    <p>
+                        Your license to use Just a Baby {{::(appVersion ? appVersion : 'N/A')}} is limited to the number of licenses purchased by you. You shall not allow others to use, copy or evaluate copies of Just a Baby {{::(appVersion ? appVersion : 'N/A')}}.
+                    </p>
+
+                    <h3>3.2 Use Restrictions</h3>
+
+                    <p>
+                        You shall use Just a Baby {{::(appVersion ? appVersion : 'N/A')}} in compliance with all applicable laws and not for any unlawful purpose. Without limiting the foregoing, use, display or distribution of Just a Baby {{::(appVersion ? appVersion : 'N/A')}}
+                        together with material that is pornographic, racist, vulgar, obscene, defamatory, libelous, abusive, promoting hatred, discriminating or displaying prejudice based on religion, ethnic heritage, race, sexual orientation or age is
+                        strictly prohibited.
+                    </p>
+
+                    <p>
+                        Each licensed copy of Just a Baby {{::(appVersion ? appVersion : 'N/A')}} may be used on one single computer location by one user. Use of Just a Baby {{::(appVersion ? appVersion : 'N/A')}} means that you have loaded, installed, or run Just a Baby {{::(appVersion
+                        ? appVersion : 'N/A')}} on a computer or similar device. If you install Just a Baby {{::(appVersion ? appVersion : 'N/A')}} onto a multi-user platform, server or network, each and every individual user of Just a Baby {{::(appVersion
+                        ? appVersion : 'N/A')}} must be licensed separately.
+                    </p>
+
+                    <p>
+                        You may make one copy of Just a Baby {{::(appVersion ? appVersion : 'N/A')}} for backup purposes, providing you only have one copy installed on one computer being used by one person. Other users may not use your copy of Just a Baby {{::(appVersion ? appVersion
+                        : 'N/A')}} . The assignment, sublicense, networking, sale, or distribution of copies of Just a Baby {{::(appVersion ? appVersion : 'N/A')}} are strictly forbidden without the prior written consent of Just a Baby. It is a violation
+                        of this agreement to assign, sell, share, loan, rent, lease, borrow, network or transfer the use of Just a Baby {{::(appVersion ? appVersion : 'N/A')}}. If any person other than yourself uses Just a Baby {{::(appVersion ? appVersion
+                        : 'N/A')}} registered in your name, regardless of whether it is at the same time or different times, then this agreement is being violated and you are responsible for that violation!
+                    </p>
+
+                    <h3>3.3 Copyright Restriction</h3>
+
+                    <p>
+                        This Software contains copyrighted material, trade secrets and other proprietary material. You shall not, and shall not attempt to, modify, reverse engineer, disassemble or decompile Just a Baby {{::(appVersion ? appVersion : 'N/A')}}. Nor can you create
+                        any derivative works or other works that are based upon or derived from Just a Baby {{::(appVersion ? appVersion : 'N/A')}} in whole or in part.
+                    </p>
+
+                    </p>
+                    Just a Baby's name, logo and graphics file that represents Just a Baby {{::(appVersion ? appVersion : 'N/A')}} shall not be used in any way to promote products developed with Just a Baby {{::(appVersion ? appVersion : 'N/A')}} . Just a Baby retains sole
+                    and exclusive ownership of all right, title and interest in and to Just a Baby {{::(appVersion ? appVersion : 'N/A')}} and all Intellectual Property rights relating thereto.
+                    </p>
+
+                    </p>
+                    Copyright law and international copyright treaty provisions protect all parts of Just a Baby {{::(appVersion ? appVersion : 'N/A')}}, products and services. No program, code, part, image, audio sample, or text may be copied or used in any way by the user
+                    except as intended within the bounds of the single user program. All rights not expressly granted hereunder are reserved for Just a Baby.
+                    </p>
+
+                    <h3>3.4 Limitation of Responsibility</h3>
+
+                    <p>
+                        You will indemnify, hold harmless, and defend Just a Baby , its employees, agents and distributors against any and all claims, proceedings, demand and costs resulting from or in any way connected with your use of Just a Baby's Software.
+                    </p>
+
+                    <p>
+                        In no event (including, without limitation, in the event of negligence) will Just a Baby , its employees, agents or distributors be liable for any consequential, incidental, indirect, special or punitive damages whatsoever (including, without limitation,
+                        damages for loss of profits, loss of use, business interruption, loss of information or data, or pecuniary loss), in connection with or arising out of or related to this Agreement, Just a Baby {{::(appVersion ? appVersion : 'N/A')}}
+                        or the use or inability to use Just a Baby {{::(appVersion ? appVersion : 'N/A')}} or the furnishing, performance or use of any other matters hereunder whether based upon contract, tort or any other theory including negligence.
+                    </p>
+
+                    <p>
+                        Just a Baby's entire liability, without exception, is limited to the customers' reimbursement of the purchase price of the Software (maximum being the lesser of the amount paid by you and the suggested retail price as listed by Just a Baby ) in exchange
+                        for the return of the product, all copies, registration papers and manuals, and all materials that constitute a transfer of license from the customer back to Just a Baby.
+                    </p>
+
+                    <h3>3.5 Warranties</h3>
+
+                    <p>
+                        Except as expressly stated in writing, Just a Baby makes no representation or warranties in respect of this Software and expressly excludes all other warranties, expressed or implied, oral or written, including, without limitation, any implied warranties
+                        of merchantable quality or fitness for a particular purpose.
+                    </p>
+
+                    <h3>3.6 Governing Law</h3>
+
+                    <p>
+                        This Agreement shall be governed by the law of the Australia applicable therein. You hereby irrevocably attorn and submit to the non-exclusive jurisdiction of the courts of Australia therefrom. If any provision shall be considered unlawful, void or otherwise
+                        unenforceable, then that provision shall be deemed severable from this License and not affect the validity and enforceability of any other provisions.
+                    </p>
+
+                    <h3>3.7 Termination</h3>
+
+                    <p>
+                        Any failure to comply with the terms and conditions of this Agreement will result in automatic and immediate termination of this license. Upon termination of this license granted herein for any reason, you agree to immediately cease use of Just a Baby
+                        {{::(appVersion ? appVersion : 'N/A')}} and destroy all copies of Just a Baby {{::(appVersion ? appVersion : 'N/A')}} supplied under this Agreement. The financial obligations incurred by you shall survive the expiration or termination
+                        of this license.
+                    </p>
+
+                    <h2>4. DISCLAIMER OF WARRANTY</h2>
+
+                    <p>
+                        THIS SOFTWARE AND THE ACCOMPANYING FILES ARE SOLD "AS IS" AND WITHOUT WARRANTIES AS TO PERFORMANCE OR MERCHANTABILITY OR ANY OTHER WARRANTIES WHETHER EXPRESSED OR IMPLIED. THIS DISCLAIMER CONCERNS ALL FILES GENERATED AND EDITED BY Just a Baby {{::(appVersion
+                        ? appVersion : 'N/A')}} AS WELL.
+                    </p>
+
+                    <h2>5. CONSENT OF USE OF DATA</h2>
+
+                    <p>
+                        You agree that Just a Baby may collect and use information gathered in any manner as part of the product support services provided to you, if any, related to Just a Baby {{::(appVersion ? appVersion : 'N/A')}}.Just a Baby may also use this information
+                        to provide notices to you which may be of use or interest to you.
+                    </p>
+
+                    <br/>
+                </div>
+
+                <button class="button button-block button-positive" ng-click="agree()">{{'AGREE' | translate}}</button>
+
+                <br/>
+
+                <button class="button button-block" ng-click="logout()">{{'LOGOUT' | translate}}</button>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

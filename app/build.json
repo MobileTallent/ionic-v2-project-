@@ -1,0 +1,23 @@
+{
+  "android": {
+    "release": {
+      "keystore": "android.keystore",
+      "storePassword": "jabRF57",
+      "alias": "justababy",
+      "password": "jabRF57"
+    }
+  },
+  "ios": {
+    "_docs": "https://cordova.apache.org/docs/en/latest/guide/platforms/ios/",
+    "debug": {
+      "codeSignIdentity": "",
+      "provisioningProfile": "",
+      "developmentTeam": "RPD5XZB46Z"
+    },
+    "release": {
+      "codeSignIdentity": "",
+      "provisioningProfile": "",
+      "developmentTeam": "RPD5XZB46Z"
+    }
+  }
+}

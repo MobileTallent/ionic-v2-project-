@@ -1,0 +1,37 @@
+<ion-slide-box show-pager="true" does-continue="true">
+    <ion-slide ng-repeat="photo in profile.photos track by $index">
+        <img ng-src="{{photo | fileUrl}}" style="width:100%" />
+    </ion-slide>
+    <ion-slide ng-if="!profile.photos.length">
+        <img src="img/generic_avatar.jpg" style="width:100%" />
+    </ion-slide>
+    <!-- profile.photosInReview should only exist for the current user, and be unset for search results -->
+    <ion-slide ng-repeat="photo in profile.photosInReview track by $index">
+        IN REVIEW
+        <img ng-src="{{photo | fileUrl}}" style="width:100%" />
+    </ion-slide>
+</ion-slide-box>
+
+
+<div id="profile-name-banner" class="col-80 col-offset-10">
+    <div class="center text-color-white text-size-24">
+        {{profile.name}}, {{profile | profileAge}}
+    </div>
+</div>
+
+<div class="padding-15">
+    <div style="color:#666666;justify-content: center;" class="center badge-row">
+        <img ng-show="profile.address" ng-src="img/flags/{{profile.country}}.png">
+        <div style="margin-left: 5px;">{{distance}} {{'AWAY' | translate}}</div>
+    </div>
+    <div class="badge-row" ng-click="onClickBadgeInfo()">
+        <img ng-class="profile.personSperm ? 'id-badge' : 'id-no-badge'" src="img/sperm_ic.svg">
+        <img ng-class="profile.personWomb ? 'id-badge' : 'id-no-badge'" src="img/womb_ic.svg">
+        <img ng-class="profile.personEgg ? 'id-badge' : 'id-no-badge'" src="img/egg_ic.svg">
+        <img ng-class="profile.personEmbryo ? 'id-badge' : 'id-no-badge'" src="img/embryo_ic.svg">
+    </div>
+    <h4 style="color:#666666">About Me</h4>
+    <div ng-show="profile.about" style="color:#9B9B9B; white-space: pre-wrap;" class="text-size-18">
+        {{profile.about}}
+    </div>
+</div>

@@ -1,0 +1,53 @@
+<ion-view title="Quick info" hide-back-button="true" id="home-page" class="background-calm" ng-controller="SpHome as vm">
+  <ion-content padding="true" class="has-header">
+    <ion-refresher on-refresh="vm.doRefresh()"></ion-refresher>
+    <ion-list>
+      <ion-item ng-if="vm.info_cards" class="item-divider">Top Info Cards</ion-item>
+      <ion-item ng-if="!vm.info_cards">Info Cards don't found</ion-item>
+      <ion-item ng-if="vm.info_cards">
+        <!--Graph cards-->
+        <canvas id="line" class="chart chart-line" 
+            chart-data="vm.cardsData"
+            chart-labels="vm.labels" 
+            chart-series="vm.cardsSeries" 
+            chart-options="vm.options"
+            chart-dataset-override="vm.datasetOverride" 
+            chart-click="vm.onClick">
+        </canvas>
+      </ion-item>
+      <ion-item ng-if="vm.info_cards" ng-repeat="card in vm.info_cards track by $index">
+        {{card.title}}
+        <span class="item-note">
+          Clicks: {{card.clicks.summary}}
+          <br>
+          Shows : {{card.shows.summary}}
+        </span>
+      </ion-item>
+    </ion-list>
+    <br>
+
+    <ion-list>
+      <ion-item ng-if="vm.services" class="item-divider">Top services</ion-item>
+      <ion-item ng-if="!vm.services">Services don't found</ion-item>
+      <ion-item ng-if="vm.services">
+        <!--Graph cards-->
+        <canvas id="line" class="chart chart-line" 
+            chart-data="vm.servicesData"
+            chart-labels="vm.labels" 
+            chart-series="vm.servicesSeries" 
+            chart-options="vm.options"
+            chart-dataset-override="vm.datasetOverride" 
+            chart-click="vm.onClick">
+        </canvas>
+      </ion-item>
+      <ion-item ng-if="vm.services" ng-repeat="service in vm.services track by $index">
+        {{service.title}}
+        <span class="item-note">
+          Clicks: {{service.clicks.summary}}
+          <br>
+          Shows : {{service.shows.summary}}
+        </span>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,16 @@
+<ion-view view-title="{{profile.name}}" ng-controller="SearchProfileView as vm">
+    <ion-nav-buttons side="right">
+       <i class="button button-icon icon ion-close search-profile-view-icon" ng-click="vm.reject()"></i>
+        <i class="button button-icon icon ion-checkmark" ng-click="vm.like()"></i>
+        <i class="button button-icon icon ion-android-share-alt" ng-click="vm.share()"></i>
+        <i class="button button-icon icon ion-android-more-vertical" ng-click="vm.profileOptions()"></i>
+        <!-- Temporarily remove this button since unable to report a person that ain't a match yet' -->
+        <!--<i class="button button-icon icon ion-android-more-vertical" ng-click="profileOptions()"></i>-->
+        <!-- TODO menu that contain 'Report' menu item )-->
+    </ion-nav-buttons>
+
+    <ion-content>
+        <profile-details profile="profile"></profile-details>
+
+    </ion-content>
+</ion-view>

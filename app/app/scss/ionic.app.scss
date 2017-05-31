@@ -1,0 +1,251 @@
+/*
+To customize the look and feel of Ionic, you can override the variables
+in ionic's _variables.scss file.
+
+For example, you might change some of the default colors:
+
+$light:                           #fff !default;
+$stable:                          #f8f8f8 !default;
+$positive:                        #387ef5 !default;
+$calm:                            #11c1f3 !default;
+$balanced:                        #33cd5f !default;
+$energized:                       #ffc900 !default;
+$assertive:                       #ef473a !default;
+$royal:                           #886aea !default;
+$dark:                            #444 !default;
+*/
+
+// The path for our ionicons font files, relative to the built CSS in www/(css)
+//$ionicons-font-path: "../lib/ionic/fonts" !default;
+$ionicons-font-path: "fonts" !default;
+//***************************** Ionic Color Override
+/* Main Theme */
+// $positive: rgba(187, 225, 213, 0.69);
+
+
+//Main Green
+$positive: #3BAA9A;
+//Secondary Green
+$calm: #B8F4E1;
+//Primary Purple
+$assertive: #92278A;
+
+/*strong green */
+$energized: #3BAA9A;
+
+// $calm: rgba(187, 225, 213, 0.35);
+// $calm: rgb(231, 245, 240);
+/*purple*/
+// $assertive: rgb(191, 127, 204);
+
+
+
+//***************************** Profile Search
+$match-search-text: rgb(130, 156, 148);
+$text-colour-white: #ffffff;
+//***************************** Chat
+$chat-bubble-right-background: rgba(187, 225, 213, 0.35);
+$chat-bubble-right-text: rgb(43, 172, 143);
+$chat-bubble-left-background: rgba(250, 248, 218, 0.71);
+$chat-bubble-left-text: rgb(165, 161, 121);
+$chat-date-recieved:rgb(155, 155, 155);
+//***************************** Chat List
+$chats-odd: rgba(155, 155, 155, 0.10);
+$chats-even: rgba(155, 155, 155, 0.15);
+// Include all of Ionic
+@import "bower_components/ionic/scss/ionic";
+button.button,
+button.button.button-stable {
+    background-color: rgb(221, 221, 221);
+}
+
+
+/* --- Login --- */
+
+@import 'login.scss';
+
+/* --- Settings --- */
+
+@import 'settings.scss';
+
+/* --- Chat List and Liked me List --- */
+
+@import 'list-chat-liked.scss';
+
+/* --- Chat --- */
+
+@import 'profile-chat.scss';
+
+/* --- Walkthrough Modal --- */
+
+@import 'walkthroughModal.scss';
+
+/* --- Match Search --- */
+
+@import 'profile-search.scss';
+
+/* --- Profile Details --- */
+
+@import 'profile-details.scss';
+
+/* --- Service Provider app --- */
+
+@import 'service-provider.scss';
+
+/* --- Profile edit --- */
+
+@import 'profile-edit.scss';
+// Self Id current Badges - Used in edit profile and match search
+.badge-row {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: row;
+    // height: 65px;
+}
+
+.id-badge-visible {
+    // animation: slideInUp 500ms ease;
+    display: block !important;
+    width: 60px;
+    height: 60px;
+    transition: all ease 300ms;
+}
+
+.id-badge-hidden {
+    visibility: hidden;
+    height: 0;
+    width: 0;
+    transition: all ease 300ms;
+}
+
+.id-badge {
+    display: block !important;
+    width: 15%;
+    height: 15%;
+}
+
+.id-no-badge {
+    display: none;
+}
+
+// Badge Info Popup
+
+.badge-info-container{
+    border: solid white 2px;
+    border-radius: 15px;
+    z-index: 0 !important;
+}
+.popup-buttons{
+    z-index: 2;
+}
+
+/* --- Global Selectors --- */
+
+.text-colour-energized {
+    color: $energized;
+}
+
+.text-colour-assertive {
+    color: $assertive;
+}
+
+.background-calm {
+    background-color: $calm;
+}
+
+.background-positive {
+    background-color: $positive !important;
+}
+
+.text-color-white {
+    color: $text-colour-white;
+}
+
+.popup-button {
+    background-color: $positive !important;
+    color: #fff;
+    border-radius: 16px !important;
+}
+
+
+/* --- Text and Font --- */
+
+.bold {
+    font-weight: bold;
+}
+
+textarea {
+    padding: 3px;
+}
+
+.text-size-18 {
+    font-size: 18px;
+}
+
+.text-size-24 {
+    font-size: 24px;
+}
+
+.text-size-28 {
+    font-size: 28px;
+}
+
+
+/* --- Action Sheets - Android --- */
+
+.platform-android .action-sheet-group {
+    border-radius: 0;
+    background-color: #fafafa;
+}
+
+.platform-android .action-sheet .button.active,
+.platform-android .action-sheet .button.activated {
+    background: #e8e8e8;
+}
+
+.platform-android .action-sheet .button {
+    border-color: #e2e2e2;
+    color: $assertive !important;
+    text-align: center !important;
+}
+
+.platform-android .action-sheet .button.destructive {
+    text-align: center !important;
+    color: red !important;
+}
+
+.platform-android .action-sheet .action-sheet-title {
+    padding: 16px;
+    color: #666;
+    text-align: center !important;
+}
+
+.platform-android .action-sheet-backdrop.active {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+/* --- My Relationships --- */
+
+.item.active {
+    background-color: $calm !important;
+}
+
+
+/*Try for a baby pop-up*/
+
+.popup-vertical-buttons .popup-buttons {
+    display: block;
+    font-size: 14px !important;
+}
+
+.popup-vertical-buttons .popup-buttons .button {
+    display: block;
+    min-width: 100% !important;
+    margin-bottom: 5px !important;
+    border-radius: 16px !important;
+    font-size: 14px !important;
+    color: $energized !important;
+}

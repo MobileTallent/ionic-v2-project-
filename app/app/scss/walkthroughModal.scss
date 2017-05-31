@@ -1,0 +1,47 @@
+@import 'colors.scss';
+
+// Walkthrough Modal
+.modalCard{ 
+    background-color: white; 
+    padding: 25; 
+ 
+} 
+.modal-page-container{ 
+    display: flex; 
+    flex-direction: column; 
+    height: 100%; 
+    padding: 50px;
+} 
+.modal-image-container{ 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    flex: 2 
+} 
+.modal-text-container{ 
+    display: flex;
+    justify-content: center; 
+    flex-direction: column;
+    flex:1.5; 
+     
+     
+} 
+.modal-text-header{ 
+    text-align: center;
+    color: $assertive; 
+    font-size: 22px; 
+} 
+.modal-text-body{ 
+    text-align: center;
+    color: $energized;
+    font-size: 18px; 
+} 
+.modal-image-avatar{ 
+    width: 100% !important;
+    height: 100% !important;  
+    border-radius:360px;  
+    margin-left: auto;  
+    margin-right: auto;
+    box-shadow: 0 0 10px #d1d1d1;
+}
+

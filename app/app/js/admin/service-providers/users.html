@@ -1,0 +1,16 @@
+<ion-view view-title="Users" ng-controller="Users as vm">
+
+    <ion-content>
+
+        <div ng-show="!vm.users.length" style="text-align: center;font-family:'Avenir Next LT Pro Regular';font-size:18px">
+            <br/>
+            {{'No results' | translate}}<br/>
+        </div>
+        <div class="list">
+            <a class="item item-avatar" ng-repeat="user in vm.users track by $index" ui-sref="^.userAdmin({userId : user.uid})">
+                <img style="top: 16px;left: 16px;max-width: 40px !important;max-height: 40px !important;" ng-src="{{user.image_cover}}">
+                <h2>{{::user.name}}</h2>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

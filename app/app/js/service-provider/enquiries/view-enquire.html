@@ -1,0 +1,58 @@
+<ion-view title="View Enquire" class="background-calm" ng-controller="SpEnquire as vm">
+  <ion-content padding="true" class="has-header">
+    <div class="list card">
+      <ion-item class="item-avatar">
+
+        <img style="top: 16px;left: 16px;max-width: 40px !important;max-height: 40px !important;" ng-src="{{vm.enquire.image_cover}}">
+        <div style="float:left;">
+          <h2>{{vm.enquire.name}}</h2>
+          <p>{{vm.user.profile.age}} y.o.</p>
+        </div>
+        <span class="item-note">
+              {{vm.enquire.createdAt | date:'dd MMM yyyy HH:mm'}}
+        </span>
+      </ion-item>
+      <ion-item class="item-divider">Profile description</ion-item>
+      <div class="item item-body">
+        <div class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#000000;font-size:12px;">{{vm.user.profile.about}}</p>
+        </div>
+      </div>
+      <ion-item class="item-divider">Enquire details</ion-item>
+      <div class="item item-body">
+        <div class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#000000;font-size:15px;">{{vm.enquire.service_name}}</p>
+        </div>
+        <div class="show-list-numbers-and-dots">
+          <p style="margin-top:0px;color:#000000;font-size:12px;">{{vm.enquire.message}}</p>
+        </div>
+      </div>
+      <ion-item class="item-divider" ng-if="vm.enquire.u_phone || vm.enquire.u_email || vm.enquire.u_skype"> Contacts</ion-item>
+      <div class="item item-body" ng-if="vm.enquire.u_phone || vm.enquire.u_email || vm.enquire.u_skype">
+        <ion-list>
+          <ion-item ng-if="vm.enquire.u_phone" class="item-icon-right" href="tel:{{vm.enquire.u_phone}}">
+            {{vm.enquire.u_phone}}
+            <i class="icon ion-ios-telephone-outline"></i>
+          </ion-item>
+          <ion-item ng-if="vm.enquire.u_email" class="item-icon-right">
+            {{vm.enquire.u_email}}
+            <i class="icon ion-ios-email-outline"></i>
+          </ion-item>
+          <ion-item ng-if="vm.enquire.u_skype" class="item-icon-right">
+            {{vm.enquire.u_skype}}
+            <i class="icon ion-social-skype-outline"></i>
+          </ion-item>
+        </ion-list>
+      </div>
+        <ion-item class="item-divider"> Profile pictures</ion-item>
+        <ion-item>
+            <div ng-if="!vm.user.profile.photos">No profile photos</div>
+            <ion-list show-delete="true">
+                <ion-item ng-repeat="photo in vm.user.profile.photos" class="item-thumbnail-left">
+                    <img ng-src="{{photo.url()}}">
+                </ion-item>
+            </ion-list>
+        </ion-item>
+    </div>
+  </ion-content>
+</ion-view>

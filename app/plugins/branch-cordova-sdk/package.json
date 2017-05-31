@@ -1,0 +1,63 @@
+{
+  "name": "branch-cordova-sdk",
+  "description": "Branch Metrics Cordova SDK",
+  "main": "www/branch.js",
+  "version": "2.5.16",
+  "homepage": "https://github.com/BranchMetrics/cordova-ionic-phonegap-branch-deep-linking",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BranchMetrics/cordova-ionic-phonegap-branch-deep-linking.git"
+  },
+  "bugs": {
+    "url": "https://github.com/BranchMetrics/cordova-ionic-phonegap-branch-deep-linking/issues"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "ecosystem:phonegap",
+    "ecosystem:ionic",
+    "cordova-ios",
+    "cordova-android",
+    "branch",
+    "linking",
+    "deep links",
+    "deep linking",
+    "universal links",
+    "app links",
+    "deferred deep linking"
+  ],
+  "platforms": [
+    "android",
+    "ios"
+  ],
+  "license": "MIT",
+  "config": {
+    "validate-commit-msg": {
+      "types": "conventional-commit-types"
+    }
+  },
+  "scripts": {
+    "changelog": "node ./src/scripts/npm/updateChangeLog -reset=true",
+    "commitmsg": "validate-commit-msg",
+    "precommit": "gulp prod",
+    "postcommit": "semantic-release pre --verifyRelease='./src/scripts/npm/updateNpmVersion' || true",
+    "prerelease": "gulp prod",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "dependencies": {
+    "mkpath": "^1.0.0",
+    "node-version-compare": "^1.0.1",
+    "plist": "^2.0.1",
+    "xml2js": "^0.4.17"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-standard": "^9.0.0",
+    "husky": "^0.13.2",
+    "mkpath": "^1.0.0",
+    "node-version-compare": "^1.0.1",
+    "plist": "^2.0.1",
+    "semantic-release": "^6.3.6",
+    "validate-commit-msg": "^2.11.2",
+    "xml2js": "^0.4.17"
+  }
+}

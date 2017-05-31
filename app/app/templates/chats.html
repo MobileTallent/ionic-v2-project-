@@ -1,0 +1,41 @@
+<ion-view>
+	<ion-nav-title class="title">Chat</ion-nav-title>
+	<ion-nav-buttons side="right">
+		<i class="button button-icon icon ion-gear-a" ng-click="chatSettings($event)"></i>
+	</ion-nav-buttons>
+
+	<ion-content>
+		<style>
+			
+		</style>
+
+		<!-- TODO style this better (style="text-align: center;font-family:'Avenir Next LT Pro Regular';font-size:18px">) -->
+		<div ng-show="!matches.length" class="center inital-chat-message-box"> 
+
+			<br/><p class="chat-inital-message"> {{'NO_MATCHES' | translate}}</p><br/>
+			<br/><p class="chat-inital-message"> {{'START_SWIPING' | translate}}</p>
+
+			<!-- buttons which tinder has
+      Discover New People
+      Invite your friends!
+      -->
+		</div>
+		
+		<div class="list" style="padding: 10px">
+			<div ng-repeat="match in matches track by match.id">
+				<a ui-sref="^.chat({matchId : match.id})" style="text-decoration:none;">
+					<div class="item item-avatar item-borderless custom-list-item">
+
+						<img src="img/generic_avatar.jpg" ng-src="{{::match.profile | profileImageUrl}}" img-cache>
+						<div ng-class-odd="'chats-list-odd'" ng-class-even="'chats-list-even'">
+							<h2 class="custom-list-item-text energized">{{::match.profile.name}}</h2>
+							<p class="custom-list-item-subtext" ng-class="match.read ? '' : 'chat-unread'" ng-bind-html="match.lastMessage | escapeHTML | emoji"
+							/>
+						</div>
+					</div>
+
+				</a>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

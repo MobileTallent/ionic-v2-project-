@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<title>Publishing to the App stores</title>
+
+<xmp theme="cerulean" style="display:none;">
+[Index](index.html)
+
+# Checklist before publishing your initial version
+* Make your production app user account an admin by running the Parse dashboard (in /server run **npm run dashboard-prod**) and for your User entry set the admin flag to true.
+* Splash screen and icon configured. See http://ionicframework.com/blog/automating-icons-and-splash-screens/
+* Facebook permissions approved (test by logging in to the app with a Facebook account that is NOT an admin for the facebook app)
+* Add the hash to the Facebook app in the Android settings
+* Test the push notifications to a real iPhone to test the push notification configuration
+* Create a public API key for your Google cloud project and add it to the google maps script in index.html
+* Lock down the external network access in */config.xml* and the Content-Security-Policy meta tags in */www/index.html*. See the inline comments and https://github.com/apache/cordova-plugin-whitelist
+* For iOS open up XCode and select the Push entitlement
+
+![Xcode push](img/xcode_push.png)
+
+* Check the Fastlane docs for any other XCode config https://docs.fastlane.tools/codesigning/xcode-project/#xcode-8-and-up
+
+# Checklist for submitting a build to the app stores
+After you've completed your initial submission checklist, to upload a new (or first) version to the app stores remember to do the following:
+
+We recommend doing the build for iOS and Android separately, i.e. provide a platform argument to the ionic build command, e.g. ionic build android --release
+* Increment the version attributes in /config.xml
+* Run **gulp prodBuild** to build with your production configuration
+* Run **ionic build --release**
+* Android - sign and align the .apk (See http://developer.android.com/tools/publishing/app-signing.html to have the build do this for you)
+* iOS - in XCode update the Version and Build number in Targets [Project Name] -> General -> Identity
+* Deploy the Parse cloud code (change into the *CloudCode* dir and run **parse deploy prod**) and run any migration scripts required (If you want to test a migration script on the production data set then export your data from Parse and import it into a new app)
+* If your new Android build gets the error "Session was closed and not closed normally." on Facebook login then you may need to add a hash to the Facebook app config
+* If you have enabled ads in Android then in your Play Store app console select the option at **Pricing & Distribution** > **CONTAINS ADS** >  *Does your application have ads?*
+
+# After publishing your first version
+
+* Post on http://forum.ionicframework.com/t/what-are-you-building-with-ionic-we-want-to-know/12244/237
+* Tell us about it!
+
+# Android
+
+http://developer.android.com/tools/publishing/publishing_overview.html
+
+</xmp>
+
+<script src="strapdown/v/0.2/strapdown.js"></script>
+</html>

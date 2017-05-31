@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<title>Setup</title>
+
+<xmp theme="cerulean" style="display:none;">
+[Index](index.html)
+
+# Setup
+
+The instructions below will get your own custom version of Cloneder setup for development.
+
+If you have any issues with building or running the app then:
+
+* Make sure you have completed **ALL** the steps. A number of support requests have been due to not uploading the Cloud code or not setting the Facebook app ids
+
+* First check the [Troubleshooting.html](Troubleshooting.html) page.
+
+* Secondly, search Google or StackOverflow with the error you are getting, as you can often find a solution very quickly.
+
+* Finally you may contacting support. Please provide the full logs from the command line and/or browser as appropriate.
+
+There are additional instructions on the [Publishing_to_app_store.html](Publishing_to_app_store.html) page for when you are ready to do a production release.
+
+There are many steps and many components required to build the app for all three platforms, web, Android and iOS.
+Please read through **ALL** the documentation provided. Once you've done the initial setup its a good idea to read through it
+all again, as when you're more familiar with the setup then more tips and steps in the documentation will make more sense.
+
+**All the bullet points in the following instructions are actions to be completed**, with additional information before/after the point.
+
+# Code Repository
+
+The Cloneder source code is currently provided as a Git repository on GitLab.com.
+
+* Create your own fork of the code repository in GitLab (Look for the Fork button at https://gitlab.com/apporchestra/cloneder)
+
+To download your fork you will want a Git GUI application such as [SourceTree](https://www.sourcetreeapp.com/)
+
+* Download and install the standard Git installation from https://git-scm.com/downloads so the git command is available from the command line.
+
+* Clone your repository to your computer using the Git command line or a Git GUI
+
+Once you have cloned the project open up a command prompt in the project root folder.
+
+* Run: **git remote add cloneder https://gitlab.com/apporchestra/cloneder.git**
+
+This will add the cloneder repository to your git configuration, allowing you to easily see new updates and merge them into your custom fork of the code.
+
+It is recommended that you frequently merge in the latest changes. If need to keep your master branch stable for a release
+then create a new branch from your master, merge in cloneder, then when you're ready merge the new branch back into your master.
+
+
+# Node.js setup
+
+The Cloneder app is primarily developed in JavaScript and TypeScript.  The build tools also uses the node.js ecosystem.
+
+* Install node.js v6.9.x LTS from http://nodejs.org/
+
+* Make sure you have the pre-requisite installations for node-gyp (See https://www.npmjs.com/package/node-gyp#installation)
+particularly for Windows users (The Visual C++ build tools, Python 2.7 and set msvs_version steps).
+
+* Change to /server and run: **npm run installglobals**
+
+If on OSX/linux you shouldn't be logged in as an admin/root user, so you will need to run it with **sudo** or [setup your npm so you don't need sudo](https://johnpapa.net/how-to-use-npm-global-without-sudo-on-osx/). In Windows you may need to run it as Administrator.
+
+If you get an error installing on Windows then to fix this delete the folder C:\Users\<username>\.node-gyp\<node_version>\include\node\openssl and retry npm install
+
+## JavaScript Development tools
+
+There are a number of IDE's you can use. We personally use WebStorm by JetBrains (https://www.jetbrains.com/webstorm/). The Ionic team have said they are quite happy using
+the new Microsoft Visual Studio. Another lightweight option is the editor Sublime.
+
+* Install WebStorm, Visual Studio or Sublime
+
+### WebStorm setup
+
+We setup two different IDE projects, one for the server folder and another for the app folder.
+
+First for the mobile app project:
+
+* File -> New Project From Existing Files...
+* Select Source files are in a local directory, no Web server is yet configured
+* Select the /app folder and select the Project Root button
+* Expand the project folder, highlight the npm_modules, bower_components, platforms, plugin-source and plugins directories, then right click and select the Excluded folder button
+
+The platforms folder will not exist yet, you can exclude it later by right clicking then Mark Directory As -> Excluded
+
+Excluding these folders speeds up WebStorm as it does not try to index the files in these folders, and avoids having duplicate
+suggestions in the auto-completion.
+
+Once the project is open, go to
+
+* Preferences... -> Languages and Frameworks -> JavaScript
+* Set JavaScript Language Version to ECMAScript 6
+
+Now create a project for the server code:
+
+* File -> New Project From Existing Files...
+* Select Source files are in a local directory, no Web server is yet configured
+* Select the /server folder and select the Project Root button
+* Expand the project folder, highlight the npm_modules then right click and select the Excluded folder button
+
+
+# Server setup (Local development)
+
+Cloneder is developed using the Parse framework. Previously Parse was a fully managed service but now that
+they are shutting down they have release an API compatible node.js server which is at
+[https://github.com/ParsePlatform/parse-server](https://github.com/ParsePlatform/parse-server)
+
+* Install MongoDB
+
+In development you will need to start the Mongo database yourself. If you want to specify where it put the data the command is in the form
+**mongod --dbpath /path/to/the/mongo-data/**
+
+* Change directory to */server* folder and run **npm install**
+
+# Mobile app initial setup
+
+### Install Android SDK
+
+* Install Android studio or the SDK tools from http://developer.android.com/sdk/installing/index.html
+
+See the Ionic tips on setting up the Android SDK at http://ionicframework.com/docs/ionic-cli-faq/#android-sdk
+
+If you have an existing SDK installation open the SDK Manager and in the Extras section make sure the following are up to date:
+
+Local Maven repository for Support Libraries<br/>
+Android Support Library<br/>
+Android Support Repository<br/>
+
+
+* Follow the instructions at at http://developer.android.com/tools/publishing/app-signing.html to generate the keystore
+
+* Save the keystore file to /app/android.keystore
+
+* Update the /app/buid.json file with the keystore alias and put the password in both fields.
+
+DO NOT lose your keystore and the alias and passwords otherwise you will not be able to upload new versions to the Play store.
+
+### Base configuration
+
+* In */server/config.json* enter your app name for the **appName** value.
+* In */app/config.xml* enter the same app name in the **name** element
+
+Choose an app id which should follow the reverse domain naming conventions, for example we have used com.apporchestra.cloneder.
+You might choose com.yourdomain.app.  This is called the package name in Android and the bundle id for your iOS app.
+
+* In */server/config.json* enter your app id for the **appId** value,
+* In */app/config.xml* and update the widget id attribute with your package name.
+
+* Update all the other appropriate values in **/app/config.xml** (email, description etc)
+
+* In */app* run **npm install**
+
+There is a currently an issue with the ionic command line tool - see https://github.com/driftyco/ionic-cli/issues/1344
+
+Remove the .bold calls from the line indicated in the issue. (On windows the global node modules path will be like C:\Users\username\AppData\Roaming\npm\node_modules)
+
+* In */app* run **ionic platform add android**
+
+**DO NOT** check in the files under /app/platforms into Git. You should be able to remove and re-add the platforms at any time.
+The scripts in the /app/hooks directory perform any custom actions required on the platform files. The .gitignore file
+is setup to ignore the files under /platforms/android|ios by default.
+
+**DO NOT** try to build the Android project from the build scripts in the /platform/android/ directory.
+You must use the **cordova** or **ionic** build commands from the /app folder which are covered later.
+You should not normally need to open the Android project /platform/android in Eclipse/ADT etc.
+
+## iOS
+
+iOS builds and app submissions can only be done on a Mac with OSX and XCode.
+
+Ionic does have an iOS build service at http://docs.ionic.io/docs/package-ios but as we use our own Mac's to build we can't comment on using it.
+
+* Install the Ruby gems package manager at https://rubygems.org/pages/download
+
+* Run ** npm run ios-setup** to install the iOS emulator plugin, ios-deploy module, and the Fastland deploy tools.
+
+This can take a while to complete and some user input will be required. When the deliver tool asks for your bundle id you
+can enter the package name used in the Android config from the previous step. Use this bundle id when you create your Apple store listing.
+
+If you are having any issues look in /app/package.json at the scripts.ios-setup value and run the commands individually
+
+* In /app run **ionic platform add ios**
+
+* Open up the project in XCode (*platforms/ios/[project_name].xcodeproj*) and make sure the Push entitlement is ON
+
+![Push](./img/push_entitlement.png "Push entitlement")
+
+Any time you re-add the ios platform you will need to check the Push entitlement is ON
+
+Follow the instructions to setup push notifications for iOS. This is complicated and you can delay doing this step until you are ready for a production build.
+https://parse.com/tutorials/ios-push-notifications. Note the following:
+
+- In section 1.7 save the certificate files (one for dev and prod) to /server, and in /server/config.json update the **devP12file** and **prodP12file** properties with the certificate file name
+- Skip section 5 as the Parse push plugin will handle that.
+
+
+# Facebook
+
+Cloneder requires a Facebook app to provide authentication and details from the users Facebook accounts.
+
+* Go to https://developers.facebook.com/ and create a new app.
+
+### Facebook Web setup
+
+* In the app Settings add the Website platform.
+
+* Set the Site URL to http://localhost:8100/
+
+This will allow the oAuth callback from Facebook when developing in the browser.
+
+### Facebook Android setup
+
+Start with Android
+
+Enter your app name
+
+Fill in the section 'Tell us about your Android project"<br/>
+Package name: Use the one you decided in the previous *App initial setup* section above.<br/>
+Default Activity Class Name (add .CordovaAppp to the package name, for example com.engineerstoolbox.cloneder.CordovaApp)
+
+To get the release key hash you have two options.
+Run (replacing YOUR_RELEASE_KEY_ALIAS and YOUR_RELEASE_KEY_PATH with the appropriate values):
+keytool -exportcert -alias YOUR_RELEASE_KEY_ALIAS -keystore YOUR_RELEASE_KEY_PATH | openssl sha1 -binary | openssl base64<br/>
+(You will have need to completed the android setup and release steps to have this. You can do it later)
+
+There is a npm script in /app/package.json with this command configured to read the alias and keystore name from the /app/build.json file.<br/>
+In /app run **npm run generate-hash**
+
+(You will need the Java bin directory and OpenSSL bin directory on your PATH for this script to work)
+
+Or otherwise just try and login to Facebook. You will get an error like "The hash aurhgu3u4gh9a3u4hg= is not found"
+Then type that hash into the Facebook Android hash configuration.
+
+### Facebook App settings
+
+It may be advisable to increase the age restriction to 18+
+
+* Status & Review tab.  Set status to Live/YES
+
+### Facebook configuration setup
+
+* In /server/config.json update the facebookAppId and facebookAppName with your Facebook app id and name.
+
+* In the /app folder run: **npm run addFacebookPlugin**
+
+* Commit the new and updated files to Git
+
+At some point you will need to submit your Facebook application for review so the app use the extended permissions to get the birthdate, likes and photos from the users facebook account.
+Note: You will need to remove the website platform when you submit your application for review to enable the extended permissions
+The estimated review time is 7 days an in that time you can't re-add the website platform.
+What you can do temporarily is make another facebook app with the website platform and update the var FACEBOOK_APP_ID in /server/config.js while you are waiting for it to be approved.
+
+# Google Cloud Platform (GCP) account setup
+
+A Google Cloud account is required as a minimum for push notifications and maps.
+
+* Create your Google Cloud account and go to the projects page at https://console.cloud.google.com/iam-admin/projects
+
+* Click Create Project and name it in the format appname-prod (for example we named ours cloneder-prod)
+
+The project naming convention is used in the configuration is appName-environment, e.g. appName-prod, appName-qa
+
+If you will be hosting your production server on the GCP then open the advanced options and select the location that is closest to your main user base.
+If unsure, or expecting global users then leave as the default option.
+
+* Go to the IAM & Admin -> Settings page. In */server/config.json* copy the Project ID and Project number to the values for **prod.gcpProjectId** and *prod.gcpProjectNumber**
+
+* Go to API Manager -> Credentials and create a new service account key in json format.
+
+* Download the file then save it as */server/service-account-key-prod.json*
+
+* In API Manager -> Credentials chose Create credentials -> API key and enter the value in */server/config.json* for **gcpBrowserKey** and **gcpServerKey**
+
+* Go to API Manager -> Overview and enable the following APIs:
+    * Google Maps JavaScript API
+    * Google App Engine Admin API
+    * Google Play Android Developer API
+
+
+#### Enable Google Play Android Developer API
+
+* Go to the [Google Play Developer Console](https://play.google.com/apps/publish/) and create your initial app listing.
+
+* In the Play console go to Settings -> API access and link your production project and the grant access to the service account you created in the previous step.
+
+TODO https://github.com/ParsePlatform/Parse-Server/wiki/Push-Configuring-Clients#configure-broadcast-receiver-and-permissions
+
+* Commit the new and updated files to Git
+
+# Parse setup
+
+* In */server/config.json* enter a value for **parseAppId** and **parseMasterKey** (random numbers and letters, about 16 characters is good)
+
+* In the */app* folder run: **npm run addParsePlugin**, which installs the Parse push plugin.
+
+* In app/config.xml update the ParseGcmSenderId preference value to be that of **prod.gcpProjectNumber** in */server/config.json*
+
+* Commit the new and updated files to Git
+
+### Twilio video chat (optional)
+
+Twilio is used for the real-time video chat (and in the future will be used for SMS notifications).
+
+* Create an account at http://www.twilio.com and upgrade to a paid account.
+
+* Create a set of API keys (Dev Tools -> API Keys)
+
+* Create a video profile (Programmable Video -> Configuration Profiles)
+
+* Enter these Twilio configuration values in */server/config.json* and commit to Git
+
+**account_sid** is your Twilio account id<br/>
+**api_key** is from https://www.twilio.com/user/account/video/dev-tools/api-keys<br/>
+**configuration_sid** is from https://www.twilio.com/user/account/video/profiles<br/>
+
+
+### LinkedIn (optional)
+
+If you want to enable the optional LinkedIn authentication then:
+
+* Create an app(s) at https://www.linkedin.com/developer/apps
+
+* In the app settings check r_basicprofile and r_emailaddress
+
+* Add http://localhost/callback to the OAuth2 callbacks
+
+* Copy the Client Id and Client Secret to the **linkedInId** and **linkedInSecret** values in */server/config.json* and commit to Git
+
+Note that the LinkedIn authentication doesn't work when developing in the browser, as it relies on a Cordova plugin
+when running on a device (or emulator).
+
+### AdMob (optional)
+
+AdMob is the Google mobile advertising product. If you want banner and/or then do the following:
+
+* Create and account at https://www.google.com/admob/
+
+* Enter the appropriate ids in /server/config.json in the **adMob** section and commit to Git.
+
+* If you enable ads in Android then in the Google Play Store developer console for your app select the option at
+**Pricing & Distribution** > **CONTAINS ADS** >  *Does your application have ads?*
+
+If you enter the ids for a platform then the default code is to display a banner ad which is configured in /app/js/app.js
+
+See https://github.com/floatinghotpot/cordova-admob-pro for more details on configuring ads
+
+For the Android build you will need some extras installed in the Android SDK Manager otherwise you will get build errors.
+
+![alt text](./img/admobpro.png "AdMobPro")
+
+### Icons
+
+* Read http://ionicframework.com/docs/cli/icon-splashscreen.html for creating and setting up your slash screen and icon images.
+
+More info on icon/splash resources at http://ionicframework.com/blog/automating-icons-and-splash-screens/
+
+
+# Development - Running the app in Chrome/Safari
+
+Start the node.js Parse server. From the /server folder run **npm start**
+
+**DO NOT** use the **ionic serve** command which you would know if you are familiar with Ionic. The provided gulp file in
+this project is more advanced and provides production grade features.
+
+* From the /app folder run: **gulp**
+
+This will start a continuous build process which does not exit, and watches for changes to the files to rebuild.
+
+You should see some console output like this when the initial build is complete:
+```
+[09:22:05] Finished 'templates' after 5.02 s
+[09:22:07] Finished 'js' after 6.33 s
+app/js/controller-profile.ts(97,17): 2339 Property 'findLastIndex' does not exist on type 'UnderscoreStatic'.
+app/js/controller-profile.ts(149,24): 2304 Cannot find name 'CameraPopoverOptions'.
+app/js/controller-profile.ts(156,24): 2339 Property 'cropPhoto' does not exist on type 'IAppRootScope'.
+[09:22:09] Finished 'compile-ts' after 9.78 s
+[09:22:35] Finished 'lib-css' after 35 s
+[09:22:35] Finished 'lib' after 35 s
+[09:22:35] Starting 'default'...
+[09:22:35] Finished 'default' after 5.51 μs
+```
+Ignore the 3 TypeScript warnings.
+
+* Open up [http://localhost:8100](http://localhost:8100) in Chrome.
+
+If everything is configured ok you should see the running app.
+
+Any changes to the files under app and bower_components will be compiled, joined together and compressed, then copied to the www folder
+(the output files are app.js, app.ts.js, app.css, templates.js, lib.js, lib.css)
+
+As you make JS, CSS and HTML changes you should only need to refresh the browser to get the changes.
+
+The gulp build supports dev, qa and productions build with different configuration parameters. See the *envConfig* task
+in the gulp file and the main config file /server/config.json. To do a production configured build run:
+**gulp --env prod**
+
+# Build/Run with Emulators or Real Devices
+
+Its possible to test on a device with the local development server. You will need to find the IP address of your
+computer that the phone will be able to find through USB or your local network, then update the dev.parseServerUrl value
+in /server/config.json and restart gulp.  Otherwise deploy the sever app to the cloud and use a qa environment.
+Instructions for Google App Engine, which we recommend, are further below.
+
+
+**NOTE:** We have noticed when adding the android platform not all the plugins are installed/configured,
+(in particular ionic-plugin-keyboard, cordova-plugin-file, cordova-plugin-device and the parse push plugin)
+hence in the initial install script the **ionic state restore --plugins** command is run.
+If you are re-adding a platform you may need to run this manually.
+
+### Android
+
+If you don't have an Android device and are using the emulator then don't use the default emulator which is very slow,
+instead use [Genymotion](https://www.genymotion.com/)
+
+* Run: **ionic run android**
+
+If an Android device is connected it will deploy the .apk to the device and launch the app. Otherwise it will open it with the emulator.
+
+### iOS
+
+If you have installed ios-sim then
+
+* Run: **ionic run ios**
+
+To run the emulator. The console log will end with the file path to the logs from the emulator.  Similar to the path below (with username replace to what your Mac username is)
+
+* Run: ** tail -r /Users/username/appname/platforms/ios/cordova/console.log**
+
+to view the logs while you are using the emulator.
+
+To deploy a debug build to your real iOS device you will need to do it from XCode.
+
+The iOS emulator is sufficient for most purposes. The main limitation is it can't receive push notifications.
+
+# Admin Dashboard
+
+The admin dashboard is a separate Parse project at https://github.com/ParsePlatform/parse-dashboard
+
+The parse-dashboard should already be installed from the previous server setup step (npm run installglobals)
+
+Npm scripts in /server/package.json are provided to automatically start the dashboard with the correct parameters.
+
+In /server run **npm run dashboard-dev** or **npm run dashboard-qa** or **npm run dashboard-prod**
+
+The console output will say it is running at http://0.0.0.0:4000. On Windows you may need to put http://localhost:4000 into the browser
+
+# Merging updates
+
+After creating your fork of Cloneder, there will be updates to Cloneder to merge into your code.
+
+In BitBucket you will see a notification if there are new updates in the Cloneder to sync into your fork. You should
+regularly sync the cloneder code.
+
+As you merge the changes in be sure to read the commit messages for each changeset as there may be notes on what you
+need to do to your app or development environment to be compatible with the update. Look for MERGE NOTES in the changeset
+comments. Also briefly look through the changes in the files.
+
+
+
+
+
+# Google Cloud Platform QA/Production server setup
+
+We run our Cloneder projects on the Google Cloud Platform. The following instructions are if you
+intend to run the database and servers on the Google Cloud Platform using the Google App Engine.
+
+For other hosting options follow the documentation on the [Parse wiki](https://github.com/ParsePlatform/parse-server/wiki)
+
+* Install the Google Cloud SDK https://cloud.google.com/sdk/docs/
+
+* Install the beta command for the gcloud Google Cloud SDK
+
+* run: gcloud auth login
+
+* Next go to the Google Cloud console at https://console.cloud.google.com
+
+* Create a billing account (which you will need to enable billing for your projects) https://support.google.com/cloud/answer/6293499?hl=en
+
+* Create a project for each environment you want in the cloud (QA, production etc) with billing enabled (e.g appname-prod, appname-qa). You should have already created the production project in the previous step.
+
+* In **/server/config.json** update the GCP configuration values in the qa and prod sections. (**serverUrl** must be in the format https://<project-id>.appspot.com/ )
+
+## Database setup
+
+### Mongo QA/production databases
+
+#### Option 1 - Managed database
+
+MLab provides fully managed Mongo databases at https://mlab.com.
+
+**Make sure you select the same region as the App Engine region in your project**
+
+* Create the Mongo database with the appropriate specifications
+
+* In */server/config.json* update the **qa.databaseURI** and/or **prod.databaseURI** with the IP address of the Mongo database
+
+#### Option 2 - Self-managed
+
+* Go to the Google Cloud Launcher (https://console.cloud.google.com/launcher?project=PROJECT-NAME)
+
+* Search for the **MongoDB (Google Click to Deploy)** option
+
+* Make sure the zone is in your projects App Engine region
+
+For a cheapest setup option (for QA or low traffic prod apps) select:<br/>
+    Node count: 1<br/>
+    Machine type: f1-micro<br/>
+    Data Disk Type: SSD<br/>
+    Disk Size in GB: 10GB<br/>
+    Arbiter count: 0<br/>
+
+* When the deployment in complete go to Compute Engine -> VM Instances and copy the internal IP for your Mongo database
+
+* In */server/config.json* update the **qa.databaseURI** and/or **prod.databaseURI** with the IP address of the Mongo database as appropriate and commit to Git
+
+For detailed information on the node.js runtime environment on Google App Engine see https://cloud.google.com/appengine/docs/flexible/nodejs/runtime
+
+To deploy the server app go to */server* and run **npm run deploy-prod**
+
+There is also **npm run deploy-qa** command configured in the */server/package.json*
+
+</xmp>
+
+<script src="strapdown/v/0.2/strapdown.js"></script>
+</html>

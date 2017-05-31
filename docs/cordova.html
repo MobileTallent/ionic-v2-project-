@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<title>Cordova</title>
+
+<xmp theme="cerulean" style="display:none;">
+[Index](index.html)
+
+# Cordova
+
+Apache Cordova is the open source project that was donated from, and the basis of, Adobe PhoneGap.
+
+It provides the ability to develop 'hybrid mobile apps' where the majority of the UI and logic is 
+coded as a web appication in an embedded web view. Cordova provides the ability to interface with 
+native code via a JavaScript interface.
+
+Generally the project configuration commands you will use are adding/remove platforms (android, ios) and adding/removing plugins.
+
+**ionic platform add ios**
+
+**ionic platform remove ios**
+
+**ionic platform add android**
+
+**ionic platform remove android**
+
+You should not edit anything under **/platforms/ios** or **/platforms/android**
+It should be possible to remove and add the platforms back at any time.
+If you do need to make tweaks, as we have had to in the Cloneder project, it should be done by
+updating the plugins or by the cordova hooks.
+
+
+## Cordova lifecycle hooks
+
+Cordova has hooks which allows scripts to be run at various stages of development cycle, and are found in the folder **/hooks**
+
+The Cloneder project has a number of custom hooks to automate the project setup and configuration from common issues. (A number of the other hooks come from ionic-cli)
+
+1. Add the android:name attribute to the application tag in AndroidManifest.xml for the CustomApplication ([Stackoverflow](http://stackoverflow.com/questions/23560414/apache-cordova-app-crashes-after-receiving-parse-com-push-notification/23574678))
+2. Ensure Gulp has run to copy the CustomApplication class source to in /platforms/android
+3. Add a build-extras.gradle to the android project to fix dependancy conflicts between the Parse and Facebook plugin
+4. Ensure a Gulp production build has been done before running the builds for the phones.
+
+
+</xmp>
+
+<script src="strapdown/v/0.2/strapdown.js"></script>
+</html>

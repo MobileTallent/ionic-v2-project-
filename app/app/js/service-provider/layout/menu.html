@@ -1,0 +1,80 @@
+<ion-side-menus enable-menu-with-back-views="false" ng-controller="SpMenu as vm">
+  <ion-side-menu-content>
+    <ion-nav-bar class="bar-positive">
+      <ion-nav-back-button></ion-nav-back-button>
+      <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+      </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-nav-view id="service-provider" name="menuContent"></ion-nav-view>
+  </ion-side-menu-content>
+  <ion-side-menu side="left" id="sp-menu">
+    
+    <ion-content has-bouncing="true" scroll="false">
+      <div class="sidemenu">
+        <div class="profile" menu-close>
+          <img src="{{vm.service_provider.image_cover}}" alt="">
+          <div class="names">
+            <h2>{{vm.service_provider.name}}</h2><br>
+            <span>Corporate account - ${{vm.service_provider.balance}}</span>
+          </div>
+        </div>
+
+        <div class="menu-items">
+          <h2 class="menu-title">General</h2>
+
+          <div class="menu-item energized" menu-close ui-sref='sp.home'>
+            <i class="icon ion-ios-barcode-outline"></i>
+            <span class="text">Quick info</span>
+          </div>
+
+          <div class="menu-item energized" menu-close ui-sref='sp.enquiries'>
+            <i class="icon ion-android-done-all"></i>
+            <span class="text">Incoming Enquiries</span>
+            <span class="menu-count" ng-if="$root.unread_enquiries>0">{{$root.unread_enquiries}}</span>
+          </div>
+
+          <h2 class="menu-title">My provider</h2>
+
+          <div class="menu-item energized" menu-close ui-sref='sp.my-services'>
+            <i class="icon ion-ios-keypad-outline"></i>
+            <span class="text">My Services</span>
+          </div>
+
+          <div class="menu-item energized" menu-close ui-sref='sp.info-cards'>
+            <i class="icon ion-social-buffer-outline"></i>
+            <span class="text">Info Cards</span>
+          </div>
+
+          <div class="menu-item energized" menu-close ui-sref='sp.hot-beds'>
+            <i class="icon ion-ios-albums-outline"></i>
+            <span class="text">Hotbeds</span>
+          </div>
+
+          <div class="menu-item energized" menu-close ui-sref='sp.users'>
+            <i class="icon ion-ios-people-outline"></i>
+            <span class="text">Users</span>
+          </div>
+
+          <h2 class="menu-title">Settings</h2>
+          
+          <div class="menu-item energized" menu-close ui-sref='sp.manage-account'>
+            <i class="icon ion-ios-briefcase-outline"></i>
+            <span class="text">Manage Account</span>
+          </div>
+
+          <div class="menu-item energized" menu-close ui-sref='sp.help-faq'>
+            <i class="icon ion-ios-help-outline"></i>
+            <span class="text">Help &amp; FAQ</span>
+          </div>
+
+          <div class="menu-item energized" menu-close ui-sref='signin'>
+            <i class="icon ion-log-out"></i>
+            <span class="text" style="color: #444;">Switch to user app</span>
+          </div>
+
+        </div>
+      </div>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>

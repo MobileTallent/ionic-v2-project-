@@ -1,0 +1,22 @@
+<ion-view view-title="People Who Liked Me">
+	<ion-content ng-controller="LikedMe as vm">
+
+		<ion-refresher pulling-text="{{'PULL_TO_REFRESH' | translate}}" on-refresh="vm.refresh()">
+		</ion-refresher>
+
+		<div ng-if="!vm.profiles.length" class="center inital-chat-message-box">
+			<p class="chat-inital-message">{{'NO_LIKES' | translate}}</p>
+		</div>
+
+		<div class="list" style="padding:10px;">
+
+			<div ng-repeat="profile in vm.profiles" ng-click="vm.view($index)">
+				<div class="item item-avatar item-borderless custom-list-item">
+					<img src="img/generic_avatar.jpg" ng-src="{{profile | profileImageUrl}}">
+					<div ng-class-odd="'chats-list-odd'" ng-class-even="'chats-list-even'">
+						<h2 class="custom-list-item-text energized">{{profile.name}}, {{profile | profileAge}}</h2>
+						<p class="custom-list-item-subtext">{{profile.location | distance}} {{'AWAY' | translate}}</p>
+					</div>
+				</div>
+	</ion-content>
+</ion-view>

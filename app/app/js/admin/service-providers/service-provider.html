@@ -1,0 +1,98 @@
+<ion-view title="Service Provider" ng-controller="ServiceProvider as vm">
+
+    <ion-content>
+        <div ng-if="vm.provider">
+
+            <div class="list card">
+                <div class="item item-avatar">
+                    <img style="top: 16px;left: 16px;max-width: 40px !important;max-height: 40px !important;" ng-src="{{vm.provider.image_cover}}">
+                    <h2>{{vm.provider.name}}</h2>
+                    <p>{{vm.provider.country}}</p>
+
+                </div>
+
+                <div class="item item-body">
+                    <div class="row">
+                        <div class="col">
+                            <p style="margin-top: 0px;">Created at</p>
+                        </div>
+                        <div class="col">
+                            <p style="margin-top: 0px;">{{vm.provider.createdAt | date:'dd MMM yyyy'}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p style="margin-top: 0px;">E-mail</p>
+                        </div>
+                        <div class="col">
+                            <p style="margin-top: 0px;">{{vm.provider.email}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p style="margin-top: 0px;">Phone number</p>
+                        </div>
+                        <div class="col">
+                            <p style="margin-top: 0px;">{{vm.provider.phone_number}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p style="margin-top: 0px;">Balance</p>
+                        </div>
+                        <div class="col">
+                            <p style="margin-top: 0px;">$ {{vm.provider.balance}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="list">
+                <a class="item item-icon-left item-icon-right"  ui-sref="^.userAdmin({userId : vm.provider.uid})">
+                    <i class="item-note icon ion-ios-person-outline"></i>
+                    Primary user profile
+                    <span class="item-note">
+                        <i class="icon ion-chevron-right"></i>
+                    </span>
+                </a>
+                <a class="item item-icon-left item-icon-right" ui-sref="^.adminInfoCards({pid : vm.provider.id})">
+                    <i class="item-note icon ion-social-buffer-outline"></i>
+                    <span class="badge badge-assertive" style="right: 60px;">{{vm.lengths.infocards}}</span>
+                    Info cards
+                    <span class="item-note">
+                        <i class="icon ion-chevron-right"></i>
+                    </span>
+                </a>
+                <a class="item item-icon-left item-icon-right" ui-sref="^.adminServices({pid : vm.provider.id})">
+                    <i class="item-note icon ion-ios-keypad-outline"></i>
+                    <span class="badge badge-assertive" style="right: 60px;">{{vm.lengths.services}}</span>
+                    Services
+                    <span class="item-note">
+                        <i class="icon ion-chevron-right"></i>
+                    </span>
+                </a>
+                <a class="item item-icon-left item-icon-right" ui-sref="^.adminHotBeds({pid : vm.provider.id})">
+                    <i class="item-note icon ion-ios-albums-outline"></i>
+                    <span class="badge badge-assertive" style="right: 60px;">{{vm.lengths.hotbeds}}</span>
+                    HotBeds
+                    <span class="item-note">
+                        <i class="icon ion-chevron-right"></i>
+                    </span>
+                </a>
+                <a class="item item-icon-left item-icon-right" ui-sref="^.adminUsers({pid : vm.provider.id})">
+                    <i class="item-note icon ion-ios-people-outline"></i>
+                    <span class="badge badge-assertive" style="right: 60px;">{{vm.lengths.users}}</span>
+                    Users
+                    <span class="item-note">
+                        <i class="icon ion-chevron-right"></i>
+                    </span>
+                </a>
+            </div>
+
+
+            <div class="wide center padding-10">
+                <button class="button button-block button-assertive" ng-click="vm.delServiceProvider(vm.provider)">Delete Provider</button>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

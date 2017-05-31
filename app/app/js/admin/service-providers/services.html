@@ -1,0 +1,23 @@
+<ion-view view-title="Services" ng-controller="Services as vm">
+
+    <ion-content>
+
+        <div ng-show="!vm.services.length" style="text-align: center;font-family:'Avenir Next LT Pro Regular';font-size:18px">
+            <br/>
+            {{'No results' | translate}}<br/>
+        </div>
+        <div class="list">
+            <a class="item item-icon-right" 
+               ng-repeat="service in vm.services track by service.id" 
+               ui-sref="^.adminService({service : service})"
+            />
+                <h2>{{::service.title}}</h2>
+                <p ng-if="service.active">Active</p>
+                <p ng-if="!service.active">Disabled</p>
+                <span class="item-note">
+                        <i class="icon ion-chevron-right"></i>
+                </span>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>
