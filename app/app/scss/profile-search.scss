@@ -42,7 +42,22 @@
     font-size: 16px;
     max-height: 68px;
     overflow: hidden;
+    position: relative;
+
 }
+
+.fade-box {
+    width: 100%;
+    z-index: 1000;
+    position: absolute; 
+    height: 30px;
+    bottom: 0; 
+    left: 0;
+    width: 100%; 
+    max-height: 68px;
+    background-image: linear-gradient(to bottom, transparent, white);
+}
+
 
 //Badges
 .badge-row-search {

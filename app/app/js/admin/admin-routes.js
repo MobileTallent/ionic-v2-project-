@@ -199,4 +199,12 @@ angular.module('ionicApp').config(function($stateProvider) {
                 }
             }
         })
+        .state('menu.adminCardsDeckSettings', {
+            url: "/users/:pid",
+            views: {
+                'menuContent': {
+                    templateUrl: "admin/service-providers/cards-deck-settings.html"
+                }
+            }
+        })
 }) 

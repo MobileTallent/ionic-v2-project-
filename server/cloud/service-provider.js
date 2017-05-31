@@ -5,6 +5,16 @@ var HotBed = Parse.Object.extend("HotBed")
 var Enquire = Parse.Object.extend("Enquire")
 var ProviderQuestion = Parse.Object.extend("ProviderQuestion")
 var Profile = Parse.Object.extend("Profile")
+var CardsDeckSetting = Parse.Object.extend("CardsDeckSetting")
+
+function checkAdmin(request, response) {
+    if (!request.user.get('admin')) {
+        response.error('You do not have admin permission')
+        return false
+    }
+    Parse.Cloud.useMasterKey()
+    return true
+}
 
 /* Get Service Providers */
 Parse.Cloud.define('GetServiceProviders', function(request, response) {
@@ -572,3 +582,44 @@ Parse.Cloud.define("GetUsers", function(request, response) {
 
 
 });
+
+/* Get Deck Settings */
+Parse.Cloud.define('GetCardsDeckSettings', function(request, response) {
+    if (!checkAdmin(request, response))
+        return
+        
+    console.log('GetCardsDeckSettings')
+    new Parse.Query(CardsDeckSetting).first().then(function(result) {
+        console.log("Successs " + JSON.stringify(result))
+        response.success(result.toJSON())
+    }, function(error) {
+        console.log("Erroorrr: " + JSON.stringify(error))
+        response.error(error)
+    })
+})
+
+/* Add/Edit Deck Settings */
+Parse.Cloud.define('AddCardsDeckSettings', function(request, response) {
+    if (!checkAdmin(request, response))
+        return
+
+    console.log('addEditCardsDeckSettings')
+    var deckSettingsData = request.params.deckSettings
+
+    if (!deckSettingsData)
+        return response.error('deckSettingsData parameter must be provided')
+
+    var deckSettings = new CardsDeckSetting()
+    if (deckSettingsData.id) {
+        deckSettings.id = deckSettingsData.id
+        delete deckSettingsData.id
+    }
+
+    deckSettings.save(deckSettingsData).then(function(result) {
+        console.log("Success saving deckSettings")
+        response.success("Success saving deckSettings")
+    }, function(error) {
+        console.log("Error saving deckSettings")
+        response.error(error)
+    })
+})

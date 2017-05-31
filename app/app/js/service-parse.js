@@ -254,6 +254,18 @@ var ProviderQuestion = Parse.Object.extend({
     attrs: providerQuestionFields
 })
 
+/**
+ * @typedef {Object} CardsDeckSetting
+ * @property {boolean} profile_cards - show profile cards or not
+ * @property {boolean} info_cards - show info cards or not
+ * @property {number} deck_size - show info cards or not
+ * @property {number} cards_ratio - show info cards or not
+ */
+var cardsDeckSettingFields = ['profile_cards', 'info_cards', 'deck_size', 'cards_ratio']
+var CardsDeckSetting = Parse.Object.extend({
+    className: "CardsDeckSetting",
+    attrs: cardsDeckSettingFields
+})
 
 enhance(Parse.User.prototype, userFields)
 enhance(Profile.prototype, profileFields)
@@ -271,6 +283,7 @@ enhance(PrService.prototype, PrServiceFields)
 enhance(HotBed.prototype, HotBedFields)
 enhance(Enquire.prototype, EnquireFields)
 enhance(ProviderQuestion.prototype, providerQuestionFields)
+enhance(CardsDeckSetting.prototype, cardsDeckSettingFields)
 
 function enhance(prototype, fields) {
     for (var i = 0; i < fields.length; i++) {
@@ -467,7 +480,9 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         getProviderQuestions: getProviderQuestions,
         addProviderQuestions: addProviderQuestions,
         delProviderQuestions: delProviderQuestions,
-        getUsers: getUsers
+        getUsers: getUsers,
+        getCardsDeckSettings:getCardsDeckSettings,
+        addCardsDeckSettings:addCardsDeckSettings
     }
 
     return service
@@ -1261,6 +1276,14 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
     function getUsers(audience) {
         return Parse.Cloud.run('GetUsers', {audience:audience}).catch(_unwrapError)
+    }
+
+    function getCardsDeckSettings() {
+        return Parse.Cloud.run('GetCardsDeckSettings').catch(_unwrapError)
+    }
+
+    function addCardsDeckSettings(deckSettings) {
+        return Parse.Cloud.run('AddCardsDeckSettings', { deckSettings: deckSettings }).catch(_unwrapError)
     }
 
     // Private functions
