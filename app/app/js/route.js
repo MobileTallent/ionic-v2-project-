@@ -169,16 +169,16 @@ angular.module('ionicApp').config(function($stateProvider, $urlRouterProvider) {
             views: {
                 'menuContent': {
                     templateUrl: "profile-video-confirm.html",
-                    controller: "ProfileShareVideoCtrl"
+                    controller: "ProfileMainVideoCtrl"
                 }
             }
         })
-        .state('menu.profile-video-process', {
-            url: "/profile-video-process",
+        .state('menu.profile-video-list', {
+            url: "/profile-video-list",
             views: {
                 'menuContent': {
-                    templateUrl: "profile-video-process.html",
-                    controller: "ProfileShareVideoCtrl"
+                    templateUrl: "profile-video-list.html",
+                    controller: "ProfileVideoListCtrl"
                 }
             }
         })

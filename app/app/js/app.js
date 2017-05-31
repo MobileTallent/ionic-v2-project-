@@ -2,7 +2,7 @@ var platformReady, fbJsSdkLoaded
 
 var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUtil', 'templates', 'controllers', 'controllers.share', 'service.app', 'service-provider',
         'ui.slider', 'ngImgCrop', 'ngAnimate', 'pascalprecht.translate', 'emoji', 'ImgCache', 'monospaced.elastic',
-        'ngStorage', 'SocialAuth', 'ngCookies', 'filters', 'chart.js'
+        'ngStorage', 'SocialAuth', 'ngCookies', 'filters', 'chart.js', 'ngCordova'
         // Add your own extra dependencies on the line below with the comma first to make merging updates easier
 
     ])
@@ -153,6 +153,19 @@ var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUt
 
 app.service('VideoService', function($q) {
     // Resolve the URL to the local file
+
+    var deferred = $q.defer();
+    var promise = deferred.promise;
+
+    promise.success = function(fn) {
+        promise.then(fn);
+        return promise;
+    };
+    promise.error = function(fn) {
+        promise.then(null, fn);
+        return promise;
+    };
+
     // Start the copy process
     function createFileEntry(fileURI) {
         window.resolveLocalFileSystemURL(fileURI, function(entry) {
@@ -220,17 +233,5 @@ app.service('VideoService', function($q) {
             createFileEntry(data[0].localURL);
             return promise;
         }
-    }
-
-    var deferred = $q.defer();
-    var promise = deferred.promise;
-
-    promise.success = function(fn) {
-        promise.then(fn);
-        return promise;
-    }
-    promise.error = function(fn) {
-        promise.then(null, fn);
-        return promise;
-    }
+    };
 });

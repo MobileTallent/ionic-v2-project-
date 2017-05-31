@@ -816,7 +816,9 @@ angular.module('controllers')
             $scope.video = {
                 created_date: today,
                 title: "",
-                desc: ""
+                desc: "",
+                url: "",
+                thumb: ""
             };
 
             $scope.clip = '';
@@ -865,27 +867,33 @@ angular.module('controllers')
         $scope.recordVideo = function() {
             console.log("video capture start.");
             var options = { limit: 1, duration: 30 };
+
             $cordovaCapture.captureVideo(options).then(function(videoData) {
                 $scope.currentVideoPath = videoData[0].fullPath;
+
+                console.log("videoData :" + $scope.currentVideoPath);
+
+                var video = document.getElementById('video_to_upload');
+                video.src = videoData[0].fullPath;
 
                 VideoService.saveVideo(videoData).success(function(data) {
                     $scope.clip = data;
                     $scope.$apply();
 
-                    $state.go("menu.profile-video-main");
+                    console.log("data :" + data);
+
+                    $window.location.reload(true);
 
                 }).error(function(data) {
                     console.log('ERROR: ' + data);
                 });
 
-                // $state.go("menu.profile-video-main");
             }, function(err) {
                 console.log("video capture error founded!");
             });
         }
 
         $scope.goShare = function() {
-            $scope.closeEntryModal();
             $scope.openEditModal();
         }
 
@@ -907,6 +915,7 @@ angular.module('controllers')
             var name = clipUrl.substr(clipUrl.lastIndexOf('/') + 1);
             var trueOrigin = cordova.file.dataDirectory + name;
             var sliced = trueOrigin.slice(0, -4);
+
             return sliced + '.png';
         };
 
@@ -914,16 +923,9 @@ angular.module('controllers')
             console.log('show clip: ' + clip);
         };
 
-        $scope.getThumbnail = function(fileURI) {
-            navigator.createThumbnail(fileURI, function(err, imageData) {
-                if (err)
-                    throw err;
-
-                console.log(imageData); // Will log the base64 encoded string in console. 
-            });
-        };
-
         $scope.saveVideo = () => {
+            // $scope.editModal.hide();
+            // $state.go('menu.profile-video-list');
             var filePath = getCorrectFilePath();
             if ($scope.currentVideoPath.length > 0)
                 doUploadToYoutube(filePath);
@@ -949,7 +951,9 @@ angular.module('controllers')
             $scope.video = {
                 created_date: today,
                 title: "",
-                desc: ""
+                desc: "",
+                url: "",
+                thumb: ""
             };
             $scope.currentVideoPath = '';
 
@@ -997,11 +1001,19 @@ angular.module('controllers')
                     if (typeof res["status"] != "undefined" && typeof res["status"] != null) {
                         //a service will be called here to add user video link to the server, two new column will be added to the database: 
                         // 'youtubeVid' this column is a boolean and will i fthe user has a video or not, 'youtubeVidUrl', this column will contain the youtube url   
+                        $scope.video.url = res["video_url"];
+                        $scope.video.thumb = $scope.urlForClipThumb($scope.clip);
+
+                        $rootScope.profileVideo = $scope.video;
+                        // $localStorage.profileVideo.push($scope.video);
+
                         $ionicPopup.alert({
                             title: "Successfull",
                             template: "Video Successfully uploaded. Thanks you for sharing!<br> Link:<b>" + res["video_url"]
                         }).then(function(result) {
                             $scope.closeEditModal();
+
+                            $state.go('menu.profile-video-list');
                         });
                     } else {
                         $ionicPopup.alert({
@@ -1011,7 +1023,6 @@ angular.module('controllers')
                             // $scope.closeEditModal();
                         });
                     }
-
 
                 }, function(err) {
                     // Error
@@ -1026,4 +1037,16 @@ angular.module('controllers')
                     // constant progress updates
                 });
         }
+    })
+    .controller('ProfileVideoListCtrl', function($scope, $state, $window, $cordovaSocialSharing, $rootScope, $ionicModal, $ionicLoading, $localStorage) {
+
+        // $scope.videoList = {};
+
+        $scope.$on('$ionicView.beforeEnter', () => $scope.readyVideo())
+
+        $scope.readyVideo = function() {
+            // $scope.videoList = $localStorage.profileVideo;
+            $scope.videoList = $rootScope.profileVideo;
+        }
+
     });
