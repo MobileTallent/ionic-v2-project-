@@ -1,11 +1,13 @@
-<ion-view view-title="{{'PROFILE_TITLE' | translate}}" cache-view="false"><!-- disable caching otherwise the view layout goes wierd when returning to it -->
+<ion-view view-title="{{'PROFILE_TITLE' | translate}}" cache-view="false">
+    <!-- disable caching otherwise the view layout goes wierd when returning to it -->
     <ion-nav-buttons side="right">
         <i class="button button-icon icon ion-edit" ui-sref="menu.profile-edit"></i>
     </ion-nav-buttons>
     <ion-content>
-        <profile-details profile="profile" ></profile-details>
+        <profile-details profile="profile"></profile-details>
         <div class="padding-left-right">
-            <facebook-details></facebook-details>
+            <!--<facebook-details></facebook-details>-->
         </div>
     </ion-content>
+    <span class="fixed-fade-box" />
 </ion-view>
