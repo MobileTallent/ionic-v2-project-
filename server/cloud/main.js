@@ -444,6 +444,7 @@ Parse.Cloud.define("GetMutualMatches", function(request, response) {
     matchesQuery.equalTo('state', 'M')
     matchesQuery.limit(1000)
     matchesQuery.containedIn('objectId', matchIds)
+    matchesQuery.descending('matchedDate')
 
     matchesQuery.find(masterKey).then(function(matches) {
         var result = []
