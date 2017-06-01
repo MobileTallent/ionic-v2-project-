@@ -56,6 +56,19 @@
     width: 100%; 
     max-height: 68px;
     background-image: linear-gradient(to bottom, transparent, white);
+    background-image: linear-gradient(to bottom, transparent, white);
+    background-image: -moz-linear-gradient(to bottom, transparent, white); /* FF3.6+ */
+    background-image: -webkit-gradient(to bottom, transparent, white); /* Chrome,Safari4+ */
+    background-image: -webkit-linear-gradient(to bottom, transparent, white); /* Chrome10+,Safari5.1+ */
+    background-image: -o-linear-gradient(to bottom, transparent, white); /* Opera 11.10+ */
+    background-image: -ms-linear-gradient(to bottom, transparent, white); /* IE10+ */
+    background: linear-gradient(to bottom, transparent, white); /* W3C */
+    background: -moz-linear-gradient(to bottom, transparent, white); /* FF3.6+ */
+    background: -webkit-gradient(to bottom, transparent, white); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(to bottom, transparent, white); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(to bottom, transparent, white); /* Opera 11.10+ */
+    background: -ms-linear-gradient(to bottom, transparent, white); /* IE10+ */
+    background: linear-gradient(to bottom, transparent, white); /* W3C */
 }
 
 
