@@ -15,8 +15,7 @@
         </div>
         <div class="row">
             <div class="col col-33" ng-repeat="photo in vm.photos track by $index">
-                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}"
-                    class="profileImg">
+                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}" class="profileImg">
             </div>
             <div class="col col-33" id="addPhoto" ng-if="vm.canAddPhoto()">
                 <img ng-src="{{vm.NO_IMAGE}}" ng-click="vm.addPhoto()" class="profileImg" />
@@ -29,8 +28,7 @@
         </div>
         <div class="row" ng-if="vm.photosInReview.length">
             <div class="col col-33" ng-repeat="photo in vm.photosInReview track by $index">
-                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}"
-                    class="profileImg">
+                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}" class="profileImg">
             </div>
         </div>
 
@@ -105,8 +103,7 @@
                     </div>
                     <div class="nav-button-row-filter-card">
                         <div class="nav-button-container-center">
-                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized large-icon" ng-hide="!vm.personCategory || vm.personCategory == '3'"
-                                ng-click="vm.$scope.slider.slideNext()"></a>
+                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized large-icon" ng-hide="!vm.personCategory || vm.personCategory == '3'" ng-click="vm.$scope.slider.slideNext()"></a>
                         </div>
                         <a ng-show="!vm.personCategory || vm.personCategory == '3'" class="text-colour-energized" style="text-align: center; font-size: 12px;">Please register your interest by emailing info@justababy.com and we will be in touch.</a>
                     </div>
@@ -159,8 +156,7 @@
                 <!--Tier Three-->
                 <ion-slide-page>
                     <div class="padding-10"><b>Tell us about you</b></div>
-                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap"
-                        ng-model="vm.personSperm" toggle-class="toggle-assertive">
+                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap" ng-model="vm.personSperm" toggle-class="toggle-assertive">
 
                         <div class="self-id-badge-checkbox">
                             <img src="img/sperm_ic.svg">
@@ -173,8 +169,7 @@
                     </ion-checkbox>
 
 
-                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap"
-                        ng-model="vm.personEgg" toggle-class="toggle-assertive">
+                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap" ng-model="vm.personEgg" toggle-class="toggle-assertive">
 
                         <div class="self-id-badge-checkbox">
                             <img src="img/egg_ic.svg">
@@ -187,8 +182,7 @@
                     </ion-checkbox>
 
 
-                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap"
-                        ng-model="vm.personWomb" toggle-class="toggle-assertive">
+                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap" ng-model="vm.personWomb" toggle-class="toggle-assertive">
 
                         <div class="self-id-badge-checkbox">
                             <img src="img/womb_ic.svg">
@@ -201,8 +195,7 @@
                     </ion-checkbox>
 
 
-                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap"
-                        ng-model="vm.personEmbryo" toggle-class="toggle-assertive">
+                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap" ng-model="vm.personEmbryo" toggle-class="toggle-assertive">
 
                         <div class="self-id-badge-checkbox">
                             <img src="img/embryo_ic.svg">
@@ -327,8 +320,7 @@
                         <h5 class="about-you-info padding-5">{{'ABOUT_YOU' | translate}}</h5>
 
                         <div>
-                            <textarea rows="6" class="wide input-grey text-size-18 padding-15 " placeholder="Type Here..." id="aboutYou" ng-model="vm.about"
-                                ng-keyup="vm.expandText()" ng-keydown="vm.expandText()">
+                            <textarea rows="6" class="wide input-grey text-size-18 padding-15 " style="resize: none; height: 100px; max-height: 130px;" placeholder="Type Here..." id="aboutYou" ng-model="vm.about" ng-keyup="vm.expandText()" ng-keydown="vm.expandText()">
                             </textarea>
                         </div>
 
