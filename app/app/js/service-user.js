@@ -1105,7 +1105,7 @@ function onNotificationOpen(pnObj) {
                         if (!getMatch(match.id)) {
                             console.log('storing new match ' + match.id)
                             let profile = match.profile
-                            match.lastMessage = 'Matched on ' + dateFormat(match.createdAt, 'd mmm')
+                            match.lastMessage = 'Matched on ' + dateFormat(match.dateOfMatch, 'd mmm')
                             match.read = false
                             matches.unshift(match)
                             LocalDB.saveMatch(match, profile)

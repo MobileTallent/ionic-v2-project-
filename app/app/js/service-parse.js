@@ -45,8 +45,9 @@ var Profile = Parse.Object.extend({
  *                           D if one user has removed what was previously a mutual match, or a user has deleted their account
  * @property {Profile} profile1 - if a mutual match then the profile of user with uid1
  * @property {Profile} profile2 - if a mutual match then the profile of user with uid2
+ * @property {Date} matchedDate - the date of the match
  */
-var matchFields = ['uid1', 'uid2', 'uid1action', 'uid2action', 'state', 'profile1', 'profile2', 'lastMessage', 'read', 'matchedDate']
+var matchFields = ['uid1', 'uid2', 'uid1action', 'uid2action', 'state', 'profile1', 'profile2', 'matchedDate', 'lastMessage', 'read']
 var Match = Parse.Object.extend({
         className: "Match",
         attrs: matchFields
@@ -868,9 +869,12 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         return Parse.Cloud.run('GetMutualMatches', { matchIds: matchIds })
             // Convert the JSON objects into the proper Parse objects
             .then(matches => _.map(matches, match => {
+                let matchedDate = match.matchedDate ? match.matchedDate : match.createdAt
                 let profile = fromJSON(match.otherProfile, 'Profile')
                 match = fromJSON(match, 'Match')
                 match.otherProfile = profile
+                match.dateOfMatch = matchedDate
+
                 return match
             }))
             .catch(_unwrapError)

@@ -114,7 +114,7 @@ angular.module('controllers')
         // TODO if we've come by $stateParams.profileId then $stateParams.matchId will be null
         $log.log('$stateParams.matchId ' + $stateParams.matchId)
         $scope.match = AppService.getMatch($stateParams.matchId)
-        $scope.matchDate = $scope.match.matchedDate ? $scope.match.matchedDate : $scope.match.createdAt
+        $scope.matchDate = dateFormat($scope.match.dateOfMatch, 'd mmm yyyy')
         AppService.getProfileByMatchId($stateParams.matchId).then((result) => {
             $log.log('match profile ' + JSON.stringify(result))
             $scope.matchProfile = result
