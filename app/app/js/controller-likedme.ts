@@ -11,9 +11,9 @@ module app {
 		private $state
 		private $ionicModal
 		private $ionicPopup
+		private $ionicSlideBoxDelegate
 		private AppService: IAppService
 		private AppUtil: AppUtil
-
 		public profiles: IProfile[]
 
 		private profileModal
@@ -21,7 +21,7 @@ module app {
 		public profileIndex // The index in profiles of the profile viewed
 
 		constructor($log: ng.ILogService, $rootScope: app.IAppRootScope, $scope: ng.IScope,
-			$state, $ionicModal, $ionicPopup, AppService: IAppService, AppUtil) {
+			$state, $ionicModal, $ionicPopup, AppService: IAppService, AppUtil, $ionicSlideBoxDelegate) {
 			$log.info('LikedMe constructor')
 			this.$log = $log
 			this.$rootScope = $rootScope
@@ -31,7 +31,8 @@ module app {
 			this.$ionicPopup = $ionicPopup
 			this.AppService = AppService
 			this.AppUtil = AppUtil
-
+			this.$ionicSlideBoxDelegate = $ionicSlideBoxDelegate
+			
 			$ionicModal.fromTemplateUrl('profileModal.html', {
 				scope: $scope,
 				animation: 'slide-in-up'
@@ -43,12 +44,10 @@ module app {
 		}
 
 		public refresh() {
-
 			this.AppService.getProfilesWhoLikeMe()
 				.then(profiles => {
 					this.profiles = profiles
 					this.$log.log('getProfilesWhoLikeMe returned ' + profiles.length + ' profiles')
-
 				}, error => {
 					this.$log.error('Error loading profiles who liked me ' + JSON.stringify(error))
 					this.AppUtil.toastSimple('Unable to load profiles')
@@ -83,6 +82,7 @@ module app {
 		}
 
 		public close() {
+			this.$ionicSlideBoxDelegate.slide(0)
 			this.profileIndex = null
 			this.profile = null
 			this.profileModal.hide()
@@ -102,6 +102,6 @@ module app {
 
 	}
 
-	LikedMe.$inject = ['$log', '$rootScope', '$scope', '$state', '$ionicModal','$ionicPopup', 'AppService', 'AppUtil']
+	LikedMe.$inject = ['$log', '$rootScope', '$scope', '$state', '$ionicModal', '$ionicPopup', 'AppService', 'AppUtil', '$ionicSlideBoxDelegate']
 	angular.module('controllers').controller('LikedMe', LikedMe)
 }
