@@ -70,8 +70,7 @@ module app {
 					}).catch(function (err) {
 						alert('Error in creating Uni Obj: ' + JSON.stringify(err))
 					})
-				} else
-					alert("No Branch on IOS - undefined")
+				}
 			})
 		}
 
