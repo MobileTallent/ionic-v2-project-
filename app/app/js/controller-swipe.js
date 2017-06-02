@@ -44,8 +44,32 @@ angular.module('controllers')
 
     var MIN_SEARCH_TIME = 2000
 
+    function parseTimeRemaining(duration) {
+        var seconds = parseInt((duration / 1000) % 60),
+            minutes = parseInt((duration / (1000 * 60)) % 60),
+            hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+
+        hours = (hours < 10) ? "0" + hours : hours;
+        minutes = (minutes < 10) ? "0" + minutes : minutes;
+        seconds = (seconds < 10) ? "0" + seconds : seconds;
+
+        return hours + " hrs : " + minutes + " mins : " + seconds + " sec"
+    }
+
     function updateProfileSearchResults() {
         var startTime = Date.now()
+
+        if (profile.quotaSearchedDate) {
+            var twelveHrsAgo = 10000 // 43200000-12hrs  Formula: hrs*mins*sec*1000ms  12*60*60*1000
+            var now = new Date()
+            var now_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds())
+            var diff = now_utc - profile.quotaSearchedDate
+            if (diff < twelveHrsAgo) {
+                alert("Noob cant search\n" + parseTimeRemaining(twelveHrsAgo - diff))
+                return
+            }
+        }
+
         AppService.updateProfileSearchResults()
             .then(result => {
                 $log.log('CardsCtrl: found ' + result.length + ' profiles')
@@ -245,7 +269,7 @@ angular.module('controllers')
     }
 
     $scope.share = () => {
-        var profileShare = "Hey I found this person with the following story on the new App:" + "\n\"" + $scope.matchProfile.about + "\"\nSee for yourself by clicking here:"
+        var profileShare = "Hey I'm currently chatting with this person on Just a Baby app:" + "\n\"" + $scope.matchProfile.about + "\"\nDo you think we're a good match? If you want to help me or perhaps yourself find someone to have a baby with download the app: "
         $cordovaSocialSharing.share(profileShare, null, null, $scope.linkToBeShared) // Share via native share sheet 
             .then(() => {
                 if (typeof analytics !== 'undefined') {

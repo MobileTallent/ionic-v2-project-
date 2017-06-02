@@ -70,7 +70,7 @@ module app {
 		premium: boolean
 
 		/** The number of credits a user has (e.g. from in-app purchase) */
-		credits: number
+		credits: number		
 	}
 
 	/**
@@ -98,6 +98,9 @@ module app {
 
 		/** Some information the user has provided about themself */
 		about: string
+
+		/** The last searched date when it reaced the quota of 100 likes */
+		quotaSearchedDate: Date
 
 		/** The user profile photos */
 		photos: IFile[]

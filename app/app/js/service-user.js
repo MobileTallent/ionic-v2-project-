@@ -86,6 +86,9 @@ function onNotificationOpen(pnObj) {
                 profileSearchResults: null,
                 twilioAccessToken: null,
                 branchProfileId: '',
+                numberOfLikes: 0,
+                redirectToEditProfile: false,
+                isEditProfileDone: false,
                 // methods
                 init: init,
                 facebookLogin: facebookLogin,
@@ -633,7 +636,8 @@ function onNotificationOpen(pnObj) {
                     return
                 }
 
-                if (!service.profile.about || service.profile.about.match(/\S+/g).length < 10 || !service.profile.hasSelfId) {
+                if ((!service.profile.about || service.profile.about.match(/\S+/g).length < 10 || !service.profile.hasSelfId) && !service.isEditProfileDone) {
+                    service.redirectToEditProfile = true
                     $state.go('menu.profile-edit')
                     return
                 }
@@ -915,8 +919,19 @@ function onNotificationOpen(pnObj) {
              * @returns {Promise.<T>}
              */
             function processMatch(profile, liked) {
-                return server.processProfile(profile, liked, false).then(function(match) {
+                if (liked) {
+                    service.numberOfLikes++
+                }
+                // reset and save the quota date - 
+                if (service.numberOfLikes >= 2) {
+                    service.numberOfLikes = 0
+                    var now = new Date()
+                    var now_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds())
+                    saveProfile({ quotaSearchedDate: now_utc })
+                }
+                return server.processProfile(profile, liked, false, service.numberOfLikes).then(function(match) {
                     $log.log('processed match action')
+
                     if (typeof analytics !== 'undefined') {
                         analytics.trackView("Swipe Controller")
                     }
@@ -1643,7 +1658,7 @@ function onNotificationOpen(pnObj) {
                 return server.delProviderQuestions(id)
             }
 
-            function getCardsDeckSettings(){
+            function getCardsDeckSettings() {
                 return server.getCardsDeckSettings()
             }
 

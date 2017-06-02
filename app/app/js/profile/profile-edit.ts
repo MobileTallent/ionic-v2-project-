@@ -290,10 +290,17 @@ module app {
 						historyRoot: false,
 						disableBack: true
 					})
-					if (profileUpdate.about)
-						this.$state.go('menu.profile')
-					else
-						this.refresh()
+					if (this.AppService.redirectToEditProfile) {
+						this.AppService.isEditProfileDone = true
+						this.AppService.redirectToEditProfile = false
+						this.AppService.goToNextLoginState()
+					}
+					else {
+						if (profileUpdate.about)
+							this.$state.go('menu.profile')
+						else
+							this.refresh()
+					}
 				})
 			// else
 			// 	this.onRedirectToEditProfile(true);
