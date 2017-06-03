@@ -9,9 +9,6 @@ module app {
         public chatsData = [28, 48, 40, 19, 86, 27, 90]
         public data = [[]]
 
-        // public onClick = function (points, evt) {
-        //     console.log(points, evt);
-        // };
         public datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
         public options = {
             scales: {
@@ -48,7 +45,7 @@ module app {
 
             while (dateCovered <= curDate) {
                 this.labels.push(dateCovered.toDateString())
-                dateCovered.setDate(dateCovered.getDate() + 1);
+                dateCovered.setDate(dateCovered.getDate() + 1)
             }
             this.AppUtil.blockingCall(
                 this.AppService.getMatchesReport(this.numDays),
@@ -60,22 +57,21 @@ module app {
                         if (a.matchedDate.toDateString() in this.voterReport) {
                             this.voterReport[a.matchedDate.toDateString()]++
                         } else {
-                            this.voterReport[a.matchedDate.toDateString()] = 1;
+                            this.voterReport[a.matchedDate.toDateString()] = 1
                         }
                     })
                     this.labels.forEach(a => {
-                        if (a in this.voterReport) {
+                        if (a in this.voterReport)
                             this.matchData.push(this.voterReport[a])
-                        } else {
+                        else
                             this.matchData.push(0)
-                        }
                     })
                     this.data[0] = this.matchData
 
                     this.AppService.getChatMessageReport(this.numDays).then(
                         items => {
                             this.$log.log('loaded ' + items.length + ' chats')
-                            var groupByDateObj = _.groupBy(items, function(n) {
+                            var groupByDateObj = _.groupBy(items, function (n) {
                                 return n.createdAt.toDateString()
                             })
 
@@ -88,8 +84,8 @@ module app {
                                     console.log('Names length: ' + arrayOfNames.length)
                                 }
                             }
-                    })
-            })
+                        })
+                })
         }
     }
 

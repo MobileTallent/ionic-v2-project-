@@ -1,9 +1,153 @@
 @import 'colors.scss';
 
+//Banner Style
+
 #profile-name-banner {
     background-color: $positive;
     border: 1px solid $positive;
     border-radius: 16px;
     padding: 20px 15px;
-    margin-top: 10px
+    margin-top: 10px;
 }
+
+.badge-row-profile {
+    margin-top: 50px;
+}
+
+.profile-name-banner{
+    padding-top: 30px;
+    padding-left: 15px;
+    padding-right: 15px;
+    color:#666666;
+}
+
+.profile-share-buttons:before,
+.profile-share-buttons {
+    color: $assertive;
+    padding: 0px 10px;
+    font-size: 40px !important;
+}
+
+.flag-distance {
+    color:#989898 !important;
+    padding: 5px 0px;
+}
+
+.country-popup {
+    position: relative;
+    margin-top: -5px;
+    padding: 7px;
+    margin: -7px 2px;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.flag {
+    height: 20px;
+    margin-left: 10px;
+}
+
+.profile-share-container {
+   text-align: right; 
+}
+
+.spacer-70 {
+    margin: 120px;
+}
+
+.fixed-fade-box {
+    position: fixed;
+    width: 100%;
+    bottom: 0px;
+    height: 70px;
+    background-image: linear-gradient(to bottom, transparent, white);
+    background-image: -moz-linear-gradient(to bottom, transparent, white); /* FF3.6+ */
+    background-image: -webkit-gradient(to bottom, transparent, white); /* Chrome,Safari4+ */
+    background-image: -webkit-linear-gradient(to bottom, transparent, white); /* Chrome10+,Safari5.1+ */
+    background-image: -o-linear-gradient(to bottom, transparent, white); /* Opera 11.10+ */
+    background-image: -ms-linear-gradient(to bottom, transparent, white); /* IE10+ */
+    background: linear-gradient(to bottom, transparent, white); /* W3C */
+    background: -moz-linear-gradient(to bottom, transparent, white); /* FF3.6+ */
+    background: -webkit-gradient(to bottom, transparent, white); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(to bottom, transparent, white); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(to bottom, transparent, white); /* Opera 11.10+ */
+    background: -ms-linear-gradient(to bottom, transparent, white); /* IE10+ */
+    background: linear-gradient(to bottom, transparent, white); /* W3C */
+}
+
+.floating-share-button:before,
+.floating-share-button {
+    color: white;
+    padding: 0px 10px;
+    padding: 9px 11px; 
+    font-size: 40px !important;
+}
+
+.material-share-button-container {
+    position: absolute;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    right: 11%;
+    top: 55%;
+    background-color: $energized;
+    background-image: linear-gradient(to bottom, transparent, $assertive);
+    box-shadow: 0 6px 10px rgba(191, 101, 184, 0.72);
+}
+
+.floating-tick-cross-button:before,
+.floating-tick-cross-button {
+    color: white;
+    padding: 0px 10px;
+    padding: 9px 10px; 
+    font-size: 50px !important;
+}
+
+.material-tick-button-container {
+    position: absolute;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    right: 8%;
+    bottom: 3%;
+    padding: 7px !important;
+    background-color: $energized;
+    background-image: radial-gradient(transparent,#2e8478);
+    box-shadow:0px 12px 19px 0px rgba(101, 191, 166, 0.44);
+    z-index: 1001;
+    border: solid;
+    border-color: rgba(128, 64, 141, 0.21)
+}
+
+.material-cross-button-container {
+    position: absolute;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    left: 8%;
+    bottom: 3%;
+    padding: 7px !important;
+    background-color: $energized;
+    background-image: radial-gradient(transparent,#2e8478);
+    box-shadow:0px 12px 19px 0px rgba(101, 191, 166, 0.44);
+    z-index: 1001;
+    border: solid;
+    border-color: rgba(128, 64, 141, 0.21);
+}
+
+// Purple Button Styles
+// .material-cross-button-container {
+//     position: absolute;
+//     border-radius: 50%;
+//     width: 80px;
+//     height: 80px;
+//     left: 8%;
+//     bottom: 3%;
+//     padding: 7px !important;
+//     background-color: #6b46e5;
+//     background-image: radial-gradient(transparent,#88358c);
+//     box-shadow:0px 12px 19px 0px rgb(214, 156, 209);
+//     z-index: 1001;
+//     border: solid;
+//     border-color: rgba(51, 119, 97, 0.26);
+// }

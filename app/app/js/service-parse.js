@@ -16,7 +16,7 @@ var userFields = [
 var profileFields = [
     'uid',
     'name',
-    'birthdate', 'age',
+    'birthdate', 'age', 'quotaSearchedDate',
     'about',
     'photos', 'photosInReview',
     'notifyMatch', 'notifyMessage',
@@ -45,8 +45,9 @@ var Profile = Parse.Object.extend({
  *                           D if one user has removed what was previously a mutual match, or a user has deleted their account
  * @property {Profile} profile1 - if a mutual match then the profile of user with uid1
  * @property {Profile} profile2 - if a mutual match then the profile of user with uid2
+ * @property {Date} matchedDate - the date of the match
  */
-var matchFields = ['uid1', 'uid2', 'uid1action', 'uid2action', 'state', 'profile1', 'profile2', 'lastMessage', 'read', 'matchedDate']
+var matchFields = ['uid1', 'uid2', 'uid1action', 'uid2action', 'state', 'profile1', 'profile2', 'matchedDate', 'lastMessage', 'read']
 var Match = Parse.Object.extend({
         className: "Match",
         attrs: matchFields
@@ -160,7 +161,7 @@ var FindUsReport = Parse.Object.extend({
  * @property {string} skype_id - provider skype_id
  * @property {number} balance - service provider balance
  * @property {number} spiel - service spiel
-*/
+ */
 
 var ServiceProviderFields = ['name', 'country', 'uid', 'image_cover', 'email', 'balance', 'phone_number', 'skype_id', 'spiel']
 var ServiceProvider = Parse.Object.extend({
@@ -181,7 +182,7 @@ var ServiceProvider = Parse.Object.extend({
  * @property {object} options - options object {frequency, age_from, age_to}
  * @property {object} shows - shows  with {summary:number}
  * @property {object} clicks - clicks with {summary:number,by_days:[{date:date,summary:number}]}
-*/
+ */
 
 var InfoCardFields = ['pid', 'title', 'question', 'answer', 'image', 'video', 'type', 'audience', 'options', 'shows', 'clicks']
 var InfoCard = Parse.Object.extend({
@@ -201,7 +202,7 @@ var InfoCard = Parse.Object.extend({
  * @property {number} price - service price 
  * @property {object} shows - shows  with {summary:number}
  * @property {object} clicks - clicks with {summary:number,by_days:[{date:date,summary:number}]}
-*/
+ */
 
 var PrServiceFields = ['pid', 'title', 'active', 'spiel', 'audience', 'image', 'video', 'price', 'shows', 'clicks']
 var PrService = Parse.Object.extend({
@@ -216,7 +217,7 @@ var PrService = Parse.Object.extend({
  * @property {boolean} active - active/inactive
  * @property {string} comments - hotbeds description
  * @property {object} location - location object with {"name":string, "lat":string, "lon":string, "manual":boolean}
-*/
+ */
 
 var HotBedFields = ['pid', 'title', 'active', 'comments', 'location']
 var HotBed = Parse.Object.extend({
@@ -238,6 +239,7 @@ var HotBed = Parse.Object.extend({
  * @property {string} u_phone - phone user
  * @property {string} u_skype - skype user
 */
+
 
 var EnquireFields = ['pid', 'uid', 'sid', 'service_name', 'name', 'message', 'image_cover', 'has_read', 'u_email', 'u_phone', 'u_skype']
 var Enquire = Parse.Object.extend({
@@ -886,9 +888,12 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         return Parse.Cloud.run('GetMutualMatches', { matchIds: matchIds })
             // Convert the JSON objects into the proper Parse objects
             .then(matches => _.map(matches, match => {
+                let matchedDate = match.matchedDate ? match.matchedDate : match.createdAt
                 let profile = fromJSON(match.otherProfile, 'Profile')
                 match = fromJSON(match, 'Match')
                 match.otherProfile = profile
+                match.dateOfMatch = matchedDate
+
                 return match
             }))
             .catch(_unwrapError)
@@ -1209,7 +1214,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
     }
 
     function getMyServiceProvider(userId) {
-        return Parse.Cloud.run('GetMyServiceProvider', {userId: userId}).catch(_unwrapError)
+        return Parse.Cloud.run('GetMyServiceProvider', { userId: userId }).catch(_unwrapError)
     }
 
     function getServiceProviderLengths(provider_id) {
@@ -1225,7 +1230,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
     }
 
     function setServiceProvider(is_set, user) {
-        return Parse.Cloud.run('SetServiceProvider', { is_set:is_set, user: user }).catch(_unwrapError)
+        return Parse.Cloud.run('SetServiceProvider', { is_set: is_set, user: user }).catch(_unwrapError)
     }
 
     function getInfoCards(pid) {
@@ -1265,7 +1270,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
     }
 
     function getEnquiries(pid, sid, unique_user) {
-        return Parse.Cloud.run('GetEnquiries', { provider_id: pid, service_id: sid, unique_user:unique_user }).catch(_unwrapError)
+        return Parse.Cloud.run('GetEnquiries', { provider_id: pid, service_id: sid, unique_user: unique_user }).catch(_unwrapError)
     }
 
     function addEnquire(enquire) {
@@ -1293,7 +1298,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
     }
 
     function getUsers(audience) {
-        return Parse.Cloud.run('GetUsers', {audience:audience}).catch(_unwrapError)
+        return Parse.Cloud.run('GetUsers', { audience: audience }).catch(_unwrapError)
     }
 
     function getCardsDeckSettings() {

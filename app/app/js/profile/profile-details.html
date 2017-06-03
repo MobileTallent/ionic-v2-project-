@@ -12,26 +12,46 @@
     </ion-slide>
 </ion-slide-box>
 
+<div ng-hide="isCurrentUser" class="material-share-button-container">
+    <i class="button button-icon icon ion-android-share-alt floating-share-button" ng-click="vm.share()"></i>
+</div>
 
-<div id="profile-name-banner" class="col-80 col-offset-10">
-    <div class="center text-color-white text-size-24">
-        {{profile.name}}, {{profile | profileAge}}
+<div class="ion-row profile-name-banner">
+    <div class="col-80">
+        <div class="text-size-24">
+            {{profile.name}}, {{profile | profileAge}}
+        </div>
+
+        <div class="flag-distance row" ng-init="showCountryName">{{distance}} {{'AWAY' | translate}}
+            <img class="flag" ng-show="profile.address" ng-click="showCountryName = true" ng-src="img/flags/{{profile.country}}.png">
+            <div ng-show="showCountryName" ng-class="showCountryName ? 'animated fadeInDown' : '' " class="country-popup">
+                {{profile.country}}
+            </div>
+        </div>
     </div>
+    
+    <!--Share buttons simple style like tinder-->
+    <!--<div class="col-20 profile-share-container">
+        <i class="button button-icon icon ion-android-share-alt profile-share-buttons" ng-click="vm.share()"></i>
+        <i class="button button-icon icon ion-android-more-vertical profile-share-buttons" ng-click="vm.profileOptions()"></i>
+    </div>-->
 </div>
 
 <div class="padding-15">
-    <div style="color:#666666;justify-content: center;" class="center badge-row">
-        <img ng-show="profile.address" ng-src="img/flags/{{profile.country}}.png">
-        <div style="margin-left: 5px;">{{distance}} {{'AWAY' | translate}}</div>
+    <div class="row">
+        <h4 style="color:#666666" class="col-80">About Me</h4>
     </div>
-    <div class="badge-row" ng-click="onClickBadgeInfo()">
+
+    <div ng-show="profile.about" style="color:#9B9B9B; white-space: pre-wrap;" class="text-size-18">
+        {{profile.about}}
+    </div>
+
+    <div class="badge-row badge-row-profile" ng-click="onClickBadgeInfo()">
         <img ng-class="profile.personSperm ? 'id-badge' : 'id-no-badge'" src="img/sperm_ic.svg">
         <img ng-class="profile.personWomb ? 'id-badge' : 'id-no-badge'" src="img/womb_ic.svg">
         <img ng-class="profile.personEgg ? 'id-badge' : 'id-no-badge'" src="img/egg_ic.svg">
         <img ng-class="profile.personEmbryo ? 'id-badge' : 'id-no-badge'" src="img/embryo_ic.svg">
     </div>
-    <h4 style="color:#666666">About Me</h4>
-    <div ng-show="profile.about" style="color:#9B9B9B; white-space: pre-wrap;" class="text-size-18">
-        {{profile.about}}
-    </div>
+
+    <p class="spacer-70"></p>
 </div>

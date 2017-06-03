@@ -72,6 +72,8 @@ module app {
 			this.$scope.$on('$ionicSlides.sliderInitialized', function (event, data) {
 				// data.slider is the instance of Swiper
 				$scope.slider = data.slider
+				if (!$scope.vm.profile.about || $scope.vm.profile.about.match(/\S+/g).length < 10)
+					$scope.slider.slideTo(4)
 			})
 
 			this.$scope.$on('$ionicSlides.slideChangeStart', function (event, data) {
@@ -284,13 +286,21 @@ module app {
 			this.AppUtil.blockingCall(
 				this.AppService.saveProfile(profileUpdate),
 				() => {
-					this.refresh()
+					//this.refresh()
 					this.$ionicHistory.nextViewOptions({
 						historyRoot: false,
 						disableBack: true
 					})
-					if (this.profile.about && this.profile.about.length >= 10) {
-						this.$state.go('menu.profile')
+					if (this.AppService.redirectToEditProfile) {
+						this.AppService.isEditProfileDone = true
+						this.AppService.redirectToEditProfile = false
+						this.AppService.goToNextLoginState()
+					}
+					else {
+						if (profileUpdate.about)
+							this.$state.go('menu.profile')
+						else
+							this.refresh()
 					}
 				})
 			// else
@@ -319,12 +329,13 @@ module app {
 					template: templateText
 				})
 			} else {
-				if (this.profile.about && this.profile.about.length < 10)
-				 alertPopup = this.$ionicPopup.alert({
-					title: 'We need more information',
-					cssClass: 'center',
-					template: 'Your profile could be better, please give it some more thought.'
-				})
+				if (this.profile.about && this.profile.about.match(/\S+/g).length < 10) {
+					alertPopup = this.$ionicPopup.alert({
+						title: 'We need more information',
+						cssClass: 'center',
+						template: 'Your profile could be better, please give it some more thought.'
+					})
+				}
 			}
 		}
 

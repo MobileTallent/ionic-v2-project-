@@ -129,29 +129,37 @@
                                 <img src="img/generic_avatar.jpg" class="profile-search-avatar" ng-src="{{::profile | profileImageUrl}}">
                                 <div class="no-text" ng-style="rightTextOpacity">{{'NOT_LIKE' | translate}}</div>
                             </div>
+
                             <div class="row">
                                 <p class="horizontal-center" id="match-search-name">{{profile.name}}, {{profile.age}}</p>
                             </div>
+
                             <div class="row">
                                 <div style="color:#666666;justify-content: center;" class="center badge-row">
                                     <!--<img ng-show="profile.address" ng-src="img/flags/{{profile.country}}.png">-->
                                     <div style="margin-left: 5px;">{{profile.location | distance}} {{'AWAY' | translate}}</div>
                                 </div>
                             </div>
+
                             <div id="match-search-about-container" read-more>
+
                                 <div id="match-search-about">
                                     {{profile.about}}
+                                    <div class="fade-box">
+                                    </div>
                                 </div>
 
                                 <div id="match-search-readmore">
                                     Read More
                                 </div>
+
                                 <div class="badge-row">
                                     <img ng-class="profile.personSperm ? 'id-badge' : 'id-no-badge'" src="img/sperm_ic.svg">
                                     <img ng-class="profile.personWomb ? 'id-badge' : 'id-no-badge'" src="img/womb_ic.svg">
                                     <img ng-class="profile.personEgg ? 'id-badge' : 'id-no-badge'" src="img/egg_ic.svg">
                                     <img ng-class="profile.personEmbryo ? 'id-badge' : 'id-no-badge'" src="img/embryo_ic.svg">
                                 </div>
+
                             </div>
                     </td-card>
 

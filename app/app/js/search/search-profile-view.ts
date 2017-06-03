@@ -75,14 +75,13 @@ module app {
 					}).catch(function (err) {
 						alert('Error in creating Uni Obj: ' + JSON.stringify(err))
 					})
-				} else
-					alert('No Branch on IOS - undefined')
+				}
 			})
 		}
 
 		share() {
-			var profileShare = 'Hey I found this person with the following story on the new App:'
-				profileShare = profileShare + '\n\"' + this.profile.about + '\"\nSee for yourself by clicking here:'
+			var profileShare = "Hey this person could help you start a family or maybe you could help them:"
+				profileShare = profileShare + "\n\"" + this.profile.about + "\"\nCheck them and others out by downloading the App here:"
 			this.$cordovaSocialSharing.share(profileShare, null, null, this.linkToBeShared) // Share via native share sheet
 				.then(() => {
 					if (typeof analytics !== 'undefined') {
