@@ -46,7 +46,7 @@ module app {
 			// Cleanup the modal when we're done with it
 			$scope.$on('$destroy', () => this.profileModal.remove())
 
-			this.$scope.$on("$ionicSlides.sliderInitialized", function (event, data) {
+			this.$scope.$on('$ionicSlides.sliderInitialized', function (event, data) {
 				// data.slider is the instance of Swiper
 				$scope.slider = data.slider
 			})
@@ -102,21 +102,22 @@ module app {
 				profileUpdate.personHelpLevel = this.personHelpLevel ? this.personHelpLevel : '0'
 			}
 
-			let thingsIHave = ""
+			let thingsIHave = ''
 			if (profileUpdate.personSperm)
-				thingsIHave += "S"
+				thingsIHave += 'S'
 
 			if (profileUpdate.personEgg)
-				thingsIHave += "E"
+				thingsIHave += 'E'
 
 			if (profileUpdate.personWomb)
-				thingsIHave += "W"
+				thingsIHave += 'W'
 
 			if (profileUpdate.personEmbryo)
-				thingsIHave += "Y"
+				thingsIHave += 'Y'
 
-			if (this.personCategory !== '3' && !profileUpdate.personSperm && !profileUpdate.personEgg && !profileUpdate.personWomb && !profileUpdate.personEmbryo)
-				thingsIHave += "X"
+			if (this.personCategory !== '3' && !profileUpdate.personSperm && !profileUpdate.personEgg
+			&& !profileUpdate.personWomb && !profileUpdate.personEmbryo)
+				thingsIHave += 'X'
 
 			profileUpdate.thingsIHave = thingsIHave
 
@@ -124,7 +125,7 @@ module app {
 				this.AppService.saveProfileForSomeReason(this.profile, profileUpdate),
 				() => {
 					this.closeModal()
-					this.AppUtil.toastSimple("Badge Applied Successfully")
+					this.AppUtil.toastSimple('Badge Applied Successfully')
 				})
 		}
 	}

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "devDependencies": {
+    "@types/whatwg-fetch": "0.0.33",
     "angular-mocks": "1.5.3",
     "babel-core": "^6.1.21",
     "babel-preset-es2015": "^6.1.18",

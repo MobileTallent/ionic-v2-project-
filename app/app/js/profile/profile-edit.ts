@@ -69,12 +69,12 @@ module app {
 
 			this.$scope.$on('$ionicView.beforeEnter', () => this.refresh())
 			this.$scope.$on('$ionicView.enter', () => this.expandText())
-			this.$scope.$on("$ionicSlides.sliderInitialized", function (event, data) {
+			this.$scope.$on('$ionicSlides.sliderInitialized', function (event, data) {
 				// data.slider is the instance of Swiper
 				$scope.slider = data.slider
 			})
 
-			this.$scope.$on("$ionicSlides.slideChangeStart", function (event, data) {
+			this.$scope.$on('$ionicSlides.slideChangeStart', function (event, data) {
 				console.log('Slide change is beginning')
 			})
 		}
@@ -207,7 +207,7 @@ module app {
 								this.AppUtil.toastSimple('Access to photo gallery denied')
 								this.$log.error('$cordovaCamera.getPicture error ' + JSON.stringify(error))
 							} else {
-								//this.AppUtil.toastSimpleTranslate('PHOTO_ERROR')
+								// this.AppUtil.toastSimpleTranslate('PHOTO_ERROR')
 								this.$log.error('$cordovaCamera.getPicture error ' + JSON.stringify(error))
 							}
 
@@ -243,7 +243,7 @@ module app {
 			profileUpdate.about = this.about
 			profileUpdate.personCategory = this.personCategory ? this.personCategory : '0'
 
-			// Please comment on this logic. 
+			// Please comment on this logic.
 			if (this.personCategory === '3') {
 				profileUpdate.personType = '0'
 				profileUpdate.personSperm = false
@@ -259,23 +259,24 @@ module app {
 				profileUpdate.personEmbryo = this.personEmbryo ? this.personEmbryo : false
 				profileUpdate.personHelpLevel = this.personHelpLevel ? this.personHelpLevel : '0'
 			}
-			profileUpdate.hasSelfId = profileUpdate.personCategory != '0' ? true : false
+			profileUpdate.hasSelfId = profileUpdate.personCategory !== '0' ? true : false
 
-			let thingsIHave = ""
+			let thingsIHave = ''
 			if (profileUpdate.personSperm)
-				thingsIHave += "S"
+				thingsIHave += 'S'
 
 			if (profileUpdate.personEgg)
-				thingsIHave += "E"
+				thingsIHave += 'E'
 
 			if (profileUpdate.personWomb)
-				thingsIHave += "W"
+				thingsIHave += 'W'
 
 			if (profileUpdate.personEmbryo)
-				thingsIHave += "Y"
+				thingsIHave += 'Y'
 
-			if (this.personCategory !== '3' && !profileUpdate.personSperm && !profileUpdate.personEgg && !profileUpdate.personWomb && !profileUpdate.personEmbryo)
-				thingsIHave += "X"
+			if (this.personCategory !== '3' && !profileUpdate.personSperm && !profileUpdate.personEgg
+			&& !profileUpdate.personWomb && !profileUpdate.personEmbryo)
+				thingsIHave += 'X'
 
 			profileUpdate.thingsIHave = thingsIHave
 
@@ -308,19 +309,23 @@ module app {
 		}
 
 		public onRedirectToEditProfile(forceShow) {
+			var alertPopup
 			if (!this.profile.about || forceShow) {
-				var alertPopup = this.$ionicPopup.alert({
+				var templateText = 'Your "About Me" section is empty.</br> Everyone is looking for someone'
+					templateText = templateText + ' with a compatible vision. A deep description adds value to the community, tell us about you.'
+				 alertPopup = this.$ionicPopup.alert({
 					title: 'We need more information',
 					cssClass: 'center',
-					template: 'Your "About Me" section is empty.</br> Everyone is looking for someone with a compatible vision. A deep description adds value to the community, tell us about you.'
+					template: templateText
 				})
-			}
-			else if (this.profile.about && this.profile.about.length < 10)
-				var alertPopup = this.$ionicPopup.alert({
+			} else {
+				if (this.profile.about && this.profile.about.length < 10)
+				 alertPopup = this.$ionicPopup.alert({
 					title: 'We need more information',
 					cssClass: 'center',
 					template: 'Your profile could be better, please give it some more thought.'
 				})
+			}
 		}
 
 		public onClickBadgeInfo() {
@@ -329,8 +334,7 @@ module app {
 				templateUrl: 'badgeInfo.html',
 				buttons: [{
 					text: 'Ok',
-					type: 'button-assertive',
-
+					type: 'button-assertive'
 				}]
 			})
 		}

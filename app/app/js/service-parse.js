@@ -234,6 +234,9 @@ var HotBed = Parse.Object.extend({
  * @property {string} message - User description on book service
  * @property {string} image_cover - User Image cover
  * @property {boolean} has_read - Has read by provider or not
+ * @property {string} u_email - email user
+ * @property {string} u_phone - phone user
+ * @property {string} u_skype - skype user
 */
 
 var EnquireFields = ['pid', 'uid', 'sid', 'service_name', 'name', 'message', 'image_cover', 'has_read', 'u_email', 'u_phone', 'u_skype']
@@ -267,6 +270,17 @@ var CardsDeckSetting = Parse.Object.extend({
     attrs: cardsDeckSettingFields
 })
 
+/**
+ * @typedef {Object} SavedInfoCard
+ * @property {number} cid - info card id
+ * @property {number} uid - uid
+ */
+var savedInfoCardFields = ['cid', 'uid']
+var SavedInfoCard = Parse.Object.extend({
+    className: "SavedInfoCard",
+    attrs: savedInfoCardFields
+})
+
 enhance(Parse.User.prototype, userFields)
 enhance(Profile.prototype, profileFields)
 enhance(Match.prototype, matchFields)
@@ -284,6 +298,7 @@ enhance(HotBed.prototype, HotBedFields)
 enhance(Enquire.prototype, EnquireFields)
 enhance(ProviderQuestion.prototype, providerQuestionFields)
 enhance(CardsDeckSetting.prototype, cardsDeckSettingFields)
+enhance(SavedInfoCard.prototype, savedInfoCardFields)
 
 function enhance(prototype, fields) {
     for (var i = 0; i < fields.length; i++) {
@@ -481,8 +496,11 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         addProviderQuestions: addProviderQuestions,
         delProviderQuestions: delProviderQuestions,
         getUsers: getUsers,
-        getCardsDeckSettings:getCardsDeckSettings,
-        addCardsDeckSettings:addCardsDeckSettings
+        getCardsDeckSettings: getCardsDeckSettings,
+        addCardsDeckSettings: addCardsDeckSettings,
+        getSavedInfoCards: getSavedInfoCards,
+        gotItInfoCard: gotItInfoCard,
+        increaseShowClick: increaseShowClick
     }
 
     return service
@@ -1284,6 +1302,18 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
     function addCardsDeckSettings(deckSettings) {
         return Parse.Cloud.run('AddCardsDeckSettings', { deckSettings: deckSettings }).catch(_unwrapError)
+    }
+
+    function getSavedInfoCards() {
+        return Parse.Cloud.run('GetSavedInfoCards').catch(_unwrapError)
+    }
+    
+    function gotItInfoCard(id) {
+        return Parse.Cloud.run('GotItInfoCard', { id: id }).catch(_unwrapError)
+    }
+
+    function increaseShowClick(increase) {
+        return Parse.Cloud.run('IncreaseShowClick', { increase: increase }).catch(_unwrapError)
     }
 
     // Private functions

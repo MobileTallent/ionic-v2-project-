@@ -22,10 +22,11 @@ module app {
                     this.$log.log('loaded ' + items.length + ' items')
                     this.voteReports = items
                     this.voteReports.forEach(a => {
-                        if (a.name in this.voterReport)
+                        if (a.name in this.voterReport) {
                             this.voterReport[a.name]++
-                        else
+                        } else {
                             this.voterReport[a.name] = 1;
+                        }
                     })
                 })
         }

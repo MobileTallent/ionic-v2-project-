@@ -9,9 +9,10 @@ module app {
 		public service
 		public enquiries
 
-		constructor(private $scope, private $state, private $stateParams, private $sce, private $ionicPopup, private AppUtil, private AppService, private $ionicHistory) {
+		constructor(private $scope, private $state, private $stateParams, private $sce, private $ionicPopup,
+		private AppUtil, private AppService, private $ionicHistory) {
 			this.service = this.$stateParams.service
-			if(this.service.video) this.service.video = this.$sce.trustAsResourceUrl(this.service.video)
+			if (this.service.video) this.service.video = this.$sce.trustAsResourceUrl(this.service.video)
 			console.log(this.service)
 			$scope.$on('$ionicView.beforeEnter', () => this.refresh())
 		}
@@ -60,11 +61,10 @@ module app {
 									myThis.$ionicHistory.goBack();
 								}
 							)
-						
 			})
 		}
 	}
-	
+
 	Service.$inject = ['$scope', '$state', '$stateParams', '$sce', '$ionicPopup', 'AppUtil', 'AppService', '$ionicHistory']
 	angular.module('controllers').controller('Service', Service)
 }

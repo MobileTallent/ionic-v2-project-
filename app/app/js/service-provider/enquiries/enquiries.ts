@@ -1,7 +1,7 @@
 module app {
 
     export class SpEnquiries {
-        
+
         public enquiries = []
         public keys
 
@@ -22,14 +22,14 @@ module app {
             return grouped;
         }
 
-        doRefresh(){
+        doRefresh() {
             console.log('refresh')
-            this.SpService.getEnquiries(null,null)
+            this.SpService.getEnquiries(null, null)
             .then(
                 (enquiries) => {
-                if(enquiries!==this.enquiries)
+                if (enquiries !== this.enquiries)
                     this.enquiries = this.groupByDate(enquiries);
-                this.SpService.getUnreadEnquiries()    
+                this.SpService.getUnreadEnquiries()
                 this.$scope.$broadcast('scroll.refreshComplete');
             })
         }

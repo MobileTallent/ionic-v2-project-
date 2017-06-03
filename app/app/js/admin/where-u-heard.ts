@@ -1,7 +1,7 @@
 module app {
 
     export class WhereUFindUsAdmin {
-        private modalText = "New "
+        private modalText = 'New '
         public findUsGroup
         public findUs: IFindUs
         private findUsModal
@@ -36,9 +36,9 @@ module app {
                 this.AppUtil.blockingCall(
                     this.AppService.addFindUs(this.findUs),
                     () => {
-                        this.modalText = "New "
+                        this.modalText = 'New '
                         this.findUs = null
-                        this.AppUtil.toastSimple("Saved Successfully")
+                        this.AppUtil.toastSimple('Saved Successfully')
                         this.refresh()
                     })
                 setTimeout(this.resetForm(form), 1000)
@@ -46,7 +46,7 @@ module app {
         }
 
         public editFindUs(question) {
-            this.modalText = "Update "
+            this.modalText = 'Update '
             this.findUs = question.toJSON()
             this.findUsModal.show()
         }
@@ -67,13 +67,13 @@ module app {
             this.AppUtil.blockingCall(
                 this.AppService.delFindUs(id),
                 () => {
-                    this.AppUtil.toastSimple("Deleted Successfully")
+                    this.AppUtil.toastSimple('Deleted Successfully')
                     this.refresh()
                 })
         }
 
         public close() {
-            this.modalText = "New "
+            this.modalText = 'New '
             this.findUs = null
             this.findUsModal.hide()
         }

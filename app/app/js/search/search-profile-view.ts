@@ -11,8 +11,10 @@ module app {
 		private linkToBeShared
 		private branchProfileId
 
-		static $inject = ['$log', '$scope', '$stateParams', '$ionicHistory', '$ionicActionSheet', 'AppUtil', 'AppService', '$translate', '$cordovaSocialSharing']
-		constructor(private $log: ng.ILogService, private $scope: ng.IScope, private $stateParams, private $ionicHistory,
+		static $inject = ['$log', '$scope', '$stateParams', '$ionicHistory', '$ionicActionSheet',
+		'AppUtil', 'AppService', '$translate', '$cordovaSocialSharing']
+		constructor(private $log: ng.ILogService, private $scope: ng.IScope, private $stateParams,
+		private $ionicHistory,
 			private $ionicActionSheet, private AppUtil: AppUtil, private AppService: IAppService,
 			private $translate: ITranslateService, $cordovaSocialSharing) {
 
@@ -35,11 +37,14 @@ module app {
 
 				if (typeof Branch !== 'undefined') {
 					// only canonicalIdentifier is required
+					var contentDescriptionText = 'Just a Baby is a brand new app connecting people who want to make a baby.'
+						contentDescriptionText = contentDescriptionText + ' We can help you find a surrogate, partner, co-parent,'
+						contentDescriptionText = contentDescriptionText + ' sperm or egg donor - or find someone that needs your help to have a baby.'
 					var properties = {
 						canonicalIdentifier: this.profilePointer.id,
 						canonicalUrl: 'https://justababy.com/',
 						title: 'A brand new way to make babies. Start your journey today.',
-						contentDescription: 'Just a Baby is a brand new app connecting people who want to make a baby. We can help you find a surrogate, partner, co-parent, sperm or egg donor - or find someone that needs your help to have a baby.',
+						contentDescription: contentDescriptionText,
 						contentImageUrl: this.profilePointer.photoUrl
 					}
 
@@ -71,16 +76,17 @@ module app {
 						alert('Error in creating Uni Obj: ' + JSON.stringify(err))
 					})
 				} else
-					alert("No Branch on IOS - undefined")
+					alert('No Branch on IOS - undefined')
 			})
 		}
 
 		share() {
-			var profileShare = "Hey I found this person with the following story on the new App:" + "\n\"" + this.profile.about + "\"\nSee for yourself by clicking here:"
-			this.$cordovaSocialSharing.share(profileShare, null, null, this.linkToBeShared) // Share via native share sheet 
+			var profileShare = 'Hey I found this person with the following story on the new App:'
+				profileShare = profileShare + '\n\"' + this.profile.about + '\"\nSee for yourself by clicking here:'
+			this.$cordovaSocialSharing.share(profileShare, null, null, this.linkToBeShared) // Share via native share sheet
 				.then(() => {
 					if (typeof analytics !== 'undefined') {
-						analytics.trackView("Share This Profile")
+						analytics.trackView('Share This Profile')
 					}
 					this.$log.debug('Social share action complete')
 				}, error => {
@@ -96,12 +102,14 @@ module app {
 			let match = null
 			if (this.branchProfileId) {
 				let matchIndex = this.AppService.getProfileSearchResults().findIndex(this.checkProfile, this.profilePointer.id)
-				if (matchIndex > 0)
+				if (matchIndex > 0) {
 					match = this.AppService.getProfileSearchResults().splice(matchIndex, 1)[0]
-				else
+				} else {
 					match = this.profile
-			} else
+				}
+			} else {
 				match = this.AppService.getProfileSearchResults().pop()
+			}
 
 			return match
 		}

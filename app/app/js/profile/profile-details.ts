@@ -18,9 +18,10 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 			let profile = <IProfile>$scope.profile
 
 
-			//address and flags
+			// address and flags
 			if (!ionic.Platform.isIOS() && !profile.country && profile.location.latitude && profile.location.longitude) {
-				let geocodingAPI = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + profile.location.latitude + "," + profile.location.longitude + "&sensor=false&language=en";
+				let geocodingAPI = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + profile.location.latitude
+					geocodingAPI = geocodingAPI + ',' + profile.location.longitude + '&sensor=false&language=en';
 				let num = 0
 				let addArray
 				let addComp
@@ -32,20 +33,45 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 							profile.address = out['results'][0].formatted_address;
 							addArray = profile.address.split(',')
 
-							if (out['results'][8]) num = 8
-							else if (out['results'][7]) num = 7
-							else if (out['results'][6]) num = 6
-							else if (out['results'][5]) num = 5
-							else if (out['results'][4]) num = 4
-							else if (out['results'][3]) num = 3
-							else if (out['results'][2]) num = 2
-							else if (out['results'][1]) num = 1
+							if (out['results'][8]) {
+								num = 8
+							} else {
+								if (out['results'][7]) {
+									num = 7
+								} else {
+									if (out['results'][6]) {
+										num = 6
+									} else {
+										if (out['results'][5]) {
+											num = 5
+										} else {
+											if (out['results'][4]) {
+												num = 4
+											} else {
+												if (out['results'][3]) {
+													 num = 3
+												} else {
+													if (out['results'][2]) {
+														num = 2
+													} else {
+														if (out['results'][1]) {
+															num = 1
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+
 							addComp = out['results'][num].address_components
 
-							if (addComp.length == 1)
+							if (addComp.length === 1) {
 								profile.country = out['results'][num].formatted_address
-							else
+							} else {
 								profile.country = addArray.slice(-1).pop().trim()
+							}
 						}
 					})
 					.catch(err => console.error(err));
@@ -68,8 +94,7 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 					templateUrl: 'badgeInfo.html',
 					buttons: [{
 						text: 'Ok',
-						type: 'button-assertive',
-
+						type: 'button-assertive'
 					}]
 				})
 			}

@@ -196,7 +196,10 @@ function onNotificationOpen(pnObj) {
                 addProviderQuestions: addProviderQuestions,
                 delProviderQuestions: delProviderQuestions,
                 getCardsDeckSettings: getCardsDeckSettings,
-                addCardsDeckSettings: addCardsDeckSettings
+                addCardsDeckSettings: addCardsDeckSettings,
+                getSavedInfoCards: getSavedInfoCards,
+                gotItInfoCard: gotItInfoCard,
+                increaseShowClick: increaseShowClick
 
             }
 
@@ -1650,7 +1653,18 @@ function onNotificationOpen(pnObj) {
             function addCardsDeckSettings(deckSettings) {
                 return server.addCardsDeckSettings(deckSettings)
             }
+            
+            function getSavedInfoCards() {
+                return server.getSavedInfoCards()
+            }
 
+            function gotItInfoCard(id) {
+                return server.gotItInfoCard(id)
+            }
+
+            function increaseShowClick(params) {
+                return server.increaseShowClick(params)
+            }
 
 
 

@@ -9,7 +9,8 @@ module app {
 		public users
 		public provider_id
 
-		constructor(private $scope, private $state, private $stateParams, private $sce, private $ionicPopup, private AppUtil, private AppService, private $ionicHistory) {
+		constructor(private $scope, private $state, private $stateParams, private $sce, private $ionicPopup,
+		private AppUtil, private AppService, private $ionicHistory) {
 			this.provider_id = this.$stateParams.pid
 			$scope.$on('$ionicView.beforeEnter', () => this.refresh())
 		}

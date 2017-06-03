@@ -11,6 +11,8 @@ var FindUs = Parse.Object.extend("FindUs")
 var FindUsReport = Parse.Object.extend("FindUsReport")
 var AboutJab = Parse.Object.extend("AboutJab")
 var ServiceProvider = Parse.Object.extend("ServiceProvider")
+var CardsDeckSetting = Parse.Object.extend("CardsDeckSetting")
+var SavedInfoCard = Parse.Object.extend("SavedInfoCard")
 
 var _ = require('underscore')
 
@@ -444,6 +446,7 @@ Parse.Cloud.define("GetMutualMatches", function(request, response) {
     matchesQuery.equalTo('state', 'M')
     matchesQuery.limit(1000)
     matchesQuery.containedIn('objectId', matchIds)
+    matchesQuery.descending('matchedDate')
 
     matchesQuery.find(masterKey).then(function(matches) {
         var result = []
@@ -579,121 +582,194 @@ Parse.Cloud.define("GetProfilesNoCountry", function(request, response) {
     })
 })
 
+
 /**
- * Search for new potential matches
- * @returns IProfile[] the profiles
- */
+* Search for new potential matches
+* @returns IProfile[] the profiles
+*/
 Parse.Cloud.define("GetMatches", function(request, response) {
-    // We need to use the master key to load the other users profiles
-    var userId = request.user.id
-    var profile = request.params
+        // We need to use the master key to load the other users profiles
 
-    var profileQuery = new Parse.Query("Profile")
-
-    var point = profile.location
-
-    if (profile.distanceType === 'km')
-        profileQuery.withinKilometers("location", point, profile.distance)
-    else
-        profileQuery.withinMiles("location", point, profile.distance)
-
-    //Get profiles near to the current location 9/30/16 - Jojo
-    //profileQuery.near("location", point);
-
-    var gender = []
-    if (profile.guys)
-        gender.push('M')
-    if (profile.girls)
-        gender.push('F')
-    profileQuery.containedIn("gender", gender)
-
-    profileQuery.equalTo("enabled", true)
-
-    // the birthdate from is the oldest of the age range
-    var birthdateFrom = new Date()
-    birthdateFrom.setFullYear(birthdateFrom.getFullYear() - profile.ageTo)
-    var birthdateTo = new Date()
-    birthdateTo.setFullYear(birthdateTo.getFullYear() - profile.ageFrom)
-    profileQuery.lessThan("birthdate", birthdateTo)
-    if (profile.ageTo !== MAX_AGE_PLUS)
-        profileQuery.greaterThan("birthdate", birthdateFrom)
-
-    if (profile.LFSelfId) {
-        var regExString = "["
-        if (profile.LFSperm)
-            regExString += "S?"
-
-
-        if (profile.LFEggs)
-            regExString += "E?"
-
-
-        if (profile.LFWomb)
-            regExString += "W?"
-
-
-        if (profile.LFEmbryo)
-            regExString += "Y?"
-
-        if (profile.LFNot)
-            regExString += "X?"
-
-        regExString += "]+"
-
-        var regEx = new RegExp(regExString)
-        profileQuery.matches("thingsIHave", regEx)
-    }
-
-    // TODO this will be have to be re-worked at some point as there is a maximum limit of 1000 with Parse
-    // The next two sub queries select the user id's we don't want to match on, which is from
-    // the matches the user have already actioned (liked or rejected), or other users have rejected this user
-    // This can be determined if the u1action/u2action property has already been set
-
-    var alreadyMatched1Query = new Parse.Query("Match")
-    alreadyMatched1Query.equalTo("uid1", userId)
-    alreadyMatched1Query.exists("u1action") // where we have an action
-    alreadyMatched1Query.select("uid2") // then return the other user id
-    alreadyMatched1Query.limit(10000)
-
-    var alreadyMatched2Query = new Parse.Query("Match")
-    alreadyMatched2Query.equalTo("uid2", userId)
-    alreadyMatched2Query.exists("u2action")
-    alreadyMatched2Query.select("uid1")
-    alreadyMatched2Query.limit(10000)
-
-    var alreadyMatchedQuery = Parse.Query.or(alreadyMatched1Query, alreadyMatched2Query)
-    alreadyMatchedQuery.limit(10000)
-
-    return alreadyMatchedQuery.find(masterKey).then(function(results) {
-        var ids = []
-        var length = results.length
-        var userId = request.user.id
-        for (var i = 0; i < length; i++) {
-            var row = results[i]
-            var uid1 = row.get('uid1')
-            if (uid1 != userId)
-                ids.push(uid1)
-            else
-                ids.push(row.get('uid2'))
+        var filters = { 
+            profile_cards: '',
+            info_cards: '', 
+            deck_size: '',
+            cards_ratio: ''
         }
-        return ids
-    }).then(function(ids) {
-        ids.push(userId)
-        profileQuery.notContainedIn('uid', ids)
-            //profileQuery.notEqualTo("uid", userId)
-        profileQuery.descending("updatedAt")
-        profileQuery.limit(150)
-        return profileQuery.find(masterKey)
-    }).then(function(result) {
-        result = _.map(result, _processProfile)
-        response.success(result)
-    }, function(error) {
-        console.log(JSON.stringify(error))
-        response.error(error)
-    })
+        var cards = []
+        var profiles = []
+        var info_cards = []
+
+        var userId = request.user.id
+        var profile = request.params
+
+        var profileQuery = new Parse.Query("Profile")
+
+        var point = profile.location
+
+        if (profile.distanceType === 'km')
+            profileQuery.withinKilometers("location", point, profile.distance)
+        else
+            profileQuery.withinMiles("location", point, profile.distance)
+
+        //Get profiles near to the current location 9/30/16 - Jojo
+        //profileQuery.near("location", point);
+
+        var gender = []
+        if (profile.guys)
+            gender.push('M')
+        if (profile.girls)
+            gender.push('F')
+        profileQuery.containedIn("gender", gender)
+
+        profileQuery.equalTo("enabled", true)
+
+        // the birthdate from is the oldest of the age range
+        var birthdateFrom = new Date()
+        birthdateFrom.setFullYear(birthdateFrom.getFullYear() - profile.ageTo)
+        var birthdateTo = new Date()
+        birthdateTo.setFullYear(birthdateTo.getFullYear() - profile.ageFrom)
+        profileQuery.lessThan("birthdate", birthdateTo)
+        if (profile.ageTo !== MAX_AGE_PLUS)
+            profileQuery.greaterThan("birthdate", birthdateFrom)
+
+        if (profile.LFSelfId) {
+            var regExString = "["
+            if (profile.LFSperm)
+                regExString += "S?"
+
+
+            if (profile.LFEggs)
+                regExString += "E?"
+
+
+            if (profile.LFWomb)
+                regExString += "W?"
+
+
+            if (profile.LFEmbryo)
+                regExString += "Y?"
+
+            if (profile.LFNot)
+                regExString += "X?"
+
+            regExString += "]+"
+
+            var regEx = new RegExp(regExString)
+            profileQuery.matches("thingsIHave", regEx)
+        }
+
+        //Info cards query 
+        var infoCardsQuery = new Parse.Query("InfoCard")
+        
+        //Remove already actioned profiles query
+            // TODO this will be have to be re-worked at some point as there is a maximum limit of 1000 with Parse
+            // The next two sub queries select the user id's we don't want to match on, which is from
+            // the matches the user have already actioned (liked or rejected), or other users have rejected this user
+            // This can be determined if the u1action/u2action property has already been set
+        
+        var alreadyMatched1Query = new Parse.Query("Match")
+        alreadyMatched1Query.equalTo("uid1", userId)
+        alreadyMatched1Query.exists("u1action") // where we have an action
+        alreadyMatched1Query.select("uid2") // then return the other user id
+        alreadyMatched1Query.limit(10000)
+
+        var alreadyMatched2Query = new Parse.Query("Match")
+        alreadyMatched2Query.equalTo("uid2", userId)
+        alreadyMatched2Query.exists("u2action")
+        alreadyMatched2Query.select("uid1")
+        alreadyMatched2Query.limit(10000)
+
+        var alreadyMatchedQuery = Parse.Query.or(alreadyMatched1Query, alreadyMatched2Query)
+        alreadyMatchedQuery.limit(10000)
+        
+
+        //Get Deck Settings query
+        var cardsDeckSettingQuery = new Parse.Query(CardsDeckSetting)
+        
+        //Not contained saved cards query
+        var savedCardsQuery = new Parse.Query(SavedInfoCard)
+        savedCardsQuery.equalTo("uid", userId)
+        savedCardsQuery.limit(10000)
+
+        return cardsDeckSettingQuery.first().then(function(result){
+            var result = result.toJSON()
+            filters.profile_cards = result.profile_cards
+            filters.info_cards = result.info_cards
+            filters.deck_size = result.deck_size
+            filters.cards_ratio = result.cards_ratio
+
+            return alreadyMatchedQuery.find(masterKey)
+        }).then(function(results) {
+            var ids = []
+            var length = results.length
+            var userId = request.user.id
+            for (var i = 0; i < length; i++) {
+                var row = results[i]
+                var uid1 = row.get('uid1')
+                if (uid1 != userId)
+                    ids.push(uid1)
+                else
+                    ids.push(row.get('uid2'))
+            }
+            return ids
+        }).then(function(ids) {
+            ids.push(userId)
+            profileQuery.notContainedIn('uid', ids)
+                //profileQuery.notEqualTo("uid", userId)
+            profileQuery.descending("updatedAt")
+            profileQuery.limit(filters.deck_size)
+
+
+            
+            return profileQuery.find(masterKey)
+
+
+        }).then(function(profiles) {
+
+            profiles = _.map(profiles, _processProfile)
+            
+            infoCardsQuery.descending("updatedAt")
+            infoCardsQuery.limit(filters.deck_size)
+
+            if(filters.profile_cards)
+                cards = cards.concat(profiles)
+            if(filters.info_cards)
+                return savedCardsQuery.find()
+            else response.success(cards)
+        }).then(function(saved_cards) {
+
+            var ids = []
+            for (var i = 0; i < saved_cards.length; i++) {
+                var row = saved_cards[i].get('cid')
+                ids.push(row)
+            }
+
+            infoCardsQuery.notContainedIn('objectId', ids)
+            return infoCardsQuery.find(masterKey)
+        }).then(function(info_cards) {
+
+            if(filters.profile_cards) {
+                //mix an array with two types, depend on ratio
+                    var items_marked = filters.deck_size/(filters.cards_ratio+1);
+                    for(var j=1;j<items_marked+1;j++) {
+                        if(info_cards[j-1]) cards[((j*(1+filters.cards_ratio))-1)] = info_cards[j-1];
+                    }
+                
+            } else { 
+                cards = cards.concat(info_cards)
+            }
+
+            //delete all items more than deck size
+            cards = cards.slice(-filters.deck_size);
+            cards = cards.reverse();
+            response.success(cards)
+            
+        }, function(error) {
+            console.log(JSON.stringify(error))
+            response.error(error)
+        })
 });
-
-
 
 Parse.Cloud.define("ProcessMatch", function(request, response) {
     var userId = request.user.id

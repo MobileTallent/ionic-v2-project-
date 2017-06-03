@@ -1,14 +1,15 @@
 module app {
 
     export class SpServices {
-        
+
         public services = []
         public service = {}
         private addServiceModal
-        private modalText = "New "
+        private modalText = 'New '
         private submitted = false;
 
-        constructor(private $log, private $scope, private $ionicModal, private $ionicPopup, public AppService, public AppUtil, public SpService) {
+        constructor(private $log, private $scope, private $ionicModal, private $ionicPopup,
+        public AppService, public AppUtil, public SpService) {
             this.services = this.SpService.services
 
             // Cleanup the modal when we're done with it
@@ -20,7 +21,7 @@ module app {
             }).then(modal => this.addServiceModal = modal)
         }
 
-        public doRefresh(){
+        public doRefresh() {
             console.log('refresh')
             this.SpService.getPrServices()
             .then(
@@ -35,26 +36,25 @@ module app {
             if (form.$valid) {
                 this.service['pid'] = this.SpService.provider_id
                 this.service['shows'] = {summary:0}
-                this.service['clicks'] = {summary:0,by_days:[]}
-                if(this.service['audience']) {
+                this.service['clicks'] = {summary:0, by_days:[]}
+                if (this.service['audience']) {
                     let tags = []
                     if (this.service['audience']['LFsperm']) tags.push('LFsperm')
                     if (this.service['audience']['LFeggs']) tags.push('LFeggs')
                     if (this.service['audience']['LFembryo']) tags.push('LFembryo')
                     if (this.service['audience']['LFwomb']) tags.push('LFwomb')
-                    this.service['audience'] = {"tags":tags}
+                    this.service['audience'] = {'tags':tags}
                 } else {
-                    this.service['audience'] = {"tags":[]}
+                    this.service['audience'] = {'tags':[]}
                 }
 
-                
                 console.log('service before send', this.service)
                 this.AppUtil.blockingCall(
                     this.AppService.addPrService(this.service),
                     () => {
-                        this.modalText = "New "
+                        this.modalText = 'New '
                         this.service = null
-                        this.AppUtil.toastSimple("Saved Successfully")
+                        this.AppUtil.toastSimple('Saved Successfully')
                         this.doRefresh()
                     })
                 setTimeout(this.resetForm(form), 1000)
@@ -62,7 +62,7 @@ module app {
         }
 
         public editService(service) {
-            this.modalText = "Update "
+            this.modalText = 'Update '
             this.service = service.toJSON()
             this.addServiceModal.show()
         }
@@ -83,13 +83,13 @@ module app {
             this.AppUtil.blockingCall(
                 this.AppService.delPrService(id),
                 () => {
-                    this.AppUtil.toastSimple("Deleted Successfully")
+                    this.AppUtil.toastSimple('Deleted Successfully')
                     this.doRefresh()
                 })
         }
 
         public close() {
-            this.modalText = "New "
+            this.modalText = 'New '
             this.service = null
             this.addServiceModal.hide()
         }

@@ -1,19 +1,20 @@
-/// <reference path="../../../../../typings/globals/google.maps/index.d.ts" />
+/// <reference path="../../../../typings/globals/google.maps/index.d.ts" />
 
 module app {
 
     export class SpHotBeds {
-        
+
         public hot_beds = []
         public hot_bed = {}
         private addHotBedModal
-        private modalText = "New "
+        private modalText = 'New '
         private submitted = false;
         public userProfile
         public map
         public info_card_my_location = 'true'
 
-        constructor(private $log, private $scope, private $ionicModal, private $ionicPopup, public AppService, public AppUtil, public SpService) {
+        constructor(private $log, private $scope, private $ionicModal, private $ionicPopup,
+        public AppService, public AppUtil, public SpService) {
             this.hot_beds = this.SpService.hot_beds
             this.userProfile = this.AppService.profile
 
@@ -29,17 +30,17 @@ module app {
 
         public changeSetLoc() {
 
-                if(!this.hot_bed["location"]) {
+                if (!this.hot_bed['location']) {
                     this.hot_bed['location'] = {
-                        "name":this.userProfile.address, 
-                        "lat":this.userProfile.location.latitude, 
-                        "lon":this.userProfile.location.longitude,
-                        "manual":false
+                        'name': this.userProfile.address,
+                        'lat': this.userProfile.location.latitude,
+                        'lon': this.userProfile.location.longitude,
+                        'manual': false
                     }
                 }
 
-                if(this.hot_bed["location"]["manual"]) {
-                 //setting map functions
+                if (this.hot_bed['location']['manual']) {
+                    // setting map functions
                     let myLatlng = new google.maps.LatLng(this.hot_bed['location'].lat, this.hot_bed['location'].lon)
                     let mapOptions = {
                         center: myLatlng,
@@ -52,41 +53,42 @@ module app {
                         streetViewControl: false,
                         disableDoubleClickZoom: true
                     }
-                    this.map = new google.maps.Map(document.getElementById("map4"), mapOptions)
+                    this.map = new google.maps.Map(document.getElementById('map4'), mapOptions)
                     this.map.setCenter(myLatlng)
                     let marker = new google.maps.Marker({
                         position: myLatlng,
                         draggable: true,
                         map: this.map,
-                        title: this.hot_bed.title
+                        title: this.hot_bed['title']
                     })
 
                     let This = this
-                    google.maps.event.addListener(marker, "mouseup", function(event) {
+                    google.maps.event.addListener(marker, 'mouseup', function(event) {
 
                         let ltt = this.position.lat();
                         let lgg = this.position.lng();
 
-                        var geocodingAPI = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+ltt+","+lgg+"&sensor=false&language=en";
+                        var geocodingAPI = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + ltt;
+                            geocodingAPI = geocodingAPI + ',' + lgg + '&sensor=false&language=en';
 
                         fetch(geocodingAPI)
                         .then(res => res.json())
                         .then((out) => {
                             This.hot_bed['location'] = {
-                                "name":out.results[0].formatted_address, 
-                                "lat":out.results[0].geometry.location.lat, 
-                                "lon":out.results[0].geometry.location.lng,
-                                "manual":true
+                                'name': out.results[0].formatted_address,
+                                'lat': out.results[0].geometry.location.lat,
+                                'lon': out.results[0].geometry.location.lng,
+                                'manual': true
                             }
                         })
                         .catch(err => console.error(err));
-                        
+
                     });
 
                 }
         }
 
-        public doRefresh(){
+        public doRefresh() {
             console.log('refresh')
             this.SpService.getHotBeds()
             .then(
@@ -105,9 +107,9 @@ module app {
                 this.AppUtil.blockingCall(
                     this.SpService.addHotBed(this.hot_bed),
                     () => {
-                        this.modalText = "New "
+                        this.modalText = 'New '
                         this.hot_bed = null
-                        this.AppUtil.toastSimple("Saved Successfully")
+                        this.AppUtil.toastSimple('Saved Successfully')
                         this.doRefresh()
                     })
                 setTimeout(this.resetForm(form), 1000)
@@ -115,7 +117,7 @@ module app {
         }
 
         public editHotBed(hot_bed) {
-            this.modalText = "Update "
+            this.modalText = 'Update '
             this.hot_bed = hot_bed.toJSON()
             this.addHotBedModal.show()
         }
@@ -136,13 +138,13 @@ module app {
             this.AppUtil.blockingCall(
                 this.SpService.delHotBed(id),
                 () => {
-                    this.AppUtil.toastSimple("Deleted Successfully")
+                    this.AppUtil.toastSimple('Deleted Successfully')
                     this.doRefresh()
                 })
         }
 
         public close() {
-            this.modalText = "New "
+            this.modalText = 'New '
             this.hot_bed = {}
             this.map = null
             this.addHotBedModal.hide()

@@ -1,11 +1,11 @@
 module app {
 
     export class SpMenu {
-        
+
         public service_provider
 
         constructor(public AppService, public AppUtil, public SpService) {
-            //real data
+            // Real data
             this.service_provider = this.SpService.service_provider
         }
     }

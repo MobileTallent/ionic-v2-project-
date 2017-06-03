@@ -1,4 +1,4 @@
-/// <reference path="../../../typings/globals/google.maps/index.d.ts" />
+/// <reference path="../../../../typings/globals/google.maps/index.d.ts" />
 
 module app {
 
@@ -8,9 +8,10 @@ module app {
 	export class HotBed {
 
 		public hotbed
-        public map 
+        public map
 
-		constructor(private $state, private $stateParams, private $scope, private $sce, private $ionicPopup, private AppUtil, private AppService, private $ionicHistory) {
+		constructor(private $state, private $stateParams, private $scope, private $sce, private $ionicPopup,
+		private AppUtil, private AppService, private $ionicHistory) {
 			this.hotbed = this.$stateParams.hotbed
 			console.log(this.hotbed);
 
@@ -28,7 +29,7 @@ module app {
             }
 
             this.$scope.$on('$ionicView.afterEnter', () => {
-                this.map = new google.maps.Map(document.getElementById("map2"), mapOptions)
+                this.map = new google.maps.Map(document.getElementById('map2'), mapOptions)
                 this.map.setCenter(myLatlng)
                 let marker = new google.maps.Marker({
                     position: myLatlng,
@@ -54,12 +55,10 @@ module app {
 									myThis.$ionicHistory.goBack();
 								}
 							)
-						
 			})
 		}
 	}
 
 	HotBed.$inject = ['$state', '$stateParams', '$scope', '$sce', '$ionicPopup', 'AppUtil', 'AppService', '$ionicHistory']
 	angular.module('controllers').controller('HotBed', HotBed)
-	
 }

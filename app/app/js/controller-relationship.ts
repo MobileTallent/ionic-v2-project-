@@ -48,10 +48,10 @@ module app {
 
 			this.AppService.getProfilesWhoWantsToHaveARelationshipWithMe()
 				.then(profiles => {
-					this.profilePendingRequest = profiles["pendingUserRequest"]
-					this.profilePendingInvite = profiles["pendingUserInvite"]
-					this.profileMutual = profiles["mutualUsers"]
-					this.$log.log('getProfilesWhoWantsToHaveARelationshipWithMe pending request returned ' + this.profilePendingRequest.length + ' profiles')
+					this.profilePendingRequest = profiles['pendingUserRequest']
+					this.profilePendingInvite = profiles['pendingUserInvite']
+					this.profileMutual = profiles['mutualUsers']
+					this.$log.log('getProfilesWhoWantsToHaveARelationship pending request returned ' + this.profilePendingRequest.length + ' profiles')
 					this.$log.log('getProfilesWhoWantsToHaveARelationshipWithMe pending invitereturned ' + this.profilePendingInvite.length + ' profiles')
 					this.$log.log('getProfilesWhoWantsToHaveARelationshipWithMe mutual returned ' + this.profileMutual.length + ' profiles')
 
@@ -68,7 +68,7 @@ module app {
 			this.profile = this.profiles[index]
 			this.profileIndex = index
 			this.profileModal.show()
-		}	
+		}
 
 		public like() {
 			this.$log.debug('approving relationship invite at index ' + this.profileIndex)

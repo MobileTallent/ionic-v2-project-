@@ -1,14 +1,15 @@
 module app {
 
     export class SpInfoCards {
-        
+
         public info_cards = []
         public info_card = {}
         private addInfoCardModal
-        private modalText = "New "
+        private modalText = 'New '
         private submitted = false;
 
-        constructor(private $log, private $scope, private $ionicModal, private $ionicPopup, public AppService, public AppUtil, public SpService) {
+        constructor(private $log, private $scope, private $ionicModal, private $ionicPopup, public AppService,
+        public AppUtil, public SpService) {
             this.info_cards = this.SpService.info_cards
 
             // Cleanup the modal when we're done with it
@@ -20,7 +21,7 @@ module app {
             }).then(modal => this.addInfoCardModal = modal)
         }
 
-        public doRefresh(){
+        public doRefresh() {
             console.log('refresh')
             this.SpService.getInfoCards()
             .then(
@@ -34,27 +35,26 @@ module app {
             this.submitted = true
             if (form.$valid) {
                 this.info_card['pid'] = this.SpService.provider_id
-                this.info_card['shows'] = {summary:0}
-                this.info_card['clicks'] = {summary:0,by_days:[]}
-                if(this.info_card['audience']) {
+                this.info_card['shows'] = { summary: 0 }
+                this.info_card['clicks'] = { summary:0, by_days:[]}
+                if (this.info_card['audience']) {
                     let tags = []
                     if (this.info_card['audience']['LFsperm']) tags.push('LFsperm')
                     if (this.info_card['audience']['LFeggs']) tags.push('LFeggs')
                     if (this.info_card['audience']['LFembryo']) tags.push('LFembryo')
                     if (this.info_card['audience']['LFwomb']) tags.push('LFwomb')
-                    this.info_card['audience'] = {"tags":tags}
+                    this.info_card['audience'] = {'tags':tags}
                 } else {
-                    this.info_card['audience'] = {"tags":[]}
+                    this.info_card['audience'] = {'tags':[]}
                 }
 
-                
                 console.log('infocard before send', this.info_card)
                 this.AppUtil.blockingCall(
                     this.SpService.addInfoCard(this.info_card),
                     () => {
-                        this.modalText = "New "
+                        this.modalText = 'New '
                         this.info_card = null
-                        this.AppUtil.toastSimple("Saved Successfully")
+                        this.AppUtil.toastSimple('Saved Successfully')
                         this.doRefresh()
                     })
                 setTimeout(this.resetForm(form), 1000)
@@ -62,7 +62,7 @@ module app {
         }
 
         public editInfoCard(info_card) {
-            this.modalText = "Update "
+            this.modalText = 'Update '
             this.info_card = info_card.toJSON()
             this.addInfoCardModal.show()
         }
@@ -83,19 +83,19 @@ module app {
             this.AppUtil.blockingCall(
                 this.SpService.delInfoCard(id),
                 () => {
-                    this.AppUtil.toastSimple("Deleted Successfully")
+                    this.AppUtil.toastSimple('Deleted Successfully')
                     this.doRefresh()
                 })
         }
 
         public close() {
-            this.modalText = "New "
-            this.info_card = {type:'image',options:{frequency:50,age_from:18,age_to:55}}
+            this.modalText = 'New '
+            this.info_card = { type:'image', options:{frequency:50, age_from:18, age_to:55}}
             this.addInfoCardModal.hide()
         }
 
         public resetForm(form) {
-            this.info_card = {type:'image',options:{frequency:50,age_from:18,age_to:55}}
+            this.info_card = { type:'image', options:{frequency:50, age_from:18, age_to:55}}
             this.submitted = false
             this.addInfoCardModal.hide()
             form.$setPristine()

@@ -9,10 +9,11 @@ module app {
 		public provider
 		public lengths
 
-		constructor(private $scope, private $state, private $stateParams, private AppUtil, private AppService, private $ionicHistory, private $ionicPopup) {
+		constructor(private $scope, private $state, private $stateParams, private AppUtil, private AppService,
+		private $ionicHistory, private $ionicPopup) {
 			this.provider = this.$stateParams.provider
 			$scope.$on('$ionicView.beforeEnter', () => this.refresh())
-		}	
+		}
 
 		public refresh() {
 			this.AppUtil.blockingCall(
@@ -34,7 +35,7 @@ module app {
 				if (res)
 					myThis.AppUtil.blockingCall(
 						myThis.AppService.setServiceProvider(false, provider.uid),
-						() => {		
+						() => {
 							myThis.AppService.delServiceProvider(provider.id).then(
 								() => {
 									myThis.AppUtil.toastSimple('Provider deleted')

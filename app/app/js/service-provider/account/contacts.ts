@@ -1,7 +1,6 @@
 module app {
 
     export class SpEditContacts {
-        
         public service_provider
 
         constructor(public $scope, public $ionicHistory, public AppService, public AppUtil, public SpService) {
@@ -14,7 +13,7 @@ module app {
                 this.AppUtil.blockingCall(
                     this.SpService.addServiceProvider(This.service_provider.toJSON()),
                     () => {
-                        This.AppUtil.toastSimple("Saved Successfully")
+                        This.AppUtil.toastSimple('Saved Successfully')
                         This.$ionicHistory.goBack();
                     })
             }

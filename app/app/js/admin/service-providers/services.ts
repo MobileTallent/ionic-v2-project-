@@ -50,4 +50,3 @@ module app {
 	Services.$inject = ['$scope', '$stateParams', 'AppUtil', 'AppService']
 	angular.module('controllers').controller('Services', Services)
 }
- 

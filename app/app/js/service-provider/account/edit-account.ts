@@ -1,9 +1,9 @@
 module app {
 
     export class SpEditAccount {
-        
+
         public service_provider
-        public countries 
+        public countries
 
         constructor(public $scope, public $ionicHistory, public AppService, public AppUtil, public SpService) {
             this.service_provider = this.SpService.service_provider
@@ -25,7 +25,7 @@ module app {
                 this.AppUtil.blockingCall(
                     this.SpService.addServiceProvider(This.service_provider.toJSON()),
                     () => {
-                        This.AppUtil.toastSimple("Saved Successfully")
+                        This.AppUtil.toastSimple('Saved Successfully')
                         This.$ionicHistory.goBack();
                     })
             }

@@ -95,10 +95,10 @@ module app {
 				if (res)
 					myThis.AppUtil.blockingCall(
 						myThis.AppService.setServiceProvider(true, myThis.user.id),
-						() => {		
+						() => {
 
 							let service_provider = {
-								'name': myThis.user.profile.name + "'s Provider",
+								'name': myThis.user.profile.name + '\'s Provider',
 								'country': myThis.user.profile.country,
 								'uid': myThis.user.id,
 								'image_cover' : myThis.user.profile.photos[0]._url,

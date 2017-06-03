@@ -190,7 +190,7 @@ module app {
 		 * */
 		personHelpLevel: string
 
-		//Search Filters for the Self-Id cards
+		// Search Filters for the Self-Id cards
 		/** Looking for People based on the Self Id Cards */
 		LFSelfId: boolean
 

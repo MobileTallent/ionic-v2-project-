@@ -21,7 +21,7 @@ module app {
                 this.AppUtil.blockingCall(
                     this.AppService.addAboutJab(this.about),
                     () => {
-                        this.AppUtil.toastSimple("Saved Successfully")
+                        this.AppUtil.toastSimple('Saved Successfully')
                         this.refreshAbout()
                     })
         }

@@ -1,4 +1,4 @@
-/// <reference path="../../../../../typings/globals/google.maps/index.d.ts" />
+/// <reference path="../../../../typings/globals/google.maps/index.d.ts" />
 
 module app {
 
@@ -9,9 +9,10 @@ module app {
 	export class SpHotBed {
 
 		public hot_bed
-		public map 
+		public map
 
-		constructor(private $scope, private $state, private $stateParams, private SpService, private $sce, private $ionicPopup, private AppUtil, private AppService, private $ionicHistory) {
+		constructor(private $scope, private $state, private $stateParams, private SpService, private $sce,
+        private $ionicPopup, private AppUtil, private AppService, private $ionicHistory) {
 			this.hot_bed = this.$stateParams.hot_bed
 
 			let myLatlng = new google.maps.LatLng(this.hot_bed.location.lat, this.hot_bed.location.lon)
@@ -28,7 +29,7 @@ module app {
             }
 
             this.$scope.$on('$ionicView.afterEnter', () => {
-                this.map = new google.maps.Map(document.getElementById("map3"), mapOptions)
+                this.map = new google.maps.Map(document.getElementById('map3'), mapOptions)
                 this.map.setCenter(myLatlng)
                 let marker = new google.maps.Marker({
                     position: myLatlng,
@@ -39,7 +40,7 @@ module app {
 		}
 
 	}
-	
+
 	SpHotBed.$inject = ['$scope', '$state', '$stateParams', 'SpService', '$sce', '$ionicPopup', 'AppUtil', 'AppService', '$ionicHistory']
 	angular.module('controllers').controller('SpHotBed', SpHotBed)
 }

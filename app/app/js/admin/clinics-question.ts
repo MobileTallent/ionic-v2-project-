@@ -1,7 +1,7 @@
 module app {
 
     export class ClinicsQuestion {
-        private modalText = "New "
+        private modalText = 'New '
         public clinicQuestions
         public clinicQuestion: IClinicsQuestion
         private clinicsModal
@@ -37,9 +37,9 @@ module app {
                 this.AppUtil.blockingCall(
                     this.AppService.addClinicsQuestion(this.clinicQuestion),
                     () => {
-                        this.modalText = "New "
+                        this.modalText = 'New '
                         this.clinicQuestion = null
-                        this.AppUtil.toastSimple("Saved Successfully")
+                        this.AppUtil.toastSimple('Saved Successfully')
                         this.refresh()
                     })
                 setTimeout(this.resetForm(form), 1000)
@@ -47,7 +47,7 @@ module app {
         }
 
         public editClinicsQuestion(question) {
-            this.modalText = "Update "
+            this.modalText = 'Update '
             this.clinicQuestion = question.toJSON()
             this.clinicsModal.show()
         }
@@ -68,13 +68,13 @@ module app {
             this.AppUtil.blockingCall(
                 this.AppService.delClinicsQuestion(id),
                 () => {
-                    this.AppUtil.toastSimple("Deleted Successfully")
+                    this.AppUtil.toastSimple('Deleted Successfully')
                     this.refresh()
                 })
         }
 
         public close() {
-            this.modalText = "New "
+            this.modalText = 'New '
             this.clinicQuestion = null
             this.clinicsModal.hide()
         }

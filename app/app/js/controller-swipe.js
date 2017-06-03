@@ -1,13 +1,13 @@
 angular.module('controllers')
 
-.controller('ProfileSearch', function($log, $scope, $state, $timeout, $translate, $ionicSideMenuDelegate,
+.controller('ProfileSearch', function($rootScope, $log, $scope, $state, $timeout, $translate, $ionicSideMenuDelegate,
     TDCardDelegate, AppService, AppUtil, $ionicModal, $ionicPopup) {
 
     var translations
     $translate(['MATCHES_LOAD_ERROR']).then(function(translationsResult) {
         translations = translationsResult
     })
-
+    
     // when $scope.profiles is null then we haven't done a search
     // when $scope.profiles is an empty array then there are no new matches
     $scope.profiles = null
@@ -42,6 +42,12 @@ angular.module('controllers')
         updateProfileSearchResults()
     }
 
+    $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+        //If card looked - remove and show next
+        if (from.name=="menu.info-card-detail" && to.name=="menu.home")
+            $timeout(() => $scope.profiles.pop(), 340)
+    });
+
     var MIN_SEARCH_TIME = 2000
 
     function updateProfileSearchResults() {
@@ -50,13 +56,21 @@ angular.module('controllers')
             .then(result => {
                 $log.log('CardsCtrl: found ' + result.length + ' profiles')
                 $scope.noOneAround = result.length ? false : true
-                result.map(profile => profile.image = profile.photoUrl)
+                result.map(profile => {
+                    if(profile.question) 
+                        profile.info_card = true
+                    if(profile.question) 
+                        profile.flip = false
+                    if(!profile.question) 
+                        profile.image = profile.photoUrl
+                })
                     // Make the search screen show for at least a certain time so it doesn't flash quickly
                 var elapsed = Date.now() - startTime
                 if (elapsed < MIN_SEARCH_TIME)
                     $timeout(() => $scope.profiles = result, MIN_SEARCH_TIME - elapsed)
                 else
                     $scope.profiles = result
+                console.log('Profiles', $scope.profiles)
             }, error => {
                 $log.log('updateProfileSearchResults error ' + JSON.stringify(error))
                 $scope.profiles = []
@@ -107,24 +121,64 @@ angular.module('controllers')
         $state.go('^.search-profile-view', { profile: profile })
     }
 
-    $scope.accept = () => {
+    $scope.accept = (profile) => {
+        if(profile.flip===false) {
+            profile.flip = true;
+            return;
+        }
+        if(profile.flip===true) {
+            //increase one click
+            $state.go('^.info-card-detail', { card: profile })
+            return;
+        }
+
         $log.log('accept button')
         var topProfile = $scope.profiles[$scope.profiles.length - 1]
         AppService.processMatch(topProfile, true)
         topProfile.accepted = true // this triggers the animation out
-        $timeout(() => $scope.profiles.pop(), 340)
+        $timeout(() => {
+            $scope.profiles.pop()
+            $scope.increaseShows()
+        }, 340)
     }
 
-    $scope.reject = () => {
-        $log.log('reject button')
-        var topProfile = $scope.profiles[$scope.profiles.length - 1]
-        AppService.processMatch(topProfile, false)
-        topProfile.rejected = true // this triggers the animation out
-        $timeout(() => $scope.profiles.pop(), 340)
+    $scope.reject = (profile) => {
+        if(profile.flip) {
+            profile.flip = false;
+            return;
+        }
+
+        if(!profile.info_card) {
+            $log.log('reject button')
+            var topProfile = $scope.profiles[$scope.profiles.length - 1]
+            AppService.processMatch(topProfile, false)
+            topProfile.rejected = true // this triggers the animation out
+        }
+            
+        $timeout(() => {
+            $scope.profiles.pop()
+            $scope.increaseShows()
+        }, 340)
     }
 
     // matches are swiped off from the end of the $scope.profiles array (i.e. popped)
-    $scope.cardDestroyed = (index) => $scope.profiles.splice(index, 1)
+    $scope.cardDestroyed = (index) => {
+        $scope.profiles.splice(index, 1)
+        $scope.increaseShows()
+    }
+
+    $scope.increaseShows = () => {
+        $timeout(() => {
+            if($scope.profiles[$scope.profiles.length-1] && $scope.profiles[$scope.profiles.length-1].info_card===true){
+                AppService.increaseShowClick({
+                    "type":"card", 
+                    "behavior":"show", 
+                    "obj": $scope.profiles[$scope.profiles.length-1].toJSON()
+                })
+                $scope.profiles[$scope.profiles.length-1].shows.summary++
+            }
+        })
+    }
 
     $scope.cardTransitionLeft = (profile) => {
         AppService.processMatch(profile, false)

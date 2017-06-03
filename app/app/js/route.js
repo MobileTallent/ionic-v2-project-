@@ -218,5 +218,42 @@ angular.module('ionicApp').config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+
+        /*
+            Info cards routes
+        */
+        .state('menu.info-card-detail', {
+            url: "/info-card-detail/:id",
+            views: {
+                'menuContent': {
+                    templateUrl: "info-cards/info-card-detail.html"
+                }
+            },
+            params: {
+                id:null,
+                card: null
+            }
+        })
+        .state('menu.service-detail', {
+            url: "/service-detail",
+            views: {
+                'menuContent': {
+                    templateUrl: "info-cards/service-detail.html"
+                }
+            },
+            params: {
+                service: null
+            }
+        })
+        .state('menu.saved-cards', {
+            url: "/saved-cards",
+            views: {
+                'menuContent': {
+                    templateUrl: "info-cards/saved-cards.html"
+                }
+            }
+        })
+
+
     $urlRouterProvider.otherwise("/sign-in")
 });

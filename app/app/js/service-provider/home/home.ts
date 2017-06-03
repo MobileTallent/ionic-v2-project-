@@ -1,9 +1,9 @@
 module app {
 
     export class SpHome {
-        
-        public info_cards 
-        public services 
+
+        public info_cards
+        public services
         public labels
         public cardsSeries
         public servicesSeries
@@ -15,37 +15,37 @@ module app {
         public colors
 
         constructor(private $log, private $scope, public AppService, public AppUtil, public SpService) {
-            
+
             this.info_cards = this.SpService.info_cards
             this.services = this.SpService.services
 
-            //common props
-                //set arrays with dates
+            // common props
+                // set arrays with dates
                 let curDate = new Date()
                 let dateCovered = new Date()
                 dateCovered.setDate(dateCovered.getDate() - 7 + 1)
                 this.labels = [];
-                while(dateCovered <= curDate){
+                while (dateCovered <= curDate) {
                     this.labels.push(dateCovered.toDateString())
                     dateCovered.setDate(dateCovered.getDate() + 1);
                 }
-                //settings for chart
+                // settings for chart
                 this.datasetOverride = [
-                    { 
+                    {
                         yAxisID: 'y-axis-1',
                         fill:false,
                         borderColor:'#2e8478',
                         pointBorderColor:'#2e8478',
                         pointBackgroundColor: '#2e8478'
-                    }, 
-                    { 
+                    },
+                    {
                         yAxisID: 'y-axis-1',
                         fill:false,
                         borderColor:'#3baa9a',
                         pointBorderColor:'#3baa9a',
                         pointBackgroundColor: '#3baa9a'
-                    }, 
-                    { 
+                    },
+                    {
                         yAxisID: 'y-axis-1',
                         fill:false,
                         borderColor:'#B8F4E1',
@@ -53,7 +53,7 @@ module app {
                         pointBackgroundColor: '#B8F4E1'
                     }
                 ];
-                //options for charts
+                // options for charts
                 this.options = {
                     scales: {
                     yAxes: [
@@ -72,89 +72,84 @@ module app {
         }
 
         public getCardsReport() {
-            //sort cards by summary
+            // sort cards by summary
             this.info_cards.sort(function(a, b){
                 var keyA = new Date(a.clicks.summary),
                     keyB = new Date(b.clicks.summary);
                 // Compare the 2 dates
-                if(keyA > keyB) return -1;
-                if(keyA < keyB) return 1;
+                if (keyA > keyB) return -1;
+                if (keyA < keyB) return 1;
                 return 0;
             });
-            //take first 3 cards
+            // take first 3 cards
             this.info_cards = this.info_cards.slice(0, 3);
-            //create series for graphs
+            // create series for graphs
             this.cardsSeries = [];
             this.info_cards.forEach(element => {
-               this.cardsSeries.push(element.title+' clicks');
+               this.cardsSeries.push(element.title + ' clicks');
             });
 
-            this.cardsData = [[],[],[]]
-            for (var i=0;i<this.info_cards.length;i++){
-                    if(this.info_cards[i].clicks.summary>0) {
-                        //have clicks
+            this.cardsData = [[], [], []]
+            for (var i = 0; i < this.info_cards.length; i++) {
+                    if (this.info_cards[i].clicks.summary > 0) {
+                        // have clicks
                         let last_card_clicks = this.info_cards[i].clicks.by_days.slice(0, 7);
-                        for(var j=0;j<this.labels.length;j++){
+                        for (var j = 0; j < this.labels.length; j++) {
                             let matchedTrue = 0
-                            for(let m=0;m<last_card_clicks.length;m++){
-                               
-                                if(this.labels[j] == (new Date(last_card_clicks[m].date)).toDateString()) {
+                            for (let m = 0; m < last_card_clicks.length; m++) {
+
+                                if (this.labels[j] === (new Date(last_card_clicks[m].date)).toDateString()) {
                                     matchedTrue = last_card_clicks[m].summary
                                 }
-                                    
                             }
                             this.cardsData[i].push(matchedTrue)
-                          
-
                         }
                     }  else {
-                        this.cardsData[i] = [0,0,0,0,0,0,0]
-                    } 
+                        this.cardsData[i] = [0, 0, 0, 0, 0, 0, 0]
+                    }
             }
         }
 
         public getServicesReport() {
-            //sort services by summary
+            // sort services by summary
             this.services.sort(function(a, b){
                 var keyA = new Date(a.clicks.summary),
                     keyB = new Date(b.clicks.summary);
                 // Compare the 2 dates
-                if(keyA > keyB) return -1;
-                if(keyA < keyB) return 1;
+                if (keyA > keyB) return -1;
+                if (keyA < keyB) return 1;
                 return 0;
             });
-            //take first 3 services
+            // take first 3 services
             this.services = this.services.slice(0, 3);
-            //create series for graphs
+            // create series for graphs
             this.servicesSeries = [];
             this.services.forEach(element => {
-               this.servicesSeries.push(element.title+' clicks');
+               this.servicesSeries.push(element.title + ' clicks');
             });
-            this.servicesData = [[],[],[]]
-            for (var i=0;i<this.services.length;i++){
-                    if(this.services[i].clicks.summary>0) {
-                        //have clicks
+            this.servicesData = [[], [], []]
+            for (var i = 0; i < this.services.length; i++) {
+                    if (this.services[i].clicks.summary > 0) {
+                        // have clicks
                         let last_card_clicks = this.services[i].clicks.by_days.slice(0, 7);
-                        for(var j=0;j<this.labels.length;j++){
+                        for (var j = 0; j < this.labels.length; j++) {
                             let matchedTrue = 0
-                            for(let m=0;m<last_card_clicks.length;m++){
-                               
-                                if(this.labels[j] == (new Date(last_card_clicks[m].date)).toDateString()) {
+                            for (let m = 0; m < last_card_clicks.length; m++) {
+
+                                if (this.labels[j] === (new Date(last_card_clicks[m].date)).toDateString()) {
                                     matchedTrue = last_card_clicks[m].summary
                                 }
-                                    
+
                             }
                             this.servicesData[i].push(matchedTrue)
-                          
-
                         }
                     }  else {
-                        this.servicesData[i] = [0,0,0,0,0,0,0]
-                    } 
+                        this.servicesData[i] = [0, 0, 0, 0, 0, 0, 0]
+                    }
             }
         }
 
-        doRefresh(){
+        doRefresh() {
             console.log('refresh')
             this.SpService.getInfoCards()
             .then(

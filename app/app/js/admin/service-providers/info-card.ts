@@ -8,9 +8,10 @@ module app {
 
 		public card
 
-		constructor(private $state, private $stateParams, private $sce, private $ionicPopup, private AppUtil, private AppService, private $ionicHistory) {
+		constructor(private $state, private $stateParams, private $sce, private $ionicPopup,
+		private AppUtil, private AppService, private $ionicHistory) {
 			this.card = this.$stateParams.card
-			if(this.card.video) 
+			if (this.card.video)
 				this.card.video_url = this.$sce.trustAsResourceUrl(this.card.video)
 			console.log(this.card)
 		}
@@ -30,7 +31,6 @@ module app {
 									myThis.$ionicHistory.goBack();
 								}
 							)
-						
 			})
 		}
 

@@ -24,14 +24,12 @@ module app {
 
 		public makeSumarryArray = function(num) {
 			var arr = new Array(num)
-			
-			if(this.cards_settings && this.cards_settings.info_cards) {
-				var items_marked = this.cards_settings.deck_size/(this.cards_settings.cards_ratio+1);
-				for(var j=1;j<items_marked+1;j++) {
-					arr[((j*(1+this.cards_settings.cards_ratio))-1)] = 'info';
+			if (this.cards_settings && this.cards_settings.info_cards) {
+				var items_marked = this.cards_settings.deck_size / (this.cards_settings.cards_ratio + 1);
+				for (var j = 1; j < items_marked + 1; j++) {
+					arr[((j * (1 + this.cards_settings.cards_ratio)) - 1)] = 'info';
 				}
 			}
-			
 			return arr;
 
 		}

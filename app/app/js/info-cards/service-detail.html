@@ -1,0 +1,71 @@
+<ion-view view-title="{{vm.service.title}}" ng-controller="ServiceDetail as vm">
+
+    <ion-content style="background-color:#e7f5f0;">
+        
+        <img ng-if="vm.service.image" ng-src="{{vm.service.image}}" style="width:100%"/>
+        <div ng-if="vm.service.video_new"  class="video-container">
+            <iframe ng-if="vm.service.video_new" ng-src="{{vm.service.video_new}}" frameborder="0" width="560" height="315"></iframe>
+        </div>
+
+
+     <div class="card padding-15">
+         <div class="item">
+            <h4 style="color:#666666;display:flex;justify-content:space-between;">
+                {{vm.service.title}}
+                <span class="badge badge-assertive">$ {{vm.service.price}}</span>
+            </h4>
+            <div class="padding-15">
+                <h5 style="color:#666666" class="center">{{vm.service.spiel}}</h5>
+            </div>
+        </div>
+        <div class="item">
+            <form name="service_form" novalidate ng-submit="vm.get_service(service_form);">
+                    <div class="list">
+                        <!-- E-mail -->
+                        <label class="item item-input" 
+                               ng-class="{ 'has-errors' : service_form.u_email.$invalid, 'no-errors' : service_form.u_email.$valid}">
+                            <input name="u_email" 
+                                   ng-model="vm.form.u_email" 
+                                   ng-required="true" 
+                                   type="text" 
+                                   placeholder="E-mail" 
+                            />
+                        </label>
+                        <!-- Phone -->
+                        <label class="item item-input">
+                            <input name="u_phone" 
+                                   ng-model="vm.form.u_phone"
+                                   type="text" 
+                                   placeholder="Phone number" 
+                            />
+                        </label>
+                        <!-- Skype -->
+                        <label class="item item-input">
+                            <input name="u_skype" 
+                                   ng-model="vm.form.u_skype"
+                                   type="text" 
+                                   placeholder="Skype id" 
+                            />
+                        </label>
+                        <!-- Message -->
+                        <label class="item item-input">
+                            <textarea name="message" 
+                                      ng-model="vm.form.message"
+                                      type="text" 
+                                      placeholder="Short description" 
+                                      rows="4" 
+                                      class="wide">
+                            </textarea>
+                        </label>
+                        
+                        <label class="item"
+                             ng-show="service_form.u_email.$error && vm.submitted">
+                            <i class="ion-information-circled"></i> Fill-in all fields!
+                        </label>
+                        <button class="button button-full button-positive">Request service</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

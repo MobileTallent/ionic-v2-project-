@@ -6,6 +6,7 @@ var Enquire = Parse.Object.extend("Enquire")
 var ProviderQuestion = Parse.Object.extend("ProviderQuestion")
 var Profile = Parse.Object.extend("Profile")
 var CardsDeckSetting = Parse.Object.extend("CardsDeckSetting")
+var SavedInfoCard = Parse.Object.extend("SavedInfoCard")
 
 function checkAdmin(request, response) {
     if (!request.user.get('admin')) {
@@ -622,4 +623,97 @@ Parse.Cloud.define('AddCardsDeckSettings', function(request, response) {
         console.log("Error saving deckSettings")
         response.error(error)
     })
+})
+
+/* Get Saved Info Card for user */
+Parse.Cloud.define('GetSavedInfoCards', function(request, response) {
+    console.log('GetSavedInfoCards')
+
+    new Parse.Query(SavedInfoCard)
+    .limit(1000)
+    .equalTo('uid', request.user.id)
+    .find()
+    .then(function(result) {
+            
+            var ids = []
+            for (var i = 0; i < result.length; i++) {
+                var row = result[i].get('cid')
+                ids.push(row)
+            }
+
+        return new Parse.Query(InfoCard).containedIn('objectId',ids).limit(1000).find()
+    }).then(function(results) {
+        response.success(results)
+    }, function(error) {
+        console.log("Erroorrr: " + JSON.stringify(error))
+        response.error(error)
+    })
+})
+
+/* Got Info Card (save as gotted) */
+Parse.Cloud.define('GotItInfoCard', function(request, response) {
+
+    console.log('GotItInfoCard')
+    var cardSaved = {
+        cid:request.params.id,
+        uid:request.user.id
+    }
+
+    if (!cardSaved.uid || !cardSaved.cid)
+        return response.error('cid and uid parameter must be provided')
+
+    new SavedInfoCard().save(cardSaved).then(function(result) {
+        console.log("Success saving got card!")
+        response.success("Success saving got card!")
+    }, function(error) {
+        console.log("Error saving got card!")
+        response.error(error)
+    })
+})
+
+/* Increase (card/service)-(showing/click) statistic */
+Parse.Cloud.define('IncreaseShowClick', function(request, response) {
+
+    console.log('IncreaseShowClick')
+
+    var increase = request.params.increase
+    var increaseQuery
+    var curDate = new Date()
+
+    if (!increase.type || !increase.behavior || !increase.obj)
+        return response.error('type and behavior and obj parameter must be provided')
+
+    if (increase.type=='card')
+            increaseQuery = new InfoCard()
+    if (increase.type=='service')
+            increaseQuery = new PrService()
+    if (increase.behavior=='show') {
+         increase.obj.shows.summary++
+    }
+    if (increase.behavior=='click') {
+         increase.obj.clicks.summary++
+            //clicks by days
+            if(increase.obj.clicks.by_days[0] && increase.obj.clicks.by_days[0].date==curDate.toDateString())
+                increase.obj.clicks.by_days[0].summary++
+            else 
+                increase.obj.clicks.by_days.unshift({
+                    "date":curDate.toDateString(),
+                    "summary":1
+                })
+				
+    }
+
+    if (increase.obj.objectId) {
+        increaseQuery.id = increase.obj.objectId
+        delete increase.obj.objectId
+    }
+    
+    increaseQuery.save(increase.obj).then(function(result) {
+        console.log("Success increased")
+        response.success("Success increased")
+    }, function(error) {
+        console.log("Error increased")
+        response.error(error)
+    })
+
 })

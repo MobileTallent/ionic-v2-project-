@@ -94,14 +94,13 @@ module app {
 				templateUrl: 'badgeInfo.html',
 				buttons: [{
 					text: 'Ok',
-					type: 'button-assertive',
-
+					type: 'button-assertive'
 				}]
 			})
 		}
 
 	}
 
-	LikedMe.$inject = ['$log', '$rootScope', '$scope', '$state', '$ionicModal','$ionicPopup', 'AppService', 'AppUtil']
+	LikedMe.$inject = ['$log', '$rootScope', '$scope', '$state', '$ionicModal', '$ionicPopup', 'AppService', 'AppUtil']
 	angular.module('controllers').controller('LikedMe', LikedMe)
 }

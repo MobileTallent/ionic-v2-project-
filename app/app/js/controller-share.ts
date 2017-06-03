@@ -29,12 +29,13 @@ module app {
 
 
 		public share() {
-			//this.shareStoreUrl = ionic.Platform.isAndroid() ? this.playStoreUrl : ionic.Platform.isIOS() ? this.itunesUrl : this.webStoreUrl
+			// this.shareStoreUrl = ionic.Platform.isAndroid() ? this.playStoreUrl : ionic.Platform.isIOS() ? this.itunesUrl : this.webStoreUrl
 			this.shareStoreUrl = this.smartStoreUrl
-			this.$cordovaSocialSharing.share(this.socialShareSubject, this.socialShareMessage, null, this.shareStoreUrl) // Share via native share sheet 
+			// Share via native share sheet
+			this.$cordovaSocialSharing.share(this.socialShareSubject, this.socialShareMessage, null, this.shareStoreUrl)
 				.then(() => {
 					if (typeof analytics !== 'undefined') {
-						analytics.trackView("Invite My Friends Controller")
+						analytics.trackView('Invite My Friends Controller')
 					}
 					this.$log.debug('Social share action complete')
 				}, error => {

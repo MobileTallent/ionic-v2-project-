@@ -1,7 +1,7 @@
 module app {
 
     export class SpManageAccount {
-        
+
         public service_provider
 
         constructor(public AppService, public AppUtil, public SpService) {
