@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<title>Devices build</title>
+
+<xmp theme="cerulean" style="display:none;">
+[Index](index.html)
+
+# Generate builds for devices
+
+##Android 
+* Success build for android can get more easy with stable envieronment version's :
+
+```
+java -version
+java version "1.8.0_131"
+Java(TM) SE Runtime Environment (build 1.8.0_131-b11)
+Java HotSpot(TM) 64-Bit Server VM (build 25.131-b11, mixed mode)
+
+ionic -v
+2.1.18
+
+node -v 
+v5.6.0
+
+cordova -v 
+6.4.0 
+```
+
+* Be sure you have updated Android SDK tools and API, at least until 24 version :
+
+![sdk](./img/sdk_tools.png "Android SDK tools")
+
+* Go to the app dir, and install dependencies
+```
+cd app && npm install && bower install
+```
+
+* Add platform
+```
+ionic platform add android
+```
+
+If you catch resources error 
+> Error: Source path does not exist: resources\android\icon\drawable-hdpi-icon.png
+Generate icons and splash screen 
+```
+ionic resources
+```
+
+* Add and remove platform
+```
+ionic platform remove android
+ionic platform add android
+```
+
+If you catch an error :
+> Run/restart gulp to configure the custom Android application class
+Run gulp for prepare production classes:
+```
+gulp prodBuild
+```
+
+
+* Add to 'platforms/android' directory **build-extras.build** file, which contains :
+```
+// build-extras.build file
+configurations { all*.exclude group: 'com.android.support', module: 'support-v4' }
+configurations { all*.exclude group: 'com.android.support', module: 'support-annotations' }
+configurations { all*.exclude group: 'com.android.support', module: 'appcompat' }
+configurations { all*.exclude group: 'com.android.support' }
+configurations { all*.exclude group: 'com.parse.bolts', module: 'bolts-android' }
+configurations { all*.exclude group: 'com.parse.bolts', module: 'bolts-tasks' }
+dependencies { compile ('com.facebook.android:facebook-android-sdk:4.8.+'){ exclude group: 'com.parse.bolts', module: 'bolts-tasks' exclude group: 'com.parse.bolts', module: 'bolts-applinks';} }
+dependencies {compile 'com.parse.bolts:bolts-applinks:1.4.0'}
+```
+
+* Check **project.properties** and **AndroidManifest.xml** for stable **24** target :
+
+```
+// project.properties file
+target=android-24
+```
+
+```
+// AndroidManifest.xml end of file
+<uses-sdk android:minSdkVersion="17" android:targetSdkVersion="24" />
+```
+
+* Add additional configuration **multiDexEnabled true** to **build.gradle** file :
+```
+// build.gradle
+android {
+    ...
+
+    defaultConfig {
+        versionCode cdvVersionCode ?: new BigInteger("" + privateHelpers.extractIntFromManifest("versionCode"))
+        applicationId privateHelpers.extractStringFromManifest("package")
+
+        if (cdvMinSdkVersion != null) {
+            minSdkVersion cdvMinSdkVersion
+        }
+
+        multiDexEnabled true
+    }
+```
+
+* Make a build
+```
+ionic build android // normal build
+ionic build android --release --device // production build
+ionic emulate android --livereload // emulate app with console possibility
+ionic run android // run app on device 
+```
+
+* Enjoy the Success :) 
+
+![success_android](./img/success_android.png "Success android build")
+
+##iOS
+
+server/
+
+creating iOS development & APNS development certificate, and exporting .p12 file
+creating iOS production & APNS production certificate, and exporting .p12 file
+adding push notification configuration in config.json
+confirming configuration again in parse-config.js
+
+app/
+
+npm install
+gulp
+ionic platform add ios
+cordova plugin add https://github.com/taivo/parse-push-plugin
+
+creating preference tags in config.xml https://github.com/taivo/parse-push-plugin
+
+ionic build ios
+ionic run ios
+
+note: 
+1) when running iOS version, please confirm this log:
+]ParsePushPlugin is regisering your device for PN
+]PN registration successful. Saving device token to installation
+2) Must confirm one app id is used for both facebook login and push notification
+
+Documentation is in the /docs folder
+
+</xmp>
+
+<script src="strapdown/v/0.2/strapdown.js"></script>
+</html>
