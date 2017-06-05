@@ -1,16 +1,4 @@
 {
-    "com.phonegap.parsepushplugin": {
-        "source": {
-            "type": "git",
-            "url": "https://github.com/taivo/parse-push-plugin",
-            "subdir": ".",
-            "ref": "a2e696aa27dcc0df7c7a4669caa3d0c0a5ffdaf2"
-        },
-        "is_top_level": true,
-        "variables": {
-            "GCM_SENDER_ID": "702079786951"
-        }
-    },
     "cordova-plugin-device": {
         "source": {
             "type": "registry",
@@ -268,5 +256,30 @@
             "BRANCH_KEY": "key_live_cfFrFIoOjTPIZEyQQZ2nkgnfEups99Tf",
             "URI_SCHEME": "justababy"
         }
+    },
+    "cordova-plugin-media-capture": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-media-capture"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-photokandy-video-thumbnail": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-photokandy-video-thumbnail@~2.1.0"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "parse-push-plugin": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/taivo/parse-push-plugin",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

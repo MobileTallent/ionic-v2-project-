@@ -1,0 +1,36 @@
+<ion-view title="Hotbeds" class="background-calm" ng-controller="SpHotBeds as vm">
+  <ion-nav-buttons side="right" class="has-header">
+    <i class="button button-icon icon ion-ios-plus-outline" ng-click="vm.addHotBedModal.show()"></i>
+  </ion-nav-buttons>
+  <ion-content padding="true" class="has-header">
+    <ion-refresher on-refresh="vm.doRefresh()"></ion-refresher>
+    <div class="list card">
+        <div class="item item-body">
+          <div class="show-list-numbers-and-dots">
+            <p style="margin-top:0px;color:#632985;">Create Hotbeds from which to display your "Info Cards". People near your Hotbed will see your Info Cards and services. The closer to your Hotbed they are, the more of your cards they will see. Users will only see Hotbed information from the same country in which they reside.</p>
+          </div>
+        </div>
+    </div>
+
+     <ion-list show-delete="false" can-swipe="true">
+        <ion-item ng-if="!vm.hot_beds.length">
+          Hotbeds don't found
+        </ion-item>
+        <ion-item class="item" 
+                  ui-sref="sp.view-hotbed({'hot_bed':hot_bed})" 
+                  ng-repeat="hot_bed in vm.hot_beds | orderBy:'active':true">
+          <div style="float:left">
+            {{hot_bed.title}}
+            <p>{{::hot_bed.comment}}</p>
+          </div>
+          <span class="item-note">
+                <p ng-if="!hot_bed.active">Disabled</p>
+                <p ng-if="hot_bed.active">Active</p>
+          </span>
+            <ion-option-button class="button-balanced icon ion-edit" ng-click="vm.editHotBed(hot_bed)"></ion-option-button>
+            <ion-option-button class="button-assertive icon ion-trash-a" ng-click="vm.deleteHotBed(hot_bed.id)"></ion-option-button>
+        </ion-item>
+    </ion-list>
+
+  </ion-content>
+</ion-view>

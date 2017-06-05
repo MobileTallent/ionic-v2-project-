@@ -16,8 +16,8 @@ var _ = require('underscore')
 
 var config = require('../config.js')
 require('./linkedin.js')
-//require('./migrations.js')
-//require('./jobs.js')
+    //require('./migrations.js')
+    //require('./jobs.js')
 require('./admin.js')
 require('./service-provider.js')
 require('./video.js')
@@ -156,6 +156,7 @@ Parse.Cloud.beforeSave(Profile, function(request, response) {
 
         profile.set('uid', userId)
         profile.set('photos', [])
+        profile.set('videos', [])
         profile.set('enabled', true)
         profile.set('gps', true)
         profile.set('about', '')
@@ -813,27 +814,43 @@ Parse.Cloud.define("ProcessMatch", function(request, response) {
 
     }).then(function(result) {
         if (!mutualMatch) {
-            response.success(null)
-            return
+            Parse.Push.send({
+                channels: ["user_" + otherUserId],
+                data: {
+                    alert: "Someone likes you",
+                    badge: "Increment",
+                    sound: "cheering.caf",
+                    title: "Someone likes you!",
+
+                    type: "like",
+                    matchId: match.id
+                }
+            }, {
+                useMasterKey: true,
+                success: function() { response.success(null) },
+                error: function(error) { response.error(error) }
+            })
+        } else {
+            response.success(match.toJSON())
+
+            // Send the push notification to the other user when Match
+            Parse.Push.send({
+                channels: ["user_" + otherUserId],
+                data: {
+                    alert: "You have a new match",
+                    badge: "Increment",
+                    sound: "cheering.caf",
+                    title: "New Match!",
+
+                    type: "match",
+                    matchId: match.id
+                }
+            }, {
+                useMasterKey: true,
+                success: function() { response.success(match) },
+                error: function(error) { response.error(error) }
+            })
         }
-        response.success(match.toJSON())
-            // // Send the push notification to the other user
-            // Parse.Push.send({
-            // 	channels: ["user_" + otherUserId],
-            // 	data: {
-            // 		alert: "You have a new match",
-            // 		badge: "Increment",
-            // 		sound: "cheering.caf",
-            // 		title: "New Match!",
-            //
-            // 		type: "match",
-            // 		matchId: match.id
-            // 	}
-            // }, {
-            //  useMasterKey: true,
-            // 	success: function() { response.success(match) },
-            // 	error: function(error) { response.error(error) }
-            // })
 
     }, function(error) {
         response.error(error)
@@ -1273,6 +1290,8 @@ Parse.Cloud.afterSave('ChatMessage', function(request) {
     else if (message.get('audio'))
         alert = senderName + ' sent an audio message'
 
+    // Send Push Notification to other user when new Message
+
     Parse.Push.send({
         channels: channels,
         data: {
@@ -1708,7 +1727,7 @@ function deleteUser(response, user) {
             otherUser.id = otherUserId
             otherUser.remove('matches', match.id)
 
-            sendRemoveMatchPushNotification(match.id, otherUserId)
+            // sendRemoveMatchPushNotification(match.id, otherUserId)
             return Parse.Promise.when(match.save(null, masterKey), otherUser.save(null, masterKey))
         })
     }).then(function(success) {
@@ -1797,14 +1816,15 @@ Parse.Cloud.define('TestPushNotification', function(request, response) {
  * @returns {Promise<T>}
  */
 function notifyRemoveMatch(match, uids) {
-    var channels = _.map(uids, function(uid) { return 'user_' + uid })
-    return Parse.Push.send({
-        channels: channels,
-        data: {
-            type: 'removeMatch',
-            matchId: match.id
-        }
-    }, masterKey)
+    // var channels = _.map(uids, function(uid) { return 'user_' + uid })
+    // return Parse.Push.send({
+    //     channels: channels,
+    //     data: {
+    //         type: 'removeMatch',
+    //         matchId: match.id
+    //     }
+    // }, masterKey)
+    return null
 }
 
 function rebuildMatches(user) {

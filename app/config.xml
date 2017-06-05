@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget android-versionCode="398" id="co.justababy.app" ios-CFBundleVersion="0.3.9" version="0.3.9" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="408" id="co.justababy.app" ios-CFBundleVersion="0.4.1" version="0.4.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Just a Baby</name>
   <description>&#xD;&#xD;&#xD;&#xD;&#xD;
     An app for single parents to meet and discover each other.&#xD;&#xD;&#xD;&#xD;&#xD;
@@ -18,6 +18,28 @@
   <preference name="SplashScreen" value="screen"/>
   <preference name="SplashScreenDelay" value="3000"/>
   <preference name="Orientation" value="portrait"/>
+
+  <preference name="ParseAppId" value="11111111122444" />
+  <preference name="ParseServerUrl" value="http://172.16.1.160:1337/parse/" />
+
+  <!-- If your parse-server config requires a client key, set this.
+    If not, skip this preference -->
+  <preference name="ParseClientKey" value="3333333344888" />
+
+  <!-- required for Android push notification
+    To get your GCM sender ID, enable GCM for your Android project in the Google Developer Console.
+    The sender id is your project number, and should be a large integer like 123427208255.
+    This is the same "senderId" to be used in your parse-server push configuration.
+  -->
+  <preference name="ParseGcmSenderId" value="702079786951" />
+
+  <!-- As standard, this plugin only shows the most recent PN in 
+    the android notifications tray along with a count of unopened 
+    PNs. If you would like to override this behaviour and show all 
+    PNs in the tray, then add this preference. 
+    If not, skip this preference -->
+  <preference name="ParseMultiNotifications" value="true" />
+
   <feature name="StatusBar">
     <param name="ios-package" onload="true" value="CDVStatusBar"/>
   </feature>
@@ -26,18 +48,18 @@
   </feature>
   <platform name="android">
     <preference name="android-minSdkVersion" value="17"/>
-    <icon src="resources\android\icon\drawable-ldpi-icon.png" density="ldpi"/>
-    <icon src="resources\android\icon\drawable-mdpi-icon.png" density="mdpi"/>
-    <icon src="resources\android\icon\drawable-hdpi-icon.png" density="hdpi"/>
-    <icon src="resources\android\icon\drawable-xhdpi-icon.png" density="xhdpi"/>
-    <icon src="resources\android\icon\drawable-xxhdpi-icon.png" density="xxhdpi"/>
-    <icon src="resources\android\icon\drawable-xxxhdpi-icon.png" density="xxxhdpi"/>
-    <splash src="resources\android\splash\drawable-port-ldpi-screen.png" density="port-ldpi"/>
-    <splash src="resources\android\splash\drawable-port-mdpi-screen.png" density="port-mdpi"/>
-    <splash src="resources\android\splash\drawable-port-hdpi-screen.png" density="port-hdpi"/>
-    <splash src="resources\android\splash\drawable-port-xhdpi-screen.png" density="port-xhdpi"/>
-    <splash src="resources\android\splash\drawable-port-xxhdpi-screen.png" density="port-xxhdpi"/>
-    <splash src="resources\android\splash\drawable-port-xxxhdpi-screen.png" density="port-xxxhdpi"/>
+    <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png"/>
+    <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png"/>
+    <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png"/>
+    <icon density="xhdpi" src="resources/android/icon/drawable-xhdpi-icon.png"/>
+    <icon density="xxhdpi" src="resources/android/icon/drawable-xxhdpi-icon.png"/>
+    <icon density="xxxhdpi" src="resources/android/icon/drawable-xxxhdpi-icon.png"/>
+    <splash density="port-ldpi" src="resources/android/splash/drawable-port-ldpi-screen.png"/>
+    <splash density="port-mdpi" src="resources/android/splash/drawable-port-mdpi-screen.png"/>
+    <splash density="port-hdpi" src="resources/android/splash/drawable-port-hdpi-screen.png"/>
+    <splash density="port-xhdpi" src="resources/android/splash/drawable-port-xhdpi-screen.png"/>
+    <splash density="port-xxhdpi" src="resources/android/splash/drawable-port-xxhdpi-screen.png"/>
+    <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png"/>
   </platform>
   <platform name="ios">
     <icon height="57" src="resources/ios/icon/icon.png" width="57"/>
@@ -61,29 +83,25 @@
     <splash height="1136" src="resources/ios/splash/Default-568h@2x~iphone.png" width="640"/>
     <splash height="1334" src="resources/ios/splash/Default-667h.png" width="750"/>
     <splash height="2208" src="resources/ios/splash/Default-736h.png" width="1242"/>
-    <splash height="1242" src="resources/ios/splash/Default-Landscape-736h.png" width="2208"/>
-    <splash height="1536" src="resources/ios/splash/Default-Landscape@2x~ipad.png" width="2048"/>
-    <splash height="768" src="resources/ios/splash/Default-Landscape~ipad.png" width="1024"/>
     <splash height="2048" src="resources/ios/splash/Default-Portrait@2x~ipad.png" width="1536"/>
     <splash height="1024" src="resources/ios/splash/Default-Portrait~ipad.png" width="768"/>
     <splash height="960" src="resources/ios/splash/Default@2x~iphone.png" width="640"/>
     <splash height="480" src="resources/ios/splash/Default~iphone.png" width="320"/>
   </platform>
   <allow-navigation href="*"/>
+  <allow-navigation href="http://172.16.1.160:8100"/>
   <allow-intent href="*"/>
-  <icon src="resources\android\icon\drawable-xhdpi-icon.png"/>
-  <plugin name="branch-cordova-sdk" spec="^2.5.0" />
-  <branch-config>
-    <branch-key value="key_live_cfFrFIoOjTPIZEyQQZ2nkgnfEups99Tf" />
-    <uri-scheme value="justababy" />
-    <link-domain value="khz5.app.link" />
-    <ios-team-release value="RPD5XZB46Z" />
-  </branch-config>
-  <plugin name="com.phonegap.parsepushplugin" spec="https://github.com/taivo/parse-push-plugin#a2e696aa27dcc0df7c7a4669caa3d0c0a5ffdaf2">
-    <variable name="GCM_SENDER_ID" value="702079786951"/>
-  </plugin>
+  <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
+  <plugin name="branch-cordova-sdk" spec="^2.5.0"/>
   <plugin name="cordova-plugin-facebook4" spec="~1.7.1">
     <variable name="APP_ID" value="1219040608124053"/>
     <variable name="APP_NAME" value="Justababy"/>
   </plugin>
+  <plugin name="cordova-plugin-photokandy-video-thumbnail" spec="~2.1.0"/>
+  <branch-config>
+    <branch-key value="key_live_cfFrFIoOjTPIZEyQQZ2nkgnfEups99Tf"/>
+    <uri-scheme value="justababy"/>
+    <link-domain value="khz5.app.link"/>
+    <ios-team-release value="RPD5XZB46Z"/>
+  </branch-config>
 </widget>

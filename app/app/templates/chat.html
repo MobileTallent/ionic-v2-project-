@@ -125,8 +125,8 @@
                     <i class="button button-icon icon ion-ios-videocam" ng-disabled="!video.isSupported()" ng-click="video.invite(matchProfile.uid)"></i> -->
                 </div>
             </div>
-            <label class="item-input-wrapper">
-                <textarea ng-model="input.message" value="" style="width: 100%" placeholder="Write a message..." required minlength="1" maxlength="1500" msd-elastic></textarea>
+            <label class="item-input-wrapper message-box">
+                <textarea ng-model="input.message" value="" style="width: 100%" placeholder="Write a message..." required minlength="1" maxlength="1500" msd-elastic class="message message-box"></textarea>
             </label>
             <div class="footer-btn-wrap">
                 <button class="button button-icon icon ion-android-send footer-btn" type="submit" ng-disabled="!input.message || input.message === ''">

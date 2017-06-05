@@ -1,0 +1,49 @@
+<ion-view title="Edit account" class="background-calm" ng-controller="SpEditAccount as vm">
+    <ion-content padding="true">
+                <form name="service_provider_form" novalidate ng-submit="vm.save(service_provider_form)">
+                    <div class="list">
+                        <!-- Name -->
+                        <label class="item item-input" 
+                               ng-class="{ 'has-errors' : service_provider_form.name.$invalid, 'no-errors' : service_provider_form.name.$valid}">
+                            <input name="name" 
+                                   ng-model="vm.service_provider.name" 
+                                   ng-required="true" 
+                                   type="text" 
+                                   placeholder="Name" 
+                            />
+                        </label>
+                        <!-- Country -->
+                        <label class="item item-input item-select">
+                            <div class="input-label">
+                                  Country
+                            </div>
+                            <select ng-model="vm.service_provider.country" name="country">
+                                    <option ng-repeat="country in vm.countries">{{country.name}}</option>
+                            </select>
+                        </label>
+                        <!-- Spiel -->
+                        <label class="item item-input" 
+                               ng-class="{ 'has-errors' : service_provider_form.spiel.$invalid, 'no-errors' : service_provider_form.spiel.$valid}">
+                            <textarea name="spiel" 
+                                      ng-model="vm.service_provider.spiel" 
+                                      ng-required="true" 
+                                      ng-maxlength="200"
+                                      type="text" 
+                                      placeholder="Write a spiel about your company" 
+                                      rows="7" 
+                                      class="wide">
+                            </textarea>
+                        </label>
+                        <!-- Image cover -->
+                        <label class="item item-input" ng-class="{ 'has-errors' : service_provider_form.image_cover.$invalid, 'no-errors' : service_provider_form.image_cover.$valid}">
+                            <input name="image_cover" 
+                                   ng-required="true" 
+                                   ng-model="vm.service_provider.image_cover" 
+                                   type="text" 
+                                   placeholder="Image cover url">
+                        </label>
+                    </div>
+                    <button class="button button-positive  button-block">Save</button>
+                </form>
+            </ion-content>
+</ion-view>

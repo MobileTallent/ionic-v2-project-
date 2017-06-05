@@ -1,0 +1,71 @@
+<ion-view title="View Info Card" ng-controller="SpViewCard as vm">
+
+    <ion-content>
+        <div ng-if="vm.card">
+
+            <div class="list card">
+                <div class="item">
+                    <div class="row">
+                        <div class="col col-75">
+                            <h2>{{vm.card.title}}</h2>
+                            <p>{{vm.card.created_at}}</p>
+                        </div>
+                        <div class="col">
+                            <span class="item-note">
+                                {{vm.card.shows.summary}} Shows
+                                <br/>
+                                {{vm.card.clicks.summary}} Clicks
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item item-body">
+                    <h2>{{vm.card.question}}</h2>
+                    <img ng-if="vm.card.type=='image'" class="full-image" ng-src="{{vm.card.image}}">
+                    <div ng-if="vm.card.type=='video'"  class="video-container">
+                        <iframe  ng-if="vm.card.video_url && vm.card.type=='video'" ng-src="{{vm.card.video_url}}" frameborder="0" width="560" height="315"></iframe>
+                    </div>
+                    <h3>{{vm.card.answer}}</h3>
+                <div class="item">
+                    <div class="row">
+                        <div class="col">
+                            <p style="margin-top: 0px;">Created at</p>
+                        </div>
+                        <div class="col">
+                            <p style="margin-top: 0px;">{{vm.card.createdAt | date:'dd MMM yyyy'}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p style="margin-top: 0px;">Audience tags</p>
+                        </div>
+                        <div class="col">
+                            <p style="margin-top: 0px;">
+                                <span ng-if="!vm.card.audience.tags.length">All categories</span>
+                                <span ng-repeat="tag in vm.card.audience.tags">{{tag}}&nbsp;</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p style="margin-top: 0px;">Frequency</p>
+                        </div>
+                        <div class="col">
+                            <p style="margin-top: 0px;">{{vm.card.options.frequency}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p style="margin-top: 0px;">Users age</p>
+                        </div>
+                        <div class="col">
+                            <p style="margin-top: 0px;">{{vm.card.options.age_from}} - {{vm.card.options.age_to}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+    </ion-content>
+</ion-view>

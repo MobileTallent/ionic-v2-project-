@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "devDependencies": {
+    "@ionic/cli-plugin-cordova": "1.3.0",
+    "@ionic/cli-plugin-ionic1": "1.3.0",
     "angular-mocks": "1.5.3",
     "babel-core": "^6.1.21",
     "babel-preset-es2015": "^6.1.18",
@@ -94,7 +96,10 @@
     "cordova-plugin-request-location-accuracy",
     "cordova.plugins.diagnostic",
     "cordova-plugin-locationservices",
-    "branch-cordova-sdk"
+    "branch-cordova-sdk",
+    "cordova-plugin-media-capture",
+    "cordova-plugin-photokandy-video-thumbnail",
+    "https://github.com/taivo/parse-push-plugin"
   ],
   "cordovaPlatforms": [
     "android",

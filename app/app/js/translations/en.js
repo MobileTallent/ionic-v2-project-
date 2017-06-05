@@ -80,6 +80,8 @@ var TRANSLATION_EN = {
     'EDIT_PROFILE_TITLE': 'Edit Profile',
     'ABOUT_YOU': "Tell us your story, your vision. Be open and let people know what you're looking for.",
 
+    'PROFILE_VIDEO': 'Profile Video',
+    'SHARE_VIDEO': 'Share a Video',
 
     'AWAY': 'away', // for "5km away"
 
@@ -100,7 +102,7 @@ var TRANSLATION_EN = {
     'GIRLS': 'Girls',
     'SEARCH_DISTANCE': 'Search distance',
     'AGED_BETWEEN': 'Aged between',
-    'SETTINGS_TITLE': 'App Settings',
+    'SETTINGS_TITLE': 'Settings',
     'NOTIFICATION_SOUND': 'Notification Sound',
     'NEW_MATCH': 'New match',
     'NEW_MESSAGE': 'New message',
@@ -120,8 +122,8 @@ var TRANSLATION_EN = {
     'GPS_ERROR': 'Unable to get GPS location',
     'SET_MAP_LOCATION': 'Please set your location on the map and press save',
 
-    'NO_MATCHES': 'You don\'t have any matches yet.',
-    'START_SWIPING': 'Start swiping',
+    'NO_MATCHES': 'You don\'t have any matches yet',
+    'START_SWIPING': 'Start swiping ',
     'MATCHES_LOAD_ERROR': 'Unable to load matches',
     // New Match
     'ITS_A_MATCH': 'It\'s A Match',

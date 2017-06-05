@@ -8,8 +8,8 @@
     "gcpBrowserKey": "AIzaSyCUgT951OiYF4TmpR-lcpPd9zJ_NVBpoow",
     "gcpServerKey": "AIzaSyAejh_rsmEqgCu8mSQ1Y0uiRavvrZIDQf8",
 
-    "devP12file": "",
-    "devP12passphrase": "",
+    "devP12file": "cloud/apns_dev.p12",
+    "devP12passphrase": "12345",
     "prodP12file": "",
     "prodP12passphrase": "",
 
@@ -21,7 +21,7 @@
     "environments": ["dev", "qa", "prod"],
 
     "dev": {
-        "serverUrl": "http://localhost:1337",
+        "serverUrl": "http://172.16.1.160:1337",
         "databaseURI": "mongodb://localhost:27017/mydb"
     },
 

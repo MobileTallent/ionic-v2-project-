@@ -1,0 +1,26 @@
+<ion-view view-title="{{'PROFILE_VIDEO' | translate}}" cache-view="false">
+    <ion-content has-bouncing="true">
+        <ion-refresher pulling-text="Refresh..." on-refresh="doRefresh()">
+        </ion-refresher>
+        <ion-list>
+            <ion-item ng-repeat="item in videoList" item="item" style="padding:5px;">
+                <div class="item-content-wrap item-content">
+                    <div>
+                        <div class="row">
+                            <div class="col-20">
+                                <img ng-src="{{item.thumb}}" style="background-color: lightgray; padding:2px; height:36px; width: 36px;">
+                            </div>
+                            <div class="col">
+                                <h3>{{item.title}}</h3><br />
+                                <p>{{item.desc}}</p>
+                            </div>
+                            <div class="col-25">
+                                <p><a ng-href="{{item.url}}">{{item.url}}</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

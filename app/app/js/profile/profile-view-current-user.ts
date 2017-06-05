@@ -1,6 +1,5 @@
 import IAppRootScope = app.IAppRootScope
 
-
 module app {
 
 	/**

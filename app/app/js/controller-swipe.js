@@ -16,7 +16,6 @@ angular.module('controllers')
     var profile = $scope.profile = AppService.getProfile()
     $scope.profilePhoto = profile.photoUrl
 
-
     $scope.deleteUnmatchedSwipes = () => AppUtil.blockingCall(
         AppService.deleteUnmatched(),
         success => $log.log(success),
@@ -43,11 +42,9 @@ angular.module('controllers')
         updateProfileSearchResults()
     }
 
-
     var MIN_SEARCH_TIME = 2000
 
     function updateProfileSearchResults() {
-
         var startTime = Date.now()
         AppService.updateProfileSearchResults()
             .then(result => {
@@ -81,13 +78,15 @@ angular.module('controllers')
         $scope.matchProfile = AppService.getProfileById(match.profileId)
         $scope.modal.show()
     })
+
     $scope.closeNewMatch = () => $scope.modal.hide()
 
     $scope.messageNewMatch = () => {
-            $scope.modal.hide()
-            $state.go('^.chat', { matchId: $scope.newMatch.id })
-        }
-        // a test function for viewing the new match modal screen
+        $scope.modal.hide()
+        $state.go('^.chat', { matchId: $scope.newMatch.id })
+    }
+
+    // a test function for viewing the new match modal screen
     $scope.openNewMatch = () => {
         $scope.newMatch = AppService.getMutualMatches()[0]
         $scope.modal.show()
@@ -125,7 +124,6 @@ angular.module('controllers')
     }
 
     // matches are swiped off from the end of the $scope.profiles array (i.e. popped)
-
     $scope.cardDestroyed = (index) => $scope.profiles.splice(index, 1)
 
     $scope.cardTransitionLeft = (profile) => {
@@ -134,6 +132,7 @@ angular.module('controllers')
             // TODO auto-load more?
         }
     }
+
     $scope.cardTransitionRight = (profile) => {
         AppService.processMatch(profile, true)
         if ($scope.profiles.length == 0) {
@@ -142,27 +141,82 @@ angular.module('controllers')
     }
 })
 
+.directive('readMore', function($timeout) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var getHeightAbout = function() {
+                var eleRead = element[0].firstChild
+                if (eleRead.scrollHeight <= eleRead.offsetHeight) {
+                    var readBtn = element[0].children[1]
+                    angular.element(readBtn).addClass('hidden')
+                }
+            }
+            $timeout(getHeightAbout, 0)
+        }
+    }
+})
 
 .controller('MatchProfileCtrl', function($scope, $translate, AppService, AppUtil,
     $state, $stateParams, $ionicHistory, $ionicActionSheet, $ionicPopup,
-    matchProfile) {
+    matchProfile, $cordovaSocialSharing) {
     //$cordovaFacebook.api()
     //{user-id}?fields=context.fields%28mutual_friends%29
-
     var translations
     $translate(['REQUEST_FAILED', 'REPORT', 'MATCH_OPTIONS', 'CANCEL', 'WANT_TO_REMOVE_MATCH', 'MATCH_REPORTED']).then(function(translationsResult) {
         translations = translationsResult
     })
 
     $scope.matchProfile = matchProfile
+    $scope.linkToBeShared = ''
+
+    $scope.$on('$ionicView.beforeEnter', () => {
+        if (typeof Branch !== 'undefined') {
+            // only canonicalIdentifier is required
+            var properties = {
+                canonicalIdentifier: $scope.matchProfile.id,
+                canonicalUrl: 'https://justababy.com/',
+                title: 'A brand new way to make babies. Start your journey today.',
+                contentDescription: 'Just a Baby is a brand new app connecting people who want to make a baby. We can help you find a surrogate, partner, co-parent, sperm or egg donor - or find someone that needs your help to have a baby.',
+                contentImageUrl: $scope.matchProfile.photoUrl
+            }
+
+            // create a branchUniversalObj variable to reference with other Branch methods
+            Branch.createBranchUniversalObject(properties).then(res => {
+                this.branchUniversalObj = res
+
+                var analyticsLink = {
+                    channel: 'facebook',
+                    feature: 'sharing',
+                    campaign: 'JustaBaby',
+                    tags: ['JustaBaby', 'justababy']
+                }
+
+                // optional fields
+                var properties1 = {
+                    $desktop_url: 'https://justababy.com/',
+                    $android_url: 'https://play.google.com/store/apps/details?id=co.justababy.app',
+                    $ios_url: 'https://itunes.apple.com/us/app/just-a-baby/id1147759844?mt=8',
+                    profileId: $scope.matchProfile.id
+                }
+                if (this.branchUniversalObj) {
+                    this.branchUniversalObj.generateShortUrl(analyticsLink, properties1).then(res => {
+                        $scope.linkToBeShared = JSON.stringify(res.url)
+                    }).catch(function(err) {
+                        alert('Error on Generating URL: ' + JSON.stringify(err))
+                    })
+                }
+            }).catch(function(err) {
+                alert('Error on Branch: ' + JSON.stringify(err))
+            })
+        }
+    })
 
     $scope.profileOptions = () => {
-
         $ionicPopup.show({
             title: "Match Options",
             subTitle: "Press send to confirm with your potential co-parent that you have agreed to try for a baby with each other. Don’t worry, it’s not legally binding. This will be the beginning of your journey. From here we will guide you through best practices around having a                         baby. This feature also aims to reduce the chance of what we call the Genghis Kahn effect. The Kahn family is thought to have over 30 million descendants. We encourage you to use this feature to better inform yourself and others. Best to be open and honest, we’re dealing                     with potential family.",
             cssClass: 'popup-vertical-buttons',
-
             buttons: [{
                     text: 'We have agreed to try for a baby',
                     type: 'button-positive',
@@ -177,42 +231,9 @@ angular.module('controllers')
                         AppUtil.toastSimple("No Confirmation Request has been Sent")
                     }
                 }
-
-
             ]
         });
     }
-
-    //      $ionicActionSheet.show({
-    //          buttons: [
-    //              { text: 'We have agreed to try for a baby' }
-    //          ],
-    //          destructiveText: translations.REPORT,
-    //          titleText: translations.MATCH_OPTIONS,
-    //          cancelText: translations.CANCEL,
-
-    //          destructiveButtonClicked: function (index) {
-    //              report()
-    //              return true
-    //          },
-    //          buttonClicked: function (index) {
-    //              $ionicPopup.confirm({
-    //                  title: "Press send to confirm with your potential co-parent that you have agreed to try for a baby with each other. Don’t worry, it’s not legally binding. This will be the beginning of your journey. From here we will guide you through best practices around having a baby. This feature also aims to reduce the chance of what we call the Genghis Kahn effect. The Kahn family is thought to have over 30 million descendants. We encourage you to use this feature to better inform yourself and others. Best to be open and honest, we’re dealing with potential family.",
-    //                  okText: "Send",
-    //                  cancelText: translations.CANCEL,
-
-    //              }).then(function (res) {
-    //                  if (res) {
-    //                      impregnate()
-    //                  } else {
-    //                      AppUtil.toastSimple("No Confirmation Request has been Sent")
-    //                  }
-    //                  return true
-    //              })
-
-    //          }
-    //     })
-    //  }
 
     function impregnate() {
         AppUtil.blockingCall(
@@ -223,35 +244,16 @@ angular.module('controllers')
         )
     }
 
-
-    function report() {
-        AppUtil.blockingCall(
-            AppService.reportProfile('profile', $scope.matchProfile), // should pass in the match too
-            () => {
-                $ionicPopup.confirm({
-                    title: translations.MATCH_REPORTED,
-                    template: translations.WANT_TO_REMOVE_MATCH,
-                    okText: translations.REMOVE,
-                    cancelText: translations.CANCEL
-                }).then(function(res) {
-                    if (res)
-                        unmatch()
-                })
-            }
-        )
+    $scope.share = () => {
+        var profileShare = "Hey I found this person with the following story on the new App:" + "\n\"" + $scope.matchProfile.about + "\"\nSee for yourself by clicking here:"
+        $cordovaSocialSharing.share(profileShare, null, null, $scope.linkToBeShared) // Share via native share sheet 
+            .then(() => {
+                if (typeof analytics !== 'undefined') {
+                    analytics.trackView("Share This Profile")
+                }
+            }, error => {
+                //log error
+                console.error('Social share action error ' + JSON.stringify(error))
+            })
     }
-
-    function unmatch() {
-        AppUtil.blockingCall(
-            AppService.removeMatch($stateParams.matchId),
-            () => {
-                $ionicHistory.nextViewOptions({
-                    historyRoot: true,
-                    disableBack: true
-                })
-                $state.go('menu.chats')
-            }, 'REMOVE_MATCH_ERROR'
-        )
-    }
-
-});
+})

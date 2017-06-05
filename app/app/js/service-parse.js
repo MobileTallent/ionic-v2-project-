@@ -156,11 +156,13 @@ var FindUsReport = Parse.Object.extend({
  * @property {string} uid - User promary account
  * @property {string} image_cover - Provider main picture
  * @property {string} email - user email
- * @property {string} phone_number - user phone_number
+ * @property {string} phone_number - provider phone_number
+ * @property {string} skype_id - provider skype_id
  * @property {number} balance - service provider balance
+ * @property {number} spiel - service spiel
 */
 
-var ServiceProviderFields = ['name', 'country', 'uid', 'image_cover', 'email', 'balance', 'phone_number']
+var ServiceProviderFields = ['name', 'country', 'uid', 'image_cover', 'email', 'balance', 'phone_number', 'skype_id', 'spiel']
 var ServiceProvider = Parse.Object.extend({
     className: "ServiceProvider",
     attrs: ServiceProviderFields
@@ -177,8 +179,8 @@ var ServiceProvider = Parse.Object.extend({
  * @property {string} type - type of card
  * @property {object} audience - audiengs object with {tags:[]} array
  * @property {object} options - options object {frequency, age_from, age_to}
- * @property {number} shows - shows 
- * @property {number} clicks - clicks
+ * @property {object} shows - shows  with {summary:number}
+ * @property {object} clicks - clicks with {summary:number,by_days:[{date:date,summary:number}]}
 */
 
 var InfoCardFields = ['pid', 'title', 'question', 'answer', 'image', 'video', 'type', 'audience', 'options', 'shows', 'clicks']
@@ -197,8 +199,8 @@ var InfoCard = Parse.Object.extend({
  * @property {string} image - image cover
  * @property {string} video - video cover
  * @property {number} price - service price 
- * @property {number} shows - shows 
- * @property {number} clicks - clicks
+ * @property {object} shows - shows  with {summary:number}
+ * @property {object} clicks - clicks with {summary:number,by_days:[{date:date,summary:number}]}
 */
 
 var PrServiceFields = ['pid', 'title', 'active', 'spiel', 'audience', 'image', 'video', 'price', 'shows', 'clicks']
@@ -227,16 +229,31 @@ var HotBed = Parse.Object.extend({
  * @property {string} pid - service provider id
  * @property {string} uid - User id
  * @property {string} sid - Service id
+ * @property {string} service_name - Service name
  * @property {string} name - User name
  * @property {string} message - User description on book service
  * @property {string} image_cover - User Image cover
+ * @property {boolean} has_read - Has read by provider or not
 */
 
-var EnquireFields = ['pid', 'uid', 'sid', 'name', 'message', 'image_cover']
+var EnquireFields = ['pid', 'uid', 'sid', 'service_name', 'name', 'message', 'image_cover', 'has_read', 'u_email', 'u_phone', 'u_skype']
 var Enquire = Parse.Object.extend({
     className: "Enquire",
     attrs: EnquireFields
 })
+
+/**
+ * @typedef {Object} ProviderQuestion
+ * @property {string} answer - the answer
+ * @property {string} question - the question
+ * @property {number} position - the position of the question
+ */
+var providerQuestionFields = ['answer', 'question', 'position']
+var ProviderQuestion = Parse.Object.extend({
+    className: "ProviderQuestion",
+    attrs: providerQuestionFields
+})
+
 
 enhance(Parse.User.prototype, userFields)
 enhance(Profile.prototype, profileFields)
@@ -253,6 +270,7 @@ enhance(InfoCard.prototype, InfoCardFields)
 enhance(PrService.prototype, PrServiceFields)
 enhance(HotBed.prototype, HotBedFields)
 enhance(Enquire.prototype, EnquireFields)
+enhance(ProviderQuestion.prototype, providerQuestionFields)
 
 function enhance(prototype, fields) {
     for (var i = 0; i < fields.length; i++) {
@@ -369,6 +387,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         getUserId: getUserId,
         getProfile: getProfile,
         getProfileOfSelectedUser: getProfileOfSelectedUser,
+        getProfileOfSelectedUserNoParsing: getProfileOfSelectedUserNoParsing,
         getProfileForMatch: getProfileForMatch,
         convertLocation: convertLocation,
         saveSettings: saveSettings,
@@ -427,6 +446,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
         //service-provider functions
         getServiceProviders: getServiceProviders,
+        getMyServiceProvider: getMyServiceProvider,
         getServiceProviderLengths: getServiceProviderLengths,
         addServiceProvider: addServiceProvider,
         delServiceProvider: delServiceProvider,
@@ -442,7 +462,12 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         delHotBed: delHotBed,
         getEnquiries: getEnquiries,
         addEnquire: addEnquire,
-        delEnquire: delEnquire
+        delEnquire: delEnquire,
+        markEnquireAsRead: markEnquireAsRead,
+        getProviderQuestions: getProviderQuestions,
+        addProviderQuestions: addProviderQuestions,
+        delProviderQuestions: delProviderQuestions,
+        getUsers: getUsers
     }
 
     return service
@@ -647,7 +672,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
     }
 
     /**
-     * Loads the profile for the selected unmatched user, and attempts to create one if it doesn't exist by re-saving the user
+     * Loads the profile for the selected unmatched user with parsing it to the Profile Parse Object
      * @param profileId the profileId to lookup 
      * @returns {IPromise<Profile>} A promise which resolves to the profile of the selected unmatched user, or null if unavailable for reporting
      */
@@ -657,6 +682,15 @@ angular.module('service.parse', ['constants', 'parse-angular'])
                 profile = fromJSON(profile, 'Profile')
                 return profile
             }).catch(_unwrapError)
+    }
+
+    /**
+     * Loads the profile for the selected unmatched user without parsing it to Parse Object
+     * @param profileId the profileId to lookup 
+     * @returns {IPromise<Profile>} A promise which resolves to the profile of the selected unmatched user, or null if unavailable for reporting
+     */
+    function getProfileOfSelectedUserNoParsing(profileId) {
+        return Parse.Cloud.run('GetProfileOfSelectedUser', { profileId: profileId }).catch(_unwrapError)
     }
 
 
@@ -1141,6 +1175,10 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         return Parse.Cloud.run('GetServiceProviders').catch(_unwrapError)
     }
 
+    function getMyServiceProvider(userId) {
+        return Parse.Cloud.run('GetMyServiceProvider', {userId: userId}).catch(_unwrapError)
+    }
+
     function getServiceProviderLengths(provider_id) {
         return Parse.Cloud.run('GetServiceProviderLengths', { provider_id: provider_id }).catch(_unwrapError)
     }
@@ -1203,6 +1241,26 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
     function delEnquire(id) {
         return Parse.Cloud.run('DelEnquire', { id: id }).catch(_unwrapError)
+    }
+
+    function markEnquireAsRead(id) {
+        return Parse.Cloud.run('MarkEnquireAsRead', { id: id }).catch(_unwrapError)
+    }
+
+    function getProviderQuestions() {
+        return Parse.Cloud.run('GetProviderQuestions').catch(_unwrapError)
+    }
+
+    function addProviderQuestions(question) {
+        return Parse.Cloud.run('AddProviderQuestions', { question: question }).catch(_unwrapError)
+    }
+
+    function delProviderQuestions(id) {
+        return Parse.Cloud.run('DelProviderQuestions', { id: id }).catch(_unwrapError)
+    }
+
+    function getUsers(audience) {
+        return Parse.Cloud.run('GetUsers', {audience:audience}).catch(_unwrapError)
     }
 
     // Private functions

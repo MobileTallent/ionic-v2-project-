@@ -79,11 +79,13 @@ function onNotificationOpen(pnObj) {
                 // fields
                 isLoggedIn: false,
                 user: null,
+                service_provider: null,
                 userId: '',
                 fbId: '',
                 profile: null,
                 profileSearchResults: null,
                 twilioAccessToken: null,
+                branchProfileId: '',
                 // methods
                 init: init,
                 facebookLogin: facebookLogin,
@@ -100,6 +102,7 @@ function onNotificationOpen(pnObj) {
                 loadProfile: loadProfile,
                 getProfile: getProfile,
                 getProfileOfSelectedUser: getProfileOfSelectedUser,
+                getProfileOfSelectedUserNoParsing: getProfileOfSelectedUserNoParsing,
                 getProfileById: getProfileById,
                 getProfileByUserId: getProfileByUserId,
                 getProfileByMatchId: getProfileByMatchId,
@@ -172,6 +175,7 @@ function onNotificationOpen(pnObj) {
 
                 //service-provider functions
                 getServiceProviders: getServiceProviders,
+                getMyServiceProvider: getMyServiceProvider,
                 getServiceProviderLengths: getServiceProviderLengths,
                 addServiceProvider: addServiceProvider,
                 delServiceProvider: delServiceProvider,
@@ -187,7 +191,10 @@ function onNotificationOpen(pnObj) {
                 delHotBed: delHotBed,
                 getEnquiries: getEnquiries,
                 addEnquire: addEnquire,
-                delEnquire: delEnquire
+                delEnquire: delEnquire,
+                getProviderQuestions: getProviderQuestions,
+                addProviderQuestions: addProviderQuestions,
+                delProviderQuestions: delProviderQuestions
 
             }
 
@@ -267,12 +274,16 @@ function onNotificationOpen(pnObj) {
                     return refreshUnreadCount()
                 }).then(null, error => $log.error('Error loading local db data ' + JSON.stringify(error)))
 
+                $log.log('logged in with ' + JSON.stringify(user))
+
                 if (user.admin)
                     $rootScope.isAdmin = true
-                if (user.serviceProvider)
+                if (user.serviceProvider) {
                     $rootScope.serviceProvider = true
-                    
-                $log.log('logged in with ' + JSON.stringify(user))
+                    server.getMyServiceProvider(user.id).then(provider => {
+                        service.service_provider = provider
+                    })
+                }
 
                 server.getTwilioToken().then(
                     result => {
@@ -514,11 +525,19 @@ function onNotificationOpen(pnObj) {
             }
 
             /**
-             * Get the profile for a unmatched selected user for reporting purposes.
+             * Get the profile for a unmatched selected user for reporting purposes with parsing to Profile Parse Object
              * @returns {IProfile}
              */
             function getProfileOfSelectedUser(profileId) {
                 return server.getProfileOfSelectedUser(profileId)
+            }
+
+            /**
+             * Get the profile for a unmatched selected user w/o parsing
+             * @returns {IProfile}
+             */
+            function getProfileOfSelectedUserNoParsing(profileId) {
+                return server.getProfileOfSelectedUserNoParsing(profileId)
             }
 
             /**
@@ -612,7 +631,7 @@ function onNotificationOpen(pnObj) {
                     return
                 }
 
-                if (!service.profile.about) {
+                if (!service.profile.about || service.profile.about < 10 || !service.profile.hasSelfId) {
                     $state.go('menu.profile-edit')
                     return
                 }
@@ -622,6 +641,12 @@ function onNotificationOpen(pnObj) {
                 startSynchronisation()
 
                 go('menu.home')
+
+                if (service.branchProfileId) {
+                    service.getProfileOfSelectedUserNoParsing(service.branchProfileId).then(profile => {
+                        $timeout($state.go('menu.search-profile-view', { profile: profile }), 2500)
+                    })
+                }
             }
 
             function go(state) {
@@ -1533,6 +1558,13 @@ function onNotificationOpen(pnObj) {
                 return server.getServiceProviders()
             }
 
+            function getMyServiceProvider(userId) {
+                return server.getMyServiceProvider(userId).then(provider => {
+                    service.service_provider = provider
+                    return service.profile
+                })
+            }
+
             function getServiceProviderLengths(provider_id) {
                 return server.getServiceProviderLengths(provider_id)
             }
@@ -1544,7 +1576,7 @@ function onNotificationOpen(pnObj) {
             function delServiceProvider(id) {
                 return server.delServiceProvider(id)
             }
-            
+
             function setServiceProvider(is_set, user) {
                 return server.setServiceProvider(is_set, user)
             }
@@ -1596,6 +1628,20 @@ function onNotificationOpen(pnObj) {
             function delEnquire(id) {
                 return server.delEnquire(id)
             }
+
+            function getProviderQuestions() {
+                return server.getProviderQuestions()
+            }
+
+            function addProviderQuestions(question) {
+                return server.addProviderQuestions(question)
+            }
+
+            function delProviderQuestions(id) {
+                return server.delProviderQuestions(id)
+            }
+
+            
 
 
 

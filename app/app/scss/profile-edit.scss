@@ -77,7 +77,7 @@ div input[type=radio]{
     align-items: center;
     justify-content: center;
     margin-right: 5px;
-    font-size: 12px;
+    font-size: 16px;
     -webkit-transition: all 0.25s linear;
     transition: all 0.25s linear;
 }
@@ -105,14 +105,14 @@ input[type=radio]:checked ~ label{
 
 .toggle-text-active{
     text-align: center;
-    font-size: 12px !important;
+    font-size: 16px !important;
     // color: $energized;
     color: $energized;
     
 }
 .toggle-text-inactive{
     text-align: center;
-    font-size: 12px !important;
+    font-size: 16px !important;
     // color: $assertive;
     color: $energized;
 }
@@ -140,4 +140,12 @@ a.icon.large-icon::before {
    flex-grow: 1; 
    text-align: center; 
    margin: 5px; 
+}
+
+.self-id-badge-checkbox {
+   float: left;
+    width: 35px;
+    height: 35px;
+    margin-top: -6px;
+    margin-left: -5px;
 }

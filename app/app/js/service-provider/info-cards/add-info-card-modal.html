@@ -1,0 +1,99 @@
+<ion-modal-view>
+
+            <ion-header-bar class="bar bar-header bar-positive">
+                <h1 class="title">{{vm.modalText}} Info Card</h1>
+                <button class="button button-clear button-primary" ng-click="vm.close()">Cancel</button>
+            </ion-header-bar>
+            <ion-content class="padding">
+                <form name="infocardsForm" novalidate ng-submit="vm.addInfoCard(infocardsForm)">
+                    <div class="list">
+                        <!-- Title -->
+                        <label class="item item-input" 
+                               ng-class="{ 'has-errors' : infocardsForm.title.$invalid, 'no-errors' : infocardsForm.title.$valid}">
+                            <input name="title" 
+                                   ng-model="vm.info_card.title" 
+                                   ng-required="true" 
+                                   type="text" 
+                                   placeholder="Title" 
+                            />
+                        </label>
+                         <!-- Question -->
+                        <label class="item item-input" 
+                               ng-class="{ 'has-errors' : infocardsForm.question.$invalid, 'no-errors' : infocardsForm.question.$valid}">
+                            <input name="question" 
+                                   ng-model="vm.info_card.question" 
+                                   ng-required="true" 
+                                   type="text" 
+                                   placeholder="Question">
+                        </label>
+                         <!-- Answer -->
+                        <label class="item item-input"
+                               ng-class="{ 'has-errors' : infocardsForm.answer.$invalid, 'no-errors' : infocardsForm.answer.$valid}">
+                            <input name="answer" 
+                                   ng-model="vm.info_card.answer" 
+                                   ng-required="true" 
+                                   type="text" 
+                                   placeholder="Answer">
+                        </label>
+                        <!-- Image cover -->
+                        <label class="item item-input" 
+                               ng-class="{ 'has-errors' : infocardsForm.image.$invalid, 'no-errors' : infocardsForm.image.$valid}">
+                            <input name="image" 
+                                   ng-model="vm.info_card.image" 
+                                   ng-required="true" 
+                                   type="text" 
+                                   placeholder="Image cover url">
+                        </label>
+                        <!-- Video cover -->
+                        <label class="item item-input">
+                            <input name="video" 
+                                   ng-model="vm.info_card.video" 
+                                   type="text" 
+                                   placeholder="Video cover url">
+                        </label>
+                        <!-- Type -->
+                        <label class="item item-input item-select">
+                            <div class="input-label">
+                                Type
+                            </div>
+                            <select ng-model="vm.info_card.type" ng-init="vm.info_card.type='image'" name="type">
+                                <option ng-selected="true" ng-value="image">Image</option>
+                                <option ng-value="video">Video</option>
+                            </select>
+                        </label>
+                        <!-- Audience -->
+                        <div class="item item-divider">Audience</div>
+                        <ion-list>
+                                <ion-checkbox ng-checked="vm.info_card.audience.tags.indexOf('LFsperm')>-1"                                              ng-model="vm.info_card.audience.LFsperm">Has Sperm</ion-checkbox>
+                                <ion-checkbox ng-checked="vm.info_card.audience.tags.indexOf('LFeggs')>-1"                                
+                                              ng-model="vm.info_card.audience.LFeggs">Has Eggs</ion-checkbox>
+                                <ion-checkbox ng-checked="vm.info_card.audience.tags.indexOf('LFembryo')>-1"
+                                              ng-model="vm.info_card.audience.LFembryo">Has Embryo</ion-checkbox>
+                                <ion-checkbox ng-checked="vm.info_card.audience.tags.indexOf('LFwomb')>-1"
+                                              ng-model="vm.info_card.audience.LFwomb">Has Womb</ion-checkbox>
+                        </ion-list>
+                        <!-- Frequency -->
+                        <div class="item item-divider" ng-init="vm.info_card.options = {frequency:50,age_from:18,age_to:55}">
+                            Frequency showing: {{vm.info_card.options.frequency}}
+                        </div>
+                        <label class="item custom-slider" style="height: 60px">
+                            <slider floor="1" ceiling="100" ng-model-low="1"      ng-model-high="vm.info_card.options.frequency"></slider>
+                        </label>
+                        <!-- Age from - Age to-->
+                        <div class="item item-divider">
+                            Aged between: {{vm.info_card.options.age_from}} to {{vm.info_card.options.age_to==55 ? vm.info_card.options.age_to + '+':vm.info_card.options.age_to}}
+                        </div>
+                        <label class="item custom" style="height: 60px">
+                             <slider floor="18" ceiling="55" ng-model-low="vm.info_card.options.age_from" ng-model-high="vm.info_card.options.age_to"></slider>
+                        </label>
+
+                        
+                        <label class="item"
+                             ng-show="(infocardsForm.title.$error || infocardsForm.question.$error || infocardsForm.answer.$error || infocardsForm.image.$error) && vm.submitted">
+                            <i class="ion-information-circled"></i> Fill-in all fields!
+                        </label>
+                        <button class="button button-full button-positive">Save</button>
+                    </div>
+                </form>
+            </ion-content>
+        </ion-modal-view>

@@ -1,0 +1,84 @@
+<ion-modal-view>
+
+            <ion-header-bar class="bar bar-header bar-positive">
+                <h1 class="title">{{vm.modalText}} Service</h1>
+                <button class="button button-clear button-primary" ng-click="vm.close()">Cancel</button>
+            </ion-header-bar>
+            <ion-content class="padding">
+                <form name="serviceForm" novalidate ng-submit="vm.addService(serviceForm)">
+                    <div class="list">
+                        <!-- Title -->
+                        <label class="item item-input" 
+                               ng-class="{ 'has-errors' : serviceForm.title.$invalid, 'no-errors' : serviceForm.title.$valid}">
+                            <input name="title" 
+                                   ng-model="vm.service.title" 
+                                   ng-required="true" 
+                                   type="text" 
+                                   placeholder="Title" 
+                            />
+                        </label>
+                        <!-- Active -->
+                        <ion-toggle 
+                                ng-init="vm.service.active = true"
+                                toggle-class="toggle-positive" 
+                                ng-model="vm.service.active"  
+                                ng-checked="true">
+                                    Active
+                        </ion-toggle>
+                        <!-- Spiel -->
+                        <label class="item item-input" 
+                               ng-class="{ 'has-errors' : serviceForm.spiel.$invalid, 'no-errors' : serviceForm.spiel.$valid}">
+                            <textarea name="spiel" 
+                                      ng-model="vm.service.spiel" 
+                                      ng-required="true" 
+                                      ng-maxlength="200"
+                                      type="text" 
+                                      placeholder="Write a spiel about your service" 
+                                      rows="7" 
+                                      class="wide">
+                            </textarea>
+                        </label>
+                        <!-- Price -->
+                        <label class="item item-input" 
+                               ng-class="{ 'has-errors' : serviceForm.price.$invalid, 'no-errors' : serviceForm.price.$valid}">
+                            <input name="price" 
+                                   ng-model="vm.service.price" 
+                                   ng-required="true" 
+                                   type="number" 
+                                   placeholder="Price">
+                        </label>
+                        <!-- Image cover -->
+                        <label class="item item-input">
+                            <input name="image" 
+                                   ng-model="vm.service.image" 
+                                   type="text" 
+                                   placeholder="Image cover url">
+                        </label>
+                        <!-- Video cover -->
+                        <label class="item item-input">
+                            <input name="video" 
+                                   ng-model="vm.service.video" 
+                                   type="text" 
+                                   placeholder="Video cover url">
+                        </label>
+                        <!-- Audience -->
+                        <div class="item item-divider">Audience</div>
+                        <ion-list>
+                                <ion-checkbox ng-checked="vm.service.audience.tags.indexOf('LFsperm')>-1"                                              ng-model="vm.service.audience.LFsperm">Has Sperm</ion-checkbox>
+                                <ion-checkbox ng-checked="vm.service.audience.tags.indexOf('LFeggs')>-1"                                
+                                              ng-model="vm.service.audience.LFeggs">Has Eggs</ion-checkbox>
+                                <ion-checkbox ng-checked="vm.service.audience.tags.indexOf('LFembryo')>-1"
+                                              ng-model="vm.service.audience.LFembryo">Has Embryo</ion-checkbox>
+                                <ion-checkbox ng-checked="vm.service.audience.tags.indexOf('LFwomb')>-1"
+                                              ng-model="vm.service.audience.LFwomb">Has Womb</ion-checkbox>
+                        </ion-list>
+                        
+                        <label class="item"
+                             ng-show="(serviceForm.title.$error || serviceForm.spiel.$error || serviceForm.price.$error) && vm.submitted">
+                            <i class="ion-information-circled"></i> Fill-in all fields!
+                        </label>
+                        <button class="button button-full button-positive">Save</button>
+                    </div>
+                </form>
+            </ion-content>
+        </ion-modal-view>

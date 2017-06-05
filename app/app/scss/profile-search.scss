@@ -40,7 +40,7 @@
     padding: 5px 10px;
     color: $match-search-text !important;
     font-size: 16px;
-    // height: 60%;
+    max-height: 68px;
     overflow: hidden;
 }
 
@@ -61,7 +61,6 @@
     flex: 3;
     font-size: 16px;
     color: $assertive;
-    padding: 10px;
     margin-bottom: 0;
 }
 
@@ -97,4 +96,16 @@
 .swipe-accept:before,
 .swipe-accept {
     color: white;
+}
+
+.share-profile-icon:before,
+.share-profile-icon {
+    color: white;
+    font-size:50px !important;
+    display:block !important;
+}
+
+.unread-messages {
+    animation: wobble;
+    animation-iteration-count: infinite;
 }

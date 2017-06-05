@@ -40,3 +40,15 @@
     height: 61px;
     box-shadow: 0px 0px 3px 0px rgba(155, 155, 155, 0.65);
 }
+
+.chat-inital-message {
+    color: $chat-date-recieved;
+    font-size: 18px;
+    margin: auto;
+}
+
+.inital-chat-message-box {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}

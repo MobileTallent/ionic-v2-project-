@@ -1,7 +1,7 @@
 <ion-view view-title="{{::appName}}" class="title background-calm">
     <ion-nav-buttons side="right">
         <i class="button button-icon icon ion-ios-chatbubble-outline" ui-sref="menu.chats">
-        <unread-chats-badge/>
+        <unread-chats-badge class="unread-chats-badge"/>
     </i>
     </ion-nav-buttons>
     <ion-content class="padding-20" no-scroll>
@@ -16,7 +16,7 @@
                     opacity: 0;
                 }
             }
-            
+
             .imgOverlay {
                 position: absolute;
                 margin-left: auto;
@@ -24,7 +24,7 @@
                 left: 0;
                 right: 0;
             }
-            
+
             .imgCircle {
                 width: 150px;
                 height: 150px;
@@ -32,7 +32,7 @@
                 -webkit-border-radius: 150px;
                 -moz-border-radius: 150px;
             }
-            
+
             .verticalAlign {
                 position: relative;
                 top: 50%;
@@ -40,7 +40,7 @@
                 width: 100%;
                 margin: 0 auto;
             }
-            
+
             .fade-out {
                 animation-name: 'fade_out_animation';
                 animation-duration: 2000ms;
@@ -112,7 +112,8 @@
             <td-cards>
                 <!-- ng-if="$index >= profiles.length -2" is to display only the top 2 cards in the DOM for performance -->
                 <!-- The profiles array is used like a stack, where the last item shows first -->
-                <td-card ng-if="$index >= profiles.length - 2" ng-show="profiles" ng-repeat="profile in profiles track by $index" ng-click="viewDetails(profile)" on-destroy="cardDestroyed($index)" on-transition-left="cardTransitionLeft(profile)" on-transition-right="cardTransitionRight(profile)"
+                <td-card ng-if="$index >= profiles.length - 2" ng-show="profiles" ng-repeat="profile in profiles track by $index" ng-click="viewDetails(profile)"
+                    on-destroy="cardDestroyed($index)" on-transition-left="cardTransitionLeft(profile)" on-transition-right="cardTransitionRight(profile)"
                     class="card-{{$index}}" ng-class="{'accepted-transform': profile.accepted, 'rejected-transform': profile.rejected}">
 
                     <div class="row image" ng-click="viewDetails(profile)">
@@ -135,12 +136,12 @@
                             <div style="margin-left: 5px;">{{profile.location | distance}} {{'AWAY' | translate}}</div>
                         </div>
                     </div>
-                    <div id="match-search-about-container">
+                    <div id="match-search-about-container" read-more>
                         <div id="match-search-about">
                             {{profile.about}}
                         </div>
 
-                        <div ng-hide="(profile.about).length < 200 " id="match-search-readmore">
+                        <div id="match-search-readmore">
                             Read More
                         </div>
                         <div class="badge-row">
@@ -157,27 +158,19 @@
 
             <div ng-show="profiles.length > 0" class="swipe-buttons">
                 <div class="row center">
-                    <div class="col col-33">
+                    <div class="col col-50">
                         <a class="button button-icon" ng-click="reject()">
                             <i class="icon ion-close swipe-button swipe-reject"></i>
                         </a>
                     </div>
-                    <div class="col col-33 col-offset-33">
-
+                    <div class="col col-50">
                         <a class="button button-icon" ng-click="accept()">
                             <i class="icon ion-checkmark swipe-button swipe-accept"></i>
                         </a>
-
                     </div>
                 </div>
             </div>
-
         </div>
-
-
-
-
-
 
 
         <!--

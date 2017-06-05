@@ -140,6 +140,7 @@ angular.module('controllers', ['service.app', 'ngAnimate', 'ngCordova', 'ionic.c
         $scope.status = 'LOGGING_IN_TO_FB'
 
         connectToFacebook().then(function(result) {
+            console.debug("FB Result : " + result);
             return AppService.facebookLogin(result)
         }).then(function(result) {
             // Load the user profile
@@ -262,7 +263,7 @@ angular.module('controllers', ['service.app', 'ngAnimate', 'ngCordova', 'ionic.c
                     $cordovaFacebook.login(["public_profile", "email", "user_birthday", "user_photos", "user_friends", "user_likes"])
                         .then(function(loginResult) {
                             if (loginResult.status === 'connected') {
-                                $log.log('setting $rootScope.facebookConnected')
+                                $log.log('setting $rootScope.facebookConnected - ' + loginResult.authResponse.accessToken)
                                 $rootScope.facebookConnected = true
                                 $rootScope.fbAccessToken = loginResult.authResponse.accessToken
                                 deferred.resolve(loginResult)

@@ -1,0 +1,24 @@
+<ion-view view-with-bg hide-nav-bar="true" cache-view="false" id="welcome-page" ng-controller="SpWelcome as vm">
+	<ion-content has-header="false" scroll="false">
+		<div class="container">
+			<!-- Title -->
+			<div class="row">
+				<div class="col">
+					<div class="app-name">{{::appName}}</div>
+          <div class="app-subname" ng-class="vm.logo_class">Service provider</div>
+				</div>
+			</div>
+			<br/>
+			<div class="row center" style="padding-top: 150px">
+				<div class="col">
+				</div>
+			</div>
+
+			<div class="row bottom">
+				<div class="col">
+					<div id="login-status">{{vm.status}}</div>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

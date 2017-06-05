@@ -242,7 +242,7 @@ module app {
 			let profileUpdate = <IProfile>{}
 			profileUpdate.about = this.about
 			profileUpdate.personCategory = this.personCategory ? this.personCategory : '0'
-			profileUpdate.hasSelfId = true
+			
 			// Please comment on this logic. 
 			if (this.personCategory === '3') {
 				profileUpdate.personType = '0'
@@ -259,6 +259,7 @@ module app {
 				profileUpdate.personEmbryo = this.personEmbryo ? this.personEmbryo : false
 				profileUpdate.personHelpLevel = this.personHelpLevel ? this.personHelpLevel : '0'
 			}
+			profileUpdate.hasSelfId = profileUpdate.personCategory != '0'? true : false
 
 			let thingsIHave = ""
 			if (profileUpdate.personSperm)

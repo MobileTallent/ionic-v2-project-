@@ -137,6 +137,51 @@ angular.module('ionicApp').config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state('menu.profile-video-entry', {
+            url: "/profile-video-entry",
+            views: {
+                'menuContent': {
+                    templateUrl: "profile-video-entry.html",
+                    controller: "ProfileMainVideoCtrl"
+                }
+            }
+        })
+        .state('menu.profile-video-main', {
+            url: "/profile-video-main",
+            views: {
+                'menuContent': {
+                    templateUrl: "profile-video-main.html",
+                    controller: "ProfileMainVideoCtrl"
+                }
+            }
+        })
+        .state('menu.profile-video-edit', {
+            url: "/profile-video-edit",
+            views: {
+                'menuContent': {
+                    templateUrl: "profile-video-edit.html",
+                    controller: "ProfileMainVideoCtrl"
+                }
+            }
+        })
+        .state('menu.profile-video-confirm', {
+            url: "/profile-video-confirm",
+            views: {
+                'menuContent': {
+                    templateUrl: "profile-video-confirm.html",
+                    controller: "ProfileMainVideoCtrl"
+                }
+            }
+        })
+        .state('menu.profile-video-list', {
+            url: "/profile-video-list",
+            views: {
+                'menuContent': {
+                    templateUrl: "profile-video-list.html",
+                    controller: "ProfileVideoListCtrl"
+                }
+            }
+        })
         .state('menu.fb-albums', {
             url: '/fb-albums',
             views: {
