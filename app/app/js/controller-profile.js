@@ -795,7 +795,7 @@ angular.module('controllers')
         }
 
     })
-    .controller('ProfileMainVideoCtrl', function($scope, $state, $window, VideoService, $cordovaSocialSharing, $rootScope, $cordovaCapture, $cordovaCamera, $ionicModal, $ionicPopup, $ionicLoading, $localStorage, $cordovaFileTransfer) {
+    .controller('ProfileMainVideoCtrl', function($scope, AppUtil, AppService, $state, $window, VideoService, $cordovaSocialSharing, $rootScope, $cordovaCapture, $cordovaCamera, $ionicModal, $ionicPopup, $ionicLoading, $localStorage, $cordovaFileTransfer) {
         var today = new Date();
         var dd = today.getDate();
         var mm = today.getMonth() + 1; //January is 0!
@@ -812,6 +812,11 @@ angular.module('controllers')
         $scope.$on('$ionicView.beforeEnter', () => $scope.refreshProfileMainVideo())
 
         $scope.refreshProfileMainVideo = function() {
+
+            $scope.profile = AppService.getProfile();
+            console.log("scope.profile " + $scope.profile);
+            console.log("scope.profile.videos " + $scope.profile.videos);
+            console.log("scope.profile.photos " + $scope.profile.photos);
 
             $scope.video = {
                 created_date: today,
@@ -1002,18 +1007,25 @@ angular.module('controllers')
                         //a service will be called here to add user video link to the server, two new column will be added to the database: 
                         // 'youtubeVid' this column is a boolean and will i fthe user has a video or not, 'youtubeVidUrl', this column will contain the youtube url   
                         $scope.video.url = res["video_url"];
-                        $scope.video.thumb = $scope.urlForClipThumb($scope.clip);
-
-                        $rootScope.profileVideo = $scope.video;
-                        // $localStorage.profileVideo.push($scope.video);
+                        $scope.video.thumb = isset(res["video_url"]) ? res["video_url"] : ""; //$scope.urlForClipThumb($scope.clip);
 
                         $ionicPopup.alert({
                             title: "Successfull",
                             template: "Video Successfully uploaded. Thanks you for sharing!<br> Link:<b>" + res["video_url"]
                         }).then(function(result) {
-                            $scope.closeEditModal();
+                            $scope.profile.videos.push({ youtube: $scope.video.url, thumb: $scope.video.thumb });
 
-                            $state.go('menu.profile-video-list');
+                            console.log("scope.profile.videos : " + $scope.profile.videos);
+
+                            var changes = { videos: $scope.profile.videos };
+
+                            console.log("changes : " + changes);
+
+                            AppUtil.blockingCall(AppService.saveProfile(changes),
+                                () => {
+                                    $scope.closeEditModal();
+                                    $state.go('menu.profile-video-list');
+                                }, 'SETTINGS_SAVE_ERROR')
                         });
                     } else {
                         $ionicPopup.alert({
@@ -1038,15 +1050,14 @@ angular.module('controllers')
                 });
         }
     })
-    .controller('ProfileVideoListCtrl', function($scope, $state, $window, $cordovaSocialSharing, $rootScope, $ionicModal, $ionicLoading, $localStorage) {
-
-        // $scope.videoList = {};
+    .controller('ProfileVideoListCtrl', function($scope, AppService, $state, $window, $cordovaSocialSharing, $rootScope, $ionicModal, $ionicLoading, $localStorage) {
 
         $scope.$on('$ionicView.beforeEnter', () => $scope.readyVideo())
 
         $scope.readyVideo = function() {
-            // $scope.videoList = $localStorage.profileVideo;
-            $scope.videoList = $rootScope.profileVideo;
+
+            $scope.profile = AppService.getProfile();
+            $scope.videoList = $scope.profile.videos;
         }
 
     });

@@ -702,6 +702,18 @@ Parse.Cloud.define("ProcessMatch", function(request, response) {
     var liked = request.params.liked
     var forceConnect = request.params.forceConnect
 
+    // var username = request.user.profile.name
+    var userQuery = new Parse.Query("User");
+    userQuery.equalTo("objectId", userId)
+    userQuery.include("profile")
+    userQuery.find(masterKey).then(function(users) {
+
+        var result = users.first
+        var userName = result.profile.name
+
+    }).then(null, function(error) {
+        response.error(error)
+    })
 
     if (otherUserId == null)
         return response.error('otherUserId was not provided')
@@ -817,7 +829,7 @@ Parse.Cloud.define("ProcessMatch", function(request, response) {
             Parse.Push.send({
                 channels: ["user_" + otherUserId],
                 data: {
-                    alert: "Someone likes you",
+                    alert: userName + " likes your story",
                     badge: "Increment",
                     sound: "cheering.caf",
                     title: "Someone likes you!",
@@ -837,7 +849,7 @@ Parse.Cloud.define("ProcessMatch", function(request, response) {
             Parse.Push.send({
                 channels: ["user_" + otherUserId],
                 data: {
-                    alert: "You have a new match",
+                    alert: "You have matched with " + userName,
                     badge: "Increment",
                     sound: "cheering.caf",
                     title: "New Match!",
@@ -1284,7 +1296,7 @@ Parse.Cloud.afterSave('ChatMessage', function(request) {
         // var title = 'New message!'
     var alert = senderName
     if (message.get('text'))
-        alert = senderName + ': ' + message.get('text')
+        alert = senderName + ' has messaged you' //': ' + message.get('text')
     else if (message.get('image'))
         alert = senderName + ' sent an image'
     else if (message.get('audio'))
