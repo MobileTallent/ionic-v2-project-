@@ -1,4 +1,5 @@
 
+
 @font-face {
     font-family: 'Avenir Next LT Pro Regular';
     font-style: normal;
@@ -237,7 +238,7 @@ height: 100%;
 }
 
 .unread-chats-badge {
-    background-color: #D32F2F !important;
+    background-color: #92278A !important;
     border-width: 1px !important;
     border-color: white !important;
     border-style: solid !important;
@@ -247,7 +248,7 @@ height: 100%;
 }
 
 .unread-chats-menu-badge {
-    background-color: #D32F2F !important;
+    background-color: #92278A !important;
     border-color: white !important;
     border-style: solid !important;
     font-weight: 500 !important;

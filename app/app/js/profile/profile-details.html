@@ -29,12 +29,20 @@
             </div>
         </div>
     </div>
+
+    <div class="badge-row badge-row-profile" ng-click="onClickBadgeInfo()">
+        <img ng-class="profile.personSperm ? 'id-badge' : 'id-no-badge'" src="img/sperm_ic.svg">
+        <img ng-class="profile.personWomb ? 'id-badge' : 'id-no-badge'" src="img/womb_ic.svg">
+        <img ng-class="profile.personEgg ? 'id-badge' : 'id-no-badge'" src="img/egg_ic.svg">
+        <img ng-class="profile.personEmbryo ? 'id-badge' : 'id-no-badge'" src="img/embryo_ic.svg">
+    </div>
     
     <!--Share buttons simple style like tinder-->
     <!--<div class="col-20 profile-share-container">
         <i class="button button-icon icon ion-android-share-alt profile-share-buttons" ng-click="vm.share()"></i>
         <i class="button button-icon icon ion-android-more-vertical profile-share-buttons" ng-click="vm.profileOptions()"></i>
     </div>-->
+    
 </div>
 
 <div class="padding-15">
@@ -44,13 +52,6 @@
 
     <div ng-show="profile.about" style="color:#9B9B9B; white-space: pre-wrap;" class="text-size-18">
         {{profile.about}}
-    </div>
-
-    <div class="badge-row badge-row-profile" ng-click="onClickBadgeInfo()">
-        <img ng-class="profile.personSperm ? 'id-badge' : 'id-no-badge'" src="img/sperm_ic.svg">
-        <img ng-class="profile.personWomb ? 'id-badge' : 'id-no-badge'" src="img/womb_ic.svg">
-        <img ng-class="profile.personEgg ? 'id-badge' : 'id-no-badge'" src="img/egg_ic.svg">
-        <img ng-class="profile.personEmbryo ? 'id-badge' : 'id-no-badge'" src="img/embryo_ic.svg">
     </div>
 
     <p class="spacer-70"></p>

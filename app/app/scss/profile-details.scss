@@ -11,7 +11,7 @@
 }
 
 .badge-row-profile {
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .profile-name-banner{
@@ -89,10 +89,10 @@
     width: 60px;
     height: 60px;
     right: 11%;
-    top: 55%;
+    margin-top: 22px;
     background-color: $energized;
     background-image: linear-gradient(to bottom, transparent, $assertive);
-    box-shadow: 0 6px 10px rgba(191, 101, 184, 0.72);
+    box-shadow:0px 4px 10px rgba(191, 118, 186, 0.71);
 }
 
 .floating-tick-cross-button:before,
@@ -110,12 +110,13 @@
     height: 80px;
     right: 8%;
     bottom: 3%;
-    padding: 7px !important;
+    padding: 9px !important;
     background-color: $energized;
-    background-image: radial-gradient(transparent,#2e8478);
+    // background-image: radial-gradient(transparent,#3baa9a);
     box-shadow:0px 12px 19px 0px rgba(101, 191, 166, 0.44);
     z-index: 1001;
     border: solid;
+    border-width: 1px;
     border-color: rgba(128, 64, 141, 0.21)
 }
 
@@ -126,12 +127,13 @@
     height: 80px;
     left: 8%;
     bottom: 3%;
-    padding: 7px !important;
+    padding: 9px !important;
     background-color: $energized;
-    background-image: radial-gradient(transparent,#2e8478);
+    // background-image:  radial-gradient(transparent,#3baa9a);
     box-shadow:0px 12px 19px 0px rgba(101, 191, 166, 0.44);
     z-index: 1001;
     border: solid;
+    border-width: 1px;
     border-color: rgba(128, 64, 141, 0.21);
 }
 
