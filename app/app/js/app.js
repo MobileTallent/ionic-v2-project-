@@ -58,7 +58,7 @@ var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUt
                             AppService.branchProfileId = data.$canonical_identifier
                         }
                     }).catch(function(err) {
-                        alert('Error: ' + JSON.stringify(err))
+                        alert('The network connection appears to be disabled or out of range, Just a Baby requires internet access to function. Please try again later.')
                     })
                 }
             }
