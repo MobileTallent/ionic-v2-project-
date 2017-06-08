@@ -734,7 +734,9 @@ Parse.Cloud.define("GetMatches", function(request, response) {
 
             if(filters.profile_cards)
                 cards = cards.concat(profiles)
-            if(filters.info_cards)
+            
+            //For test mode allow access info_cards only for MXm5iJTI74 and JNoXEpkAK1
+            if(filters.info_cards && (request.user.id == "JNoXEpkAK1" || request.user.id == "MXm5iJTI74"))
                 return savedCardsQuery.find()
             else response.success(cards)
         }).then(function(saved_cards) {
