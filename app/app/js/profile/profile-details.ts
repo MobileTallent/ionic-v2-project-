@@ -4,7 +4,7 @@ import IAppService = app.IAppService
 /**
  * A directive to display the main details of a profile
  */
-angular.module('ionicApp').directive('profileDetails', function (AppService: IAppService, $ionicPopup) {
+angular.module('ionicApp').directive('profileDetails', function (AppService: IAppService, $ionicPopup, $cordovaSocialSharing) {
 	return {
 		restrict: 'E',
 		scope: {
@@ -21,7 +21,7 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 			// address and flags
 			if (!ionic.Platform.isIOS() && !profile.country && profile.location.latitude && profile.location.longitude) {
 				let geocodingAPI = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + profile.location.latitude
-					geocodingAPI = geocodingAPI + ',' + profile.location.longitude + '&sensor=false&language=en';
+				geocodingAPI = geocodingAPI + ',' + profile.location.longitude + '&sensor=false&language=en';
 				let num = 0
 				let addArray
 				let addComp
@@ -49,7 +49,7 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 												num = 4
 											} else {
 												if (out['results'][3]) {
-													 num = 3
+													num = 3
 												} else {
 													if (out['results'][2]) {
 														num = 2
@@ -87,6 +87,47 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 				// Show 1km/1m as a minimum‰
 				$scope.distance = (distanceString === '0' ? 1 : distanceString) + currentUserProfile.distanceType
 			}
+
+			if (typeof Branch !== 'undefined') {
+				// only canonicalIdentifier is required
+				var contentDescriptionText = 'Just a Baby is a brand new app connecting people who want to make a baby.'
+				contentDescriptionText = contentDescriptionText + ' We can help you find a surrogate, partner, co-parent,'
+				contentDescriptionText = contentDescriptionText + ' sperm or egg donor - or find someone that needs your help to have a baby.'
+				var properties = {
+					canonicalIdentifier: profile.id,
+					canonicalUrl: 'https://justababy.com/',
+					title: 'A brand new way to make babies. Start your journey today.',
+					contentDescription: contentDescriptionText,
+					contentImageUrl: profile.photoUrl
+				}
+
+				// create a branchUniversalObj variable to reference with other Branch methods
+				Branch.createBranchUniversalObject(properties).then(res => {
+					var analyticsLink = {
+						channel: 'facebook',
+						feature: 'sharing',
+						tags: ['JustaBaby', 'justababy']
+					}
+
+					// optional fields
+					var properties1 = {
+						$desktop_url: 'https://justababy.com/',
+						$android_url: 'https://play.google.com/store/apps/details?id=co.justababy.app',
+						$ios_url: 'https://itunes.apple.com/us/app/just-a-baby/id1147759844?mt=8',
+						profileId: profile.id
+					}
+					if (res) {
+						res.generateShortUrl(analyticsLink, properties1).then(link => {
+							$scope.linkToBeShared = JSON.stringify(link.url)
+						}).catch(function (err) {
+							alert('Error in Branch URL: ' + JSON.stringify(err))
+						})
+					}
+				}).catch(function (err) {
+					alert('Error in creating Uni Obj: ' + JSON.stringify(err))
+				})
+			}
+
 			$scope.isCurrentUser = profile.id === currentUserProfile.id
 			$scope.onClickBadgeInfo = () => {
 				var alertPopup = $ionicPopup.alert({
@@ -97,6 +138,20 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 						type: 'button-assertive'
 					}]
 				})
+			}
+
+			$scope.share = () => {
+				var profileShare = "This person wants to have or help others make a baby: "
+				profileShare = profileShare + "\n\n\"" + profile.about.toString() + "\"\n\nThought they could be a good match for you? \n\n"
+				$cordovaSocialSharing.share(profileShare, null, null, $scope.linkToBeShared) // Share via native share sheet
+					.then(() => {
+						if (typeof analytics !== 'undefined') {
+							analytics.trackView('Share This Profile')
+						}
+						this.$log.debug('Social share action complete')
+					}, error => {
+						this.$log.error('Social share action error ' + JSON.stringify(error))
+					})
 			}
 		}
 	}

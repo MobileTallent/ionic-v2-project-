@@ -201,6 +201,7 @@ angular.module('controllers')
             }, 340)
         }
 
+
         $scope.reject = (profile) => {
             if (profile.flip) {
                 profile.flip = false;
@@ -370,3 +371,101 @@ angular.module('controllers')
                 })
         }
     })
+        var translations
+        $translate(['MATCHES_LOAD_ERROR']).then(function (translationsResult) {
+            translations = translationsResult
+        })
+        $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+            //If card looked - remove and show next
+            if (from.name == "menu.info-card-detail" && to.name == "menu.home")
+                $timeout(() => $scope.profiles.pop(), 340)
+        });
+            if (profile.quotaSearchedDate) {
+                var twelveHrsAgo = 43200000 // 43200000-12hrs  Formula: hrs*mins*sec*1000ms  12*60*60*1000
+                var now = new Date()
+                var now_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds())
+                var diff = now_utc - profile.quotaSearchedDate
+                var timeRemaining = parseTimeRemaining(twelveHrsAgo - diff)
+                if (diff < twelveHrsAgo) {
+                    $scope.timeRemaining = timeRemaining
+                    $scope.$broadcast('likeLimitReached')
+                    return
+                }
+
+            AppService.updateProfileSearchResults()
+                .then(result => {
+                    $log.log('CardsCtrl: found ' + result.length + ' profiles')
+                    $scope.noOneAround = result.length ? false : true
+                    result.map(profile => {
+                        if (profile.question)
+                            profile.info_card = true
+                        if (profile.question)
+                            profile.flip = false
+                        if (!profile.question)
+                            profile.image = profile.photoUrl
+                    })
+                    // Make the search screen show for at least a certain time so it doesn't flash quickly
+                    var elapsed = Date.now() - startTime
+                    if (elapsed < MIN_SEARCH_TIME)
+                        $timeout(() => $scope.profiles = result, MIN_SEARCH_TIME - elapsed)
+                    else
+                        $scope.profiles = result
+                    console.log('Profiles', $scope.profiles)
+                }, error => {
+                    $log.log('updateProfileSearchResults error ' + JSON.stringify(error))
+                    $scope.profiles = []
+                    AppUtil.toastSimple(translations.MATCHES_LOAD_ERROR)
+                })
+        }
+        $scope.messageNewMatch = () => {
+            $scope.closeModal(1)
+            $state.go('^.chat', { matchId: $scope.newMatch.id })
+
+        // a test function for viewing the new match modal screen
+        $scope.openNewMatch = () => {
+            $scope.newMatch = AppService.getMutualMatches()[0]
+            $scope.openModal(1)
+        $scope.enableDiscovery = () => {
+            AppUtil.blockingCall(
+                AppService.enableDiscovery(),
+                () => {
+                    $log.log('discovery enabled. updating search results...')
+                    updateProfileSearchResults()
+                }
+            )
+        $scope.viewDetails = (profile) => {
+            $log.log('view details ' + JSON.stringify(profile))
+            $state.go('^.search-profile-view', { profile: profile })
+        }
+
+        $scope.accept = (profile) => {
+            if (profile.flip === false) {
+                profile.flip = true;
+                return;
+            }
+            if (profile.flip === true) {
+                //increase one click
+                $state.go('^.info-card-detail', { card: profile })
+                return;
+            }
+
+            $log.log('accept button')
+        $scope.reject = (profile) => {
+            if (profile.flip) {
+                profile.flip = false;
+                return;
+            }
+            if (!profile.info_card) {
+                $log.log('reject button')
+                var topProfile = $scope.profiles[$scope.profiles.length - 1]
+                AppService.processMatch(topProfile, false)
+                topProfile.rejected = true // this triggers the animation out
+            $timeout(() => {
+                $scope.profiles.pop()
+                $scope.increaseShows()
+            }, 340)
+        }
+        // matches are swiped off from the end of the $scope.profiles array (i.e. popped)
+        $scope.cardDestroyed = (index) => {
+            $scope.profiles.splice(index, 1)
+            $scope.increaseShows()

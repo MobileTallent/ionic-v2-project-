@@ -78,7 +78,7 @@ module app {
 
                             for (var item in groupByDateObj) {
                                 if (groupByDateObj.hasOwnProperty(item)) {
-                                    var arrayOfNames = _.groupBy(item, function(n) {
+                                    var arrayOfNames = _.groupBy(item, function (n) {
                                         return n.senderName
                                     })
                                     console.log('Names length: ' + arrayOfNames.length)

@@ -70,7 +70,7 @@ module app {
 		premium: boolean
 
 		/** The number of credits a user has (e.g. from in-app purchase) */
-		credits: number		
+		credits: number
 	}
 
 	/**
