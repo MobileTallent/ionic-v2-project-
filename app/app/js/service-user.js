@@ -926,7 +926,7 @@ function onNotificationOpen(pnObj) {
                     service.numberOfLikes++
                 }
                 // reset and save the quota date - 
-                if (service.numberOfLikes >= 2) {
+                if (service.numberOfLikes >= 100) {
                     service.numberOfLikes = 0
                     var now = new Date()
                     var now_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds())

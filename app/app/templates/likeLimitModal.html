@@ -1,0 +1,18 @@
+<ion-modal-view>
+    <ion-content scroll="false" class="modalCard">
+        <ion-slides>
+            <ion-slide-page>
+                <div class="modal-page-container">
+                    <div class="row modal-image-container">
+                        <img class="modal-image-avatar" src="img/bottleOfHearts.svg" />
+                    </div>
+                    <div class="modal-text-container">
+                        <h3 class="modal-text-header">All out of likes!</h3>
+                        <h5 class="modal-text-body">It seems like you've reached the like limit for today. Check back in {{timeRemaining}}</h5>
+                    </div>
+                    <h5 class="text-center padding-25 text-colour-assertive" ng-click="closeLikeLimit()">Work on your profile instead?</h5>
+                </div>
+            </ion-slide-page>
+        </ion-slides>
+    </ion-content>
+</ion-modal-view>
