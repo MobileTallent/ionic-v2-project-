@@ -12,9 +12,9 @@
     "kerberos": "~0.0.x",
     "mailgun.js": "^2.0.1",
     "mongodb": "^2.1.19",
-    "parse": "~1.8.0",
-    "parse-server": "2.2.15",
-    "parse-server-gcs-adapter": "^1.0.0",
+    "parse": "1.9.2",
+    "parse-server": "2.4.2",
+    "parse-server-gcs-adapter": "1.1.2",
     "underscore": "1.8.3"
   },
   "scripts": {
