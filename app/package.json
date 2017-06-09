@@ -95,7 +95,10 @@
     "cordova-plugin-request-location-accuracy",
     "cordova.plugins.diagnostic",
     "cordova-plugin-locationservices",
-    "branch-cordova-sdk"
+    "branch-cordova-sdk",
+    "https://github.com/taivo/parse-push-plugin",
+    "cordova-plugin-photokandy-video-thumbnail",
+    "cordova-plugin-media-capture"
   ],
   "cordovaPlatforms": [
     "android",

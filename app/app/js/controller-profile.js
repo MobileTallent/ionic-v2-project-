@@ -716,82 +716,348 @@ angular.module('controllers')
 
 .controller('LocationCtrl', function($scope, $translate, AppService, AppUtil, $ionicLoading) {
 
-    // TODO load the google map script async here when required instead of index.html
-    var translations
-    $translate(['GPS_ERROR']).then(function(translationsResult) {
-        translations = translationsResult
-    })
+        // TODO load the google map script async here when required instead of index.html
+        var translations
+        $translate(['GPS_ERROR']).then(function(translationsResult) {
+            translations = translationsResult
+        })
 
-    var profile = AppService.getProfile()
-    var location = profile.location
+        var profile = AppService.getProfile()
+        var location = profile.location
 
-    $scope.location = { useGPS: profile.gps }
+        $scope.location = { useGPS: profile.gps }
 
-    var myLatlng = new google.maps.LatLng(location.latitude, location.longitude)
+        var myLatlng = new google.maps.LatLng(location.latitude, location.longitude)
 
-    var mapOptions = {
-        center: myLatlng,
-        zoom: 11,
-        zoomControlOptions: {
-            position: google.maps.ControlPosition.RIGHT_TOP
-        },
-        mapTypeId: google.maps.MapTypeId.ROADMAP,
-        mapTypeControl: false,
-        streetViewControl: false,
-        disableDoubleClickZoom: true
-    }
+        var mapOptions = {
+            center: myLatlng,
+            zoom: 11,
+            zoomControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_TOP
+            },
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            mapTypeControl: false,
+            streetViewControl: false,
+            disableDoubleClickZoom: true
+        }
 
-    var map = new google.maps.Map(document.getElementById("map"), mapOptions)
-    $scope.map = map
-    map.setCenter(myLatlng)
+        var map = new google.maps.Map(document.getElementById("map"), mapOptions)
+        $scope.map = map
+        map.setCenter(myLatlng)
 
-    var marker = new google.maps.Marker({
-        position: myLatlng,
-        map: map,
-        title: "My Location",
-        draggable: !profile.gps
-    })
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            title: "My Location",
+            draggable: !profile.gps
+        })
 
-    google.maps.event.addListener(map, 'click', function(event) {
-        if (!$scope.location.useGPS)
-            marker.setPosition(event.latLng)
-    })
+        google.maps.event.addListener(map, 'click', function(event) {
+            if (!$scope.location.useGPS)
+                marker.setPosition(event.latLng)
+        })
 
-    $scope.useGPSchanged = function() {
-        marker.setDraggable(!$scope.location.useGPS)
+        $scope.useGPSchanged = function() {
+            marker.setDraggable(!$scope.location.useGPS)
 
-        if ($scope.location.useGPS) {
-            $ionicLoading.show({ templateUrl: 'loading.html' })
-            AppService.getCurrentPosition().then(function(gpsLocation) {
-                return AppService.saveProfile({ gps: true, location: gpsLocation })
-            }).then(
-                function(profile) {
-                    var gpsLatLng = new google.maps.LatLng(profile.location.latitude, profile.location.longitude)
-                    marker.setPosition(gpsLatLng)
-                    map.setCenter(gpsLatLng)
-                    $ionicLoading.hide()
-                }, error => {
-                    $ionicLoading.hide()
-                    if (error === 'GPS_ERROR')
-                        AppUtil.toastSimple(translations.GPS_ERROR)
-                    else
-                        AppUtil.toastSimple(translations.SETTINGS_SAVE_ERROR)
-                    $scope.location.useGPS = false
-                    marker.setDraggable(true)
-                }
+            if ($scope.location.useGPS) {
+                $ionicLoading.show({ templateUrl: 'loading.html' })
+                AppService.getCurrentPosition().then(function(gpsLocation) {
+                    return AppService.saveProfile({ gps: true, location: gpsLocation })
+                }).then(
+                    function(profile) {
+                        var gpsLatLng = new google.maps.LatLng(profile.location.latitude, profile.location.longitude)
+                        marker.setPosition(gpsLatLng)
+                        map.setCenter(gpsLatLng)
+                        $ionicLoading.hide()
+                    }, error => {
+                        $ionicLoading.hide()
+                        if (error === 'GPS_ERROR')
+                            AppUtil.toastSimple(translations.GPS_ERROR)
+                        else
+                            AppUtil.toastSimple(translations.SETTINGS_SAVE_ERROR)
+                        $scope.location.useGPS = false
+                        marker.setDraggable(true)
+                    }
+                )
+            }
+            // else the user needs to click the save button
+        }
+
+        $scope.setLocation = function() {
+            var pos = marker.getPosition()
+
+            AppUtil.blockingCall(
+                AppService.saveProfile({ gps: false, location: { latitude: pos.lat(), longitude: pos.lng() } }),
+                () => { /* send back to main page? */ },
+                'SETTINGS_SAVE_ERROR'
             )
         }
-        // else the user needs to click the save button
-    }
 
-    $scope.setLocation = function() {
-        var pos = marker.getPosition()
+    })
+    .controller('ProfileMainVideoCtrl', function($scope, AppUtil, AppService, $state, $window, VideoService, $cordovaSocialSharing, $rootScope, $cordovaCapture, $cordovaCamera, $ionicModal, $ionicPopup, $ionicLoading, $localStorage, $cordovaFileTransfer) {
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
 
-        AppUtil.blockingCall(
-            AppService.saveProfile({ gps: false, location: { latitude: pos.lat(), longitude: pos.lng() } }),
-            () => { /* send back to main page? */ },
-            'SETTINGS_SAVE_ERROR'
-        )
-    }
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        var today = dd + '/' + mm + '/' + yyyy;
 
-});
+        $scope.$on('$ionicView.beforeEnter', () => $scope.refreshProfileMainVideo())
+
+        $scope.refreshProfileMainVideo = function() {
+
+            $scope.profile = AppService.getProfile();
+            console.log("scope.profile " + $scope.profile);
+            console.log("scope.profile.videos " + $scope.profile.videos);
+            console.log("scope.profile.photos " + $scope.profile.photos);
+
+            $scope.video = {
+                created_date: today,
+                title: "",
+                desc: "",
+                url: "",
+                thumb: ""
+            };
+
+            $scope.clip = '';
+
+            if ($localStorage.video_direct)
+                $scope.video_direct = $localStorage.video_direct;
+            else
+                $scope.video_direct = false;
+
+            if (!$scope.video_direct) {
+                $scope.openEntryModal();
+            } else {
+                $scope.recordVideo();
+            }
+        }
+
+        // Show Entry Modal View
+        $scope.openEntryModal = () => {
+            $ionicModal.fromTemplateUrl('profile-video-entry.html', {
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(function(modal) {
+                $scope.entryModal = modal;
+                $scope.entryModal.show();
+            })
+        };
+        $scope.closeEntryModal = () => {
+            $localStorage.video_direct = $scope.video_direct;
+            console.log($scope.video_direct);
+            $scope.entryModal.hide();
+        };
+        $scope.entryNext = () => {
+            $scope.closeEntryModal();
+            $scope.recordVideo();
+        }
+
+        $scope.printValue = function() {
+            $scope.video_direct = !$scope.video_direct;
+            console.log($scope.video_direct);
+        }
+
+        $scope.vid_height = ($window.innerHeight / 2);
+        $scope.vid_width = $window.innerWidth;
+
+        //Show Main View
+        $scope.recordVideo = function() {
+            console.log("video capture start.");
+            var options = { limit: 1, duration: 30 };
+
+            $cordovaCapture.captureVideo(options).then(function(videoData) {
+                $scope.currentVideoPath = videoData[0].fullPath;
+
+                console.log("videoData :" + $scope.currentVideoPath);
+
+                var video = document.getElementById('video_to_upload');
+                video.src = videoData[0].fullPath;
+
+                VideoService.saveVideo(videoData).success(function(data) {
+                    $scope.clip = data;
+                    $scope.$apply();
+
+                    console.log("data :" + data);
+
+                    $window.location.reload(true);
+
+                }).error(function(data) {
+                    console.log('ERROR: ' + data);
+                });
+
+            }, function(err) {
+                console.log("video capture error founded!");
+            });
+        }
+
+        $scope.goShare = function() {
+            $scope.openEditModal();
+        }
+
+        // Show Edit Modal View
+        $scope.openEditModal = () => {
+            $ionicModal.fromTemplateUrl('profile-video-edit.html', {
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(function(modal) {
+                $scope.editModal = modal;
+                $scope.editModal.show();
+            })
+        };
+        $scope.closeEditModal = () => {
+            $scope.editModal.hide()
+        };
+
+        $scope.urlForClipThumb = function(clipUrl) {
+            var name = clipUrl.substr(clipUrl.lastIndexOf('/') + 1);
+            var trueOrigin = cordova.file.dataDirectory + name;
+            var sliced = trueOrigin.slice(0, -4);
+
+            return sliced + '.png';
+        };
+
+        $scope.showClip = function(clip) {
+            console.log('show clip: ' + clip);
+        };
+
+        $scope.saveVideo = () => {
+            // $scope.editModal.hide();
+            // $state.go('menu.profile-video-list');
+            var filePath = getCorrectFilePath();
+            if ($scope.currentVideoPath.length > 0)
+                doUploadToYoutube(filePath);
+        };
+
+        // Show Confirm Modal View
+
+        $scope.videoConfirm = function() {
+            $ionicModal.fromTemplateUrl('profile-video-confirm.html', {
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(function(modal) {
+                $scope.confirmModal = modal;
+                $scope.confirmModal.show()
+            })
+        };
+
+        $scope.closeConfirmModal = () => {
+            $scope.confirmModal.hide();
+        };
+        $scope.cleanVideo = () => {
+
+            $scope.video = {
+                created_date: today,
+                title: "",
+                desc: "",
+                url: "",
+                thumb: ""
+            };
+            $scope.currentVideoPath = '';
+
+            $scope.clip = '';
+
+            $scope.editModal.hide();
+            $scope.confirmModal.hide();
+        };
+
+        // Media related functions
+        function getCorrectFilePath() {
+            var fileName = $scope.currentVideoPath;
+            if (ionic.Platform.isAndroid()) {
+                if (fileName.substring(0, 4) != "file") {
+
+                    fileName = "file:/" + fileName;
+                }
+            } else if (ionic.Platform.isIOS()) {
+
+            }
+
+            return fileName;
+        }
+
+        function doUploadToYoutube(videoPath) {
+            $ionicLoading.show({
+                content: 'Processing please wait',
+                animation: 'fade-in',
+                showBackdrop: true,
+                showDelay: 0
+            });
+
+            var options = {
+                fileKey: "video",
+                fileName: "will_be_provided_by_user" + ".mp4",
+                chunkedMode: false,
+                mimeType: "video/mp4"
+            };
+
+            $cordovaFileTransfer.upload("http://sandboxserver.co.za/upload_to_youtube.php", videoPath, options, true)
+                .then(function(result) {
+                    console.log(result.response);
+                    $ionicLoading.hide();
+                    var res = JSON.parse(result.response);
+                    if (typeof res["status"] != "undefined" && typeof res["status"] != null) {
+                        //a service will be called here to add user video link to the server, two new column will be added to the database: 
+                        // 'youtubeVid' this column is a boolean and will i fthe user has a video or not, 'youtubeVidUrl', this column will contain the youtube url   
+                        $scope.video.url = res["video_url"];
+                        $scope.video.thumb = isset(res["video_url"]) ? res["video_url"] : ""; //$scope.urlForClipThumb($scope.clip);
+
+                        $ionicPopup.alert({
+                            title: "Successfull",
+                            template: "Video Successfully uploaded. Thanks you for sharing!<br> Link:<b>" + res["video_url"]
+                        }).then(function(result) {
+                            $scope.profile.videos.push({ youtube: $scope.video.url, thumb: $scope.video.thumb });
+
+                            console.log("scope.profile.videos : " + $scope.profile.videos);
+
+                            var changes = { videos: $scope.profile.videos };
+
+                            console.log("changes : " + changes);
+
+                            AppUtil.blockingCall(AppService.saveProfile(changes),
+                                () => {
+                                    $scope.closeEditModal();
+                                    $state.go('menu.profile-video-list');
+                                }, 'SETTINGS_SAVE_ERROR')
+                        });
+                    } else {
+                        $ionicPopup.alert({
+                            title: "Error",
+                            template: "Upload failed please try again"
+                        }).then(function(result) {
+                            // $scope.closeEditModal();
+                        });
+                    }
+
+                }, function(err) {
+                    // Error
+                    console.log("ERROR: " + JSON.stringify(err));
+                    $ionicPopup.alert({
+                        title: "Error",
+                        template: "Upload failed please try again"
+                    }).then(function(result) {
+                        $ionicLoading.hide();
+                    });
+                }, function(progress) {
+                    // constant progress updates
+                });
+        }
+    })
+    .controller('ProfileVideoListCtrl', function($scope, AppService, $state, $window, $cordovaSocialSharing, $rootScope, $ionicModal, $ionicLoading, $localStorage) {
+
+        $scope.$on('$ionicView.beforeEnter', () => $scope.readyVideo())
+
+        $scope.readyVideo = function() {
+
+            $scope.profile = AppService.getProfile();
+            $scope.videoList = $scope.profile.videos;
+        }
+
+    });

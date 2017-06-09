@@ -1,0 +1,22 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-positive">
+        <h1 class="title">{{'SHARE_VIDEO' | translate}}</h1>
+    </ion-header-bar>
+    <ion-content>
+        <div style="text-align: center; margin-top:20px;">
+            <img ng-src="{{urlForClipThumb(clip)}}" ng-click="showClip(clip)" style="height: 150px; width: 150px" />
+        </div>
+        <div style="text-align: center; margin-bottom:0px;">
+            <h3 class="assertive" style="margin-top:10%;">Are you sure you want to delete your video ?</h3>
+        </div>
+
+        <div class="row">
+            <button style="width: 100%;margin-bottom:10px;" class="button button-balanced" ng-click="cleanVideo()">Yes, please delete</button>
+            <!--ng-click="recordVideo()"-->
+        </div>
+        <div class="row">
+            <button style="width: 100%;margin-bottom:10px;" class="button button-balanced" ng-click="closeConfirmModal()">I'll keep it</button>
+            <!--ng-click="recordVideo()"-->
+        </div>
+    </ion-content>
+</ion-modal-view>

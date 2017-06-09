@@ -1,0 +1,19 @@
+<ion-view view-title="{{'PROFILE_VIDEO' | translate}}" cache-view="false">
+    <ion-content>
+        <div class="row vid" style="background-color: #000000; margin-bottom: 10px" ng-click="showClip(clip)">
+            <video height="{{vid_height}}" id="video_to_upload" style="background: #000000" controls>
+            <source ng-src="{{clip}}">
+            Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="row" style="margin-top: 30px">
+            <div class="col-50">
+                <button style="width: 80%; margin:0 auto; background-color: #2e8478 !important;" ng-click="recordVideo()" class="button button-balanced">Try again</button>
+            </div>
+
+            <div class="col-50">
+                <button style="width: 80%;  margin:0 auto; background-color: #2e8478 !important;" class="button button-balanced" ng-click="goShare()">Share</button>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

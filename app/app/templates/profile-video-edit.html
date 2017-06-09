@@ -1,0 +1,43 @@
+<!--<ion-view cache-view="false" hide-back-button="true">
+        <ion-nav-buttons side="left">
+        <button class="button" ui-sref="menu.profile-video-process">Save</button>
+    </ion-nav-buttons>-->
+<ion-modal-view>
+    <ion-header-bar class="bar-positive">
+        <div class="buttons">
+            <button class="button" ng-click="saveVideo()">Save</button>
+        </div>
+        <h1 class="title">{{'SHARE_VIDEO' | translate}}</h1>
+        <div class="buttons">
+            <button class="button" ng-click="closeEditModal()">Cancel</button>
+        </div>
+    </ion-header-bar>
+    <ion-content style="width:90%;margin:0 auto;">
+        <div class="row" style="margin-bottom: 10px;">
+            <div class="col-50">
+                <h3 class="assertive" style="margin-top:10%;">{{video.created_date}}</h3>
+            </div>
+
+            <div class="col-50">
+                <img ng-src="{{urlForClipThumb(clip)}}" ng-click="showClip(clip)" style="height: 150px; width: 150px" />
+            </div>
+        </div>
+        <div class=" row " style="margin-bottom: 10px; ">
+            <label class="item item-input" style="margin:0 auto;width:80%;">
+                <input type="text " placeholder="Title (70 character max) " ng-model="video.title " ng-required="true " />
+            </label>
+        </div>
+        <div style="text-align: center; margin-bottom:20px;">
+            <h3 class="assertive " style="margin-top:10%; ">Make it punchy, and remember to use keywords</h3>
+        </div>
+        <div class="row ">
+            <div style="width:100%; margin-bottom:20px;">
+                <textarea style="width: 100%;background-color: #bbe1d5 !important; padding:10px; " ng-model="video.desc " ng-required="true " rows="10 " placeholder="YouTube Description (auto-Populate with profile desciption) (500 Character Limit) "></textarea>
+            </div>
+        </div>
+        <div class="row " style="margin-bottom:20px;">
+            <button style="width: 50%;margin:0 auto;" class="button button-balanced" ng-click="videoConfirm()">Delete</button>
+            <!--ui-sref="menu.profile-video-confirm "-->
+        </div>
+    </ion-content>
+</ion-modal-view>

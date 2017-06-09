@@ -268,5 +268,30 @@
             "BRANCH_KEY": "key_live_cfFrFIoOjTPIZEyQQZ2nkgnfEups99Tf",
             "URI_SCHEME": "justababy"
         }
+    },
+    "parse-push-plugin": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/taivo/parse-push-plugin",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-photokandy-video-thumbnail": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-photokandy-video-thumbnail"
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-media-capture": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-media-capture"
+        },
+        "is_top_level": true,
+        "variables": {}
     }
 }

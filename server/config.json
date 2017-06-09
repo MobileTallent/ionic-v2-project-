@@ -8,10 +8,10 @@
     "gcpBrowserKey": "AIzaSyCUgT951OiYF4TmpR-lcpPd9zJ_NVBpoow",
     "gcpServerKey": "AIzaSyDGDI61-o_DzaKlzble29aGvPCJhLXWnfc",
 
-    "devP12file": "",
-    "devP12passphrase": "",
-    "prodP12file": "",
-    "prodP12passphrase": "",
+    "devP12file": "cloud/apns_dev.p12",
+    "devP12passphrase": "12345",
+    "prodP12file": "cloud/apns_prod.p12",
+    "prodP12passphrase": "12345",
 
     "itunesConnect": {
         "email": "",
@@ -22,7 +22,9 @@
 
     "dev": {
         "serverUrl": "http://localhost:1337",
-        "databaseURI": "mongodb://localhost:27017/mydb"
+        "databaseURI": "mongodb://localhost:27017/mydb",
+        "gcpProjectId": " baby-e7381",
+        "gcpProjectNumber": "424006926092"
     },
 
     "prod": {

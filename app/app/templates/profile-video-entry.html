@@ -1,0 +1,20 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-positive">
+        <h1 class="title">{{'PROFILE_VIDEO' | translate}}</h1>
+    </ion-header-bar>
+    <ion-content>
+        <div style="text-align: center; margin-bottom:0px; padding: 10px;">
+            <h2 class="assertive" style="margin-top:10%;">Help spread the word, come out and tell the word your story.</h2><br/>
+        </div>
+        <div style="text-align: center; margin-bottom:0px;">
+            <h2 class="assertive" style="margin-top:10%;">You have 30 seconds!!</h2><br/>
+        </div>
+        <div class="row" style="margin-bottom: 20px;text-align: center;">
+            <ion-checkbox ng-model="video_direct" style="margin:0 auto;" ng-true-value="'true'" ng-false-value="'false'" ng-change="printValue()">Don't show this again</ion-checkbox>
+        </div>
+
+        <div class="row">
+            <button style="width: 50%;margin: 0 auto;" class="button button-balanced" ng-click="entryNext()">Next</button>
+        </div>
+    </ion-content>
+</ion-modal-view>
