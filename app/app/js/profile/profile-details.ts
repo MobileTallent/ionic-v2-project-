@@ -4,7 +4,7 @@ import IAppService = app.IAppService
 /**
  * A directive to display the main details of a profile
  */
-angular.module('ionicApp').directive('profileDetails', function (AppService: IAppService, $ionicPopup, $cordovaSocialSharing) {
+angular.module('ionicApp').directive('profileDetails', function (AppService: IAppService, $ionicPopup, $state, $ionicModal, $cordovaSocialSharing) {
 	return {
 		restrict: 'E',
 		scope: {
@@ -153,6 +153,21 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 						this.$log.error('Social share action error ' + JSON.stringify(error))
 					})
 			}
+
+			$ionicModal.fromTemplateUrl('profile/profile-upgrade-modal.html', {
+				scope: $scope,
+				animation: 'slide-in-up'
+			}).then(function(modal) {
+				$scope.upgradeModal = modal
+			})
+
+			$scope.continueUpgrade = function(){
+				$scope.upgradeModal.hide()
+				$state.go('^.upgrade-profile');
+			}
+
+			$scope.currentState = $state.current.name
+
 		}
 	}
 })

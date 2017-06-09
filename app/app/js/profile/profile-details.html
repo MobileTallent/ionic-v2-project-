@@ -54,5 +54,13 @@
         {{profile.about}}
     </div>
 
+    <button class="button help-button" 
+            ng-show="!$root.serviceProvider && (currentState=='menu.profile') && (profile.uid=='JNoXEpkAK1' || profile.uid=='MXm5iJTI74')"
+            style="line-height: 25px;padding: 12px;width: 70%;margin-left: 15%;margin-top: 30px;" 
+            ng-click="upgradeModal.show()">
+        Service Provider ? <br>
+        Get a corporate account
+    </button>
+
     <p class="spacer-70"></p>
 </div>

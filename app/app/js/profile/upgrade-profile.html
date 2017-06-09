@@ -1,0 +1,32 @@
+<ion-view view-title="Upgrade profile" cache-view="false" ng-controller="UpgradeProfileCtrl as vm">
+  <ion-content padding="true" class="has-header">
+    <div class="list card">
+      <ion-item class="item-divider"> Corporate account include :</ion-item>
+      <div class="item item-body">
+        <ion-list>
+          <ion-item class="item-icon-right">
+            <small>"Did you know?" cards creator </small>
+            <i class="icon ion-social-buffer-outline"></i>
+          </ion-item>
+          <ion-item class="item-icon-right">
+            <small>My services </small>
+            <i class="icon ion-ios-keypad-outline"></i>
+          </ion-item>
+          <ion-item class="item-icon-right">
+            <small>Control enquiries</small>
+            <i class="icon ion-ios-people-outline"></i>
+          </ion-item>
+        </ion-list>
+        <div class="show-list-numbers-and-dots">
+          <p>And other tools for make your services public</p>
+        </div>
+      </div>
+    </div>
+    <ion-list>
+      <ion-item class="item-divider"> Total
+        <small style="float:right">$ 1</small>
+      </ion-item>
+    </ion-list>
+    <button class="button button-royal button-block" ng-click="vm.upgradeToServiceProvider()">Upgrate to corporate</button>
+  </ion-content>
+</ion-view>

@@ -253,6 +253,14 @@ angular.module('ionicApp').config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state('menu.upgrade-profile', {
+            url: "/upgrade-profile",
+            views: {
+                'menuContent': {
+                    templateUrl: "profile/upgrade-profile.html"
+                }
+            }
+        })
 
 
     $urlRouterProvider.otherwise("/sign-in")
