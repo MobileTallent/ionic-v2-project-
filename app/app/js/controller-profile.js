@@ -209,7 +209,7 @@ angular.module('controllers')
 
         AppUtil.blockingCall(AppService.saveProfile(changes),
             () => {
-                AppService.goToNextLoginState()
+
             }, 'SETTINGS_SAVE_ERROR')
     }
 
@@ -1000,54 +1000,52 @@ angular.module('controllers')
 
             $cordovaFileTransfer.upload("http://sandboxserver.co.za/upload_to_youtube.php", videoPath, options, true)
                 .then(function(result) {
-                    console.log(result.response);
-                    $ionicLoading.hide();
-                    var res = JSON.parse(result.response);
-                    if (typeof res["status"] != "undefined" && typeof res["status"] != null) {
-                        //a service will be called here to add user video link to the server, two new column will be added to the database: 
-                        // 'youtubeVid' this column is a boolean and will i fthe user has a video or not, 'youtubeVidUrl', this column will contain the youtube url   
-                        $scope.video.url = res["video_url"];
-                        $scope.video.thumb = isset(res["video_url"]) ? res["video_url"] : ""; //$scope.urlForClipThumb($scope.clip);
+                        console.log(result.response);
+                        $ionicLoading.hide();
+                        var res = JSON.parse(result.response);
 
-                        $ionicPopup.alert({
-                            title: "Successfull",
-                            template: "Video Successfully uploaded. Thanks you for sharing!<br> Link:<b>" + res["video_url"]
-                        }).then(function(result) {
-                            $scope.profile.videos.push({ youtube: $scope.video.url, thumb: $scope.video.thumb });
+                        if (!res.status) {
+                            console.log("res status false");
+                            $ionicPopup.alert({
+                                title: "Error",
+                                template: "wrong status code received. please try again"
+                            }).then(function(result) {
+                                // $scope.closeEditModal();
+                            });
+                        } else {
+                            //a service will be called here to add user video link to the server, two new column will be added to the database: 
+                            // 'youtubeVid' this column is a boolean and will i fthe user has a video or not, 'youtubeVidUrl', this column will contain the youtube url   
+                            $scope.video.url = res.video_url;
+                            // $scope.video.thumb = isset(res["video_url"]) ? res["video_url"] : ""; //$scope.urlForClipThumb($scope.clip);
 
-                            console.log("scope.profile.videos : " + $scope.profile.videos);
+                            $ionicPopup.alert({
+                                title: "Successfull",
+                                template: "Video Successfully uploaded. Thanks you for sharing!<br> Link:<b>" + res.video_url
+                            }).then(function(result) {
+                                $scope.profile.videos.push({ youtube: $scope.video.url, thumb: $scope.video.thumb });
+                                var changes = { videos: $scope.profile.videos };
+                                AppUtil.blockingCall(AppService.saveProfile(changes),
+                                    () => {
+                                        $scope.closeEditModal();
+                                        $state.go('menu.profile-video-list');
+                                    }, 'SETTINGS_SAVE_ERROR')
+                            });
+                        }
 
-                            var changes = { videos: $scope.profile.videos };
-
-                            console.log("changes : " + changes);
-
-                            AppUtil.blockingCall(AppService.saveProfile(changes),
-                                () => {
-                                    $scope.closeEditModal();
-                                    $state.go('menu.profile-video-list');
-                                }, 'SETTINGS_SAVE_ERROR')
-                        });
-                    } else {
+                    },
+                    function(err) {
+                        // Error
+                        console.log("ERROR: " + JSON.stringify(err));
                         $ionicPopup.alert({
                             title: "Error",
                             template: "Upload failed please try again"
                         }).then(function(result) {
-                            // $scope.closeEditModal();
+                            $ionicLoading.hide();
                         });
-                    }
-
-                }, function(err) {
-                    // Error
-                    console.log("ERROR: " + JSON.stringify(err));
-                    $ionicPopup.alert({
-                        title: "Error",
-                        template: "Upload failed please try again"
-                    }).then(function(result) {
-                        $ionicLoading.hide();
+                    },
+                    function(progress) {
+                        // constant progress updates
                     });
-                }, function(progress) {
-                    // constant progress updates
-                });
         }
     })
     .controller('ProfileVideoListCtrl', function($scope, AppService, $state, $window, $cordovaSocialSharing, $rootScope, $ionicModal, $ionicLoading, $localStorage) {
