@@ -795,7 +795,7 @@ angular.module('controllers')
         }
 
     })
-    .controller('ProfileMainVideoCtrl', function($scope, AppUtil, AppService, $state, $window, VideoService, $cordovaSocialSharing, $rootScope, $cordovaCapture, $cordovaCamera, $ionicModal, $ionicPopup, $ionicLoading, $localStorage, $cordovaFileTransfer) {
+    .controller('ProfileMainVideoCtrl', function($scope, $http, AppUtil, AppService, $state, $window, VideoService, $cordovaSocialSharing, $rootScope, $cordovaCapture, $cordovaCamera, $ionicModal, $ionicPopup, $ionicLoading, $localStorage, $cordovaFileTransfer) {
         var today = new Date();
         var dd = today.getDate();
         var mm = today.getMonth() + 1; //January is 0!
@@ -929,12 +929,40 @@ angular.module('controllers')
         };
 
         $scope.saveVideo = () => {
-            // $scope.editModal.hide();
-            // $state.go('menu.profile-video-list');
+
             var filePath = getCorrectFilePath();
             if ($scope.currentVideoPath.length > 0)
                 doUploadToYoutube(filePath);
         };
+
+        $scope.readyVideo = () => {
+            $ionicLoading.show({
+                content: 'Processing please wait',
+                animation: 'fade-in',
+                showBackdrop: true,
+                showDelay: 0
+            });
+            $http.post("http://sandboxserver.co.za/retrieve_videos_list.php", {}).then(function(res) {
+                console.log(res.data);
+                // var result = JSON.parse(res.data);
+                var result = res.data;
+                $ionicLoading.hide();
+                if (result.status && result.status == "success") {
+                    console.log(result.video_ids);
+                    $scope.videoList = result.video_ids;
+
+                    $scope.editModal.hide();
+                    $state.go('menu.profile-video-list');
+                } else {
+                    console.log("error founded in getting video list.");
+                }
+            });
+        }
+
+        $scope.playVideo = function(video_url) {
+            window.open('http://' + video_url, '_system', 'location=yes');
+            return false;
+        }
 
         // Show Confirm Modal View
 
@@ -990,12 +1018,16 @@ angular.module('controllers')
                 showBackdrop: true,
                 showDelay: 0
             });
+            var video_param = {};
+            video_param.video_title = $scope.video.title;
+            video_param.video_description = $scope.video.desc;
 
             var options = {
                 fileKey: "video",
                 fileName: "will_be_provided_by_user" + ".mp4",
                 chunkedMode: false,
-                mimeType: "video/mp4"
+                mimeType: "multipart/form-data",
+                params: video_param
             };
 
             $cordovaFileTransfer.upload("http://sandboxserver.co.za/upload_to_youtube.php", videoPath, options, true)
@@ -1004,7 +1036,7 @@ angular.module('controllers')
                         $ionicLoading.hide();
                         var res = JSON.parse(result.response);
 
-                        if (!res.status) {
+                        if (!res.status || res.status != "success") {
                             console.log("res status false");
                             $ionicPopup.alert({
                                 title: "Error",
@@ -1026,8 +1058,7 @@ angular.module('controllers')
                                 var changes = { videos: $scope.profile.videos };
                                 AppUtil.blockingCall(AppService.saveProfile(changes),
                                     () => {
-                                        $scope.closeEditModal();
-                                        $state.go('menu.profile-video-list');
+                                        $scope.readyVideo();
                                     }, 'SETTINGS_SAVE_ERROR')
                             });
                         }
@@ -1047,15 +1078,4 @@ angular.module('controllers')
                         // constant progress updates
                     });
         }
-    })
-    .controller('ProfileVideoListCtrl', function($scope, AppService, $state, $window, $cordovaSocialSharing, $rootScope, $ionicModal, $ionicLoading, $localStorage) {
-
-        $scope.$on('$ionicView.beforeEnter', () => $scope.readyVideo())
-
-        $scope.readyVideo = function() {
-
-            $scope.profile = AppService.getProfile();
-            $scope.videoList = $scope.profile.videos;
-        }
-
     });

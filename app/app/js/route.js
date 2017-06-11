@@ -178,7 +178,7 @@ angular.module('ionicApp').config(function($stateProvider, $urlRouterProvider) {
             views: {
                 'menuContent': {
                     templateUrl: "profile-video-list.html",
-                    controller: "ProfileVideoListCtrl"
+                    controller: "ProfileMainVideoCtrl"
                 }
             }
         })
@@ -263,11 +263,10 @@ angular.module('ionicApp').config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
-
-    /*
-        Info cards routes
-    */
-    .state('menu.info-card-detail', {
+        /*
+            Info cards routes
+        */
+        .state('menu.info-card-detail', {
             url: "/info-card-detail/:id",
             views: {
                 'menuContent': {
@@ -306,7 +305,5 @@ angular.module('ionicApp').config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
-
-
     $urlRouterProvider.otherwise("/sign-in")
 });

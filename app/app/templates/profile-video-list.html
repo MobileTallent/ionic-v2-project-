@@ -5,13 +5,14 @@
         <ion-list>
             <ion-item ng-repeat="item in videoList" item="item" style="padding:5px; margin:20px;">
                 <div class="item-content-wrap item-content">
-                    <div>
+                    <div ng-click="playVideo('{{item.video_link}}')">
                         <div class="row">
                             <div class="col-30">
-                                <img ng-src="{{item.thumb}}" style="background-color: lightgray; padding:2px; height:46px; width: 46px;">
+                                <img ng-src="{{item.thumbnails.default.url}}" style="background-color: lightgray; padding:2px; height:66px; width: 66px;">
                             </div>
                             <div class="col">
-                                <p>{{item.youtube}}</p>
+                                <h3>{{item.title}}</h3>
+                                <p>{{item.date_published}}</p>
                             </div>
                         </div>
                     </div>
