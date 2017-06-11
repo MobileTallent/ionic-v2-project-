@@ -102,6 +102,7 @@ module app {
             this.submitted = true
             if (form.$valid) {
                 this.hot_bed['pid'] = this.SpService.provider_id
+                this.hot_bed['location_point'] = new Parse.GeoPoint({ latitude: this.hot_bed['location']['lat'], longitude: this.hot_bed['location']['lon']})
 
                 console.log('hot_bed before send', this.hot_bed)
                 this.AppUtil.blockingCall(

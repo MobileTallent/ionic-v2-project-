@@ -13,6 +13,7 @@ var AboutJab = Parse.Object.extend("AboutJab")
 var ServiceProvider = Parse.Object.extend("ServiceProvider")
 var CardsDeckSetting = Parse.Object.extend("CardsDeckSetting")
 var SavedInfoCard = Parse.Object.extend("SavedInfoCard")
+var HotBed = Parse.Object.extend("HotBed")
 
 var _ = require('underscore')
 
@@ -583,7 +584,12 @@ Parse.Cloud.define("GetProfilesNoCountry", function(request, response) {
     })
 })
 
-
+/////////////////
+/////////////////
+////////////////
+////////////////
+///////////////
+////////////////
 /**
  * Search for new potential matches
  * @returns IProfile[] the profiles
@@ -595,7 +601,12 @@ Parse.Cloud.define("GetMatches", function(request, response) {
         profile_cards: '',
         info_cards: '',
         deck_size: '',
-        cards_ratio: ''
+        cards_ratio: '',
+        info_cards_logic: {
+            hotbeds_distance:'',
+            order_hotbeds:'',
+            last_updated:''
+        }
     }
     var cards = []
     var profiles = []
@@ -647,7 +658,6 @@ Parse.Cloud.define("GetMatches", function(request, response) {
         if (profile.LFWomb)
             regExString += "W?"
 
-
         if (profile.LFEmbryo)
             regExString += "Y?"
 
@@ -685,13 +695,17 @@ Parse.Cloud.define("GetMatches", function(request, response) {
     alreadyMatchedQuery.limit(10000)
 
 
-    //Get Deck Settings query
+    // Get Deck Settings query
     var cardsDeckSettingQuery = new Parse.Query(CardsDeckSetting)
 
-    //Not contained saved cards query
+    // Not contained saved cards query
     var savedCardsQuery = new Parse.Query(SavedInfoCard)
     savedCardsQuery.equalTo("uid", userId)
     savedCardsQuery.limit(10000)
+
+    // Hot beds query
+    var hotBedsQuery = new Parse.Query(HotBed)
+    hotBedsQuery.limit(10000)
 
     return cardsDeckSettingQuery.first().then(function(result) {
         var result = result.toJSON()
@@ -699,6 +713,9 @@ Parse.Cloud.define("GetMatches", function(request, response) {
         filters.info_cards = result.info_cards
         filters.deck_size = result.deck_size
         filters.cards_ratio = result.cards_ratio
+        filters.info_cards_logic.last_updated = result.info_cards_logic.last_updated
+        filters.info_cards_logic.hotbeds_distance = result.info_cards_logic.hotbeds_distance
+        filters.info_cards_logic.order_hotbeds = result.info_cards_logic.order_hotbeds
 
         return alreadyMatchedQuery.find(masterKey)
     }).then(function(results) {
@@ -729,10 +746,6 @@ Parse.Cloud.define("GetMatches", function(request, response) {
     }).then(function(profiles) {
 
         profiles = _.map(profiles, _processProfile)
-
-        infoCardsQuery.descending("updatedAt")
-        infoCardsQuery.limit(filters.deck_size)
-
         if (filters.profile_cards)
             cards = cards.concat(profiles)
 
@@ -749,10 +762,35 @@ Parse.Cloud.define("GetMatches", function(request, response) {
         }
 
         infoCardsQuery.notContainedIn('objectId', ids)
+
+        if (filters.info_cards_logic.last_updated)
+            infoCardsQuery.descending("updatedAt")
+        infoCardsQuery.limit(filters.deck_size)
+        
+        //Get hotbeds no more than options in deck settings
+        hotBedsQuery.withinKilometers("location_point", point, filters.info_cards_logic.hotbeds_distance)
+        return hotBedsQuery.find(masterKey)
+    }).then(function(hot_beds) {
+
+        //Get a provider ids
+        var ids = []
+        for (var i = 0; i < hot_beds.length; i++) {
+            var row = hot_beds[i].get('pid')
+            ids.push(row)
+        }
+
+        //remove dublicates
+        ids = ids.filter(function(elem, index, self) {
+            return index == self.indexOf(elem);
+        })
+        //Include only with hotbed ids to infocards query 
+        if(filters.info_cards_logic.hotbeds_distance!=20000)
+            infoCardsQuery.containedIn('pid', ids)
+
         return infoCardsQuery.find(masterKey)
     }).then(function(info_cards) {
 
-        if (filters.profile_cards) {
+        if (filters.profile_cards && info_cards.length) {
             //mix an array with two types, depend on ratio
             var items_marked = filters.deck_size / (filters.cards_ratio + 1);
             for (var j = 1; j < items_marked + 1; j++) {
@@ -773,6 +811,12 @@ Parse.Cloud.define("GetMatches", function(request, response) {
         response.error(error)
     })
 });
+///////////////
+//////////////
+/////////////
+/////////////
+//////////////
+
 
 Parse.Cloud.define("ProcessMatch", function(request, response) {
     var userId = request.user.id

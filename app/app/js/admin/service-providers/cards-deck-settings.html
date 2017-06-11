@@ -52,6 +52,32 @@
                        </div>
                 </div>
 
+                <br>
+                <br>
+
+                <div class="item item-divider">
+                    Info Cards Order
+                </div>
+                <ion-checkbox class="checkbox-royal"                                        ng-model="vm.cards_settings.info_cards_logic.last_updated">
+                    By last updated
+                </ion-checkbox>
+                <!--<ion-checkbox class="checkbox-royal"                                        ng-model="vm.cards_settings.info_cards_logic.order_hotbeds">
+                    By closest hotbeds
+                </ion-checkbox>-->
+                <div class="item item-divider">
+                    {{
+                        vm.cards_settings.info_cards_logic.hotbeds_distance == '20000' ? 
+                        'Any distances of hotbeds' : 'Hotbeds distance no more '+ vm.cards_settings.info_cards_logic.hotbeds_distance + 'km'
+                    }}
+                </div>
+                <label class="item custom-slider" style="height: 60px">
+                            <slider floor="1" 
+                                    ceiling="20000" 
+                                    ng-model-low="1"
+                                    ng-model-high="vm.cards_settings.info_cards_logic.hotbeds_distance">
+                            </slider>
+                </label>
+
                 <button ng-click="vm.save()" 
                         ng-disabled="!vm.cards_settings.profile_cards && !vm.cards_settings.info_cards" 
                         class="button button-full button-positive">

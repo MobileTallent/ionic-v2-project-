@@ -217,9 +217,10 @@ var PrService = Parse.Object.extend({
  * @property {boolean} active - active/inactive
  * @property {string} comments - hotbeds description
  * @property {object} location - location object with {"name":string, "lat":string, "lon":string, "manual":boolean}
+ * @property {geopoint} location_point - location point
  */
 
-var HotBedFields = ['pid', 'title', 'active', 'comments', 'location']
+var HotBedFields = ['pid', 'title', 'active', 'comments', 'location', 'location_point']
 var HotBed = Parse.Object.extend({
     className: "HotBed",
     attrs: HotBedFields
@@ -265,8 +266,9 @@ var ProviderQuestion = Parse.Object.extend({
  * @property {boolean} info_cards - show info cards or not
  * @property {number} deck_size - show info cards or not
  * @property {number} cards_ratio - show info cards or not
+ * @property {onject} info_cards_logic - logic for info cards
  */
-var cardsDeckSettingFields = ['profile_cards', 'info_cards', 'deck_size', 'cards_ratio']
+var cardsDeckSettingFields = ['profile_cards', 'info_cards', 'deck_size', 'cards_ratio', 'info_cards_logic']
 var CardsDeckSetting = Parse.Object.extend({
     className: "CardsDeckSetting",
     attrs: cardsDeckSettingFields
