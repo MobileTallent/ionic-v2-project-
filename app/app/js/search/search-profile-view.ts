@@ -6,8 +6,6 @@ module app {
 		private translations
 		public profile: IProfile
 		public profilePointer
-		public branchUniversalObj
-		private linkToBeShared
 		private branchProfileId
 
 		static $inject = ['$log', '$scope', '$stateParams', '$ionicHistory', '$ionicActionSheet',
@@ -32,48 +30,6 @@ module app {
 			}
 			this.AppService.getProfileOfSelectedUser(this.profile.objectId).then(profilePointer => {
 				this.profilePointer = profilePointer
-
-				// if (typeof Branch !== 'undefined') {
-				// 	// only canonicalIdentifier is required
-				// 	var contentDescriptionText = 'Just a Baby is a brand new app connecting people who want to make a baby.'
-				// 		contentDescriptionText = contentDescriptionText + ' We can help you find a surrogate, partner, co-parent,'
-				// 		contentDescriptionText = contentDescriptionText + ' sperm or egg donor - or find someone that needs your help to have a baby.'
-				// 	var properties = {
-				// 		canonicalIdentifier: this.profilePointer.id,
-				// 		canonicalUrl: 'https://justababy.com/',
-				// 		title: 'A brand new way to make babies. Start your journey today.',
-				// 		contentDescription: contentDescriptionText,
-				// 		contentImageUrl: this.profilePointer.photoUrl
-				// 	}
-
-				// 	// create a branchUniversalObj variable to reference with other Branch methods
-				// 	Branch.createBranchUniversalObject(properties).then(res => {
-				// 		this.branchUniversalObj = res
-
-				// 		var analyticsLink = {
-				// 			channel: 'facebook',
-				// 			feature: 'sharing',
-				// 			tags: ['JustaBaby', 'justababy']
-				// 		}
-
-				// 		// optional fields
-				// 		var properties1 = {
-				// 			$desktop_url: 'https://justababy.com/',
-				// 			$android_url: 'https://play.google.com/store/apps/details?id=co.justababy.app',
-				// 			$ios_url: 'https://itunes.apple.com/us/app/just-a-baby/id1147759844?mt=8',
-				// 			profileId: this.profilePointer.id
-				// 		}
-				// 		if (this.branchUniversalObj) {
-				// 			this.branchUniversalObj.generateShortUrl(analyticsLink, properties1).then(res => {
-				// 				this.linkToBeShared = JSON.stringify(res.url)
-				// 			}).catch(function (err) {
-				// 				alert('Error in Branch URL: ' + JSON.stringify(err))
-				// 			})
-				// 		}
-				// 	}).catch(function (err) {
-				// 		alert('Error in creating Uni Obj: ' + JSON.stringify(err))
-				// 	})
-				// }
 			})
 		}
 
