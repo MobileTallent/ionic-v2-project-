@@ -62,11 +62,10 @@ angular.module('controllers')
         return hours + " hrs : " + minutes + " mins : " + seconds + " sec"
     }
 
-    function updateProfileSearchResults() {
-        var startTime = Date.now()
-
+    function checkQuotaTime() {
+        var quotaNotReached = false
         if (profile.quotaSearchedDate) {
-            var twelveHrsAgo = 10000 // 43200000-12hrs  Formula: hrs*mins*sec*1000ms  12*60*60*1000
+            var twelveHrsAgo = 30000 // 43200000-12hrs  Formula: hrs*mins*sec*1000ms  12*60*60*1000
             var now = new Date()
             var now_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds())
             var diff = now_utc - profile.quotaSearchedDate
@@ -74,10 +73,17 @@ angular.module('controllers')
             if (diff < twelveHrsAgo) {
                 $scope.timeRemaining = timeRemaining
                 $scope.$broadcast('likeLimitReached')
-                return
+                quotaNotReached = true
             }
         }
+        return quotaNotReached
+    }
 
+    function updateProfileSearchResults() {
+        var startTime = Date.now()
+
+        if (checkQuotaTime())
+            return
 
         AppService.updateProfileSearchResults()
             .then(result => {
@@ -97,7 +103,6 @@ angular.module('controllers')
                     $timeout(() => $scope.profiles = result, MIN_SEARCH_TIME - elapsed)
                 else
                     $scope.profiles = result
-                console.log('Profiles', $scope.profiles)
             }, error => {
                 $log.log('updateProfileSearchResults error ' + JSON.stringify(error))
                 $scope.profiles = []
@@ -138,19 +143,20 @@ angular.module('controllers')
     })
 
     $scope.openModal = function(index) {
-        if (index == 1) $scope.modalNewMatch.show();
-        else $scope.modalLikeLimit.show();
-    };
+        if (index == 1) $scope.modalNewMatch.show()
+        else $scope.modalLikeLimit.show()
+    }
 
     $scope.closeModal = function(index) {
-        if (index == 1) $scope.modalNewMatch.hide();
-        else $scope.modalLikeLimit.hide()
-        $state.go('^.profile-edit')
-    };
+        if (index == 1) $scope.modalNewMatch.hide()
+        else {
+            $scope.modalLikeLimit.hide()
+            $state.go('^.profile-edit')
+        }
+    }
 
     $scope.closeNewMatch = () => $scope.closeModal(1)
 
-    //a fuction for testing 
     $scope.closeLikeLimit = () => $scope.closeModal(2)
 
     $scope.messageNewMatch = () => {
@@ -181,6 +187,9 @@ angular.module('controllers')
     }
 
     $scope.accept = (profile) => {
+        if (checkQuotaTime()) {
+            return
+        }
         if (profile.flip === false) {
             profile.flip = true;
             return;
@@ -241,6 +250,14 @@ angular.module('controllers')
     }
 
     $scope.cardTransitionLeft = (profile) => {
+        // var cardT2 = this.valueOf()
+        // var card = TDCardDelegate.getSwipeableCard(cardT2.swipeCard)
+        // card.snapBack()
+        // return
+        // if (checkQuotaTime()) {
+        //     card.snapBack()
+        //     return
+        // }
         AppService.processMatch(profile, false)
         if ($scope.profiles.length == 0) {
             // TODO auto-load more?
@@ -248,6 +265,9 @@ angular.module('controllers')
     }
 
     $scope.cardTransitionRight = (profile) => {
+        if (checkQuotaTime()) {
+            return
+        }
         AppService.processMatch(profile, true)
         if ($scope.profiles.length == 0) {
             // TODO auto-load more?

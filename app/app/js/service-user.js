@@ -926,10 +926,11 @@ function onNotificationOpen(pnObj) {
                     service.numberOfLikes++
                 }
                 // reset and save the quota date - 
-                if (service.numberOfLikes >= 100) {
+                if (service.numberOfLikes >= 2) {
                     service.numberOfLikes = 0
                     var now = new Date()
                     var now_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds())
+                    service.profile.quotaSearchedDate = now_utc
                     saveProfile({ quotaSearchedDate: now_utc })
                 }
                 return server.processProfile(profile, liked, false, service.numberOfLikes).then(function(match) {
@@ -1668,7 +1669,7 @@ function onNotificationOpen(pnObj) {
             function addCardsDeckSettings(deckSettings) {
                 return server.addCardsDeckSettings(deckSettings)
             }
-            
+
             function getSavedInfoCards() {
                 return server.getSavedInfoCards()
             }

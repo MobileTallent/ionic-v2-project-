@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget android-versionCode="437" id="co.justababy.app" ios-CFBundleVersion="0.4.3" version="0.4.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="440" id="co.justababy.app" ios-CFBundleVersion="0.4.4" version="0.4.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Just a Baby</name>
-  <description>&#xD;&#xD;&#xD;&#xD;&#xD;
-    An app for single parents to meet and discover each other.&#xD;&#xD;&#xD;&#xD;&#xD;
+  <description>
+    An app for single parents to meet and discover each other.
   </description>
-    <author email="admin@justababy.co" href="http://justababy.co/">
-
-
-
-
-    Just a Baby
-
-
-
-
-  </author>
+    <author email="admin@justababy.co" href="http://justababy.co/">Just a Baby</author>
     <content src="index.html" />
     <access origin="*" />
     <access origin="*" />
