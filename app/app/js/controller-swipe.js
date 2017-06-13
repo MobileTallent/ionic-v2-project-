@@ -293,7 +293,7 @@ angular.module('controllers')
 
 .controller('MatchProfileCtrl', function($scope, $translate, AppService, AppUtil,
     $state, $stateParams, $ionicHistory, $ionicActionSheet, $ionicPopup,
-    matchProfile, $cordovaSocialSharing) {
+    matchProfile) {
     //$cordovaFacebook.api()
     //{user-id}?fields=context.fields%28mutual_friends%29
     var translations
@@ -376,18 +376,5 @@ angular.module('controllers')
                 AppUtil.toastSimple("Confirmation Request Sent!")
             }
         )
-    }
-
-    $scope.share = () => {
-        var profileShare = "Hey I'm currently chatting with this person on Just a Baby app:" + "\n\"" + $scope.matchProfile.about + "\"\nDo you think we're a good match? If you want to help me or perhaps yourself find someone to have a baby with download the app: "
-        $cordovaSocialSharing.share(profileShare, null, null, $scope.linkToBeShared) // Share via native share sheet 
-            .then(() => {
-                if (typeof analytics !== 'undefined') {
-                    analytics.trackView("Share This Profile")
-                }
-            }, error => {
-                //log error
-                console.error('Social share action error ' + JSON.stringify(error))
-            })
     }
 })

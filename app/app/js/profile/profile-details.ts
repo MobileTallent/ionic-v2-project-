@@ -32,30 +32,33 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 						if (out['results'][0]) {
 							profile.address = out['results'][0].formatted_address;
 							addArray = profile.address.split(',')
-
-							if (out['results'][8]) {
-								num = 8
+							if (out['results'][9]) {
+								num = 9
 							} else {
-								if (out['results'][7]) {
-									num = 7
+								if (out['results'][8]) {
+									num = 8
 								} else {
-									if (out['results'][6]) {
-										num = 6
+									if (out['results'][7]) {
+										num = 7
 									} else {
-										if (out['results'][5]) {
-											num = 5
+										if (out['results'][6]) {
+											num = 6
 										} else {
-											if (out['results'][4]) {
-												num = 4
+											if (out['results'][5]) {
+												num = 5
 											} else {
-												if (out['results'][3]) {
-													num = 3
+												if (out['results'][4]) {
+													num = 4
 												} else {
-													if (out['results'][2]) {
-														num = 2
+													if (out['results'][3]) {
+														num = 3
 													} else {
-														if (out['results'][1]) {
-															num = 1
+														if (out['results'][2]) {
+															num = 2
+														} else {
+															if (out['results'][1]) {
+																num = 1
+															}
 														}
 													}
 												}
@@ -64,7 +67,6 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 									}
 								}
 							}
-
 							addComp = out['results'][num].address_components
 
 							if (addComp.length === 1) {
@@ -94,13 +96,13 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 				contentDescriptionText = contentDescriptionText + ' We can help you find a surrogate, partner, co-parent,'
 				contentDescriptionText = contentDescriptionText + ' sperm or egg donor - or find someone that needs your help to have a baby.'
 				var properties = {
-					canonicalIdentifier: profile.id,
+					canonicalIdentifier: profile.id ? profile.id : profile.objectId,
 					canonicalUrl: 'https://justababy.com/',
 					title: 'A brand new way to make babies. Start your journey today.',
 					contentDescription: contentDescriptionText,
 					contentImageUrl: getPhotoUrl(profile.photos)
 				}
-
+				
 				// create a branchUniversalObj variable to reference with other Branch methods
 				Branch.createBranchUniversalObject(properties).then(res => {
 					var analyticsLink = {
@@ -114,7 +116,7 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 						$desktop_url: 'https://justababy.com/',
 						$android_url: 'https://play.google.com/store/apps/details?id=co.justababy.app',
 						$ios_url: 'https://itunes.apple.com/us/app/just-a-baby/id1147759844?mt=8',
-						profileId: profile.id
+						profileId: profile.id ? profile.id : profile.objectId
 					}
 					if (res) {
 						res.generateShortUrl(analyticsLink, properties1).then(link => {
@@ -128,7 +130,7 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 				})
 			}
 
-			$scope.isCurrentUser = profile.id === currentUserProfile.id
+			$scope.isCurrentUser = false
 			$scope.onClickBadgeInfo = () => {
 				var alertPopup = $ionicPopup.alert({
 					title: 'Self Identification Badges',
@@ -171,11 +173,11 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 			$ionicModal.fromTemplateUrl('profile/profile-upgrade-modal.html', {
 				scope: $scope,
 				animation: 'slide-in-up'
-			}).then(function(modal) {
+			}).then(function (modal) {
 				$scope.upgradeModal = modal
 			})
 
-			$scope.continueUpgrade = function(){
+			$scope.continueUpgrade = function () {
 				$scope.upgradeModal.hide()
 				$state.go('^.upgrade-profile');
 			}

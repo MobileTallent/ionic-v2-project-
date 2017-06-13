@@ -7,18 +7,16 @@ module app {
 		public profile: IProfile
 		public profilePointer
 		public branchUniversalObj
-		private $cordovaSocialSharing
 		private linkToBeShared
 		private branchProfileId
 
 		static $inject = ['$log', '$scope', '$stateParams', '$ionicHistory', '$ionicActionSheet',
-			'AppUtil', 'AppService', '$translate', '$cordovaSocialSharing']
+			'AppUtil', 'AppService', '$translate']
 		constructor(private $log: ng.ILogService, private $scope: ng.IScope, private $stateParams,
 			private $ionicHistory,
 			private $ionicActionSheet, private AppUtil: AppUtil, private AppService: IAppService,
-			private $translate: ITranslateService, $cordovaSocialSharing) {
+			private $translate: ITranslateService) {
 
-			this.$cordovaSocialSharing = $cordovaSocialSharing
 			$translate(['REQUEST_FAILED', 'REPORT', 'INAPPROPRIATE_CONTENT', 'CANCEL']).then(translationsResult => {
 				this.translations = translationsResult
 			})
