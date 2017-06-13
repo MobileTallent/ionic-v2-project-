@@ -1,16 +1,8 @@
-<?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="408" id="co.justababy.app" ios-CFBundleVersion="0.4.0" version="0.4.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Just a Baby</name>
-    <description>
-
-
-
-
-    An app for single parents to meet and discover each other.
-
-
-
-
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<widget android-versionCode="437" id="co.justababy.app" ios-CFBundleVersion="0.4.3" version="0.4.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>Just a Baby</name>
+  <description>&#xD;&#xD;&#xD;&#xD;&#xD;
+    An app for single parents to meet and discover each other.&#xD;&#xD;&#xD;&#xD;&#xD;
   </description>
     <author email="admin@justababy.co" href="http://justababy.co/">
 

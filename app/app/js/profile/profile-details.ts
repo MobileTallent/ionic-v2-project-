@@ -98,7 +98,7 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 					canonicalUrl: 'https://justababy.com/',
 					title: 'A brand new way to make babies. Start your journey today.',
 					contentDescription: contentDescriptionText,
-					contentImageUrl: profile.photoUrl
+					contentImageUrl: getPhotoUrl(profile.photos)
 				}
 
 				// create a branchUniversalObj variable to reference with other Branch methods
@@ -152,6 +152,20 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 					}, error => {
 						this.$log.error('Social share action error ' + JSON.stringify(error))
 					})
+			}
+
+			function getPhotoUrl(photos) {
+				if (photos && photos.length) {
+					var photo = photos[0]
+					if (photo._url)
+						return photo._url
+					if (angular.isFunction(photo.url))
+						return photo.url()
+					if (angular.isString(photo.url))
+						return photo.url
+				}
+
+				return 'img/generic_avatar.jpg'
 			}
 
 			$ionicModal.fromTemplateUrl('profile/profile-upgrade-modal.html', {
