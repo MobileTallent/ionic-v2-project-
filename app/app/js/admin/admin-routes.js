@@ -192,7 +192,7 @@ angular.module('ionicApp').config(function($stateProvider) {
             }
         })
         .state('menu.adminUsers', {
-            url: "/users/:pid",
+            url: "/users/:pid/:uid",
             views: {
                 'menuContent': {
                     templateUrl: "admin/service-providers/users.html"
@@ -200,7 +200,7 @@ angular.module('ionicApp').config(function($stateProvider) {
             }
         })
         .state('menu.adminCardsDeckSettings', {
-            url: "/users/:pid",
+            url: "/cards-deck/",
             views: {
                 'menuContent': {
                     templateUrl: "admin/service-providers/cards-deck-settings.html"

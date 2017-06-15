@@ -1,33 +1,20 @@
-<ion-view title="Users" class="background-calm" ng-controller="SpSeeUsers as vm">
-  <ion-content class="has-header">
-    <!-- Filter by audience -->
-    <ion-refresher on-refresh="vm.doRefresh()"></ion-refresher>
-    <div class="item item-input item-select">
-         <div class="input-label">
-              Audience
-         </div>
-         <select ng-model="vm.filter_card" ng-change="vm.doRefresh()" name="type">
-                 <option ng-selected="true" value="all">All</option>
-                 <option value="LFSperm">Has Sperm</option>
-                 <option value="LFEggs">Has Eggs</option>
-                 <option value="LFWomb">Has Womb</option>
-                 <option value="LFEmbryo">Has Embryo</option>
-         </select>
-    </div>
-    <div class="list card padding" ng-if="vm.users && vm.users[vm.count]">
-      <ion-item>
-        <h2>{{vm.users[vm.count].name}}</h2>
-        <p>{{vm.users[vm.count].age}} y.o</p>
-      </ion-item>
-      <div style="margin: 0px; background-color: rgb(232, 235, 239); text-align: center;">
-        <img ng-src="{{vm.users[vm.count].photos[0]._url}}" style="border-radius:50%;width:60%">
-      </div>
-      <div style="text-align:center;" ng-if="vm.users[vm.count].about" class="show-list-numbers-and-dots">
-        <p style="color:#000000;margin:10px;">{{vm.users[vm.count].about}}</p>
-      </div>
-      <div class="item item-body">
-        <button class="button button-positive  button-block" ng-click="vm.next()">Next</button>
-      </div>
-    </div>
-  </ion-content>
+<ion-view title="Manage users" class="background-calm" ng-controller="SpSeeUsers as vm">
+   <ion-nav-buttons side="right" class="has-header">
+    <i class="button button-icon icon ion-ios-plus-outline" ng-click="vm.openConnect()"></i>
+   </ion-nav-buttons>
+       <ion-content>
+        <div ng-show="!vm.users.length" style="text-align: center;font-family:'Avenir Next LT Pro Regular';font-size:18px">
+            <br/>
+            {{'No results' | translate}}<br/>
+        </div>
+        <ion-list show-delete="false" can-swipe="true">
+            <ion-item class="item item-avatar" ng-repeat="user in vm.users track by $index">
+                <img style="top: 16px;left: 16px;max-width: 40px !important;max-height: 40px !important;" ng-src="{{user.photos[0]._url}}">
+                <h2>{{::user.name}}</h2>
+                <p ng-if="user.uid!=vm.provider_owner_id">User</p>
+                <p ng-if="user.uid==vm.provider_owner_id">Owner</p>
+                <ion-option-button ng-if="user.uid!=vm.provider_owner_id" class="button-assertive icon ion-trash-a" ng-click="vm.deleteUser(user.uid, vm.provider_id)"></ion-option-button>
+            </ion-item>
+        </ion-list>
+    </ion-content>
 </ion-view>

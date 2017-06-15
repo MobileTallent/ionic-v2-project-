@@ -1,4 +1,4 @@
-<ion-side-menus enable-menu-with-back-views="false" ng-controller="SpMenu as vm">
+<ion-side-menus enable-menu-with-back-views="false" cache-view="false" ng-controller="SpMenu as vm">
   <ion-side-menu-content>
     <ion-nav-bar class="bar-positive">
       <ion-nav-back-button></ion-nav-back-button>
@@ -68,7 +68,7 @@
             <span class="text">Help &amp; FAQ</span>
           </div>
 
-          <div class="menu-item energized" menu-close ui-sref='signin'>
+          <div class="menu-item energized" menu-close ng-click="vm.logout()">
             <i class="icon ion-log-out"></i>
             <span class="text" style="color: #444;">Switch to user app</span>
           </div>

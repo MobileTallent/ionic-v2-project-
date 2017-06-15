@@ -7,6 +7,7 @@ var ProviderQuestion = Parse.Object.extend("ProviderQuestion")
 var Profile = Parse.Object.extend("Profile")
 var CardsDeckSetting = Parse.Object.extend("CardsDeckSetting")
 var SavedInfoCard = Parse.Object.extend("SavedInfoCard")
+var PrUser = Parse.Object.extend("PrUser")
 
 function checkAdmin(request, response) {
     if (!request.user.get('admin')) {
@@ -71,36 +72,13 @@ Parse.Cloud.define('GetServiceProviderLengths', function(request, response) {
         .limit(1000)
         .equalTo("pid", provider_id)
         .find()
-
-    var getUsersLength = new Parse.Query(Enquire)
+    
+    var getUsersLength = new Parse.Query(PrUser)
         .limit(1000)
         .equalTo("pid", provider_id)
         .find()
     
     Parse.Promise.when(getInfoCardsLength, getServicesLength, getHotBedsLength, getUsersLength).then(function(infocards, services, hotbeds, users) {
-                
-                        var users_array = []
-						for (var i=0;i<users.length;i++){
-							console.log(users[i])
-							users_array.push(users[i].name)
-						}
-						//remove dublicates
-						var uniqueArray = users_array.filter(function(item, pos) {
-							return users_array.indexOf(item) == pos;
-						})
-						
-						//make users array
-						var new_result = [];
-						for(var i=0;i<uniqueArray.length;i++) {
-							for(var j=0;j<users.length;j++){
-								if(users[j].name==uniqueArray[i]) {
-									new_result.push(users[j])
-									break
-								}   
-							}
-						}
-						users = new_result
-
         let result = {infocards:infocards.length, services:services.length, hotbeds:hotbeds.length, users:users.length}
         console.log("Successs " + JSON.stringify(result))
         response.success(result)
@@ -127,7 +105,7 @@ Parse.Cloud.define('AddServiceProvider', function(request, response) {
 
     sp.save(serviceProviderData).then(function(result) {
         console.log("Success saving service provider")
-        response.success("Success saving service provider")
+        response.success(result.toJSON())
     }, function(error) {
         console.log("Error saving service provider")
         response.error(error)
@@ -395,32 +373,6 @@ Parse.Cloud.define('GetEnquiries', function(request, response) {
         .find()
     
     Parse.Promise.when(queryEnquiries).then(function(result) {
-        if(request.params.unique_user) {
-            
-						//create array with users
-						var users_array = []
-						for (var i=0;i<result.length;i++){
-							console.log(result[i])
-							users_array.push(result[i].name)
-						}
-						//remove dublicates
-						var uniqueArray = users_array.filter(function(item, pos) {
-							return users_array.indexOf(item) == pos;
-						})
-						
-						//make users array
-						var new_result = [];
-						for(var i=0;i<uniqueArray.length;i++) {
-							for(var j=0;j<result.length;j++){
-								if(result[j].name==uniqueArray[i]) {
-									new_result.push(result[j])
-									break
-								}   
-							}
-						}
-						result = new_result
-        }
-
         console.log("Successs " + JSON.stringify(result))
         response.success(result)
     }, function(error) {
@@ -547,42 +499,6 @@ Parse.Cloud.define('DelProviderQuestions', function(request, response) {
             response.error(error)
         }
 })
-
-
-/* Get Users */
-Parse.Cloud.define("GetUsers", function(request, response) {
-    // We need to use the master key to load the other users profiles
-    var audience = request.params.audience
-
-   
-    if(audience=='all') {
-        new Parse.Query(Profile)
-        .limit(1000)
-        .equalTo("enabled", true)
-        .find({useMasterKey:true})
-        .then(function(result) {
-            console.log("Successs " + JSON.stringify(result))
-            response.success(result)
-        }, function(error) {
-            console.log("Erroorrr: " + JSON.stringify(error))
-            response.error(error)
-        })
-    } else {
-         new Parse.Query(Profile)
-        .limit(10000)
-        .equalTo(audience, true)
-        .find({useMasterKey:true})
-        .then(function(result) {
-            console.log("Successs " + JSON.stringify(result))
-            response.success(result)
-        }, function(error) {
-            console.log("Erroorrr: " + JSON.stringify(error))
-            response.error(error)
-        })
-    }
-
-
-});
 
 /* Get Deck Settings */
 Parse.Cloud.define('GetCardsDeckSettings', function(request, response) {
@@ -716,4 +632,113 @@ Parse.Cloud.define('IncreaseShowClick', function(request, response) {
         response.error(error)
     })
 
+})
+
+/* Get Users for specify provider */
+Parse.Cloud.define('GetProviderUsers', function(request, response) {
+    var provider_id = request.params.pid
+    if (!provider_id)
+        return response.error('pid parameter must be provided')
+
+    var getUsersQuery = new Parse.Query(PrUser)
+        .limit(1000)
+        .equalTo("pid", provider_id)
+        .descending('createdAt')
+    
+    var getProfilesQuery = new Parse.Query(Profile)
+        .limit(1000)
+
+    return getUsersQuery.find()
+    .then(function(result) {
+        var ids = []
+            for (var i = 0; i < result.length; i++) {
+                var row = result[i].get('uid')
+                ids.push(row)
+        }
+
+        return getProfilesQuery.containedIn('uid', ids).find()
+    }).then(function(results) {
+        response.success(results)
+    }), function(error) {
+        console.log("Erroorrr: " + JSON.stringify(error))
+        response.error(error)
+    }
+})
+
+/* Get Providers for specify user */
+Parse.Cloud.define('GetUserProviders', function(request, response) {
+    var user_id = request.params.uid
+    if (!user_id)
+        return response.error('uid parameter must be provided')
+
+    var getUsersQuery = new Parse.Query(PrUser)
+        .limit(1000)
+        .equalTo("uid", user_id)
+        .descending('createdAt')
+    
+    var getServiceProviderQuery = new Parse.Query(ServiceProvider)
+        .limit(1000)
+
+    return getUsersQuery.find()
+    .then(function(result) {
+        var ids = []
+            for (var i = 0; i < result.length; i++) {
+                var row = result[i].get('pid')
+                ids.push(row)
+        }
+
+        return getServiceProviderQuery.containedIn('objectId', ids).find()
+    }).then(function(results) {
+        response.success(results)
+    }), function(error) {
+        console.log("Erroorrr: " + JSON.stringify(error))
+        response.error(error)
+    }
+})
+
+/* Remove user allocation from provider */
+Parse.Cloud.define('DelProviderUser', function(request, response) {
+
+    console.log('DelProviderUser')
+    var pid = request.params.pid
+    var uid = request.params.uid
+    if (!pid && !uid) return response.error('uid or pid - parameters is required')
+
+    var deletingQuery = new Parse.Query(PrUser)
+        if (pid) deletingQuery.equalTo('pid', pid)
+        if (uid) deletingQuery.equalTo('uid', uid)
+        
+
+    return deletingQuery.limit(1000).find({useMasterKey: true})
+        .then(function(results) {
+            return Parse.Object.destroyAll(results, {useMasterKey: true})
+        }).then(function(success) {
+            response.success("Successfully deleted user allocations to provider!")
+        }), function(error) {
+            console.log(JSON.stringify(error))
+            response.error(error)
+        }
+})
+
+/* Add user allocation to provider */
+Parse.Cloud.define('AddProviderUser', function(request, response) {
+
+    console.log('addProviderUser')
+
+    var PrUserSaved = {
+        pid:request.params.user.pid,
+        uid:request.params.user.uid,
+        role:request.params.user.role
+    }
+
+    if (!PrUserSaved.pid || !PrUserSaved.uid)
+        return response.error('pid and uid parameter must be provided')
+
+    new PrUser().save(PrUserSaved).then(function(result) {
+        console.log("Success saving got card!")
+        response.success("Success saving got card!")
+    }, function(error) {
+        console.log("Error saving got card!")
+        response.error(error)
+    })
 })

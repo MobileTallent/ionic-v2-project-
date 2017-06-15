@@ -8,7 +8,7 @@ module app {
 
 		public service_providers
 
-		constructor(private $scope:ng.IScope, private AppUtil:AppUtil, private AppService:IAppService) {
+		constructor(private $scope:ng.IScope, private AppUtil, private AppService) {
 
 			$scope.$on('$ionicView.beforeEnter', () => this.refresh())
 		}

@@ -1,0 +1,24 @@
+<ion-modal-view>
+
+            <ion-header-bar class="bar bar-header bar-positive">
+                <h1 class="title">Connect user to Service Provider</h1>
+                <button class="button button-clear button-primary" ng-click="vm.closeConnect()">Cancel</button>
+            </ion-header-bar>
+            <ion-content class="padding">
+                Please choose provider
+                <br>
+                <br>
+                 <div ng-show="!vm.service_providers.length" style="text-align: center;font-family:'Avenir Next LT Pro Regular';font-size:18px">
+                    <br/>
+                    {{'Dont have service providers' | translate}}<br/>
+                </div>
+                <div class="list">
+                    <a class="item item-avatar" ng-repeat="provider in vm.service_providers track by provider.id" 
+                        ng-click="vm.chooseProvider(provider.id)">
+                        <img style="top: 16px;left: 16px;max-width: 40px !important;max-height: 40px !important;" ng-src="{{provider.image_cover}}">
+                        <h2>{{::provider.name}}</h2>
+                        <p>{{::provider.country}}</p>
+                    </a>
+                </div>
+            </ion-content>
+        </ion-modal-view>

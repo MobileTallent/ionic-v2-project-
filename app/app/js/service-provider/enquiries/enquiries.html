@@ -2,7 +2,7 @@
   <ion-content padding="true" class="has-header">
     <ion-refresher on-refresh="vm.doRefresh()"></ion-refresher>
     <ion-list>
-      <ion-item ng-if="!vm.keys">Enquiries don't found</ion-item>
+      <ion-item ng-if="!vm.keys.length">Enquiries don't found</ion-item>
       <div ng-repeat="key in vm.keys">
           <ion-item class="item-divider">
             <small style="float:right;">{{key}}</small>

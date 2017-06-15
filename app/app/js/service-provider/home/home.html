@@ -3,8 +3,8 @@
     <ion-refresher on-refresh="vm.doRefresh()"></ion-refresher>
     <ion-list>
       <ion-item ng-if="vm.info_cards" class="item-divider">Top Info Cards</ion-item>
-      <ion-item ng-if="!vm.info_cards">Info Cards don't found</ion-item>
-      <ion-item ng-if="vm.info_cards">
+      <ion-item ng-if="!vm.info_cards.length">Info Cards don't found</ion-item>
+      <ion-item ng-if="vm.info_cards.length">
         <!--Graph cards-->
         <canvas id="line" class="chart chart-line" 
             chart-data="vm.cardsData"
@@ -28,8 +28,8 @@
 
     <ion-list>
       <ion-item ng-if="vm.services" class="item-divider">Top services</ion-item>
-      <ion-item ng-if="!vm.services">Services don't found</ion-item>
-      <ion-item ng-if="vm.services">
+      <ion-item ng-if="!vm.services.length">Services don't found</ion-item>
+      <ion-item ng-if="vm.services.length">
         <!--Graph cards-->
         <canvas id="line" class="chart chart-line" 
             chart-data="vm.servicesData"

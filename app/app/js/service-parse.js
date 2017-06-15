@@ -161,12 +161,26 @@ var FindUsReport = Parse.Object.extend({
  * @property {string} skype_id - provider skype_id
  * @property {number} balance - service provider balance
  * @property {number} spiel - service spiel
+ * @property {string} video - service spiel
  */
 
-var ServiceProviderFields = ['name', 'country', 'uid', 'image_cover', 'email', 'balance', 'phone_number', 'skype_id', 'spiel']
+var ServiceProviderFields = ['name', 'country', 'uid', 'image_cover', 'email', 'balance', 'phone_number', 'skype_id', 'spiel', 'video']
 var ServiceProvider = Parse.Object.extend({
     className: "ServiceProvider",
     attrs: ServiceProviderFields
+})
+
+/**
+ * @typedef {Object} PrUser
+ * @property {string} uid - User promary account
+ * @property {string} pid - Service provider account
+ * @property {string} role - User role at service provider
+ */
+
+var SpUserFields = ['uid', 'pid', 'role']
+var SpUser = Parse.Object.extend({
+    className: "SpUser",
+    attrs: SpUserFields
 })
 
 /**
@@ -303,6 +317,7 @@ enhance(Enquire.prototype, EnquireFields)
 enhance(ProviderQuestion.prototype, providerQuestionFields)
 enhance(CardsDeckSetting.prototype, cardsDeckSettingFields)
 enhance(SavedInfoCard.prototype, savedInfoCardFields)
+enhance(SpUser.prototype, SpUserFields)
 
 function enhance(prototype, fields) {
     for (var i = 0; i < fields.length; i++) {
@@ -499,12 +514,15 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         getProviderQuestions: getProviderQuestions,
         addProviderQuestions: addProviderQuestions,
         delProviderQuestions: delProviderQuestions,
-        getUsers: getUsers,
         getCardsDeckSettings: getCardsDeckSettings,
         addCardsDeckSettings: addCardsDeckSettings,
         getSavedInfoCards: getSavedInfoCards,
         gotItInfoCard: gotItInfoCard,
-        increaseShowClick: increaseShowClick
+        increaseShowClick: increaseShowClick,
+        getProviderUsers: getProviderUsers,
+        getUserProviders: getUserProviders,
+        delProviderUser: delProviderUser,
+        addProviderUser: addProviderUser
     }
 
     return service
@@ -1299,10 +1317,6 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         return Parse.Cloud.run('DelProviderQuestions', { id: id }).catch(_unwrapError)
     }
 
-    function getUsers(audience) {
-        return Parse.Cloud.run('GetUsers', { audience: audience }).catch(_unwrapError)
-    }
-
     function getCardsDeckSettings() {
         return Parse.Cloud.run('GetCardsDeckSettings').catch(_unwrapError)
     }
@@ -1322,6 +1336,24 @@ angular.module('service.parse', ['constants', 'parse-angular'])
     function increaseShowClick(increase) {
         return Parse.Cloud.run('IncreaseShowClick', { increase: increase }).catch(_unwrapError)
     }
+
+    function getProviderUsers(pid) {
+        return Parse.Cloud.run('GetProviderUsers', { pid:pid }).catch(_unwrapError)
+    }
+
+    function getUserProviders(uid) {
+        return Parse.Cloud.run('GetUserProviders', { uid:uid }).catch(_unwrapError)
+    }
+
+    function delProviderUser(pid,uid) {
+        return Parse.Cloud.run('DelProviderUser', { pid:pid, uid:uid }).catch(_unwrapError)
+    }
+
+    function addProviderUser(user) {
+        return Parse.Cloud.run('AddProviderUser', { user:user }).catch(_unwrapError)
+    }
+
+
 
     // Private functions
 

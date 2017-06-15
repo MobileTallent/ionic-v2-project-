@@ -1,20 +1,28 @@
-<ion-view title="Main Organisation Video" class="background-calm">
+<ion-view title="Main Organisation Video" class="background-calm" ng-controller="SpAccountVideo as vm">
   <ion-content padding="true" class="has-header">
-    <div class="show-list-numbers-and-dots">
-      <p style="color:#000000;font-size:13px;">Here you can upload a short sub-60 second video, about your company. Your video must be aligned to the Just a Baby vision and mention your relationship with us. ie: "Once you've met someone at Just-a-Baby call us to...". or "we help people on Just
-        a Baby by..."</p>
+    <div class="list card">
+        <div class="item item-body">
+          <div class="show-list-numbers-and-dots">
+            <p style="margin-top:0px;color:#632985;">Here you can upload a short sub-60 second video, about your company. Your video must be aligned to the Just a Baby vision and mention your relationship with us. ie: "Once you've met someone at Just-a-Baby call us to...". or "we help people on Just a Baby by..."</p>
+          </div>
+        </div>
     </div>
-    <div style="position:relative;overflow:hidden;padding-bottom:56.25%;height:0;">
-      <iframe src="" frameborder="0" allowfullscreen="" width="560" height="315" style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+    <div ng-if="vm.service_provider.video_url" class="video-container">
+          <iframe  ng-if="vm.service_provider.video_url" ng-src="{{vm.service_provider.video_url}}" frameborder="0" width="560" height="315"></iframe>
     </div>
-    <div class="show-list-numbers-and-dots">
-      <p style="color:#000000;font-size:13px;">Your video will be uploaded to YouTube on our Service Provider Channel</p>
-    </div>
-    <form class="list">
-      <ion-checkbox id="mainOrganisationVideo-checkbox1">I do not want share video
-        <br> link to be publicly searchable</ion-checkbox>
+
+    <form name="service_provider_form" novalidate ng-submit="vm.save(service_provider_form)">
+                    <div class="list">
+                        <!-- URL -->
+                        <label class="item item-input">
+                            <input name="video" 
+                                   ng-model="vm.service_provider.video" 
+                                   type="text" 
+                                   placeholder="Example: https://www.youtube.com/embed/{id}" 
+                            />
+                        </label>
+                    </div>
+                    <button class="button button-positive button-block">Save</button>
     </form>
-    <button class="button button-assertive  button-block">Remove</button>
-    <button class="button button-positive  button-block">Upload new ...</button>
   </ion-content>
 </ion-view>

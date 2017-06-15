@@ -305,5 +305,13 @@ angular.module('ionicApp').config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+        .state('menu.switch-corporate', {
+            url: "/switch-corporate",
+            views: {
+                'menuContent': {
+                    templateUrl: "service-provider/welcome/switch-corporate.html"
+                }
+            }
+        })
     $urlRouterProvider.otherwise("/sign-in")
 });
