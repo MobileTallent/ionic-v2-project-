@@ -649,7 +649,8 @@ function onNotificationOpen(pnObj) {
 
                 if ((!service.profile.about || service.profile.about.match(/\S+/g).length < 10 || !service.profile.hasSelfId) && !service.isEditProfileDone) {
                     service.redirectToEditProfile = true
-                    $state.go('menu.profile-edit')
+                        //$state.go('menu.profile-edit')
+                    go('menu.profile-edit')
                     return
                 }
 
@@ -661,7 +662,8 @@ function onNotificationOpen(pnObj) {
 
                 if (service.branchProfileId) {
                     service.getProfileOfSelectedUserNoParsing(service.branchProfileId).then(profile => {
-                        $timeout($state.go('menu.search-profile-view', { profile: profile }), 2500)
+                        //$timeout($state.go('menu.search-profile-view', { profile: profile }), 2500)
+                        $timeout($state.go('menu.search-profile-view', { profile: profile }), 3000)
                     })
                 }
             }

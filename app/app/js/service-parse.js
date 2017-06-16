@@ -253,7 +253,7 @@ var HotBed = Parse.Object.extend({
  * @property {string} u_email - email user
  * @property {string} u_phone - phone user
  * @property {string} u_skype - skype user
-*/
+ */
 
 
 var EnquireFields = ['pid', 'uid', 'sid', 'service_name', 'name', 'message', 'image_cover', 'has_read', 'u_email', 'u_phone', 'u_skype']
@@ -394,6 +394,18 @@ Object.defineProperty(Match.prototype, 'profile', {
     },
     set: function(obj) {
         this.otherProfile = obj
+    }
+})
+
+Object.defineProperty(Match.prototype, 'dateOfMatch', {
+    get: function() {
+        if (this.matchedDate)
+            return this.matchedDate
+
+        return null
+    },
+    set: function(obj) {
+        this.matchedDate = obj
     }
 })
 
@@ -1328,7 +1340,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
     function getSavedInfoCards() {
         return Parse.Cloud.run('GetSavedInfoCards').catch(_unwrapError)
     }
-    
+
     function gotItInfoCard(id) {
         return Parse.Cloud.run('GotItInfoCard', { id: id }).catch(_unwrapError)
     }
