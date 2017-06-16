@@ -209,7 +209,7 @@ angular.module('controllers')
 
         AppUtil.blockingCall(AppService.saveProfile(changes),
             () => {
-
+                AppService.goToNextLoginState()
             }, 'SETTINGS_SAVE_ERROR')
     }
 
