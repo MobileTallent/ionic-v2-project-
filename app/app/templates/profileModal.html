@@ -23,7 +23,7 @@
             </ion-slide>
         </ion-slide-box>
 
-        <div ng-hide="isCurrentUser" class="material-share-button-container">
+        <div ng-hide="isCurrentUser" class="material-share-button-container" ng-class="vm.isLoading ? 'customLoader' : ''">
             <i class="button button-icon icon ion-android-share-alt floating-share-button" ng-click="vm.share()"></i>
         </div>
 

@@ -39,7 +39,8 @@
 .center {
     text-align: center;
 }
-.horizontal-center{
+
+.horizontal-center {
     margin-left: auto;
     margin-right: auto;
     display: block;
@@ -52,7 +53,6 @@
 .cf {
     clear: both !important;
 }
-
 
 
 /* --------- My Relationships ---------------*/
@@ -108,3 +108,18 @@
     white-space: normal !important;
 }
 
+
+/* -- Loading Icon Class -- */
+
+.customLoader {
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
