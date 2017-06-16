@@ -4,18 +4,18 @@
         <!--<i class="button button-icon icon ion-checkmark" ng-click="vm.like()"></i>-->
         <!--Share and options buttons moved to profile-details.html-->
         <!--<i class="button button-icon icon ion-android-share-alt" ng-click="vm.share()"></i>-->
-        <i class="button button-icon icon ion-android-more-vertical" ng-click="vm.profileOptions()"></i>
+        <i class="button button-icon icon ion-android-more-vertical" ng-click="vm.profileOptions()" ng-hide="vm.isSameUser"></i>
 
     </ion-nav-buttons>
 
     <ion-content>
         <profile-details profile="profile"></profile-details>
     </ion-content>
-    <div class="material-cross-button-container">
+    <div class="material-cross-button-container" ng-hide="vm.isSameUser">
         <i class="button button-icon icon ion-close search-profile-view-icon floating-tick-cross-button" ng-click="vm.reject()"></i>
     </div>
 
-    <div class="material-tick-button-container">
+    <div class="material-tick-button-container" ng-hide="vm.isSameUser">
         <i class="button button-icon icon ion-checkmark floating-tick-cross-button" ng-click="vm.like()"></i>
     </div>
     <!--<span class="fixed-fade-box" />-->

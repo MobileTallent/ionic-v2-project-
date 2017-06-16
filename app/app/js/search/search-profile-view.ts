@@ -7,6 +7,7 @@ module app {
 		public profile: IProfile
 		public profilePointer
 		private branchProfileId
+		public isSameUser: Boolean
 
 		static $inject = ['$log', '$scope', '$stateParams', '$ionicHistory', '$ionicActionSheet',
 			'AppUtil', 'AppService', '$translate']
@@ -19,18 +20,24 @@ module app {
 				this.translations = translationsResult
 			})
 			$scope.$on('$ionicView.beforeEnter', (event, data) => this.ionViewWillEnter())
+			$scope.$on('$ionicView.beforeLeave', (event, data) => this.ionViewWillLeave())
 		}
 
 		ionViewWillEnter() {
 			this.profile = this.$stateParams['profile']
 			this.$scope['profile'] = this.profile
+			this.isSameUser = this.profile.objectId === this.AppService.getProfile().id
 			if (this.AppService.branchProfileId) {
 				this.branchProfileId = this.AppService.branchProfileId
-				this.AppService.branchProfileId = ''
 			}
 			this.AppService.getProfileOfSelectedUser(this.profile.objectId).then(profilePointer => {
 				this.profilePointer = profilePointer
 			})
+		}
+
+		ionViewWillLeave() {
+			if (this.AppService.branchProfileId)
+				this.AppService.branchProfileId = ''
 		}
 
 		checkProfile(profile) {
@@ -56,13 +63,23 @@ module app {
 		like() {
 			let match = this.getMatchProfile()
 			this.AppService.processMatch(match, true)
-			this.$ionicHistory.goBack()
+			if (this.AppService.branchProfileId) {
+				this.AppService.branchProfileId = ''
+				this.AppService.goToNextLoginState()
+			} else {
+				this.$ionicHistory.goBack()
+			}
 		}
 
 		reject() {
 			let match = this.getMatchProfile()
 			this.AppService.processMatch(match, false)
-			this.$ionicHistory.goBack()
+			if (this.AppService.branchProfileId) {
+				this.AppService.branchProfileId = ''
+				this.AppService.goToNextLoginState()
+			} else {
+				this.$ionicHistory.goBack()
+			}
 		}
 
 		profileOptions() {
