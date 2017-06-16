@@ -6,6 +6,7 @@ angular.module('sp.routes', [])
 
   .state('sp-welcome', {
     url: '/sp-welcome',
+    params: { provider:null },
     templateUrl: 'service-provider/welcome/welcome.html',
   })
 
@@ -70,14 +71,6 @@ angular.module('sp.routes', [])
     views: {
       'menuContent': {
         templateUrl: 'service-provider/account/video.html'
-      }
-    }
-  })
-  .state('sp.account-users', {
-    url: '/account-users',
-    views: {
-      'menuContent': {
-        templateUrl: 'service-provider/account/users.html'
       }
     }
   })

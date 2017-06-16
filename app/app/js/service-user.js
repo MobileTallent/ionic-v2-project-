@@ -79,7 +79,6 @@ function onNotificationOpen(pnObj) {
                 // fields
                 isLoggedIn: false,
                 user: null,
-                service_provider: null,
                 userId: '',
                 fbId: '',
                 profile: null,
@@ -202,8 +201,11 @@ function onNotificationOpen(pnObj) {
                 addCardsDeckSettings: addCardsDeckSettings,
                 getSavedInfoCards: getSavedInfoCards,
                 gotItInfoCard: gotItInfoCard,
-                increaseShowClick: increaseShowClick
-
+                increaseShowClick: increaseShowClick,
+                getProviderUsers: getProviderUsers,
+                getUserProviders: getUserProviders,
+                delProviderUser: delProviderUser,
+                addProviderUser: addProviderUser
             }
 
             return service
@@ -286,12 +288,6 @@ function onNotificationOpen(pnObj) {
 
                 if (user.admin)
                     $rootScope.isAdmin = true
-                if (user.serviceProvider) {
-                    $rootScope.serviceProvider = true
-                    server.getMyServiceProvider(user.id).then(provider => {
-                        service.service_provider = provider
-                    })
-                }
 
                 server.getTwilioToken().then(
                     result => {
@@ -314,6 +310,18 @@ function onNotificationOpen(pnObj) {
 
                 initInAppPurchases()
                 initAdMob()
+
+                //check if user provider
+                server.getUserProviders(user.id).then(
+                    results => {
+                        if (results.length) {
+                            $rootScope.serviceProvider = true
+                            for (var i = 0; i < results.length; i++) {
+                                if(results[i].uid == user.id) $rootScope.serviceProviderOwner = true
+                            }
+                        }
+                    }
+                )
 
                 return user
             }
@@ -1580,10 +1588,7 @@ function onNotificationOpen(pnObj) {
             }
 
             function getMyServiceProvider(userId) {
-                return server.getMyServiceProvider(userId).then(provider => {
-                    service.service_provider = provider
-                    return service.profile
-                })
+                return server.getMyServiceProvider(userId)
             }
 
             function getServiceProviderLengths(provider_id) {
@@ -1682,6 +1687,21 @@ function onNotificationOpen(pnObj) {
                 return server.increaseShowClick(params)
             }
 
+            function getProviderUsers(pid) {
+                return server.getProviderUsers(pid)
+            }
+
+            function getUserProviders(uid) {
+                return server.getUserProviders(uid)
+            }
+
+            function delProviderUser(pid, uid) {
+                return server.delProviderUser(pid, uid)
+            }
+
+            function addProviderUser(user) {
+                return server.addProviderUser(user)
+            }
 
 
             // Util functions

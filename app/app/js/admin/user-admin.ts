@@ -8,9 +8,10 @@ module app {
 
 		public user: IUser
 		public isMatch: Boolean
+		public service_providers
 
-		constructor(private $ionicPopup, private $log: ng.ILogService, private $scope: ng.IScope, private $ionicHistory,
-			private $state, private $stateParams, private AppService: IAppService, private AppUtil: AppUtil) {
+		constructor(private $ionicPopup, public $ionicModal, private $log: ng.ILogService, private $scope: ng.IScope, private $ionicHistory,
+			private $state, private $stateParams, private AppService, private AppUtil) {
 
 			$scope.$on('$ionicView.beforeEnter', () => {
 				let userId = this.$stateParams.userId
@@ -25,6 +26,52 @@ module app {
 						this.isMatch = match ? true : false
 					})
 			})
+
+			this.AppService.getUserProviders(this.$stateParams.userId).then(function(success){
+				$scope.providers = success
+			})
+			
+			$ionicModal.fromTemplateUrl('admin/connectProviderModal.html', {
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(modal => $scope.connectModal = modal)
+		}	
+
+		public openConnect() {
+			this.AppUtil.blockingCall(
+                this.AppService.getServiceProviders(),
+                service_providers => {
+                    console.log('service_providers', service_providers);
+                    this.service_providers = service_providers
+                })
+			this.$scope.connectModal.show()
+		}
+		public closeConnect() {
+			this.$scope.connectModal.hide()
+		}
+
+		public chooseProvider(id) {
+			
+			for (var i = 0; i < this.$scope.providers.length; i++){
+                if(this.$scope.providers[i].id==id) {
+                    this.AppUtil.toastSimple('Provider already connected!')
+                    return;
+                }
+            }
+
+			let PrUser = {
+				'pid':id,
+				'uid':this.$stateParams.userId,
+				'role': 'User'
+			}
+
+			this.AppUtil.blockingCall(
+                this.AppService.addProviderUser(PrUser).then(
+					() => {
+						this.AppUtil.toastSimple('User connected to provider!')
+						this.$scope.connectModal.hide()
+						this.$ionicHistory.goBack()
+				}))
 		}
 
 		public deleteUser() {
@@ -108,15 +155,23 @@ module app {
 							}
 
 							myThis.AppService.addServiceProvider(service_provider).then(
-								() => {
-									myThis.AppUtil.toastSimple('User upgraded')
-									myThis.$ionicHistory.goBack()
-								})
+								(sp) => {
+									let PrUser = {
+										pid:sp.objectId,
+										uid:myThis.user.id,
+										role:'main'
+									}
+									myThis.AppService.addProviderUser(PrUser).then(
+										() => {
+											myThis.AppUtil.toastSimple('User upgraded')
+											myThis.$ionicHistory.goBack()
+										})
+								}) 
 						})
 			})
 		}
 	}
 
-	UserAdmin.$inject = ['$ionicPopup', '$log', '$scope', '$ionicHistory', '$state', '$stateParams', 'AppService', 'AppUtil']
+	UserAdmin.$inject = ['$ionicPopup', '$ionicModal', '$log', '$scope', '$ionicHistory', '$state', '$stateParams', 'AppService', 'AppUtil']
 	angular.module('controllers').controller('UserAdmin', UserAdmin)
 }

@@ -1,0 +1,23 @@
+<ion-view view-title="Switch to corporate app" class="background-calm" ng-controller="SwitchCorporate as vm">
+
+    <ion-content>
+
+        <div class="list card" ui-sref="sp-welcome({provider:provider})" ng-repeat="provider in vm.service_providers track by provider.id" >
+
+            <div class="item item-avatar">
+                <img style="top: 16px;left: 16px;max-width: 40px !important;max-height: 40px !important;" ng-src="{{provider.image_cover}}">
+                <h2>{{::provider.name}}</h2>
+                <p>{{::provider.country}}</p>
+                <p ng-if="provider.uid!=vm.user_id" style="position: absolute;top: 15px;right: 15px;">User</p>
+                <p ng-if="provider.uid==vm.user_id" style="position: absolute;top: 15px;right: 15px;">Owner</p>
+            </div>
+
+            <div class="item item-body">
+                <a href="" ui-sref="sp-welcome({provider:provider})" class="subdued">Switch to corporate app</a>
+                <i class="icon ion-log-in" style="float:right;"></i>
+            </div>
+
+        </div>
+
+    </ion-content>
+</ion-view>

@@ -6,11 +6,14 @@
             <br/>
             {{'No results' | translate}}<br/>
         </div>
-        <div class="list">
-            <a class="item item-avatar" ng-repeat="user in vm.users track by $index" ui-sref="^.userAdmin({userId : user.uid})">
-                <img style="top: 16px;left: 16px;max-width: 40px !important;max-height: 40px !important;" ng-src="{{user.image_cover}}">
+        <ion-list show-delete="false" can-swipe="true">
+            <ion-item class="item item-avatar" ng-repeat="user in vm.users track by $index">
+                <img style="top: 16px;left: 16px;max-width: 40px !important;max-height: 40px !important;" ng-src="{{user.photos[0]._url}}">
                 <h2>{{::user.name}}</h2>
-            </a>
-        </div>
+                <p ng-if="user.uid!=vm.provider_owner_id">User</p>
+                <p ng-if="user.uid==vm.provider_owner_id">Owner</p>
+                <ion-option-button ng-if="user.uid!=vm.provider_owner_id" class="button-assertive icon ion-trash-a" ng-click="vm.deleteUser(vm.provider_id,user.uid)"></ion-option-button>
+            </ion-item>
+        </ion-list>
     </ion-content>
-</ion-view>
+</ion-view> 

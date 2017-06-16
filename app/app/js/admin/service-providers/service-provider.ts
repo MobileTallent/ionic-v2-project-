@@ -38,8 +38,11 @@ module app {
 						() => {
 							myThis.AppService.delServiceProvider(provider.id).then(
 								() => {
-									myThis.AppUtil.toastSimple('Provider deleted')
-									myThis.$ionicHistory.goBack();
+									myThis.AppService.delProviderUser(provider.id, null).then(
+										() => {
+											myThis.AppUtil.toastSimple('Provider deleted')
+											myThis.$ionicHistory.goBack();
+										})
 								})
 						})
 			})

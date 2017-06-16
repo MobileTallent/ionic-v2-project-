@@ -7,8 +7,8 @@
         <h1 class="title">{{vm.profile.name}}</h1>
         <div class="buttons">
 
-            <i class="button button-icon icon ion-close" ng-click="vm.pass()"></i>
-            <i class="button button-icon icon ion-checkmark" ng-click="vm.like()"></i>
+            <!--<i class="button button-icon icon ion-close" ng-click="vm.pass()"></i>
+            <i class="button button-icon icon ion-checkmark" ng-click="vm.like()"></i>-->
 
         </div>
     </ion-header-bar>
@@ -63,4 +63,12 @@
         </div>
 
     </ion-content>
+
+    <div class="material-cross-button-container">
+        <i class="button button-icon icon ion-close search-profile-view-icon floating-tick-cross-button" ng-click="vm.reject()"></i>
+    </div>
+
+    <div class="material-tick-button-container">
+        <i class="button button-icon icon ion-checkmark floating-tick-cross-button" ng-click="vm.like()"></i>
+    </div>
 </ion-modal-view>

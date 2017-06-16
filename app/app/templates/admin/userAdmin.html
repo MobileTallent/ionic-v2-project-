@@ -11,7 +11,15 @@
                 <b>Premium:</b> {{vm.user.premium ? 'Yes' : 'No'}}<br/>
                 <b>Credits:</b> {{vm.user.credits}}<br/>
                 <b>Created:</b> {{vm.user.createdAt}}<br/>
-                <b>Service Provider:</b> {{vm.user.serviceProvider}}<br/>
+                <br>
+                <b>Connections to Service Providers :</b> <span ng-if="!providers.length">None</span>
+                <br/>
+                <ul>
+                    <li ng-repeat="provider in providers track by $index">
+                        {{provider.name}}
+                    </li>
+                </ul>
+                <br>
             </div>
 
             <div ng-if="!vm.user.profile.photos">No profile photos</div>
@@ -30,6 +38,9 @@
                 <button class="button button-block button-assertive" ng-click="vm.deleteUser()">Delete User</button>
                 <button class="button button-block button-assertive" ng-click="vm.banUser()">Ban User</button>
                 <button class="button button-block button-assertive" ng-click="vm.connectUser()" ng-show="!vm.isMatch">Connect User</button>
+                <button class="button button-block button-assertive" ng-click="vm.openConnect()">
+                    Connect to Service provider
+                </button>
                 <button class="button button-block button-assertive" ng-click="vm.upgradeToServiceProvider()" ng-show="!vm.user.serviceProvider">Upgrade to Service Provider</button>
             </div>
         </div>

@@ -9,11 +9,12 @@ module app {
 		public logo_class
 		public provider_id
 
-		constructor(public $rootScope, public $scope, public $ionicPopup, public SpService, public $state, public AppUtil, public AppService) {
+		constructor(public $rootScope, public $scope, public $stateParams, public $ionicPopup, public SpService, public $state, public AppUtil, public AppService) {
+	 
 			this.logo_class = 'animated jello infinite'
-			this.provider_id = this.AppService.service_provider.id
-			this.SpService.service_provider = this.AppService.service_provider
-			this.SpService.provider_id = this.AppService.service_provider.id
+			this.provider_id = this.$stateParams.provider.id
+			this.SpService.service_provider = this.$stateParams.provider
+			this.SpService.provider_id = this.$stateParams.provider.id
 			this.loading()
 		}
 
@@ -70,6 +71,6 @@ module app {
 
 	}
 
-	SpWelcome.$inject = ['$rootScope', '$scope', '$ionicPopup', 'SpService', '$state', 'AppUtil', 'AppService']
+	SpWelcome.$inject = ['$rootScope', '$scope', '$stateParams', '$ionicPopup', 'SpService', '$state', 'AppUtil', 'AppService']
 	angular.module('controllers').controller('SpWelcome', SpWelcome)
 }
