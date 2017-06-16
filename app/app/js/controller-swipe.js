@@ -65,7 +65,7 @@ angular.module('controllers')
     function checkQuotaTime() {
         var quotaNotReached = false
         if (profile.quotaSearchedDate) {
-            var twelveHrsAgo = 30000 // 43200000-12hrs  Formula: hrs*mins*sec*1000ms  12*60*60*1000
+            var twelveHrsAgo = 43200000 // 43200000-12hrs  Formula: hrs*mins*sec*1000ms  12*60*60*1000
             var now = new Date()
             var now_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds())
             var diff = now_utc - profile.quotaSearchedDate

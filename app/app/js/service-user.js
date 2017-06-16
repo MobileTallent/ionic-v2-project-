@@ -317,7 +317,7 @@ function onNotificationOpen(pnObj) {
                         if (results.length) {
                             $rootScope.serviceProvider = true
                             for (var i = 0; i < results.length; i++) {
-                                if(results[i].uid == user.id) $rootScope.serviceProviderOwner = true
+                                if (results[i].uid == user.id) $rootScope.serviceProviderOwner = true
                             }
                         }
                     }
@@ -936,7 +936,7 @@ function onNotificationOpen(pnObj) {
                     service.numberOfLikes++
                 }
                 // reset and save the quota date - 
-                if (service.numberOfLikes >= 2) {
+                if (service.numberOfLikes >= 100) {
                     service.numberOfLikes = 0
                     var now = new Date()
                     var now_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds())
