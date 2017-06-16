@@ -72,7 +72,7 @@ module app {
 			this.$scope.$on('$ionicSlides.sliderInitialized', function (event, data) {
 				// data.slider is the instance of Swiper
 				$scope.slider = data.slider
-				if (!$scope.vm.profile.about || $scope.vm.profile.about.match(/\S+/g).length < 10)
+				if ((!$scope.vm.profile.about || $scope.vm.profile.about.match(/\S+/g).length < 10) && $scope.vm.profile.hasSelfId)
 					$scope.slider.slideTo(4)
 			})
 
@@ -277,7 +277,7 @@ module app {
 				thingsIHave += 'Y'
 
 			if (this.personCategory !== '3' && !profileUpdate.personSperm && !profileUpdate.personEgg
-			&& !profileUpdate.personWomb && !profileUpdate.personEmbryo)
+				&& !profileUpdate.personWomb && !profileUpdate.personEmbryo)
 				thingsIHave += 'X'
 
 			profileUpdate.thingsIHave = thingsIHave
@@ -322,8 +322,8 @@ module app {
 			var alertPopup
 			if (!this.profile.about || forceShow) {
 				var templateText = 'Your "About Me" section is empty.</br> Everyone is looking for someone'
-					templateText = templateText + ' with a compatible vision. A deep description adds value to the community, tell us about you.'
-				 alertPopup = this.$ionicPopup.alert({
+				templateText = templateText + ' with a compatible vision. A deep description adds value to the community, tell us about you.'
+				alertPopup = this.$ionicPopup.alert({
 					title: 'We need more information',
 					cssClass: 'center',
 					template: templateText
