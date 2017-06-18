@@ -640,6 +640,8 @@ Parse.Cloud.define('GetProviderUsers', function(request, response) {
     if (!provider_id)
         return response.error('pid parameter must be provided')
 
+    var users = []
+
     var getUsersQuery = new Parse.Query(PrUser)
         .limit(1000)
         .equalTo("pid", provider_id)
@@ -650,6 +652,8 @@ Parse.Cloud.define('GetProviderUsers', function(request, response) {
 
     return getUsersQuery.find()
     .then(function(result) {
+
+        users = result 
         var ids = []
             for (var i = 0; i < result.length; i++) {
                 var row = result[i].get('uid')
@@ -658,6 +662,23 @@ Parse.Cloud.define('GetProviderUsers', function(request, response) {
 
         return getProfilesQuery.containedIn('uid', ids).find()
     }).then(function(results) {
+        for (var i = 0; i < results.length; i++) {
+            results[i] = results[i].toJSON()
+        }
+        for (var i = 0; i < users.length; i++) {
+            users[i] = users[i].toJSON()
+        }
+
+        for (var i = 0; i < results.length; i++) {
+            for (var m = 0; m < users.length; m++) {
+                if (results[i].uid==users[m].uid) {
+                    results[i].p_role = users[m].role
+                    results[i].p_pr_user = users[m].objectId
+                }
+            }
+        }
+
+
         response.success(results)
     }), function(error) {
         console.log("Erroorrr: " + JSON.stringify(error))
@@ -671,6 +692,8 @@ Parse.Cloud.define('GetUserProviders', function(request, response) {
     if (!user_id)
         return response.error('uid parameter must be provided')
 
+    var users = []
+
     var getUsersQuery = new Parse.Query(PrUser)
         .limit(1000)
         .equalTo("uid", user_id)
@@ -681,6 +704,8 @@ Parse.Cloud.define('GetUserProviders', function(request, response) {
 
     return getUsersQuery.find()
     .then(function(result) {
+
+        users = result
         var ids = []
             for (var i = 0; i < result.length; i++) {
                 var row = result[i].get('pid')
@@ -689,6 +714,21 @@ Parse.Cloud.define('GetUserProviders', function(request, response) {
 
         return getServiceProviderQuery.containedIn('objectId', ids).find()
     }).then(function(results) {
+
+        for (var i = 0; i < results.length; i++) {
+            results[i] = results[i].toJSON()
+        }
+        for (var i = 0; i < users.length; i++) {
+            users[i] = users[i].toJSON()
+        }
+
+        for (var i = 0; i < results.length; i++) {
+            for (var m = 0; m < users.length; m++) {
+                if (results[i].objectId==users[m].pid)
+                    results[i].p_role = users[m].role
+            }
+        }
+
         response.success(results)
     }), function(error) {
         console.log("Erroorrr: " + JSON.stringify(error))
@@ -724,21 +764,25 @@ Parse.Cloud.define('DelProviderUser', function(request, response) {
 Parse.Cloud.define('AddProviderUser', function(request, response) {
 
     console.log('addProviderUser')
+    
+    var userSaved = request.params.user
 
-    var PrUserSaved = {
-        pid:request.params.user.pid,
-        uid:request.params.user.uid,
-        role:request.params.user.role
+    if (!userSaved.pid || !userSaved.uid)
+        return response.error('pid and uid parameter must be provided')
+    
+    
+    var PrUserS = new PrUser()
+    if (userSaved.id) {
+        PrUserS.id = userSaved.id
+        delete userSaved.id
     }
 
-    if (!PrUserSaved.pid || !PrUserSaved.uid)
-        return response.error('pid and uid parameter must be provided')
 
-    new PrUser().save(PrUserSaved).then(function(result) {
-        console.log("Success saving got card!")
-        response.success("Success saving got card!")
+    PrUserS.save(userSaved).then(function(result) {
+        console.log("Success saving provider user!")
+        response.success("Success saving provider user!")
     }, function(error) {
-        console.log("Error saving got card!")
+        console.log("Error saving provider user!")
         response.error(error)
     })
 })

@@ -50,7 +50,7 @@ module app {
 			this.$scope.connectModal.hide()
 		}
 
-		public chooseProvider(id) {
+		public chooseProvider(id, role) {
 			
 			for (var i = 0; i < this.$scope.providers.length; i++){
                 if(this.$scope.providers[i].id==id) {
@@ -62,7 +62,7 @@ module app {
 			let PrUser = {
 				'pid':id,
 				'uid':this.$stateParams.userId,
-				'role': 'User'
+				'role': role
 			}
 
 			this.AppUtil.blockingCall(

@@ -1,0 +1,19 @@
+<ion-modal-view>
+
+            <ion-header-bar class="bar bar-header bar-positive">
+                <h1 class="title">Change user Role</h1>
+                <button class="button button-clear button-primary" ng-click="vm.closeRole()">Cancel</button>
+            </ion-header-bar>
+            <ion-content class="padding">
+                <p>
+                    Please choose role
+                </p>
+
+                <ion-list>
+                    <ion-radio ng-model="vm.user.p_role" ng-value="'Owner'">Owner</ion-radio>
+                    <ion-radio ng-model="vm.user.p_role" ng-value="'User'">User</ion-radio>
+                </ion-list>
+
+                <button ng-click="vm.editUser(vm.user)" class="button button-full button-positive">Save</button>
+            </ion-content>
+        </ion-modal-view>

@@ -5,16 +5,25 @@
                 <button class="button button-clear button-primary" ng-click="vm.closeConnect()">Cancel</button>
             </ion-header-bar>
             <ion-content class="padding">
-                Please choose user
-                <br>
-                <br>
+                <p>
+                    Please choose role
+                </p>
+
+                <ion-list>
+                    <ion-radio ng-init="choice_role='Owner'" ng-model="choice_role" ng-value="'Owner'">Owner</ion-radio>
+                    <ion-radio ng-model="choice_role" ng-value="'User'">User</ion-radio>
+                </ion-list>
+                <br><br>
+                <p>
+                    Please choose user
+                </p>
                  <div ng-show="!vm.profiles.length" style="text-align: center;font-family:'Avenir Next LT Pro Regular';font-size:18px">
                     <br/>
                     {{'Users dont found' | translate}}<br/>
                 </div>
                 <div class="list">
                     <a class="item item-avatar" ng-repeat="user in vm.profiles track by user.id" 
-                        ng-click="vm.chooseUser(user.uid)">
+                        ng-click="vm.chooseUser(user.uid, choice_role)">
                         <img style="top: 16px;left: 16px;max-width: 40px !important;max-height: 40px !important;" ng-src="{{user.photos[0]._url}}">
                         <h2>{{::user.name}}</h2>
                         <p>{{::user.country}}</p>

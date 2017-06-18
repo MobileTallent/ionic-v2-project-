@@ -12,9 +12,10 @@ module app {
 		constructor(public $rootScope, public $scope, public $stateParams, public $ionicPopup, public SpService, public $state, public AppUtil, public AppService) {
 	 
 			this.logo_class = 'animated jello infinite'
-			this.provider_id = this.$stateParams.provider.id
+			this.provider_id = this.$stateParams.provider.objectId
 			this.SpService.service_provider = this.$stateParams.provider
-			this.SpService.provider_id = this.$stateParams.provider.id
+			this.SpService.user_role = this.$stateParams.provider.p_role
+			this.SpService.provider_id = this.$stateParams.provider.objectId
 			this.loading()
 		}
 

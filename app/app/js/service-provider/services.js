@@ -8,6 +8,7 @@
                 // fields
                 service_provider: null,
                 provider_id: '',
+                user_role: '',
                 info_cards: null,
                 services: null,
                 hot_beds: null,

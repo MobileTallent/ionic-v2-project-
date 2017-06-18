@@ -1,6 +1,6 @@
 <ion-view title="Manage users" class="background-calm" ng-controller="SpSeeUsers as vm">
    <ion-nav-buttons side="right" class="has-header">
-    <i class="button button-icon icon ion-ios-plus-outline" ng-click="vm.openConnect()"></i>
+    <i class="button button-icon icon ion-ios-plus-outline" ng-if="vm.user_role=='Owner'" ng-click="vm.openConnect()"></i>
    </ion-nav-buttons>
        <ion-content>
         <div ng-show="!vm.users.length" style="text-align: center;font-family:'Avenir Next LT Pro Regular';font-size:18px">
@@ -11,9 +11,9 @@
             <ion-item class="item item-avatar" ng-repeat="user in vm.users track by $index">
                 <img style="top: 16px;left: 16px;max-width: 40px !important;max-height: 40px !important;" ng-src="{{user.photos[0]._url}}">
                 <h2>{{::user.name}}</h2>
-                <p ng-if="user.uid!=vm.provider_owner_id">User</p>
-                <p ng-if="user.uid==vm.provider_owner_id">Owner</p>
-                <ion-option-button ng-if="user.uid!=vm.provider_owner_id" class="button-assertive icon ion-trash-a" ng-click="vm.deleteUser(user.uid, vm.provider_id)"></ion-option-button>
+                <p>{{::user.p_role}}</p>
+                <ion-option-button ng-if="vm.user_role=='Owner'" class="button-balanced icon ion-edit" ng-click="vm.user = user;roleModal.show()"></ion-option-button>
+                <ion-option-button ng-if="vm.user_role=='Owner'" class="button-assertive icon ion-trash-a" ng-click="vm.deleteUser(user.uid, vm.provider_id)"></ion-option-button>
             </ion-item>
         </ion-list>
     </ion-content>

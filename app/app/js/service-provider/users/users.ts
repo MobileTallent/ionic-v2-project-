@@ -6,13 +6,16 @@ module app {
         public provider_owner_id
         public provider_id
         public name
+		public user_role
         public profiles
+		public user = null
 
         constructor(private $log, public $ionicLoading, private $scope, public $timeout,
         public $ionicModal, public $ionicHistory, private $ionicPopup, private AppService, private AppUtil, public SpService) {
 
             this.provider_owner_id = this.SpService.service_provider.uid
-            this.provider_id = this.SpService.service_provider.id
+            this.provider_id = this.SpService.service_provider.objectId
+			this.user_role = this.SpService.user_role
 
             $scope.$on('$ionicView.beforeEnter', () => this.doRefresh())
 
@@ -20,6 +23,10 @@ module app {
                 scope: $scope,
                 animation: 'slide-in-up'
             }).then(modal => $scope.connectModal = modal)
+			$ionicModal.fromTemplateUrl('service-provider/users/roleModal.html', {
+                scope: $scope,
+                animation: 'slide-in-up'
+            }).then(modal => $scope.roleModal = modal)
         }
 
         public openConnect() {
@@ -64,7 +71,7 @@ module app {
 			this.$scope.connectModal.hide()
 		}
 
-		public chooseUser(uid) {
+		public chooseUser(uid, role) {
 
             for (var i = 0; i < this.users.length; i++){
                 if(this.users[i].uid==uid) {
@@ -76,7 +83,7 @@ module app {
 			let PrUser = {
 				'pid':this.provider_id,
 				'uid':uid,
-				'role': 'User'
+				'role': role
 			}
 
 			this.AppUtil.blockingCall(
@@ -106,6 +113,33 @@ module app {
                 }
 			})
         }
+
+		public closeRole() {
+			this.$scope.roleModal.hide()
+			this.user = null
+		}
+
+		public editUser(user) {
+
+			
+			user = {
+				id : user.p_pr_user,
+				objectId: user.p_pr_user,
+				uid: user.uid,
+				pid: this.SpService.provider_id,
+				role: user.p_role
+			} 
+
+			console.log('!!!user before save!!!', user)
+
+			this.AppUtil.blockingCall(
+                this.AppService.addProviderUser(user).then(
+					() => {
+						this.AppUtil.toastSimple('User edited!')
+						this.$scope.roleModal.hide()
+                        this.doRefresh()
+				}))
+		}
 
         public doRefresh() {
             this.users = []
