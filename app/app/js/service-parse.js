@@ -471,6 +471,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         deleteAccount: deleteAccount,
 
         testPushNotification: testPushNotification,
+        getProfilesWhoAreCurious: getProfilesWhoAreCurious,
         getProfilesNoCountry: getProfilesNoCountry,
 
         // admin functions
@@ -1112,6 +1113,10 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         return Parse.Cloud.run('TestPushNotification').catch(_unwrapError)
     }
 
+    function getProfilesWhoAreCurious(type) {
+        return Parse.Cloud.run('GetProfilesWhoAreCurious', { type: type }).catch(_unwrapError)
+    }
+
     function getProfilesNoCountry() {
         return Parse.Cloud.run('GetProfilesNoCountry').then(profiles => _.map(profiles, profile => {
             profile = fromJSON(profile, 'Profile')
@@ -1350,19 +1355,19 @@ angular.module('service.parse', ['constants', 'parse-angular'])
     }
 
     function getProviderUsers(pid) {
-        return Parse.Cloud.run('GetProviderUsers', { pid:pid }).catch(_unwrapError)
+        return Parse.Cloud.run('GetProviderUsers', { pid: pid }).catch(_unwrapError)
     }
 
     function getUserProviders(uid) {
-        return Parse.Cloud.run('GetUserProviders', { uid:uid }).catch(_unwrapError)
+        return Parse.Cloud.run('GetUserProviders', { uid: uid }).catch(_unwrapError)
     }
 
-    function delProviderUser(pid,uid) {
-        return Parse.Cloud.run('DelProviderUser', { pid:pid, uid:uid }).catch(_unwrapError)
+    function delProviderUser(pid, uid) {
+        return Parse.Cloud.run('DelProviderUser', { pid: pid, uid: uid }).catch(_unwrapError)
     }
 
     function addProviderUser(user) {
-        return Parse.Cloud.run('AddProviderUser', { user:user }).catch(_unwrapError)
+        return Parse.Cloud.run('AddProviderUser', { user: user }).catch(_unwrapError)
     }
 
 

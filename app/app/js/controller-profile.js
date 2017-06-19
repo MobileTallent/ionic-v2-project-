@@ -523,6 +523,11 @@ angular.module('controllers')
         error => AppUtil.toastSimple(JSON.stringify(error))
     )
 
+    $scope.getProfilesWhoAreCurious = (type) => AppService.getProfilesWhoAreCurious(type).then(
+        length => console.log("Number of profiles " + length + " Type: " + type),
+        error => AppUtil.toastSimple(JSON.stringify(error))
+    )
+
 
     $scope.deleteUnmatchedSwipes = () => AppUtil.blockingCall(
         AppService.deleteUnmatched(),

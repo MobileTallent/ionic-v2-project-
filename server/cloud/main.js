@@ -584,12 +584,6 @@ Parse.Cloud.define("GetProfilesNoCountry", function(request, response) {
     })
 })
 
-/////////////////
-/////////////////
-////////////////
-////////////////
-///////////////
-////////////////
 /**
  * Search for new potential matches
  * @returns IProfile[] the profiles
@@ -603,9 +597,9 @@ Parse.Cloud.define("GetMatches", function(request, response) {
         deck_size: '',
         cards_ratio: '',
         info_cards_logic: {
-            hotbeds_distance:'',
-            order_hotbeds:'',
-            last_updated:''
+            hotbeds_distance: '',
+            order_hotbeds: '',
+            last_updated: ''
         }
     }
     var cards = []
@@ -753,7 +747,7 @@ Parse.Cloud.define("GetMatches", function(request, response) {
         // if (filters.info_cards && (request.user.id == "JNoXEpkAK1" || request.user.id == "MXm5iJTI74"))
         //     return savedCardsQuery.find()
         // else response.success(cards)
-         response.success(cards)
+        response.success(cards)
     }).then(function(saved_cards) {
 
         var ids = []
@@ -767,7 +761,7 @@ Parse.Cloud.define("GetMatches", function(request, response) {
         if (filters.info_cards_logic.last_updated)
             infoCardsQuery.descending("updatedAt")
         infoCardsQuery.limit(filters.deck_size)
-        
+
         //Get hotbeds no more than options in deck settings
         hotBedsQuery.withinKilometers("location_point", point, filters.info_cards_logic.hotbeds_distance)
         return hotBedsQuery.find(masterKey)
@@ -782,10 +776,10 @@ Parse.Cloud.define("GetMatches", function(request, response) {
 
         //remove dublicates
         ids = ids.filter(function(elem, index, self) {
-            return index == self.indexOf(elem);
-        })
-        //Include only with hotbed ids to infocards query 
-        if(filters.info_cards_logic.hotbeds_distance!=20000)
+                return index == self.indexOf(elem);
+            })
+            //Include only with hotbed ids to infocards query 
+        if (filters.info_cards_logic.hotbeds_distance != 20000)
             infoCardsQuery.containedIn('pid', ids)
 
         return infoCardsQuery.find(masterKey)
@@ -812,12 +806,6 @@ Parse.Cloud.define("GetMatches", function(request, response) {
         response.error(error)
     })
 });
-///////////////
-//////////////
-/////////////
-/////////////
-//////////////
-
 
 Parse.Cloud.define("ProcessMatch", function(request, response) {
     var userId = request.user.id
@@ -1674,6 +1662,27 @@ Parse.Cloud.define('AddAboutJab', function(request, response) {
         response.success("Success saving about JAB")
     }, function(error) {
         console.log("Error saving about JAB")
+        response.error(error)
+    })
+})
+
+/* Get Profiles Length that are curious - serious - etc */
+Parse.Cloud.define('GetProfilesWhoAreCurious', function(request, response) {
+    var profileType = request.params.type
+    console.log('GetProfilesWhoAreCurious - ' + profileType)
+
+    var profileQuery = new Parse.Query(Profile)
+
+    if (profileType === "5")
+        profileQuery.doesNotExist("personType")
+    else
+        profileQuery.equalTo('personType', profileType)
+
+    profileQuery.limit(10000).find().then(function(result) {
+        console.log("Successs - GetProfilesWhoAreCurious - " + result.length)
+        response.success(result.length)
+    }, function(error) {
+        console.log("Error in getting result - GetProfilesWhoAreCurious: " + JSON.stringify(error))
         response.error(error)
     })
 })

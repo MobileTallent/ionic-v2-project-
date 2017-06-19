@@ -143,6 +143,7 @@ function onNotificationOpen(pnObj) {
                 deleteAccount: deleteAccount,
 
                 testPushNotification: testPushNotification,
+                getProfilesWhoAreCurious: getProfilesWhoAreCurious,
                 getProfilesNoCountry: getProfilesNoCountry,
 
                 // Admin functions
@@ -1461,6 +1462,10 @@ function onNotificationOpen(pnObj) {
 
             function testPushNotification() {
                 return server.testPushNotification()
+            }
+
+            function getProfilesWhoAreCurious(type) {
+                return server.getProfilesWhoAreCurious(type)
             }
 
             function getProfilesNoCountry() {
