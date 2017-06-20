@@ -836,8 +836,14 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
                             if (addComp.length == 1)
                                 profileChanges.country = out['results'][num].formatted_address
-                            else
+                            else {
                                 profileChanges.country = addArray.slice(-1).pop().trim()
+                                let cntParsingNumber = profileChanges.country.split(' ').pop()
+                                if (cntParsingNumber && !isNaN(cntParsingNumber)) {
+                                    let lastIndex = profileChanges.country.lastIndexOf(" ")
+                                    profileChanges.country = profileChanges.country.substring(0, lastIndex)
+                                }
+                            }
                         }
                         return profile.save(profileChanges)
                     })

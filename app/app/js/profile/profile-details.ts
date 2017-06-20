@@ -32,47 +32,25 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 						if (out['results'][0]) {
 							profile.address = out['results'][0].formatted_address;
 							addArray = profile.address.split(',')
-							if (out['results'][9]) {
-								num = 9
-							} else {
-								if (out['results'][8]) {
-									num = 8
-								} else {
-									if (out['results'][7]) {
-										num = 7
-									} else {
-										if (out['results'][6]) {
-											num = 6
-										} else {
-											if (out['results'][5]) {
-												num = 5
-											} else {
-												if (out['results'][4]) {
-													num = 4
-												} else {
-													if (out['results'][3]) {
-														num = 3
-													} else {
-														if (out['results'][2]) {
-															num = 2
-														} else {
-															if (out['results'][1]) {
-																num = 1
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
+							if (out['results'][8]) num = 8
+							else if (out['results'][7]) num = 7
+							else if (out['results'][6]) num = 6
+							else if (out['results'][5]) num = 5
+							else if (out['results'][4]) num = 4
+							else if (out['results'][3]) num = 3
+							else if (out['results'][2]) num = 2
+							else if (out['results'][1]) num = 1
 							addComp = out['results'][num].address_components
 
 							if (addComp.length === 1) {
 								profile.country = out['results'][num].formatted_address
 							} else {
 								profile.country = addArray.slice(-1).pop().trim()
+								let cntParsingNumber = profile.country.split(' ').pop()
+								if (cntParsingNumber && !isNaN(cntParsingNumber)) {
+									let lastIndex = profile.country.lastIndexOf(" ")
+									profile.country = profile.country.substring(0, lastIndex)
+								}
 							}
 						}
 					})
@@ -102,7 +80,7 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 					contentDescription: contentDescriptionText,
 					contentImageUrl: getPhotoUrl(profile.photos)
 				}
-				
+
 				// create a branchUniversalObj variable to reference with other Branch methods
 				Branch.createBranchUniversalObject(properties).then(res => {
 					var analyticsLink = {

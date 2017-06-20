@@ -608,8 +608,14 @@ angular.module('controllers')
 
                                     if (addComp.length == 1)
                                         profileUpdate.country = out['results'][num].formatted_address
-                                    else
+                                    else {
                                         profileUpdate.country = addArray.slice(-1).pop().trim()
+                                        let cntParsingNumber = profileUpdate.country.split(' ').pop()
+                                        if (cntParsingNumber && !isNaN(cntParsingNumber)) {
+                                            let lastIndex = profileUpdate.country.lastIndexOf(" ")
+                                            profileUpdate.country = profileUpdate.country.substring(0, lastIndex)
+                                        }
+                                    }
 
                                     AppService.saveProfileForSomeReason(profile, profileUpdate)
                                 }
