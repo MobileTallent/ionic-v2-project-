@@ -6,7 +6,7 @@
  */
 var exec = require('child_process').exec;
 var path = require('path');
-var sys = require('sys');
+var sys = require('util');
 var fs = require('fs');
 
 var rootDir = process.argv[2];
