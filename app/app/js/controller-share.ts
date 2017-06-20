@@ -30,7 +30,7 @@ module app {
 
 		public share() {
 			// this.shareStoreUrl = ionic.Platform.isAndroid() ? this.playStoreUrl : ionic.Platform.isIOS() ? this.itunesUrl : this.webStoreUrl
-			this.shareStoreUrl = this.smartStoreUrl
+			this.shareStoreUrl = "https://khz5.app.link/justababy"
 			// Share via native share sheet
 			this.$cordovaSocialSharing.share(this.socialShareSubject, this.socialShareMessage, null, this.shareStoreUrl)
 				.then(() => {
