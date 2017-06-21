@@ -38,3 +38,30 @@ slider div.slider-bar .selection {
 button.button.help-button:active{
     border-color: $energized !important;
 }
+
+.filter-row {
+    margin-top: 10px !important;
+}
+.img-avatar {
+    width: 70px;
+}
+
+.filter-selector {
+    width: 40%;
+}
+
+.filter-selector-left {
+   border-radius: 8px 0px 0px 8px !important;
+}
+.filter-selector-right {
+   border-radius: 0px 8px 8px 0px  !important;
+}
+
+.filter-section {
+    border: solid;
+    border-width: 1px;
+    border-color: #3baa9a;
+    border-radius: 8px;
+    background-color: rgba(59, 170, 154, 0.05);
+    margin: 10px;
+}

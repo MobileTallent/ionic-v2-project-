@@ -697,7 +697,149 @@ angular.module('controllers')
     $scope.goToEditProfile = () => {
         $state.go('menu.profile-edit');
     }
+
+
+    //  //  //  //  //  SUDO SEARCH FILTERS  \\  \\  \\  \\  \\
+
+    $scope.individualImage = 'img/Badges/inactive-Individual.svg';
+    $scope.toggleIndividual = false;
+
+    $scope.activateIndividual = function() {
+
+        if ($scope.toggleIndividual === false){
+                $scope.individualImage = 'img/Badges/active-Individual.svg';
+                $scope.toggleIndividual = true;
+                return;
+        }
+        if ($scope.toggleIndividual === true) {
+                $scope.individualImage = 'img/Badges/inactive-Individual.svg';
+                $scope.toggleIndividual = false;
+                return;
+        }
+    };
+
+   $scope.coupleImage = 'img/Badges/inactive-Couple.svg';
+    $scope.toggleCouple = false;
+
+    $scope.activateCouple = function() {
+
+        if ($scope.toggleCouple === false){
+                $scope.coupleImage = 'img/Badges/active-Couple.svg';
+                $scope.toggleCouple = true;
+                return;
+        }
+        if ($scope.toggleCouple === true) {
+                $scope.coupleImage = 'img/Badges/inactive-Couple.svg';
+                $scope.toggleCouple = false;
+                return;
+        }
+    };
+    
+    $scope.helpImage = 'img/Badges/inactive-Help.svg';
+    $scope.toggleHelp = false;
+
+    $scope.activateHelp = function() {
+
+        if ($scope.toggleHelp === false){
+                $scope.helpImage = 'img/Badges/active-Help.svg';
+                $scope.toggleHelp = true;
+                return;
+        }
+        if ($scope.toggleHelp === true) {
+                $scope.helpImage = 'img/Badges/inactive-Help.svg';
+                $scope.toggleHelp = false;
+                return;
+        }
+    };
+
+   $scope.lookingImage = 'img/Badges/inactive-Looking-For-Help.svg';
+    $scope.toggleLooking = false;
+
+    $scope.activateLooking = function() {
+
+        if ($scope.toggleLooking === false){
+                $scope.lookingImage = 'img/Badges/active-Looking-For-Help.svg';
+                $scope.toggleLooking = true;
+                return;
+        }
+        if ($scope.toggleLooking === true) {
+                $scope.lookingImage = 'img/Badges/inactive-Looking-For-Help.svg';
+                $scope.toggleLooking = false;
+                return;
+        }
+    };
+    
+    $scope.spermImage = 'img/Badges/inactive-Sperm.svg';
+    $scope.toggleSperm = false;
+
+    $scope.activateSperm = function() {
+
+        if ($scope.toggleSperm === false){
+                $scope.spermImage = 'img/Badges/active-Sperm.svg';
+                $scope.toggleSperm = true;
+                return;
+        }
+        if ($scope.toggleSperm === true) {
+                $scope.spermImage = 'img/Badges/inactive-Sperm.svg';
+                $scope.toggleSperm = false;
+                return;
+        }
+    };
+
+   $scope.eggImage = 'img/Badges/inactive-Egg.svg';
+    $scope.toggleEgg = false;
+
+    $scope.activateEgg = function() {
+
+        if ($scope.toggleEgg === false){
+                $scope.eggImage = 'img/Badges/active-Egg.svg';
+                $scope.toggleEgg = true;
+                return;
+        }
+        if ($scope.toggleEgg === true) {
+                $scope.eggImage = 'img/Badges/inactive-Egg.svg';
+                $scope.toggleEgg = false;
+                return;
+        }
+    };
+        
+    $scope.wombImage = 'img/Badges/inactive-Womb.svg';
+    $scope.toggleWomb = false;
+
+    $scope.activateWomb = function() {
+
+        if ($scope.toggleWomb === false){
+                $scope.wombImage = 'img/Badges/active-Womb.svg';
+                $scope.toggleWomb = true;
+                return;
+        }
+        if ($scope.toggleWomb === true) {
+                $scope.wombImage = 'img/Badges/inactive-Womb.svg';
+                $scope.toggleWomb = false;
+                return;
+        }
+    };
+
+   $scope.embryoImage = 'img/Badges/inactive-Frozen-Embryo.svg';
+    $scope.toggleEmbryo = false;
+
+    $scope.activateEmbryo = function() {
+
+        if ($scope.toggleEmbryo === false){
+                $scope.embryoImage = 'img/Badges/active-Frozen-Embryo.svg';
+                $scope.toggleEmbryo = true;
+                return;
+        }
+        if ($scope.toggleEmbryo === true) {
+                $scope.embryoImage = 'img/Badges/inactive-Frozen-Embryo.svg';
+                $scope.toggleEmbryo = false;
+                return;
+        }
+    };
+
+
 })
+
 
 .controller('ContactCtrl', function($scope, AppService, AppUtil, $translate) {
 

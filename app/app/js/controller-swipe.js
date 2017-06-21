@@ -304,48 +304,6 @@ angular.module('controllers')
     $scope.matchProfile = matchProfile
     $scope.linkToBeShared = ''
 
-    $scope.$on('$ionicView.beforeEnter', () => {
-        if (typeof Branch !== 'undefined') {
-            // only canonicalIdentifier is required
-            var properties = {
-                canonicalIdentifier: $scope.matchProfile.id,
-                canonicalUrl: 'https://justababy.com/',
-                title: 'A brand new way to make babies. Start your journey today.',
-                contentDescription: 'Just a Baby is a brand new app connecting people who want to make a baby. We can help you find a surrogate, partner, co-parent, sperm or egg donor - or find someone that needs your help to have a baby.',
-                contentImageUrl: $scope.matchProfile.photoUrl
-            }
-
-            // create a branchUniversalObj variable to reference with other Branch methods
-            Branch.createBranchUniversalObject(properties).then(res => {
-                this.branchUniversalObj = res
-
-                var analyticsLink = {
-                    channel: 'facebook',
-                    feature: 'sharing',
-                    campaign: 'JustaBaby',
-                    tags: ['JustaBaby', 'justababy']
-                }
-
-                // optional fields
-                var properties1 = {
-                    $desktop_url: 'https://justababy.com/',
-                    $android_url: 'https://play.google.com/store/apps/details?id=co.justababy.app',
-                    $ios_url: 'https://itunes.apple.com/us/app/just-a-baby/id1147759844?mt=8',
-                    profileId: $scope.matchProfile.id
-                }
-                if (this.branchUniversalObj) {
-                    this.branchUniversalObj.generateShortUrl(analyticsLink, properties1).then(res => {
-                        $scope.linkToBeShared = JSON.stringify(res.url)
-                    }).catch(function(err) {
-                        alert('Error on Generating URL: ' + JSON.stringify(err))
-                    })
-                }
-            }).catch(function(err) {
-                alert('Error on Branch: ' + JSON.stringify(err))
-            })
-        }
-    })
-
     $scope.profileOptions = () => {
         $ionicPopup.show({
             title: "Match Options",
