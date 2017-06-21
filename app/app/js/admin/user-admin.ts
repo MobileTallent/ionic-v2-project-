@@ -51,9 +51,8 @@ module app {
 		}
 
 		public chooseProvider(id, role) {
-			
 			for (var i = 0; i < this.$scope.providers.length; i++){
-                if(this.$scope.providers[i].id==id) {
+                if(this.$scope.providers[i].objectId==id) {
                     this.AppUtil.toastSimple('Provider already connected!')
                     return;
                 }
