@@ -7,28 +7,120 @@
             </div>
 
             <div class="settings-dropdown" ng-show="showSearchFilter" ng-class="showSearchFilter ? 'animated slideInDown' : '' ">
+
+                <div class="row filter-row">
+                    <div class="col">
+                        <div class="center">
+                            <h3>Show me</h3>
+                        </div>
+                    </div>
+                </div>      
+
+                <!--<div class="row center">
+                    <div class="col center">
+                        <button class="button filter-selector filter-selector-left">Auto Filter</button>
+                        <button class="button filter-selector filter-selector-right">Manual</button>
+                    </div>
+                </div>
+
+                <div class="row filter-row">
+                    <div class="col">
+                        <div class="center">
+                            <img class="img-avatar" ng-src="{{individualImage}}" on-tap="activateIndividual()" >
+                            <p>Individials</p>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="center">
+                            <img class="img-avatar" ng-src="{{coupleImage}}" on-tap="activateCouple()" >
+                            <p>Couples</p>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="row filter-row">
+                    <div class="col">
+                        <div class="center">
+                            <img class="img-avatar" ng-src="{{helpImage}}" on-tap="activateHelp()" >
+                            <p>Donors/Surrogates</p>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="center">
+                            <img class="img-avatar" ng-src="{{lookingImage}}" on-tap="activateLooking()" >
+                            <p>Intended Parents</p>
+                        </div>
+                    </div>
+                </div>-->
+
+   
+                    <div class="row filter-row">
+                        <div class="col">
+                            <div class="center">
+                                <img class="img-avatar" ng-src="{{spermImage}}" on-tap="activateSperm()" >
+                                <p>Sperm</p>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="center">
+                                <img class="img-avatar" ng-src="{{eggImage}}" on-tap="activateEgg()" >
+                                <p>Egg</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row filter-row">
+                        <div class="col">
+                            <div class="center">
+                                <img class="img-avatar" ng-src="{{wombImage}}" on-tap="activateWomb()" >
+                                <p>Womb</p>
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="center">
+                                <img class="img-avatar" ng-src="{{embryoImage}}" on-tap="activateEmbryo()" >
+                                <p>Embryo</p>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <!--<div class="card" ng-init="showSearchFilter = false">
+            <div class="settings-header" ng-click="showSearchFilter = !showSearchFilter; showDiscovery = false; showAppSettings = false; showHelp = false; ">
+                Search Filters
+            </div>
+
+            <div class="settings-dropdown" ng-show="showSearchFilter" ng-class="showSearchFilter ? 'animated slideInDown' : '' ">
                 <ul>
-                    <!--<div class="item item-divider">
+                    <div class="item item-divider">
                         {{'SHOW_ME' | translate}}:
-                    </div>-->
+                    </div>
+
                     <ion-toggle ng-model="profile.guys" toggle-class="toggle-assertive" class="item-text-wrap">{{'GUYS' | translate}}</ion-toggle>
                     <ion-toggle ng-model="profile.girls" toggle-class="toggle-assertive" class="item-text-wrap">{{'GIRLS' | translate}}</ion-toggle>
 
+                    <div class="item item-divider">
+                        Filters
+                    </div>
 
-                    <!--METHOD NEEDS TO CHECK IF USER HAS FILLED IN SELF ID-->
+  
+                        <ion-toggle ng-model="" ng-click="autofilterInfoPopup()" toggle-class="toggle-assertive" class="item-text-wrap">Auto Filter</ion-toggle>
+   
+                        <ion-toggle ng-model="profile.LFSelfId" toggle-class="toggle-assertive" class="item-text-wrap">Advanced Filters</ion-toggle>
 
-                    <!--<div ng-click="filterInfoPopup()">-->
-                    <!--<ion-toggle ng-model="profile.LFSelfId" toggle-class="toggle-assertive" class="item-text-wrap">Advanced Filters</ion-toggle>-->
-                    <!--</div>-->
 
-
-                    <!--<div ng-show="profile.LFSelfId">
+                    <div ng-show="profile.LFSelfId">
 
                         <div class="item item-divider">
                             Show Me:
                         </div>
                         <div class="item">
-                                
+
                         </div>
                         <ion-checkbox ng-model="profile.LFSperm" color="positive" class="item-checkbox-right">
                             <ion-label class="row flex-center">
@@ -66,10 +158,10 @@
                         <div class="padding-10">
                             <button class="button button-block button-assertive" ng-click="goToEditProfile()">Edit my profile!</button>
                         </div>
-                    </div>-->
+                    </div>
                 </ul>
             </div>
-        </div>
+        </div>-->
 
 
         <div class="card">
