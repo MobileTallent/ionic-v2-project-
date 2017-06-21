@@ -875,6 +875,10 @@ angular.module('controllers')
             translations = translationsResult
         })
 
+        $scope.$on('$ionicView.beforeLeave', function() {
+            $scope.setLocation()
+        })
+
         var profile = AppService.getProfile()
         var location = profile.location
 
@@ -939,10 +943,11 @@ angular.module('controllers')
 
         $scope.setLocation = function() {
             var pos = marker.getPosition()
-
             AppUtil.blockingCall(
                 AppService.saveProfile({ gps: false, location: { latitude: pos.lat(), longitude: pos.lng() } }),
-                () => { /* send back to main page? */ },
+                () => {
+                    AppService.clearProfileSearchResults()
+                },
                 'SETTINGS_SAVE_ERROR'
             )
         }
