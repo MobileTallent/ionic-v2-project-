@@ -107,10 +107,11 @@ module app {
 					}
 					if (res) {
 						res.generateShortUrl(analyticsLink, properties1).then(link => {
-							this.linkToBeShared = JSON.stringify(link.url)
+							this.linkToBeShared = link.url
 							var profileShare = "This person wants to have or help others make a baby: "
 							profileShare = profileShare + "\n\n\"" + this.profile.about.toString() + "\"\n\nThought they could be a good match for you? \n\n"
 							this.isLoading = false
+							 
 							this.$cordovaSocialSharing.share(profileShare, null, null, this.linkToBeShared) // Share via native share sheet
 								.then(() => {
 									if (typeof analytics !== 'undefined') {

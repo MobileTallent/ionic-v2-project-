@@ -12,7 +12,7 @@
     </ion-slide>
 </ion-slide-box>
 
-<div ng-hide="isCurrentUser" class="material-share-button-container">
+<div ng-hide="isCurrentUser || !canShare"  class="material-share-button-container" ng-class="isLoading ? 'customLoader' : '' "> 
     <i class="button button-icon icon ion-android-share-alt floating-share-button" ng-click="share()"></i>
 </div>
 

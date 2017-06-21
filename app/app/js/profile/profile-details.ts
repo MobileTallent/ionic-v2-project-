@@ -67,8 +67,26 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 				// Show 1km/1m as a minimum‰
 				$scope.distance = (distanceString === '0' ? 1 : distanceString) + currentUserProfile.distanceType
 			}
+			
+			$scope.isCurrentUser = false
+			$scope.onClickBadgeInfo = () => {
+				var alertPopup = $ionicPopup.alert({
+					title: 'Self Identification Badges',
+					templateUrl: 'badgeInfo.html',
+					buttons: [{
+						text: 'Ok',
+						type: 'button-assertive'
+					}]
+				})
+			}
 
-			if (typeof Branch !== 'undefined') {
+			var canShare = typeof Branch !== 'undefined';
+
+			$scope.canShare = canShare;
+			$scope.share = () => {
+
+				$scope.isLoading = true;
+
 				// only canonicalIdentifier is required
 				var contentDescriptionText = 'Just a Baby is a brand new app connecting people who want to make a baby.'
 				contentDescriptionText = contentDescriptionText + ' We can help you find a surrogate, partner, co-parent,'
@@ -88,7 +106,7 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 						feature: 'sharing',
 						tags: ['JustaBaby', 'justababy']
 					}
-
+					
 					// optional fields
 					var properties1 = {
 						$desktop_url: 'https://justababy.com/',
@@ -96,42 +114,32 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 						$ios_url: 'https://itunes.apple.com/us/app/just-a-baby/id1147759844?mt=8',
 						profileId: profile.id ? profile.id : profile.objectId
 					}
+
 					if (res) {
 						res.generateShortUrl(analyticsLink, properties1).then(link => {
-							$scope.linkToBeShared = JSON.stringify(link.url)
+							$scope.linkToBeShared = link.url;
+							
+							var profileShare = "This person wants to have or help others make a baby: "
+							profileShare = profileShare + "\n\n\"" + profile.about.toString() + "\"\n\nThought they could be a good match for you? \n\n"
+							$scope.isLoading = false;
+							$cordovaSocialSharing.share(profileShare, "test message", null, $scope.linkToBeShared) // Share via native share sheet
+								.then(() => {
+									if (typeof analytics !== 'undefined') {
+										analytics.trackView('Share This Profile')
+									}
+									this.$log.debug('Social share action complete')
+								}, error => {
+									this.$log.error('Social share action error ' + JSON.stringify(error))
+								})
+
 						}).catch(function (err) {
-							alert('Error in Branch URL: ' + JSON.stringify(err))
+							//alert('Error in Branch URL: ' + JSON.stringify(err))
 						})
 					}
 				}).catch(function (err) {
-					alert('Error in creating Uni Obj: ' + JSON.stringify(err))
+					//alert('Error in creating Uni Obj: ' + JSON.stringify(err))
 				})
-			}
-
-			$scope.isCurrentUser = false
-			$scope.onClickBadgeInfo = () => {
-				var alertPopup = $ionicPopup.alert({
-					title: 'Self Identification Badges',
-					templateUrl: 'badgeInfo.html',
-					buttons: [{
-						text: 'Ok',
-						type: 'button-assertive'
-					}]
-				})
-			}
-
-			$scope.share = () => {
-				var profileShare = "This person wants to have or help others make a baby: "
-				profileShare = profileShare + "\n\n\"" + profile.about.toString() + "\"\n\nThought they could be a good match for you? \n\n"
-				$cordovaSocialSharing.share(profileShare, null, null, $scope.linkToBeShared) // Share via native share sheet
-					.then(() => {
-						if (typeof analytics !== 'undefined') {
-							analytics.trackView('Share This Profile')
-						}
-						this.$log.debug('Social share action complete')
-					}, error => {
-						this.$log.error('Social share action error ' + JSON.stringify(error))
-					})
+				
 			}
 
 			function getPhotoUrl(photos) {
