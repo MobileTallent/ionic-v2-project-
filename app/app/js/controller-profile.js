@@ -487,6 +487,7 @@ angular.module('controllers')
 
     $scope.save = () => {
         AppService.clearProfileSearchResults()
+        $scope.profile.LFSelfId = true
         if (dType != $scope.profile.distanceType && $scope.profile.distanceType == 'mi') {
             $scope.profile.distance *= 0.621371
             $scope.profile.distance = Math.floor($scope.profile.distance)
