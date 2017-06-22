@@ -940,7 +940,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         return Parse.Cloud.run('GetMutualMatches', { matchIds: matchIds })
             // Convert the JSON objects into the proper Parse objects
             .then(matches => _.map(matches, match => {
-                let matchedDate = match.matchedDate ? match.matchedDate : match.createdAt
+                let matchedDate = match.matchedDate ? match.matchedDate : new Date(match.createdAt)
                 let profile = fromJSON(match.otherProfile, 'Profile')
                 match = fromJSON(match, 'Match')
                 match.otherProfile = profile

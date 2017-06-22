@@ -302,7 +302,6 @@
                     deferred.reject(convertError(e))
                     $log.error('Error saving chat message: ' + e.message)
                 }, function() {
-                    $log.debug('saved chat message new:' + isNew)
                     deferred.resolve(isNew)
                 })
                 return deferred.promise

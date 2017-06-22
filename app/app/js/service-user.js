@@ -277,11 +277,11 @@ function onNotificationOpen(pnObj) {
                     return LocalDB.getMatches()
                 }).then(dbMatches => {
                     for (let match of dbMatches) {
-                        
+
                         //Fix any chat issues where date come as invalid date
-                        if ((typeof match.matchedDate === 'object') || (typeof match.dateOfMatch === 'object') || (!match.matchedDate) || (!match.dateOfMatch)) {
-                                match.matchedDate = match.createdAt
-                                match.dateOfMatch = match.createdAt
+                        if ((!match.matchedDate) || (!match.dateOfMatch) || (typeof match.matchedDate === 'object') || (typeof match.dateOfMatch === 'object')) {
+                            match.matchedDate = new Date(match.createdAt)
+                            match.dateOfMatch = new Date(match.createdAt)
                         }
 
                         // TODO GROUP_CHAT for group chat get the profile of the latest sender
