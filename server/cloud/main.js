@@ -618,18 +618,6 @@ Parse.Cloud.define("GetMatches", function(request, response) {
     else
         profileQuery.withinMiles("location", point, profile.distance)
 
-    //Get profiles near to the current location 9/30/16 - Jojo
-    //profileQuery.near("location", point);
-
-    var gender = []
-    if (profile.guys)
-        gender.push('M')
-    if (profile.girls)
-        gender.push('F')
-    profileQuery.containedIn("gender", gender)
-
-    profileQuery.equalTo("enabled", true)
-
     // the birthdate from is the oldest of the age range
     var birthdateFrom = new Date()
     birthdateFrom.setFullYear(birthdateFrom.getFullYear() - profile.ageTo)
@@ -644,10 +632,8 @@ Parse.Cloud.define("GetMatches", function(request, response) {
         if (profile.LFSperm)
             regExString += "S?"
 
-
         if (profile.LFEggs)
             regExString += "E?"
-
 
         if (profile.LFWomb)
             regExString += "W?"
@@ -662,6 +648,15 @@ Parse.Cloud.define("GetMatches", function(request, response) {
 
         var regEx = new RegExp(regExString)
         profileQuery.matches("thingsIHave", regEx)
+    } else {
+        var gender = []
+        if (profile.guys)
+            gender.push('M')
+        if (profile.girls)
+            gender.push('F')
+        profileQuery.containedIn("gender", gender)
+
+        profileQuery.equalTo("enabled", true)
     }
 
     //Info cards query 

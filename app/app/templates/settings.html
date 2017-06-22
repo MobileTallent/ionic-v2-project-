@@ -14,7 +14,7 @@
                             <h3>Show me</h3>
                         </div>
                     </div>
-                </div>      
+                </div>
 
                 <!--<div class="row center">
                     <div class="col center">
@@ -55,38 +55,38 @@
                     </div>
                 </div>-->
 
-   
-                    <div class="row filter-row">
-                        <div class="col">
-                            <div class="center">
-                                <img class="img-avatar" ng-src="{{spermImage}}" on-tap="activateSperm()" >
-                                <p>Sperm</p>
-                            </div>
-                        </div>
 
-                        <div class="col">
-                            <div class="center">
-                                <img class="img-avatar" ng-src="{{eggImage}}" on-tap="activateEgg()" >
-                                <p>Egg</p>
-                            </div>
+                <div class="row filter-row">
+                    <div class="col">
+                        <div class="center">
+                            <img class="img-avatar" ng-src="{{spermImage}}" ng-model="profile.LFSperm" on-tap="activateSperm(); ">
+                            <p>Sperm</p>
                         </div>
                     </div>
 
-                    <div class="row filter-row">
-                        <div class="col">
-                            <div class="center">
-                                <img class="img-avatar" ng-src="{{wombImage}}" on-tap="activateWomb()" >
-                                <p>Womb</p>
-                            </div>
-                        </div>
-
-                        <div class="col">
-                            <div class="center">
-                                <img class="img-avatar" ng-src="{{embryoImage}}" on-tap="activateEmbryo()" >
-                                <p>Embryo</p>
-                            </div>
+                    <div class="col">
+                        <div class="center">
+                            <img class="img-avatar" ng-src="{{eggImage}}" ng-model="profile.LFEggs" on-tap="activateEgg()">
+                            <p>Egg</p>
                         </div>
                     </div>
+                </div>
+
+                <div class="row filter-row">
+                    <div class="col">
+                        <div class="center">
+                            <img class="img-avatar" ng-src="{{wombImage}}" ng-model="profile.LFWomb" on-tap="activateWomb()">
+                            <p>Womb</p>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="center">
+                            <img class="img-avatar" ng-src="{{embryoImage}}" ng-model="profile.LFEmbryo" on-tap="activateEmbryo()">
+                            <p>Embryo</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
