@@ -454,6 +454,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         saveProfileForSomeReason: saveProfileForSomeReason,
         saveFile: saveFile,
         searchProfiles: searchProfiles,
+        searchTestProfiles: searchTestProfiles,
         getProfilesWhoLikeMe: getProfilesWhoLikeMe,
         getProfilesWhoWantsToHaveARelationshipWithMe: getProfilesWhoWantsToHaveARelationshipWithMe,
         processProfile: processProfile,
@@ -914,6 +915,18 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             searchParams[profileFields[i]] = searchParameters[profileFields[i]]
         return Parse.Cloud.run('GetMatches', searchParams).catch(_unwrapError)
     }
+
+    //Test info cards env
+    function searchTestProfiles(searchParameters) {
+        if (!searchParameters)
+            $log.error('search parameters were not provided')
+            // Can't use a Parse object as a param, so copy the fields. Could copy only the required search fields.
+        var searchParams = {};
+        for (var i = 0; i < profileFields.length; i++)
+            searchParams[profileFields[i]] = searchParameters[profileFields[i]]
+        return Parse.Cloud.run('GetTestMatches', searchParams).catch(_unwrapError)
+    }
+    //Test info cards env
 
     /**
      * Loads the mutual matches for the given ids

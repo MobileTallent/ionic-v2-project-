@@ -119,6 +119,7 @@ function onNotificationOpen(pnObj) {
                 setPhoto: setPhoto,
                 getProfileSearchResults: getProfileSearchResults,
                 updateProfileSearchResults: updateProfileSearchResults,
+                updateTestProfileSearchResults: updateTestProfileSearchResults,
                 getProfilesWhoLikeMe: getProfilesWhoLikeMe,
                 getProfilesWhoWantsToHaveARelationshipWithMe: getProfilesWhoWantsToHaveARelationshipWithMe,
                 clearProfileSearchResults: clearProfileSearchResults,
@@ -288,7 +289,7 @@ function onNotificationOpen(pnObj) {
                         else
                             $log.error('Found duplicate when loading matches from LocalDB')
                     }
-                    console.log('match.dateOfMatch', dbMatches)
+
                     return refreshUnreadCount()
                 }).then(null, error => $log.error('Error loading local db data ' + JSON.stringify(error)))
 
@@ -331,6 +332,11 @@ function onNotificationOpen(pnObj) {
                     }
                 )
 
+                //Test info cards env
+                if (user.id == 'JNoXEpkAK1' || user.id == 'MXm5iJTI74') 
+                    $rootScope.allowedTests = true
+                //Test info cards env
+                
                 return user
             }
 
@@ -1066,6 +1072,17 @@ function onNotificationOpen(pnObj) {
                     return service.profileSearchResults
                 })
             }
+
+            //Test info cards env
+            function updateTestProfileSearchResults() {
+                //$analytics.eventTrack('searchProfiles')
+                return server.searchTestProfiles(service.profile).then(function(profiles) {
+                    service.profileSearchResults = profiles
+                    $rootScope.$broadcast('newProfileSearchResults')
+                    return service.profileSearchResults
+                })
+            }
+            //Test info cards env
 
             /**
              *
