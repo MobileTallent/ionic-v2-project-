@@ -83,6 +83,7 @@ function onNotificationOpen(pnObj) {
                 fbId: '',
                 profile: null,
                 profileSearchResults: null,
+                profileTestSearchResults: null,
                 twilioAccessToken: null,
                 branchProfileId: '',
                 numberOfLikes: 0,
@@ -118,6 +119,7 @@ function onNotificationOpen(pnObj) {
                 copyFacebookProfile: copyFacebookProfile,
                 setPhoto: setPhoto,
                 getProfileSearchResults: getProfileSearchResults,
+                getTestProfileSearchResults: getTestProfileSearchResults,
                 updateProfileSearchResults: updateProfileSearchResults,
                 updateTestProfileSearchResults: updateTestProfileSearchResults,
                 getProfilesWhoLikeMe: getProfilesWhoLikeMe,
@@ -1064,6 +1066,12 @@ function onNotificationOpen(pnObj) {
                 return service.profileSearchResults
             }
 
+            //Test info cards env
+            function getTestProfileSearchResults() {
+                return service.profileTestSearchResults
+            }
+            //Test info cards env
+
             function updateProfileSearchResults() {
                 //$analytics.eventTrack('searchProfiles')
                 return server.searchProfiles(service.profile).then(function(profiles) {
@@ -1077,9 +1085,9 @@ function onNotificationOpen(pnObj) {
             function updateTestProfileSearchResults() {
                 //$analytics.eventTrack('searchProfiles')
                 return server.searchTestProfiles(service.profile).then(function(profiles) {
-                    service.profileSearchResults = profiles
+                    service.profileTestSearchResults = profiles
                     $rootScope.$broadcast('newProfileSearchResults')
-                    return service.profileSearchResults
+                    return service.profileTestSearchResults
                 })
             }
             //Test info cards env
@@ -1106,6 +1114,7 @@ function onNotificationOpen(pnObj) {
             function clearProfileSearchResults() {
                 service.profileSearchResults = null
             }
+            
 
 
             function getMutualMatches() {

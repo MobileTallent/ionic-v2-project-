@@ -25,7 +25,7 @@ angular.module('controllers')
     $scope.$on('$ionicView.enter', () => {
         if (profile.enabled) {
             // Check for any previously search results
-            $scope.profiles = AppService.getProfileSearchResults()
+            $scope.profiles = AppService.getTestProfileSearchResults()
                 // If we haven't searched yet or we are coming back to the screen and there isn't any results then search for more
             if (!$scope.profiles || $scope.profiles.length === 0)
                 $scope.searchAgain()
@@ -33,7 +33,7 @@ angular.module('controllers')
     })
 
     $scope.$on('newProfileSearchResults', () => {
-        $scope.profiles = AppService.getProfileSearchResults()
+        $scope.profiles = AppService.getTestProfileSearchResults()
     })
 
     $scope.searchAgain = () => {
@@ -44,7 +44,7 @@ angular.module('controllers')
 
     $rootScope.$on('$stateChangeSuccess', function(ev, to, toParams, from, fromParams) {
         //If card looked - remove and show next
-        if (from.name == "menu.info-card-detail" && to.name == "menu.home")
+        if (from.name == "menu.info-card-detail" && to.name == "menu.testEnvCards")
             $timeout(() => $scope.profiles.pop(), 340)
     })
 
@@ -202,7 +202,6 @@ angular.module('controllers')
 
         $log.log('accept button')
         var topProfile = $scope.profiles[$scope.profiles.length - 1]
-        AppService.processMatch(topProfile, true)
         topProfile.accepted = true // this triggers the animation out
         $timeout(() => {
             $scope.profiles.pop()
@@ -220,7 +219,6 @@ angular.module('controllers')
         if (!profile.info_card) {
             $log.log('reject button')
             var topProfile = $scope.profiles[$scope.profiles.length - 1]
-            AppService.processMatch(topProfile, false)
             topProfile.rejected = true // this triggers the animation out
         }
 
@@ -258,7 +256,6 @@ angular.module('controllers')
         //     card.snapBack()
         //     return
         // }
-        AppService.processMatch(profile, false)
         if ($scope.profiles.length == 0) {
             // TODO auto-load more?
         }
@@ -268,7 +265,6 @@ angular.module('controllers')
         if (checkQuotaTime()) {
             return
         }
-        AppService.processMatch(profile, true)
         if ($scope.profiles.length == 0) {
             // TODO auto-load more?
         }
