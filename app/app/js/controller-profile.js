@@ -865,12 +865,6 @@ angular.module('controllers')
             translations = translationsResult
         })
 
-        $scope.$on('$ionicView.beforeLeave', function() {
-            if (!$scope.location.useGPS) {
-                $scope.setLocation()
-            }
-        })
-
         var profile = AppService.getProfile()
         var location = profile.location
 
@@ -931,6 +925,12 @@ angular.module('controllers')
                 )
             }
         }
+
+        $scope.$on('$ionicView.beforeLeave', function() {
+            if (!$scope.location.useGPS) {
+                $scope.setLocation()
+            }
+        })
 
         $scope.setLocation = function() {
             var pos = marker.getPosition()
