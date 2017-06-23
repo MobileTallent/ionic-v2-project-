@@ -857,17 +857,19 @@ angular.module('controllers')
     }
 
     $scope.openIntercom = function() {
+
         var profile = AppService.getProfile();
         var user = {
-            userId: profile.uid,
-            // email: current.email,
+           userId: profile.uid,
+           // email: current.email,
             name: profile.name
         };
 
-        intercom.reset();
-        intercom.registerIdentifiedUser(user);
-        intercom.displayMessenger();
+       intercom.reset();
+       intercom.registerIdentifiedUser(user);
+       intercom.displayMessenger();
     }
+
 })
 
 .controller('LocationCtrl', function($scope, $translate, AppService, AppUtil, $ionicLoading) {
@@ -876,10 +878,6 @@ angular.module('controllers')
         var translations
         $translate(['GPS_ERROR']).then(function(translationsResult) {
             translations = translationsResult
-        })
-
-        $scope.$on('$ionicView.beforeLeave', function() {
-            $scope.setLocation()
         })
 
         var profile = AppService.getProfile()
@@ -919,8 +917,8 @@ angular.module('controllers')
 
         $scope.useGPSchanged = function() {
             marker.setDraggable(!$scope.location.useGPS)
-
             if ($scope.location.useGPS) {
+                AppService.clearProfileSearchResults()
                 $ionicLoading.show({ templateUrl: 'loading.html' })
                 AppService.getCurrentPosition().then(function(gpsLocation) {
                     return AppService.saveProfile({ gps: true, location: gpsLocation })
@@ -941,8 +939,13 @@ angular.module('controllers')
                     }
                 )
             }
-            // else the user needs to click the save button
         }
+
+        $scope.$on('$ionicView.beforeLeave', function() {
+            if (!$scope.location.useGPS) {
+                $scope.setLocation()
+            }
+        })
 
         $scope.setLocation = function() {
             var pos = marker.getPosition()
