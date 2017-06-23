@@ -866,7 +866,9 @@ angular.module('controllers')
         })
 
         $scope.$on('$ionicView.beforeLeave', function() {
-            $scope.setLocation()
+            if (!$scope.location.useGPS) {
+                $scope.setLocation()
+            }
         })
 
         var profile = AppService.getProfile()
@@ -906,8 +908,8 @@ angular.module('controllers')
 
         $scope.useGPSchanged = function() {
             marker.setDraggable(!$scope.location.useGPS)
-
             if ($scope.location.useGPS) {
+                AppService.clearProfileSearchResults()
                 $ionicLoading.show({ templateUrl: 'loading.html' })
                 AppService.getCurrentPosition().then(function(gpsLocation) {
                     return AppService.saveProfile({ gps: true, location: gpsLocation })
@@ -928,7 +930,6 @@ angular.module('controllers')
                     }
                 )
             }
-            // else the user needs to click the save button
         }
 
         $scope.setLocation = function() {
