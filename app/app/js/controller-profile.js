@@ -928,21 +928,21 @@ angular.module('controllers')
 
         $scope.$on('$ionicView.beforeLeave', function() {
             if (!$scope.location.useGPS) {
-                $scope.setLocation()
+                setLocation()
             }
         })
 
-        $scope.setLocation = function() {
+        function setLocation() {
+            AppService.clearProfileSearchResults()
             var pos = marker.getPosition()
             AppUtil.blockingCall(
                 AppService.saveProfile({ gps: false, location: { latitude: pos.lat(), longitude: pos.lng() } }),
                 () => {
-                    AppService.clearProfileSearchResults()
+
                 },
                 'SETTINGS_SAVE_ERROR'
             )
         }
-
     })
     .controller('ProfileMainVideoCtrl', function($scope, $http, AppUtil, AppService, $state, $window, VideoService, $cordovaSocialSharing, $rootScope, $cordovaCapture, $cordovaCamera, $ionicModal, $ionicPopup, $ionicLoading, $localStorage, $cordovaFileTransfer) {
         var today = new Date();
