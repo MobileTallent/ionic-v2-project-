@@ -88,6 +88,12 @@ var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUt
 
             AppService.init()
             platformReady = true
+
+            //intercom.setLauncherVisibility('VISIBLE');
+            intercom.setInAppMessageVisibility('VISIBLE');
+
+            
+
         })
     })
 

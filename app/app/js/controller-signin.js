@@ -324,4 +324,10 @@ angular.module('controllers', ['service.app', 'ngAnimate', 'ngCordova', 'ionic.c
     // Check if we need to wait for the Facebook JS plugin to initialise and then check for doing an auto-login
     ensureFb(autoLogin)
 
+
+    $scope.feedback = function() {
+
+        intercom.registerUnidentifiedUser();
+        intercom.displayMessenger();
+    }    
 });

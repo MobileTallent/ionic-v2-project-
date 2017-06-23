@@ -33,7 +33,7 @@
                 <!--<a ui-sref="menu.discovery" class="item energized" menu-close><i class="icon ion-ios-search-strong"></i> {{'MENU_DISCOVERY' | translate}}</a>-->
                 <a ui-sref="menu.location" class="item positive" menu-close><i class="icon ion-ios-location-outline"></i> {{'LOCATION' | translate}}</a>
                 <a ui-sref="menu.settings" class="item positive" menu-close><i class="icon ion-ios-cog-outline"></i> {{'MENU_SETTINGS' | translate}}</a>
-                <a ui-sref="menu.contact" class="item positive" menu-close><i class="icon ion-ios-email-outline"></i> {{'MENU_CONTACT' | translate}}</a>
+                <a ng-controller="ContactCtrl as contactCtrl" ng-click="openIntercom()" class="item positive" menu-close><i class="icon ion-ios-email-outline"></i> {{'MENU_CONTACT' | translate}}</a>
                 <a ui-sref="menu.about" class="item positive" menu-close><i class="icon ion-ios-information-outline"></i> {{'ABOUT_JUST_A_BABY' | translate}}</a>
                 <a ng-if="serviceProvider" ui-sref="menu.switch-corporate" class="item" menu-close><i class="icon ion-log-in"></i> Switch to corporate app</a>
 
