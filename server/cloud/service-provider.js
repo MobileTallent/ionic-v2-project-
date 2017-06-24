@@ -8,6 +8,7 @@ var Profile = Parse.Object.extend("Profile")
 var CardsDeckSetting = Parse.Object.extend("CardsDeckSetting")
 var SavedInfoCard = Parse.Object.extend("SavedInfoCard")
 var PrUser = Parse.Object.extend("PrUser")
+var Branch = Parse.Object.extend("Branch")
 
 function checkAdmin(request, response) {
     if (!request.user.get('admin')) {
@@ -78,8 +79,13 @@ Parse.Cloud.define('GetServiceProviderLengths', function(request, response) {
         .equalTo("pid", provider_id)
         .find()
     
-    Parse.Promise.when(getInfoCardsLength, getServicesLength, getHotBedsLength, getUsersLength).then(function(infocards, services, hotbeds, users) {
-        let result = {infocards:infocards.length, services:services.length, hotbeds:hotbeds.length, users:users.length}
+    var getBranchesLength = new Parse.Query(Branch)
+        .limit(1000)
+        .equalTo("pid", provider_id)
+        .find()
+    
+    Parse.Promise.when(getInfoCardsLength, getServicesLength, getHotBedsLength, getUsersLength, getBranchesLength).then(function(infocards, services, hotbeds, users, branches) {
+        let result = {infocards:infocards.length, services:services.length, hotbeds:hotbeds.length, users:users.length, branches:branches.length}
         console.log("Successs " + JSON.stringify(result))
         response.success(result)
     }, function(error) {
@@ -783,6 +789,87 @@ Parse.Cloud.define('AddProviderUser', function(request, response) {
         response.success("Success saving provider user!")
     }, function(error) {
         console.log("Error saving provider user!")
+        response.error(error)
+    })
+})
+
+/* Get Branches */
+Parse.Cloud.define('GetBranches', function(request, response) {
+    var provider_id = request.params.provider_id
+    if (!provider_id)
+        return response.error('provider_id parameter must be provided')
+        
+    new Parse.Query(Branch)
+        .limit(1000)
+        .equalTo("pid", provider_id)
+        .descending('createdAt')
+        .find()
+        .then(function(result) {
+        console.log("Successs " + JSON.stringify(result))
+        response.success(result)
+    }, function(error) {
+        console.log("Erroorrr: " + JSON.stringify(error))
+        response.error(error)
+    })
+})
+
+/* Add/Edit Branch */
+Parse.Cloud.define('AddBranch', function(request, response) {
+
+    var BranchData = request.params.branch
+
+    if (!BranchData)
+        return response.error('BranchData parameter must be provided')
+
+    var br = new Branch()
+    if (BranchData.id) {
+        br.id = BranchData.id
+        delete BranchData.id
+    }
+
+    br.save(BranchData).then(function(result) {
+        console.log("Success saving branch")
+        response.success("Success saving branch")
+    }, function(error) {
+        console.log("Error saving internal branch")
+        response.error(error)
+    })
+})
+
+/* Del Branch */
+Parse.Cloud.define('DelBranch', function(request, response) {
+
+    var id = request.params.id
+    if (!id) return response.error('id parameter is required')
+
+    new Parse.Query(Branch)
+    .get(id)
+    .then(function(branch) {
+            return branch.destroy()
+        }).then(function() {
+            response.success("Successfully deleted Branch!")
+        }),
+        function(error) {
+            console.log(JSON.stringify(error))
+            response.error(error)
+        }
+})
+
+/* Get Branch services */
+Parse.Cloud.define('GetBranchServices', function(request, response) {
+    var services = request.params.services
+    if (!services)
+        return response.error('services parameter must be provided')
+        
+    new Parse.Query(PrService)
+        .limit(1000)
+        .containedIn('objectId', services)
+        .find()
+        .then(function(result) {
+        console.log("Successs " + JSON.stringify(result))
+        response.success(result)
+    }, function(error) {
+        console.log("Erroorrr: " + JSON.stringify(error))
         response.error(error)
     })
 })

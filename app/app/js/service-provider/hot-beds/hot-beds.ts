@@ -11,7 +11,6 @@ module app {
         private submitted = false;
         public userProfile
         public map
-        public info_card_my_location = 'true'
 
         constructor(private $log, private $scope, private $ionicModal, private $ionicPopup,
         public AppService, public AppUtil, public SpService) {

@@ -1,0 +1,20 @@
+<ion-modal-view>
+
+            <ion-header-bar class="bar bar-header bar-positive">
+                <h1 class="title">Add service to branch</h1>
+                <button class="button button-clear button-primary" ng-click="vm.closeConnect()">Cancel</button>
+            </ion-header-bar>
+            <ion-content class="padding">
+                <p>
+                    Please choose service
+                </p>
+
+                <div class="list">
+                    <a class="item" ng-repeat="service in vm.sp_services" 
+                        ng-click="vm.chooseService(service)">
+                        <h2>{{::service.title}}</h2>
+                        <p>{{::service.description}}</p>
+                    </a>
+                </div>
+            </ion-content>
+        </ion-modal-view>

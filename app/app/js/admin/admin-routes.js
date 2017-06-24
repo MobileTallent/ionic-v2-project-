@@ -182,6 +182,23 @@ angular.module('ionicApp').config(function($stateProvider) {
                 }
             }
         })
+        .state('menu.adminBranches', {
+            url: "/branches/:pid",
+            views: {
+                'menuContent': {
+                    templateUrl: "admin/service-providers/branches.html"
+                }
+            }
+        })
+        .state('menu.adminBranch', {
+            url: "/branch/",
+            params: { 'branch':null },
+            views: {
+                'menuContent': {
+                    templateUrl: "admin/service-providers/branch.html"
+                }
+            }
+        })
         .state('menu.adminHotBed', {
             url: "/hotbed/",
             params: { 'hotbed':null },

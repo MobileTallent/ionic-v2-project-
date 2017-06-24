@@ -1,0 +1,24 @@
+<ion-view title="Branches" class="background-calm" ng-controller="SpBranches as vm">
+  <ion-nav-buttons side="right" class="has-header">
+    <i class="button button-icon icon ion-ios-plus-outline" ng-click="vm.addBranchModal.show();vm.changeSetLoc();"></i>
+  </ion-nav-buttons>
+  <ion-content padding="true" class="has-header">
+    <ion-refresher on-refresh="vm.doRefresh()"></ion-refresher>
+    <ion-list show-delete="false" can-swipe="true">
+        <ion-item ng-if="!vm.branches.length">
+          Branches don't found
+        </ion-item>
+        <ion-item class="item" 
+                  ui-sref="sp.view-branch({'branch':branch})" 
+                  ng-repeat="branch in vm.branches | orderBy:'active':true">
+          <div style="float:left">
+            {{branch.title}}
+            <p style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;width: 45%;">{{::branch.location.name}}</p>
+          </div>
+            <ion-option-button class="button-balanced icon ion-edit" ng-click="vm.editBranch(branch);vm.changeSetLoc();"></ion-option-button>
+            <ion-option-button class="button-assertive icon ion-trash-a" ng-click="vm.deleteBranch(branch.id)"></ion-option-button>
+        </ion-item>
+    </ion-list>
+
+  </ion-content>
+</ion-view>

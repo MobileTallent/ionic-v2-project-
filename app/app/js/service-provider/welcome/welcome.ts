@@ -51,7 +51,14 @@ module app {
 
 			}).then(function(provider_questions){
 				console.log(provider_questions)
+				myThis.status = 'Waiting for Branches'
 				myThis.SpService.provider_questions = provider_questions
+				return myThis.SpService.getBranches()
+
+			}).then(function(branches){
+				console.log(branches)
+				myThis.SpService.branches = branches
+	
 				myThis.afterLoading()
 			})
 

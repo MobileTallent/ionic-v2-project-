@@ -299,6 +299,20 @@ var SavedInfoCard = Parse.Object.extend({
     attrs: savedInfoCardFields
 })
 
+/**
+ * @typedef {Object} Branch
+ * @property {number} pid - service providers id
+ * @property {number} title - name of branch
+ * @property {number} location - name of branch
+ * @property {number} location_point - name of branch
+ * @property {array}  services - array of allocated services id
+ */
+var branchFields = ['pid', 'title', 'location', 'location_point', 'services']
+var Branch = Parse.Object.extend({
+    className: "Branch",
+    attrs: branchFields
+})
+
 enhance(Parse.User.prototype, userFields)
 enhance(Profile.prototype, profileFields)
 enhance(Match.prototype, matchFields)
@@ -318,6 +332,7 @@ enhance(ProviderQuestion.prototype, providerQuestionFields)
 enhance(CardsDeckSetting.prototype, cardsDeckSettingFields)
 enhance(SavedInfoCard.prototype, savedInfoCardFields)
 enhance(SpUser.prototype, SpUserFields)
+enhance(Branch.prototype, branchFields)
 
 function enhance(prototype, fields) {
     for (var i = 0; i < fields.length; i++) {
@@ -536,7 +551,11 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         getProviderUsers: getProviderUsers,
         getUserProviders: getUserProviders,
         delProviderUser: delProviderUser,
-        addProviderUser: addProviderUser
+        addProviderUser: addProviderUser,
+        getBranches: getBranches,
+        addBranch: addBranch,
+        delBranch: delBranch,
+        getBranchServices: getBranchServices
     }
 
     return service
@@ -1389,6 +1408,21 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         return Parse.Cloud.run('AddProviderUser', { user: user }).catch(_unwrapError)
     }
 
+    function getBranches(pid) {
+        return Parse.Cloud.run('GetBranches', { provider_id: pid }).catch(_unwrapError)
+    }
+
+    function addBranch(branch) {
+        return Parse.Cloud.run('AddBranch', { branch: branch }).catch(_unwrapError)
+    }
+
+    function delBranch(id) {
+        return Parse.Cloud.run('DelBranch', { id: id }).catch(_unwrapError)
+    }
+
+    function getBranchServices(services) {
+        return Parse.Cloud.run('GetBranchServices', {services:services}).catch(_unwrapError)
+    }
 
 
     // Private functions

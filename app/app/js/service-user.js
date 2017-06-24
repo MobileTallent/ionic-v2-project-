@@ -209,7 +209,11 @@ function onNotificationOpen(pnObj) {
                 getProviderUsers: getProviderUsers,
                 getUserProviders: getUserProviders,
                 delProviderUser: delProviderUser,
-                addProviderUser: addProviderUser
+                addProviderUser: addProviderUser,
+                getBranches: getBranches,
+                addBranch: addBranch,
+                delBranch: delBranch,
+                getBranchServices: getBranchServices
             }
 
             return service
@@ -1743,7 +1747,22 @@ function onNotificationOpen(pnObj) {
                 return server.addProviderUser(user)
             }
 
+            function getBranches(pid) {
+                return server.getBranches(pid)
+            }
 
+            function addBranch(branch) {
+                return server.addBranch(branch)
+            }
+
+            function delBranch(id) {
+                return server.delBranch(id)
+            }
+
+            function getBranchServices(services) {
+                return server.getBranchServices(services)
+            }
+            
             // Util functions
             function filePath(file) {
                 if (ionic.Platform.isIOS())

@@ -58,14 +58,6 @@ angular.module('sp.routes', [])
       }
     }
   })
-  .state('sp.account-branches', {
-    url: '/account-branches',
-    views: {
-      'menuContent': {
-        templateUrl: 'service-provider/account/branches.html'
-      }
-    }
-  })
   .state('sp.account-video', {
     url: '/account-video',
     views: {
@@ -74,31 +66,26 @@ angular.module('sp.routes', [])
       }
     }
   })
-  .state('sp.edit-branch', {
-    url: '/edit-branch',
-    views: {
-      'menuContent': {
-        templateUrl: 'service-provider/account/edit-branch.html'
-      }
-    }
-  })
-  .state('sp.add-service-2', {
-    url: '/add-service-2',
-    views: {
-      'menuContent': {
-        templateUrl: 'service-provider/account/add-service-2.html'
-      }
-    }
-  })
-  .state('sp.edit-user', {
-    url: '/edit-user',
-    views: {
-      'menuContent': {
-        templateUrl: 'service-provider/account/edit-user.html'
-      }
-    }
-  })
 
+
+  // Branches
+  .state('sp.branches', {
+    url: '/branches',
+    views: {
+      'menuContent': {
+        templateUrl: 'service-provider/branches/branches.html'
+      }
+    }
+  })
+  .state('sp.view-branch', {
+    url: '/view-branch',
+    params: {'branch':null},
+    views: {
+      'menuContent': {
+        templateUrl: 'service-provider/branches/branch.html'
+      }
+    }
+  })
 
 
   // Services
@@ -200,59 +187,5 @@ angular.module('sp.routes', [])
       }
     }
   })
-
-  //Other
-  .state('sp.video', {
-    url: '/video',
-    views: {
-      'menuContent': {
-        templateUrl: 'service-provider/other/video.html'
-      }
-    }
-  })
-  .state('sp.audience', {
-    url: '/audience',
-    views: {
-      'menuContent': {
-        templateUrl: 'service-provider/other/audience.html'
-      }
-    }
-  })
-  .state('sp.sorting-options', {
-    url: '/sorting-options',
-    views: {
-      'menuContent': {
-        templateUrl: 'service-provider/other/sorting-options.html'
-      }
-    }
-  })
-
-
-  // .state('setLocation', {
-  //   url: '/location',
-  //   templateUrl: 'templates/setLocation.html',
-  //   controller: 'setLocationCtrl'
-  // })
-
-  // .state('menu.getACorprorateAccount', {
-  //   url: '/get-corporate',
-  //   views: {
-  //     'side-menu21': {
-  //       templateUrl: 'templates/getACorprorateAccount.html',
-  //       controller: 'getACorprorateAccountCtrl'
-  //     }
-  //   }
-  // })
-
-  // .state('menu.upgradeAccount', {
-  //   url: '/upgrade-account',
-  //   views: {
-  //     'side-menu21': {
-  //       templateUrl: 'templates/upgradeAccount.html',
-  //       controller: 'upgradeAccountCtrl'
-  //     }
-  //   }
-  // })
-  
 
 });

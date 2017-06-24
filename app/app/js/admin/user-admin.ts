@@ -158,7 +158,7 @@ module app {
 									let PrUser = {
 										pid:sp.objectId,
 										uid:myThis.user.id,
-										role:'main'
+										role:'Owner'
 									}
 									myThis.AppService.addProviderUser(PrUser).then(
 										() => {

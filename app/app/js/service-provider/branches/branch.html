@@ -1,0 +1,45 @@
+<ion-view title="Branch" ng-controller="SpBranch as vm">
+
+    <ion-content>
+        <div ng-if="vm.branch">
+
+            <div class="list card">
+                <div class="item">
+                    <h2>{{vm.branch.title}}</h2>
+                </div>
+                <div class="item item-body">
+                    <div class="row">
+                        <div class="col">
+                            <p style="margin-top: 0px;">Created at</p>
+                        </div>
+                        <div class="col">
+                            <p style="margin-top: 0px;">{{vm.branch.createdAt | date:'dd MMM yyyy'}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <p style="margin-top: 0px;">Geolocation name</p>
+                        </div>
+                        <div class="col">
+                            <p style="margin-top: 0px;">{{vm.branch.location.name}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="item item-body">
+                    <div class="row">
+                        <div class="col">
+                            <p style="margin-top: 0px;">Allocated services :</p>
+                            <p ng-repeat="service in vm.services"><small>{{service.title}}</small></p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="item item-body">
+                    <!-- Geolocation -->
+                    <div id="map2" data-tap-disabled="true" style="height:300px;"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </ion-content>
+</ion-view>

@@ -14,6 +14,7 @@
                 hot_beds: null,
                 enquiries: null,
                 provider_questions: null,
+                branches: null,
                 // methods
                 addServiceProvider: addServiceProvider,
                 getMyServiceProvider: getMyServiceProvider,
@@ -31,7 +32,11 @@
                 markEnquireAsRead: markEnquireAsRead,
                 addEnquire: addEnquire,
                 getProviderQuestions: getProviderQuestions,
-                getUsers: getUsers
+                getUsers: getUsers,
+                getBranches: getBranches,
+                delBranch: delBranch,
+                addBranch: addBranch,
+                getBranchServices: getBranchServices
 
             }
 
@@ -114,6 +119,21 @@
                 return server.getUsers(audience)
             }
 
+            function getBranches() {
+                return server.getBranches(service.provider_id)
+            }
+
+            function delBranch(id) {
+                return server.delBranch(id)
+            }
+
+            function addBranch(branch) {
+                return server.addBranch(branch)
+            }
+
+            function getBranchServices(services) {
+                return server.getBranchServices(services)
+            }
         })
 
 })();
