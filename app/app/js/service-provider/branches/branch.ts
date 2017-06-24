@@ -12,7 +12,7 @@ module app {
         public map
 
 		constructor(private $state, private $stateParams, private $scope, private $sce, private $ionicPopup,
-		private AppUtil, private AppService, private $ionicHistory) {
+		private AppUtil, private AppService, public SpService, private $ionicHistory) {
 			this.branch = this.$stateParams.branch
 			console.log(this.branch);
 
@@ -38,18 +38,20 @@ module app {
                     title: this.branch.title
                 })
 				
-				this.AppUtil.blockingCall(
+				if (this.branch.services.length) {
+					this.AppUtil.blockingCall(
 					this.SpService.getBranchServices(this.branch.services),
 						services => {
 							this.services = services
 						}
-				)
+				)		
+				}
 			})
 
 		}
 
 	}
 
-	SpBranch.$inject = ['$state', '$stateParams', '$scope', '$sce', '$ionicPopup', 'AppUtil', 'AppService', '$ionicHistory']
+	SpBranch.$inject = ['$state', '$stateParams', '$scope', '$sce', '$ionicPopup', 'AppUtil', 'AppService', 'SpService', '$ionicHistory']
 	angular.module('controllers').controller('SpBranch', SpBranch)
 }
