@@ -865,10 +865,6 @@ angular.module('controllers')
             translations = translationsResult
         })
 
-        $scope.$on('$ionicView.beforeLeave', function() {
-            $scope.setLocation()
-        })
-
         var profile = AppService.getProfile()
         var location = profile.location
 
@@ -906,8 +902,8 @@ angular.module('controllers')
 
         $scope.useGPSchanged = function() {
             marker.setDraggable(!$scope.location.useGPS)
-
             if ($scope.location.useGPS) {
+                AppService.clearProfileSearchResults()
                 $ionicLoading.show({ templateUrl: 'loading.html' })
                 AppService.getCurrentPosition().then(function(gpsLocation) {
                     return AppService.saveProfile({ gps: true, location: gpsLocation })
@@ -928,20 +924,25 @@ angular.module('controllers')
                     }
                 )
             }
-            // else the user needs to click the save button
         }
 
-        $scope.setLocation = function() {
+        $scope.$on('$ionicView.beforeLeave', function() {
+            if (!$scope.location.useGPS) {
+                setLocation()
+            }
+        })
+
+        function setLocation() {
+            AppService.clearProfileSearchResults()
             var pos = marker.getPosition()
             AppUtil.blockingCall(
                 AppService.saveProfile({ gps: false, location: { latitude: pos.lat(), longitude: pos.lng() } }),
                 () => {
-                    AppService.clearProfileSearchResults()
+
                 },
                 'SETTINGS_SAVE_ERROR'
             )
         }
-
     })
     .controller('ProfileMainVideoCtrl', function($scope, $http, AppUtil, AppService, $state, $window, VideoService, $cordovaSocialSharing, $rootScope, $cordovaCapture, $cordovaCamera, $ionicModal, $ionicPopup, $ionicLoading, $localStorage, $cordovaFileTransfer) {
         var today = new Date();

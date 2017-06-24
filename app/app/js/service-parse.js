@@ -831,7 +831,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             profileChanges.location = convertLocation(profileChanges.location.latitude, profileChanges.location.longitude)
 
             //address and flags
-            if (!ionic.Platform.isIOS() && profileChanges.location.latitude && profileChanges.location.longitude) {
+            if (profileChanges.location.latitude && profileChanges.location.longitude) {
                 let geocodingAPI = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + profileChanges.location.latitude + "," + profileChanges.location.longitude + "&sensor=false&language=en";
                 let num = 0
                 let addArray
