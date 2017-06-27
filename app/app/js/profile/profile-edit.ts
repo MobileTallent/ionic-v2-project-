@@ -99,8 +99,18 @@ module app {
 			this.onRedirectToEditProfile(false)
 		}
 
+		public changeSperm(){
+			if(this.personCategory === "1" && this.personSperm){
+				this.personEgg = false
+				this.personWomb = false
+			}
+		}
 
-
+		public changeWombEgg(){
+			if(this.personCategory === "1" && (this.personWomb || this.personEgg)){
+				this.personSperm = false
+			}
+		}
 
 		public selectedCount() {
 			return _.filter(this.photos, (photo) => photo.selected).length

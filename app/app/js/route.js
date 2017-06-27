@@ -313,5 +313,18 @@ angular.module('ionicApp').config(function($stateProvider, $urlRouterProvider) {
                 }
             }
         })
+
+        //Test info cards env
+        .state('menu.testEnvCards', {
+            url: "/test-env",
+            views: {
+                'menuContent': {
+                    templateUrl: "test-env-cards/test-env-cards.html",
+                    controller: "TestEnvCards"
+                }
+            }
+        })
+        //Test info cards env
+        
     $urlRouterProvider.otherwise("/sign-in")
 });

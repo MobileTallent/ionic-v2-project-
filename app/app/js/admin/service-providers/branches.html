@@ -1,0 +1,22 @@
+<ion-view view-title="Branches" ng-controller="Branches as vm">
+
+    <ion-content>
+
+        <div ng-show="!vm.branches.length" style="text-align: center;font-family:'Avenir Next LT Pro Regular';font-size:18px">
+            <br/>
+            {{'No results' | translate}}<br/>
+        </div>
+        <div class="list">
+            <a class="item item-icon-right" 
+               ng-repeat="branch in vm.branches track by branch.id" 
+               ui-sref="^.adminBranch({branch : branch})"
+            />
+                <h2>{{::branch.title}}</h2>
+                <p>{{::branch.location.name}}</p>
+                <span class="item-note">
+                        <i class="icon ion-chevron-right"></i>
+                </span>
+            </a>
+        </div>
+    </ion-content>
+</ion-view>

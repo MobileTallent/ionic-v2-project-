@@ -1,24 +1,27 @@
 <ion-view view-title="{{'SET_LOCATION' | translate}}" cache-view="false">
     <ion-content>
-        <ul class="items">
+        <div>
+            <ion-toggle ng-model="location.useGPS" ng-change="useGPSchanged()" toggle-class="toggle-assertive">{{'USE_GPS_LOCATION' | translate}}</ion-toggle>
+        </div>
+        <!--<ul class="items">
             <div class="padding" ng-hide="location.useGPS">
                 <button class="button button-block button-assertive" style="margin:0px" ng-click="setLocation()">{{'SAVE' | translate}}</button>
             </div>
-            <li>
-                <ion-toggle ng-model="location.useGPS" ng-change="useGPSchanged()" toggle-class="toggle-assertive">{{'USE_GPS_LOCATION' | translate}}</ion-toggle>
-            </li>
+        <li>
+            <ion-toggle ng-model="location.useGPS" ng-change="useGPSchanged()" toggle-class="toggle-assertive">{{'USE_GPS_LOCATION' | translate}}</ion-toggle>
+        </li>
 
 
-            <!--<li class="item item-toggle">
+        <li class="item item-toggle">
                 {{'USE_GPS_LOCATION' | translate}}
                 <label class="toggle">
                     <input type="checkbox" ng-model="location.useGPS" ng-change="useGPSchanged()">
                     <div class="track"><div class="handle"></div></div>
                 </label>
-            </li>-->
-        </ul>
+            </li>
+        </ul>-->
 
-        <div id="map" data-tap-disabled="true"></div>
+        <div id="map" style="height: 91%;" data-tap-disabled="true"></div>
 
     </ion-content>
     <!--<ion-footer-bar>

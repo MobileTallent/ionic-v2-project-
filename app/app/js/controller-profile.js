@@ -476,6 +476,10 @@ angular.module('controllers')
     $scope.showKM = $scope.profile.distanceType === 'km' ? true : false
     var dType = $scope.profile.distanceType
 
+    if (!$scope.profile.LFSelfId) {
+        $scope.profile.LFSperm = $scope.profile.LFEggs = $scope.profile.LFWomb = $scope.profile.LFEmbryo = true
+    }
+
     $scope.setLanguage = (key) => {
         $log.log('setting language to ' + key)
         $translate.use(key)
@@ -483,6 +487,7 @@ angular.module('controllers')
 
     $scope.save = () => {
         AppService.clearProfileSearchResults()
+        $scope.profile.LFSelfId = true
         if (dType != $scope.profile.distanceType && $scope.profile.distanceType == 'mi') {
             $scope.profile.distance *= 0.621371
             $scope.profile.distance = Math.floor($scope.profile.distance)
@@ -492,6 +497,11 @@ angular.module('controllers')
         }
 
         dType = $scope.profile.distanceType
+
+        if (!$scope.profile.LFSperm && !$scope.profile.LFEggs && !$scope.profile.LFWomb && !$scope.profile.LFEmbryo)
+            $scope.profile.LFNot = true
+        else
+            $scope.profile.LFNot = false
 
         AppUtil.blockingCall(
             AppService.saveProfile(_.pick($scope.profile, fields)),
@@ -520,6 +530,11 @@ angular.module('controllers')
 
     $scope.testPushNotification = () => AppService.testPushNotification().then(
         success => AppUtil.toastSimple('Sent'),
+        error => AppUtil.toastSimple(JSON.stringify(error))
+    )
+
+    $scope.getProfilesWhoAreCurious = (type) => AppService.getProfilesWhoAreCurious(type).then(
+        length => console.log("Number of profiles " + length + " Type: " + type),
         error => AppUtil.toastSimple(JSON.stringify(error))
     )
 
@@ -603,8 +618,14 @@ angular.module('controllers')
 
                                     if (addComp.length == 1)
                                         profileUpdate.country = out['results'][num].formatted_address
-                                    else
+                                    else {
                                         profileUpdate.country = addArray.slice(-1).pop().trim()
+                                        let cntParsingNumber = profileUpdate.country.split(' ').pop()
+                                        if (cntParsingNumber && !isNaN(cntParsingNumber)) {
+                                            let lastIndex = profileUpdate.country.lastIndexOf(" ")
+                                            profileUpdate.country = profileUpdate.country.substring(0, lastIndex)
+                                        }
+                                    }
 
                                     AppService.saveProfileForSomeReason(profile, profileUpdate)
                                 }
@@ -686,6 +707,128 @@ angular.module('controllers')
     $scope.goToEditProfile = () => {
         $state.go('menu.profile-edit');
     }
+
+
+    //  //  //  //  //  SUDO SEARCH FILTERS  \\  \\  \\  \\  \\
+
+    $scope.individualImage = 'img/Badges/inactive-Individual.svg';
+    $scope.toggleIndividual = false;
+
+    $scope.activateIndividual = function() {
+
+        if ($scope.toggleIndividual === false) {
+            $scope.individualImage = 'img/Badges/active-Individual.svg';
+            $scope.toggleIndividual = true;
+            return;
+        }
+        if ($scope.toggleIndividual === true) {
+            $scope.individualImage = 'img/Badges/inactive-Individual.svg';
+            $scope.toggleIndividual = false;
+            return;
+        }
+    };
+
+    $scope.coupleImage = 'img/Badges/inactive-Couple.svg'
+    $scope.toggleCouple = false
+
+    $scope.activateCouple = function() {
+
+        if ($scope.toggleCouple === false) {
+            $scope.coupleImage = 'img/Badges/active-Couple.svg';
+            $scope.toggleCouple = true;
+            return;
+        }
+        if ($scope.toggleCouple === true) {
+            $scope.coupleImage = 'img/Badges/inactive-Couple.svg';
+            $scope.toggleCouple = false;
+            return;
+        }
+    };
+
+    $scope.helpImage = 'img/Badges/inactive-Help.svg'
+    $scope.toggleHelp = false
+
+    $scope.activateHelp = function() {
+
+        if ($scope.toggleHelp === false) {
+            $scope.helpImage = 'img/Badges/active-Help.svg'
+            $scope.toggleHelp = true
+            return;
+        }
+        if ($scope.toggleHelp === true) {
+            $scope.helpImage = 'img/Badges/inactive-Help.svg'
+            $scope.toggleHelp = false
+            return;
+        }
+    };
+
+    $scope.lookingImage = 'img/Badges/inactive-Looking-For-Help.svg'
+    $scope.toggleLooking = false;
+
+    $scope.activateLooking = function() {
+
+        if ($scope.toggleLooking === false) {
+            $scope.lookingImage = 'img/Badges/active-Looking-For-Help.svg';
+            $scope.toggleLooking = true;
+            return;
+        }
+        if ($scope.toggleLooking === true) {
+            $scope.lookingImage = 'img/Badges/inactive-Looking-For-Help.svg';
+            $scope.toggleLooking = false;
+            return;
+        }
+    };
+
+    $scope.spermImage = $scope.profile.LFSperm ? 'img/Badges/active-Sperm.svg' : 'img/Badges/inactive-Sperm.svg'
+
+    $scope.activateSperm = function() {
+
+        if ($scope.profile.LFSperm === true) {
+            $scope.spermImage = 'img/Badges/inactive-Sperm.svg'
+            $scope.profile.LFSperm = false
+        } else {
+            $scope.spermImage = 'img/Badges/active-Sperm.svg'
+            $scope.profile.LFSperm = true
+        }
+    }
+
+    $scope.eggImage = $scope.profile.LFEggs ? 'img/Badges/active-Egg.svg' : 'img/Badges/inactive-Egg.svg'
+
+    $scope.activateEgg = function() {
+        if ($scope.profile.LFEggs === true) {
+            $scope.eggImage = 'img/Badges/inactive-Egg.svg'
+            $scope.profile.LFEggs = false
+        } else {
+            $scope.eggImage = 'img/Badges/active-Egg.svg'
+            $scope.profile.LFEggs = true
+        }
+
+    };
+
+    $scope.wombImage = $scope.profile.LFWomb ? 'img/Badges/active-Womb.svg' : 'img/Badges/inactive-Womb.svg'
+
+    $scope.activateWomb = function() {
+        if ($scope.profile.LFWomb === true) {
+            $scope.wombImage = 'img/Badges/inactive-Womb.svg'
+            $scope.profile.LFWomb = false
+        } else {
+            $scope.wombImage = 'img/Badges/active-Womb.svg'
+            $scope.profile.LFWomb = true
+        }
+
+    };
+
+    $scope.embryoImage = $scope.profile.LFEmbryo ? 'img/Badges/active-Frozen-Embryo.svg' : 'img/Badges/inactive-Frozen-Embryo.svg'
+
+    $scope.activateEmbryo = function() {
+        if ($scope.profile.LFEmbryo === true) {
+            $scope.embryoImage = 'img/Badges/inactive-Frozen-Embryo.svg'
+            $scope.profile.LFEmbryo = false
+        } else {
+            $scope.embryoImage = 'img/Badges/active-Frozen-Embryo.svg'
+            $scope.profile.LFEmbryo = true
+        }
+    }
 })
 
 .controller('ContactCtrl', function($scope, AppService, AppUtil, $translate) {
@@ -759,8 +902,8 @@ angular.module('controllers')
 
         $scope.useGPSchanged = function() {
             marker.setDraggable(!$scope.location.useGPS)
-
             if ($scope.location.useGPS) {
+                AppService.clearProfileSearchResults()
                 $ionicLoading.show({ templateUrl: 'loading.html' })
                 AppService.getCurrentPosition().then(function(gpsLocation) {
                     return AppService.saveProfile({ gps: true, location: gpsLocation })
@@ -781,19 +924,25 @@ angular.module('controllers')
                     }
                 )
             }
-            // else the user needs to click the save button
         }
 
-        $scope.setLocation = function() {
-            var pos = marker.getPosition()
+        $scope.$on('$ionicView.beforeLeave', function() {
+            if (!$scope.location.useGPS) {
+                setLocation()
+            }
+        })
 
+        function setLocation() {
+            AppService.clearProfileSearchResults()
+            var pos = marker.getPosition()
             AppUtil.blockingCall(
                 AppService.saveProfile({ gps: false, location: { latitude: pos.lat(), longitude: pos.lng() } }),
-                () => { /* send back to main page? */ },
+                () => {
+
+                },
                 'SETTINGS_SAVE_ERROR'
             )
         }
-
     })
     .controller('ProfileMainVideoCtrl', function($scope, $http, AppUtil, AppService, $state, $window, VideoService, $cordovaSocialSharing, $rootScope, $cordovaCapture, $cordovaCamera, $ionicModal, $ionicPopup, $ionicLoading, $localStorage, $cordovaFileTransfer) {
         var today = new Date();

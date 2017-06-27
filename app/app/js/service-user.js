@@ -83,6 +83,7 @@ function onNotificationOpen(pnObj) {
                 fbId: '',
                 profile: null,
                 profileSearchResults: null,
+                profileTestSearchResults: null,
                 twilioAccessToken: null,
                 branchProfileId: '',
                 numberOfLikes: 0,
@@ -118,7 +119,9 @@ function onNotificationOpen(pnObj) {
                 copyFacebookProfile: copyFacebookProfile,
                 setPhoto: setPhoto,
                 getProfileSearchResults: getProfileSearchResults,
+                getTestProfileSearchResults: getTestProfileSearchResults,
                 updateProfileSearchResults: updateProfileSearchResults,
+                updateTestProfileSearchResults: updateTestProfileSearchResults,
                 getProfilesWhoLikeMe: getProfilesWhoLikeMe,
                 getProfilesWhoWantsToHaveARelationshipWithMe: getProfilesWhoWantsToHaveARelationshipWithMe,
                 clearProfileSearchResults: clearProfileSearchResults,
@@ -143,6 +146,7 @@ function onNotificationOpen(pnObj) {
                 deleteAccount: deleteAccount,
 
                 testPushNotification: testPushNotification,
+                getProfilesWhoAreCurious: getProfilesWhoAreCurious,
                 getProfilesNoCountry: getProfilesNoCountry,
 
                 // Admin functions
@@ -205,7 +209,11 @@ function onNotificationOpen(pnObj) {
                 getProviderUsers: getProviderUsers,
                 getUserProviders: getUserProviders,
                 delProviderUser: delProviderUser,
-                addProviderUser: addProviderUser
+                addProviderUser: addProviderUser,
+                getBranches: getBranches,
+                addBranch: addBranch,
+                delBranch: delBranch,
+                getBranchServices: getBranchServices
             }
 
             return service
@@ -273,6 +281,13 @@ function onNotificationOpen(pnObj) {
                     return LocalDB.getMatches()
                 }).then(dbMatches => {
                     for (let match of dbMatches) {
+
+                        //Fix any chat issues where date come as invalid date
+                        if ((!match.matchedDate) || (!match.dateOfMatch) || (typeof match.matchedDate === 'object') || (typeof match.dateOfMatch === 'object')) {
+                            match.matchedDate = new Date(match.createdAt)
+                            match.dateOfMatch = new Date(match.createdAt)
+                        }
+
                         // TODO GROUP_CHAT for group chat get the profile of the latest sender
                         match.otherProfile = profileCache[match.get('otherProfileId')]
                         if (!getMatch(match.id))
@@ -323,6 +338,11 @@ function onNotificationOpen(pnObj) {
                     }
                 )
 
+                //Test info cards env
+                if (user.id == 'JNoXEpkAK1' || user.id == 'MXm5iJTI74') 
+                    $rootScope.allowedTests = true
+                //Test info cards env
+                
                 return user
             }
 
@@ -1050,6 +1070,12 @@ function onNotificationOpen(pnObj) {
                 return service.profileSearchResults
             }
 
+            //Test info cards env
+            function getTestProfileSearchResults() {
+                return service.profileTestSearchResults
+            }
+            //Test info cards env
+
             function updateProfileSearchResults() {
                 //$analytics.eventTrack('searchProfiles')
                 return server.searchProfiles(service.profile).then(function(profiles) {
@@ -1058,6 +1084,17 @@ function onNotificationOpen(pnObj) {
                     return service.profileSearchResults
                 })
             }
+
+            //Test info cards env
+            function updateTestProfileSearchResults() {
+                //$analytics.eventTrack('searchProfiles')
+                return server.searchTestProfiles(service.profile).then(function(profiles) {
+                    service.profileTestSearchResults = profiles
+                    $rootScope.$broadcast('newProfileSearchResults')
+                    return service.profileTestSearchResults
+                })
+            }
+            //Test info cards env
 
             /**
              *
@@ -1081,6 +1118,7 @@ function onNotificationOpen(pnObj) {
             function clearProfileSearchResults() {
                 service.profileSearchResults = null
             }
+            
 
 
             function getMutualMatches() {
@@ -1463,6 +1501,10 @@ function onNotificationOpen(pnObj) {
                 return server.testPushNotification()
             }
 
+            function getProfilesWhoAreCurious(type) {
+                return server.getProfilesWhoAreCurious(type)
+            }
+
             function getProfilesNoCountry() {
                 return server.getProfilesNoCountry()
             }
@@ -1705,7 +1747,22 @@ function onNotificationOpen(pnObj) {
                 return server.addProviderUser(user)
             }
 
+            function getBranches(pid) {
+                return server.getBranches(pid)
+            }
 
+            function addBranch(branch) {
+                return server.addBranch(branch)
+            }
+
+            function delBranch(id) {
+                return server.delBranch(id)
+            }
+
+            function getBranchServices(services) {
+                return server.getBranchServices(services)
+            }
+            
             // Util functions
             function filePath(file) {
                 if (ionic.Platform.isIOS())

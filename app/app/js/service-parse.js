@@ -299,6 +299,20 @@ var SavedInfoCard = Parse.Object.extend({
     attrs: savedInfoCardFields
 })
 
+/**
+ * @typedef {Object} Branch
+ * @property {number} pid - service providers id
+ * @property {number} title - name of branch
+ * @property {number} location - name of branch
+ * @property {number} location_point - name of branch
+ * @property {array}  services - array of allocated services id
+ */
+var branchFields = ['pid', 'title', 'location', 'location_point', 'services']
+var Branch = Parse.Object.extend({
+    className: "Branch",
+    attrs: branchFields
+})
+
 enhance(Parse.User.prototype, userFields)
 enhance(Profile.prototype, profileFields)
 enhance(Match.prototype, matchFields)
@@ -318,6 +332,7 @@ enhance(ProviderQuestion.prototype, providerQuestionFields)
 enhance(CardsDeckSetting.prototype, cardsDeckSettingFields)
 enhance(SavedInfoCard.prototype, savedInfoCardFields)
 enhance(SpUser.prototype, SpUserFields)
+enhance(Branch.prototype, branchFields)
 
 function enhance(prototype, fields) {
     for (var i = 0; i < fields.length; i++) {
@@ -454,6 +469,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         saveProfileForSomeReason: saveProfileForSomeReason,
         saveFile: saveFile,
         searchProfiles: searchProfiles,
+        searchTestProfiles: searchTestProfiles,
         getProfilesWhoLikeMe: getProfilesWhoLikeMe,
         getProfilesWhoWantsToHaveARelationshipWithMe: getProfilesWhoWantsToHaveARelationshipWithMe,
         processProfile: processProfile,
@@ -471,6 +487,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         deleteAccount: deleteAccount,
 
         testPushNotification: testPushNotification,
+        getProfilesWhoAreCurious: getProfilesWhoAreCurious,
         getProfilesNoCountry: getProfilesNoCountry,
 
         // admin functions
@@ -534,7 +551,11 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         getProviderUsers: getProviderUsers,
         getUserProviders: getUserProviders,
         delProviderUser: delProviderUser,
-        addProviderUser: addProviderUser
+        addProviderUser: addProviderUser,
+        getBranches: getBranches,
+        addBranch: addBranch,
+        delBranch: delBranch,
+        getBranchServices: getBranchServices
     }
 
     return service
@@ -810,7 +831,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             profileChanges.location = convertLocation(profileChanges.location.latitude, profileChanges.location.longitude)
 
             //address and flags
-            if (!ionic.Platform.isIOS() && profileChanges.location.latitude && profileChanges.location.longitude) {
+            if (profileChanges.location.latitude && profileChanges.location.longitude) {
                 let geocodingAPI = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + profileChanges.location.latitude + "," + profileChanges.location.longitude + "&sensor=false&language=en";
                 let num = 0
                 let addArray
@@ -835,8 +856,14 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
                             if (addComp.length == 1)
                                 profileChanges.country = out['results'][num].formatted_address
-                            else
+                            else {
                                 profileChanges.country = addArray.slice(-1).pop().trim()
+                                let cntParsingNumber = profileChanges.country.split(' ').pop()
+                                if (cntParsingNumber && !isNaN(cntParsingNumber)) {
+                                    let lastIndex = profileChanges.country.lastIndexOf(" ")
+                                    profileChanges.country = profileChanges.country.substring(0, lastIndex)
+                                }
+                            }
                         }
                         return profile.save(profileChanges)
                     })
@@ -908,6 +935,18 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         return Parse.Cloud.run('GetMatches', searchParams).catch(_unwrapError)
     }
 
+    //Test info cards env
+    function searchTestProfiles(searchParameters) {
+        if (!searchParameters)
+            $log.error('search parameters were not provided')
+            // Can't use a Parse object as a param, so copy the fields. Could copy only the required search fields.
+        var searchParams = {};
+        for (var i = 0; i < profileFields.length; i++)
+            searchParams[profileFields[i]] = searchParameters[profileFields[i]]
+        return Parse.Cloud.run('GetTestMatches', searchParams).catch(_unwrapError)
+    }
+    //Test info cards env
+
     /**
      * Loads the mutual matches for the given ids
      * @param {string[]} matchIds An array of the match ids
@@ -920,7 +959,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         return Parse.Cloud.run('GetMutualMatches', { matchIds: matchIds })
             // Convert the JSON objects into the proper Parse objects
             .then(matches => _.map(matches, match => {
-                let matchedDate = match.matchedDate ? match.matchedDate : match.createdAt
+                let matchedDate = match.matchedDate ? match.matchedDate : new Date(match.createdAt)
                 let profile = fromJSON(match.otherProfile, 'Profile')
                 match = fromJSON(match, 'Match')
                 match.otherProfile = profile
@@ -1110,6 +1149,10 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
     function testPushNotification() {
         return Parse.Cloud.run('TestPushNotification').catch(_unwrapError)
+    }
+
+    function getProfilesWhoAreCurious(type) {
+        return Parse.Cloud.run('GetProfilesWhoAreCurious', { type: type }).catch(_unwrapError)
     }
 
     function getProfilesNoCountry() {
@@ -1350,21 +1393,36 @@ angular.module('service.parse', ['constants', 'parse-angular'])
     }
 
     function getProviderUsers(pid) {
-        return Parse.Cloud.run('GetProviderUsers', { pid:pid }).catch(_unwrapError)
+        return Parse.Cloud.run('GetProviderUsers', { pid: pid }).catch(_unwrapError)
     }
 
     function getUserProviders(uid) {
-        return Parse.Cloud.run('GetUserProviders', { uid:uid }).catch(_unwrapError)
+        return Parse.Cloud.run('GetUserProviders', { uid: uid }).catch(_unwrapError)
     }
 
-    function delProviderUser(pid,uid) {
-        return Parse.Cloud.run('DelProviderUser', { pid:pid, uid:uid }).catch(_unwrapError)
+    function delProviderUser(pid, uid) {
+        return Parse.Cloud.run('DelProviderUser', { pid: pid, uid: uid }).catch(_unwrapError)
     }
 
     function addProviderUser(user) {
-        return Parse.Cloud.run('AddProviderUser', { user:user }).catch(_unwrapError)
+        return Parse.Cloud.run('AddProviderUser', { user: user }).catch(_unwrapError)
     }
 
+    function getBranches(pid) {
+        return Parse.Cloud.run('GetBranches', { provider_id: pid }).catch(_unwrapError)
+    }
+
+    function addBranch(branch) {
+        return Parse.Cloud.run('AddBranch', { branch: branch }).catch(_unwrapError)
+    }
+
+    function delBranch(id) {
+        return Parse.Cloud.run('DelBranch', { id: id }).catch(_unwrapError)
+    }
+
+    function getBranchServices(services) {
+        return Parse.Cloud.run('GetBranchServices', {services:services}).catch(_unwrapError)
+    }
 
 
     // Private functions

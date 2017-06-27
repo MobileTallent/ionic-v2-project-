@@ -36,6 +36,11 @@
                 <a ui-sref="menu.contact" class="item positive" menu-close><i class="icon ion-ios-email-outline"></i> {{'MENU_CONTACT' | translate}}</a>
                 <a ui-sref="menu.about" class="item positive" menu-close><i class="icon ion-ios-information-outline"></i> {{'ABOUT_JUST_A_BABY' | translate}}</a>
                 <a ng-if="serviceProvider" ui-sref="menu.switch-corporate" class="item" menu-close><i class="icon ion-log-in"></i> Switch to corporate app</a>
+
+                <!--//Test info cards env-->
+                <a ng-if="allowedTests" style="color:brown" ui-sref="menu.testEnvCards" class="item" menu-close><i class="icon ion-planet"></i> Test Info Cards</a>
+                <!--//Test info cards env-->
+
                 <a ng-if="isAdmin" ui-sref="menu.adminMenu" class="item" menu-close><i class="icon ion-ios-email"></i> {{'ADMIN' | translate}}</a>
                 
             </ul>

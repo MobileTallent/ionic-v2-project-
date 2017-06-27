@@ -4,18 +4,21 @@
       "keystore": "android.keystore",
       "storePassword": "jabRF57",
       "alias": "justababy",
-      "password" : "jabRF57"
+      "password": "jabRF57"
     }
   },
   "ios": {
     "_docs": "https://cordova.apache.org/docs/en/latest/guide/platforms/ios/",
     "debug": {
-      "codeSignIdentity": "",
-      "provisioningProfile": ""
+      "codeSignIdentity": "iPhone Developer",
+      "provisioningProfile": "",
+      "developmentTeam": "RPD5XZB46Z"
     },
     "release": {
-      "codeSignIdentity": "",
-      "provisioningProfile": ""
+      "codeSignIdentity": "iPhone Developer",
+      "provisioningProfile": "",
+      "packageType": "app-store",
+      "developmentTeam": "RPD5XZB46Z"
     }
   }
 }

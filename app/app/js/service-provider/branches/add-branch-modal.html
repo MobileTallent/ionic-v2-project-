@@ -1,0 +1,55 @@
+<ion-modal-view>
+
+            <ion-header-bar class="bar bar-header bar-positive">
+                <h1 class="title">{{vm.modalText}} Branch</h1>
+                <button class="button button-clear button-primary" ng-click="vm.close()">Cancel</button>
+            </ion-header-bar>
+            <ion-content class="padding">
+                <form name="branchForm" novalidate ng-submit="vm.addBranch(branchForm)">
+                    <div class="list">
+                        <!-- Title -->
+                        <label class="item item-input" 
+                               ng-class="{ 'has-errors' : branchForm.title.$invalid, 'no-errors' : branchForm.title.$valid}">
+                            <input name="title" 
+                                   ng-model="vm.branch.title" 
+                                   ng-required="true" 
+                                   type="text" 
+                                   placeholder="Title" 
+                            />
+                        </label>
+                        <!--Location-->
+                    </div>
+
+                    <ion-list>
+                        <ion-item class="item item-icon-right" ng-repeat="service in vm.branch.services">
+                            {{service.title}}
+                            <i ng-click="vm.removeService(service)" style="font-size: 20px;color:#cccccc;" class="icon ion-close-round"></i>
+                        </ion-item>
+                        <ion-item class="item item-icon-right">
+                            Add new service 
+                            <i ng-click="vm.addServiceModal.show()" style="font-size: 20px;color:#cccccc;" class="icon ion-plus-round"></i>
+                        </ion-item>
+                    </ion-list>
+
+                    <br>
+                    <ion-list>
+                        <ion-item>Map <small>(drag marker to change location)</small></ion-item>
+                        <label class="item" style="padding:0px;">
+                            <div id="map5" data-tap-disabled="true" style="height:300px;"></div>
+                        </label>
+                        <label class="item">
+                            <p><small style="white-space: normal;">{{vm.branch.location.name}}</small></p>
+                            <p>Latitude : <small>{{vm.branch.location.lat}}</small></p>
+                            <p>Longitude : <small>{{vm.branch.location.lon}}</small></p>
+                        </label>
+
+
+                        <label class="item"
+                             ng-show="(branchForm.title.$error || branchForm.comments) && vm.submitted">
+                            <i class="ion-information-circled"></i> Fill-in all fields!
+                        </label>
+                        <button class="button button-full button-positive">Save</button>
+                    </ion-list>
+                </form>
+            </ion-content>
+        </ion-modal-view>
