@@ -246,7 +246,7 @@ angular.module('ionicApp').config(function($stateProvider, $urlRouterProvider) {
             }
         })
         .state('menu.settings', {
-            url: "/settings",
+            url: "/settings?showFilters",
             views: {
                 'menuContent': {
                     templateUrl: "settings.html",

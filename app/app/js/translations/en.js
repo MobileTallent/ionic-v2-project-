@@ -160,5 +160,6 @@ var TRANSLATION_EN = {
 
     'DELETE_ACCOUNT': 'Delete your account',
 
-    '': ''
+    '': '',
+    'SEARCH_FILTERS' : 'Search Filters'
 }

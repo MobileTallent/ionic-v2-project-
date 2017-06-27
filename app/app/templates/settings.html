@@ -1,7 +1,7 @@
-<ion-view view-title="{{'SETTINGS_TITLE' | translate}}" class="title" cache-view="false">
+<ion-view view-title="{{ viewTitle | translate}}" class="title" cache-view="false">
     <ion-content>
 
-        <div class="card" ng-init="showSearchFilter = false">
+        <div class="card">
             <div class="settings-header" ng-click="showSearchFilter = !showSearchFilter; showDiscovery = false; showAppSettings = false; showHelp = false; ">
                 Search Filters
             </div>
@@ -164,7 +164,7 @@
         </div>-->
 
 
-        <div class="card">
+        <div class="card" ng-show="!showFiltersOnly">
             <div class="settings-header" ng-click="showDiscovery = !showDiscovery; showSearchFilter = false; showAppSettings = false; showHelp = false; ">
                 Discovery
             </div>
@@ -206,7 +206,7 @@
         </div>
 
 
-        <div class="card" ng-init="showAppSettings = false">
+        <div class="card" ng-init="showAppSettings = false" ng-show="!showFiltersOnly">
             <div class="settings-header" ng-click="showAppSettings = !showAppSettings; showSearchFilter = false; showDiscovery = false; showHelp = false; ">
                 Sound Settings
             </div>
@@ -231,7 +231,7 @@
             </div>
 
         </div>
-        <div class="card" ng-init="showHelp = false">
+        <div class="card" ng-init="showHelp = false" ng-show="!showFiltersOnly">
             <div class="settings-header" ng-click="showHelp = !showHelp; showSearchFilter = false; showDiscovery = false; showAppSettings = false; ">
                 Help
             </div>
@@ -242,7 +242,7 @@
             </div>
 
         </div>
-        <div class="card">
+        <div class="card" ng-show="!showFiltersOnly">
             <div class="wide center padding-10">
                 <button class="button button-block button-assertive hidden" ng-click="save()" translate="SAVE"></button>
                 <button class="button button-block button-positive hidden" ng-click="testPushNotification()">Test Push Notification</button>

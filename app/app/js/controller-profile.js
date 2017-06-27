@@ -449,7 +449,7 @@ angular.module('controllers')
 //     $scope.cancel = () => $scope.profile = AppService.getProfile($scope).clone()
 // })
 
-.controller('SettingsCtrl', function($scope, $state, $ionicModal, $ionicPopup, AppService, AppUtil, $log, $rootScope, $translate, $ionicHistory, $ionicActionSheet, env) {
+.controller('SettingsCtrl', function($scope, $state, $stateParams, $ionicModal, $ionicPopup, AppService, AppUtil, $log, $rootScope, $translate, $ionicHistory, $ionicActionSheet, env) {
 
     // The Profile fields on the discover page to save
     var fields = ['enabled', 'guys', 'girls', 'ageFrom', 'ageTo', 'notifyMatch', 'notifyMessage', 'distanceType', 'distance', 'LFSperm', 'LFEggs', 'LFWomb', 'LFEmbryo', 'LFNot', 'LFHelpM', 'LFHelpO', 'LFSelfId']
@@ -460,8 +460,13 @@ angular.module('controllers')
         translations = translationsResult
     })
 
+    $scope.showSearchFilter = !!$stateParams.showFilters;
+    $scope.showFiltersOnly = $scope.showSearchFilter;
+    $scope.viewTitle = $scope.showFiltersOnly ? "SEARCH_FILTERS" : 'SETTINGS_TITLE';
+
     $scope.$on('$ionicView.enter', function(event) {
         $scope.showDiscovery = false
+        
     })
 
     $scope.$on('$ionicView.beforeLeave', function() {
@@ -471,6 +476,7 @@ angular.module('controllers')
 
     $scope.profile = AppService.getProfile().clone()
         //$scope.profile.LFNot = typeof $scope.profile.LFNot !== 'undefined' ? $scope.profile.LFNot : true
+    //$scope.showSearchFilter = false; 
     $scope.showDiscovery = true
     $scope.showMI = $scope.profile.distanceType === 'mi' ? true : false
     $scope.showKM = $scope.profile.distanceType === 'km' ? true : false
