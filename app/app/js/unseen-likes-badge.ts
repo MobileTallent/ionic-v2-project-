@@ -11,9 +11,8 @@ angular.module('ionicApp').directive('unseenLikesBadge', function (AppService: a
 		replace: true, // Need replace otherwise when its used in the menu bar it doesnt work
 		controller: function ($scope) {
 			AppService.getProfilesWhoLikeMe()
-				.then(profiles => {
-					$scope.likesCount = profiles.length
-				})
+			$scope.$on('getPeopleWhoLikesMeCountUpdated', () => $scope.likesCount = AppService.getPeopleWhoLikesMeCount())
+			$scope.$on('getPeopleWhoLikesMeCountDeduced', () => $scope.likesCount--)
 		}
 	}
 });

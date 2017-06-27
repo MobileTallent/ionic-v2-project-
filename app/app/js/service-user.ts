@@ -22,6 +22,7 @@ module app {
 		reportProfile(reason: string, profile: IProfile, match?: IMatch): ng.IPromise<void>
 
 		getUnreadChatsCount(): number
+		getPeopleWhoLikesMeCount(): number
 		getProfileNew(): ng.IPromise<IProfile[]>
 
 		// Admin functions

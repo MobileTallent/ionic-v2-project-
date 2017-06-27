@@ -136,6 +136,7 @@ module app {
 				this.AppService.processMatch(this.profile, liked),
 				() => {
 					this.profiles.splice(this.profileIndex, 1)
+					this.$rootScope.$broadcast('getPeopleWhoLikesMeCountDeduced')
 					this.close()
 				})
 		}

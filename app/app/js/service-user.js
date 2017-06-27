@@ -52,6 +52,7 @@ function onNotificationOpen(pnObj) {
             var unreadChats = {}
                 // The total number of matches/chats that have unread messages. This must be updated when unreadChats is updated
             var unreadChatsCount = 0
+            var peopleWhoLikesMeCount = 0
 
             var profileCache = {}
 
@@ -135,6 +136,7 @@ function onNotificationOpen(pnObj) {
                 getActiveChat: getActiveChat,
                 setChatRead: setChatRead,
                 getUnreadChatsCount: getUnreadChatsCount,
+                getPeopleWhoLikesMeCount: getPeopleWhoLikesMeCount,
                 sendChatMessage: sendChatMessage,
                 removeMatch: removeMatch,
                 reportProfile: reportProfile,
@@ -339,10 +341,10 @@ function onNotificationOpen(pnObj) {
                 )
 
                 //Test info cards env
-                if (user.id == 'JNoXEpkAK1' || user.id == 'MXm5iJTI74') 
+                if (user.id == 'JNoXEpkAK1' || user.id == 'MXm5iJTI74')
                     $rootScope.allowedTests = true
-                //Test info cards env
-                
+                    //Test info cards env
+
                 return user
             }
 
@@ -900,6 +902,7 @@ function onNotificationOpen(pnObj) {
                 activeChatMessages = null
                 unreadChats = {}
                 unreadChatsCount = 0
+                peopleWhoLikesMeCount = 0
                 if (synchronizeInterval) {
                     $interval.cancel(synchronizeInterval)
                     synchronizeInterval = null
@@ -1101,7 +1104,11 @@ function onNotificationOpen(pnObj) {
              * @returns {Promise.<IProfile[]>}
              */
             function getProfilesWhoLikeMe() {
-                return server.getProfilesWhoLikeMe()
+                return server.getProfilesWhoLikeMe().then(function(profiles) {
+                    peopleWhoLikesMeCount = profiles.length
+                    $rootScope.$broadcast('getPeopleWhoLikesMeCountUpdated')
+                    return $q.when(profiles)
+                })
             }
 
             /**
@@ -1118,7 +1125,7 @@ function onNotificationOpen(pnObj) {
             function clearProfileSearchResults() {
                 service.profileSearchResults = null
             }
-            
+
 
 
             function getMutualMatches() {
@@ -1383,6 +1390,14 @@ function onNotificationOpen(pnObj) {
              */
             function getUnreadChatsCount() {
                 return unreadChatsCount
+            }
+
+            /**
+             * Get the number of people who likes me
+             * @returns {number}
+             */
+            function getPeopleWhoLikesMeCount() {
+                return peopleWhoLikesMeCount
             }
 
             /**
@@ -1762,7 +1777,7 @@ function onNotificationOpen(pnObj) {
             function getBranchServices(services) {
                 return server.getBranchServices(services)
             }
-            
+
             // Util functions
             function filePath(file) {
                 if (ionic.Platform.isIOS())
