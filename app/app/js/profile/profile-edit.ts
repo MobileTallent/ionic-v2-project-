@@ -74,7 +74,7 @@ module app {
 				// data.slider is the instance of Swiper
 				$scope.slider = data.slider
 				if ((!$scope.vm.profile.about || $scope.vm.profile.about.match(/\S+/g).length < 10) && $scope.vm.profile.hasSelfId)
-					$scope.slider.slideTo(4)
+					$scope.slider.slideTo($scope.slider.slides.length - 1)
 			})
 
 			this.$scope.$on('$ionicSlides.slideChangeStart', function (event, data) {
@@ -101,15 +101,15 @@ module app {
 			this.onRedirectToEditProfile(false)
 		}
 
-		public changeSperm(){
-			if(this.personCategory === "1" && this.personSperm){
+		public changeSperm() {
+			if (this.personCategory === "1" && this.personSperm) {
 				this.personEgg = false
 				this.personWomb = false
 			}
 		}
 
-		public changeWombEgg(){
-			if(this.personCategory === "1" && (this.personWomb || this.personEgg)){
+		public changeWombEgg() {
+			if (this.personCategory === "1" && (this.personWomb || this.personEgg)) {
 				this.personSperm = false
 			}
 		}
