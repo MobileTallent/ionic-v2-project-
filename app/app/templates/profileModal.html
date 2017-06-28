@@ -23,25 +23,25 @@
             </ion-slide>
         </ion-slide-box>
 
-        <div ng-hide="isCurrentUser" class="material-share-button-container" ng-class="vm.isLoading ? 'customLoader' : ''">
-            <i class="button button-icon icon ion-android-share-alt floating-share-button" ng-click="vm.share()"></i>
-        </div>
-
-        <div class="ion-row profile-name-banner">
-            <div class="col-80">
-                <div class="text-size-24">
-                    {{vm.profile.name}}, {{vm.profile.age}}
-                </div>
-
-                <div class="flag-distance row" ng-init="showCountryName">{{vm.profile.location | distance}} {{'AWAY' | translate}}
-                    <img class="flag" ng-show="profile.address" ng-click="showCountryName = true" ng-src="img/flags/{{profile.country}}.png">
-                    <div ng-show="showCountryName" ng-class="showCountryName ? 'animated fadeInDown' : '' " class="country-popup">
-                        {{vm.profile.country}}
-                    </div>
-                </div>
+    <div class="row profile-name-banner">
+        <div class="col-70">
+            <div class="text-size-24">
+            {{vm.profile.name}}, {{vm.profile.age}}
             </div>
 
+            <div class="flag-distance row" ng-init="showCountryName">{{vm.profile.location | distance}} {{'AWAY' | translate}}
+                <img class="flag" ng-show="profile.address" ng-click="showCountryName = true" ng-src="img/flags/{{profile.country}}.png">
+                <div ng-show="showCountryName" ng-class="showCountryName ? 'animated fadeInDown' : '' " class="country-popup">
+                    {{vm.profile.country}}
+                </div>
+            </div>
         </div>
+
+        <div class="inder-share-button-container">
+            <i class="button button-icon icon ion-android-share-alt profile-share-buttons" ng-click="share()"></i>
+        </div>
+
+    </div>
 
         <div class="padding-15">
             <div class="row">
@@ -52,14 +52,47 @@
                 {{vm.profile.about}}
             </div>
 
-            <div class="badge-row badge-row-profile" ng-click="vm.onClickBadgeInfo()">
-                <img ng-class="profile.personSperm ? 'id-badge' : 'id-no-badge'" src="img/sperm_ic.svg">
-                <img ng-class="profile.personWomb ? 'id-badge' : 'id-no-badge'" src="img/womb_ic.svg">
-                <img ng-class="profile.personEgg ? 'id-badge' : 'id-no-badge'" src="img/egg_ic.svg">
-                <img ng-class="profile.personEmbryo ? 'id-badge' : 'id-no-badge'" src="img/embryo_ic.svg">
-            </div>
+            <br />
 
-            <p class="spacer-70"></p>
+    <!--Id Badge Section (Still need to work out why src is not connecting)-->
+    <!--<div class="padding-15 col-75" style="margin: auto">
+        <hr class="divider-solid center">
+    </div>
+
+
+    <div class="row filter-row">
+        <div class="col">
+            <div class="center">
+                <img class="img-avatar" ng-src="{{vm.spermImage}}" ng-model="vm.profile.personSperm" ng-click="onClickBadgeInfo()">
+                <p ng-class="vm.profile.personSperm ? 'id-text-active' :  'id-text-inactive' ">Sperm</p>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="center">
+                <img class="img-avatar" ng-src="{{vm.eggImage}}" ng-model="vm.profile.personEgg" ng-click="onClickBadgeInfo()">
+                <p ng-class="vm.profile.personEgg ? 'id-text-active' :  'id-text-inactive' ">Eggs</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row filter-row">
+        <div class="col">
+            <div class="center">
+                <img class="img-avatar" ng-src="{{vm.wombImage}}" ng-model="vm.profile.personWomb" ng-click="onClickBadgeInfo()">
+                <p ng-class="vm.profile.personWomb ? 'id-text-active' :  'id-text-inactive' ">Womb</p>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="center">
+                <img class="img-avatar" ng-src="{{vm.embryoImage}}" ng-model="vm.profile.personEmbryo" ng-click="onClickBadgeInfo()">
+                <p ng-class="vm.profile.personEmbryo ? 'id-text-active-embryo' :  'id-text-inactive' ">Embryo</p>
+            </div>
+        </div>
+    </div>-->
+
+            <p class="spacer-50 row"></p>
         </div>
 
     </ion-content>
