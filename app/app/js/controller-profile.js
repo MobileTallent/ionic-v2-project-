@@ -461,8 +461,8 @@ angular.module('controllers')
     })
 
     $scope.showSearchFilter = !!$stateParams.showFilters;
-    $scope.showFiltersOnly = $scope.showSearchFilter;
-    $scope.viewTitle = $scope.showFiltersOnly ? "SEARCH_FILTERS" : 'SETTINGS_TITLE';
+    $scope.showFiltersOnly = !!$scope.showSearchFilter;
+    $scope.viewTitle = $scope.showFiltersOnly ? "" : 'SETTINGS_TITLE';
 
     $scope.$on('$ionicView.enter', function(event) {
         $scope.showDiscovery = false

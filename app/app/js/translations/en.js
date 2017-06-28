@@ -98,7 +98,7 @@ var TRANSLATION_EN = {
     'SHOW_ME': 'Show me',
     'GUYS': 'Guys',
     'GIRLS': 'Girls',
-    'SEARCH_DISTANCE': 'Search distance',
+    'SEARCH_DISTANCE': 'Distance',
     'AGED_BETWEEN': 'Aged between',
     'SETTINGS_TITLE': 'Settings',
     'NOTIFICATION_SOUND': 'Notification Sound',
@@ -161,5 +161,5 @@ var TRANSLATION_EN = {
     'DELETE_ACCOUNT': 'Delete your account',
 
     '': '',
-    'SEARCH_FILTERS' : 'Search Filters'
+    'SEARCH_FILTERS' : 'Back'
 }
