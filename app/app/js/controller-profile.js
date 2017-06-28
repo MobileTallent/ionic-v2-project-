@@ -715,7 +715,7 @@ angular.module('controllers')
     }
 
 
-    //  //  //  //  //  SUDO SEARCH FILTERS  \\  \\  \\  \\  \\
+    //  //  //  //  //  SEARCH FILTERS  \\  \\  \\  \\  \\
 
     $scope.individualImage = 'img/Badges/inactive-Individual.svg';
     $scope.toggleIndividual = false;

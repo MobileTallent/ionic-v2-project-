@@ -185,6 +185,9 @@ module app {
 		/** If the user has embryo */
 		personEmbryo: boolean
 
+		/** If the user intends to be a parent */
+		personParent: boolean
+
 		/* Refers to the helping level of the person 
 		 * 0 - N/A or undefined
 		 * 1 - consider helping someone maybe
