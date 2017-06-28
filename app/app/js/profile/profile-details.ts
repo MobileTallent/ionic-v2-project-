@@ -80,6 +80,25 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 				})
 			}
 
+			$scope.onClickHelpBadgeInfo = () => {
+				var alertPopup = $ionicPopup.alert({
+					title: 'Help Identification Badges',
+					templateUrl: 'badgeInfo-Help.html',
+					buttons: [{
+						text: 'Ok',
+						type: 'button-assertive'
+					}]
+				})
+			}
+
+
+		// // // Self Id Badges \\ \\ \\
+
+		$scope.spermImage = profile.personSperm ? 'img/Badges/active-Sperm.svg' : 'img/Badges/inactive-Sperm.svg'
+    $scope.eggImage = profile.personEgg ? 'img/Badges/active-Egg.svg' : 'img/Badges/inactive-Egg.svg'
+    $scope.wombImage = profile.personWomb ? 'img/Badges/active-Womb.svg' : 'img/Badges/inactive-Womb.svg'
+    $scope.embryoImage = profile.personEmbryo ? 'img/Badges/active-Frozen-Embryo.svg' : 'img/Badges/inactive-Frozen-Embryo.svg'
+
 			var canShare = typeof Branch !== 'undefined';
 
 			$scope.canShare = canShare;

@@ -12,12 +12,12 @@
     </ion-slide>
 </ion-slide-box>
 
-<div ng-hide="isCurrentUser || !canShare"  class="material-share-button-container" ng-class="isLoading ? 'customLoader' : '' "> 
+<!--<div ng-hide="isCurrentUser || !canShare" class="material-share-button-container" ng-class="isLoading ? 'customLoader' : '' ">
     <i class="button button-icon icon ion-android-share-alt floating-share-button" ng-click="share()"></i>
-</div>
+</div>-->
 
-<div class="ion-row profile-name-banner">
-    <div class="col-80">
+<div class="row profile-name-banner">
+    <div class="col-70">
         <div class="text-size-24">
             {{profile.name}}, {{profile | profileAge}}
         </div>
@@ -30,20 +30,12 @@
         </div>
     </div>
 
-    <div class="badge-row badge-row-profile" ng-click="onClickBadgeInfo()">
-        <img ng-class="profile.personSperm ? 'id-badge' : 'id-no-badge'" src="img/sperm_ic.svg">
-        <img ng-class="profile.personWomb ? 'id-badge' : 'id-no-badge'" src="img/womb_ic.svg">
-        <img ng-class="profile.personEgg ? 'id-badge' : 'id-no-badge'" src="img/egg_ic.svg">
-        <img ng-class="profile.personEmbryo ? 'id-badge' : 'id-no-badge'" src="img/embryo_ic.svg">
+    <div ng-hide="isCurrentUser || !canShare" ng-class="isLoading ? 'customLoader' : '' " class="inder-share-button-container">
+        <i class="button button-icon icon ion-android-share-alt profile-share-buttons" ng-click="share()"></i>
     </div>
 
-    <!--Share buttons simple style like tinder-->
-    <!--<div class="col-20 profile-share-container">
-        <i class="button button-icon icon ion-android-share-alt profile-share-buttons" ng-click="vm.share()"></i>
-        <i class="button button-icon icon ion-android-more-vertical profile-share-buttons" ng-click="vm.profileOptions()"></i>
-    </div>-->
-
 </div>
+
 
 <div class="padding-15">
     <div class="row">
@@ -53,14 +45,108 @@
     <div ng-show="profile.about" style="color:#9B9B9B; white-space: pre-wrap;" class="text-size-18">
         {{profile.about}}
     </div>
+</div>
 
-    <button class="button help-button" 
-            ng-show="!$root.serviceProviderOwner && (currentState=='menu.profile') && (profile.uid=='JNoXEpkAK1' || profile.uid=='MXm5iJTI74')"
-            style="line-height: 25px;padding: 12px;width: 70%;margin-left: 15%;margin-top: 30px;" 
-            ng-click="upgradeModal.show()">
+<!--Id Badge Section-->
+<div class="padding-15 col-75" style="margin: auto">
+    <hr class="divider-solid center">
+</div>
+
+
+<div class="row filter-row">
+    <div class="col">
+        <div class="center">
+            <img class="img-avatar" ng-src="{{spermImage}}" ng-model="profile.personSperm" ng-click="onClickBadgeInfo()">
+            <p ng-class="profile.personSperm ? 'id-text-active' :  'id-text-inactive' ">Sperm</p>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="center">
+            <img class="img-avatar" ng-src="{{eggImage}}" ng-model="profile.personEgg" ng-click="onClickBadgeInfo()">
+            <p ng-class="profile.personEgg ? 'id-text-active' :  'id-text-inactive' ">Eggs</p>
+        </div>
+    </div>
+</div>
+
+<div class="row filter-row">
+    <div class="col">
+        <div class="center">
+            <img class="img-avatar" ng-src="{{wombImage}}" ng-model="profile.personWomb" ng-click="onClickBadgeInfo()">
+            <p ng-class="profile.personWomb ? 'id-text-active' :  'id-text-inactive' ">Womb</p>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="center">
+            <img class="img-avatar" ng-src="{{embryoImage}}" ng-model="profile.personEmbryo" ng-click="onClickBadgeInfo()">
+            <p ng-class="profile.personEmbryo ? 'id-text-active-embryo' :  'id-text-inactive' ">Embryo</p>
+        </div>
+    </div>
+</div>
+
+<button class="button help-button" ng-show="!$root.serviceProviderOwner && (currentState=='menu.profile') && (profile.uid=='JNoXEpkAK1' || profile.uid=='MXm5iJTI74')"
+    style="line-height: 25px;padding: 12px;width: 70%;margin-left: 15%;margin-top: 30px;" ng-click="upgradeModal.show()">
         Service Provider ? <br>
         Get a corporate account
     </button>
 
-    <p class="spacer-70"></p>
+<p class="spacer-50 row"></p>
+
+<!--Old Bage Row-->
+<!--<div class="badge-row badge-row-profile" ng-click="onClickBadgeInfo()">
+    <img ng-class="profile.personSperm ? 'id-badge-visible col' : 'id-badge-hidden' " src="img/Badges/active-Sperm.svg">
+    <img ng-class="profile.personEgg ? 'id-badge-visible col' : 'id-badge-hidden' " src="img/Badges/active-Egg.svg">
+    <img ng-class="profile.personWomb ? 'id-badge-visible col' : 'id-badge-hidden' " src="img/Badges/active-Womb.svg">
+    <img ng-class="profile.personEmbryo ? 'id-badge-visible col' : 'id-badge-hidden' " src="img/Badges/active-Frozen-Embryo.svg">
+    <img ng-class="profile.personParent ? 'id-badge-visible col' : 'id-badge-hidden' " src="img/Badges/active-Looking-For-Help.svg">
+    <img ng-class="profile.personHelpLevel === '2' ? 'id-badge-visible col' : 'id-badge-hidden' " src="img/Badges/active-Help.svg">
+</div>-->
+
+<!--Share buttons simple style like tinder-->
+<!--<div class="col-20 profile-share-container">
+    <i class="button button-icon icon ion-android-share-alt profile-share-buttons" ng-click="vm.share()"></i>
+    <i class="button button-icon icon ion-android-more-vertical profile-share-buttons" ng-click="vm.profileOptions()"></i>
+</div>-->
+
+
+<!--More Self Id Badges-->
+<!--<div class="padding-15 col-75" style="margin: auto">
+<hr class="divider-solid center">
+</div>
+
+
+<div class="row filter-row">
+    <div class="col">
+        <div class="center">
+            <img class="img-avatar" ng-src="{{individualImage}}">
+            <p>Individials</p>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="center">
+            <img class="img-avatar" ng-src="{{coupleImage}}">
+            <p>Couples</p>
+        </div>
+    </div>
+</div>
+
+<div class="row filter-row">
+    <div class="col">
+        <div class="center">
+            <img class="img-avatar" ng-src="{{helpImage}}">
+            <p>Angels & Helpers</p>
+        </div>
+    </div>
+
+    <div class="col">
+        <div class="center">
+            <img class="img-avatar" ng-src="{{lookingImage}}">
+            <p>Intended legal Parents</p>
+        </div>
+    </div>
+</div>-->
+
+
 </div>
