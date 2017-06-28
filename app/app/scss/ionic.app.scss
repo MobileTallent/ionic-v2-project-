@@ -105,16 +105,26 @@ button.button.button-stable {
     // height: 65px;
 }
 
+.badge-row-profile-edit {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
 .id-badge-visible {
-    // animation: slideInUp 500ms ease;
     display: block !important;
-    width: 60px;
-    height: 60px;
+    opacity: 1;
+    margin: auto;
+    width: 70px;
+    height: 70px;
     transition: all ease 300ms;
 }
 
 .id-badge-hidden {
     visibility: hidden;
+    //margin: auto;
+    opacity: 0;
     height: 0;
     width: 0;
     transition: all ease 300ms;
@@ -129,6 +139,73 @@ button.button.button-stable {
 .id-no-badge {
     display: none;
 }
+
+//Testing Ng-if for better performance
+
+// .id-badge-appear-disappear.ng-enter {
+//     visibility: hidden;
+//     height: 0;
+//     width: 0;
+//     transition: all ease 300ms;
+// }
+
+// .id-badge-appear-disappear-init .id-badge-appear-disappear.ng-enter {
+//     display: block !important;
+//     width: 60px;
+//     height: 60px;
+//     transition: all ease 300ms;
+// }
+
+// .id-badge-appear-disappear.ng-enter.ng-enter-active {
+//     display: block !important;
+//     width: 60px;
+//     height: 60px;
+//     transition: all ease 300ms;
+// }
+
+// .id-badge-appear-disappear.ng-leave {
+//     display: block !important;
+//     width: 60px;
+//     height: 60px;
+//     transition: all ease 300ms;
+// }
+// .id-badge-appear-disappear.ng-leave.ng-leave-active {
+//     visibility: hidden;
+//     height: 0;
+//     width: 0;
+//     transition: all ease 300ms;
+// }
+
+// .fade-element-in.ng-enter {
+//     display: block !important;
+//     width: 60px;
+//     height: 60px;
+//     transition: all ease 300ms;
+// }
+
+// .fade-element-in-init .fade-element-in.ng-enter {
+//     visibility: hidden;
+//     height: 0;
+//     width: 0;
+//     transition: all ease 300ms;
+// }
+
+// .fade-element-in.ng-enter.ng-enter-active {
+//     display: block !important;
+//     width: 60px;
+//     height: 60px;
+//     transition: all ease 300ms;
+// }
+
+// .fade-element-in.ng-leave {
+//     visibility: hidden;
+//     height: 0;
+//     width: 0;
+//     transition: all ease 300ms;
+// }
+// .fade-element-in.ng-leave.ng-leave-active {
+//   opacity: 0;
+// }
 
 // Badge Info Popup
 
