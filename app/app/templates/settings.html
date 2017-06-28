@@ -8,18 +8,11 @@
 
             <div class="settings-dropdown" ng-show="showSearchFilter" ng-class="showSearchFilter ? 'animated slideInDown' : '' ">
 
-                <div class="row filter-row">
+                <!--<div class="row filter-row">
                     <div class="col">
                         <div class="center">
-                            <h3>Show me</h3>
+                            <h3>Help me find...</h3>
                         </div>
-                    </div>
-                </div>
-
-                <!--<div class="row center">
-                    <div class="col center">
-                        <button class="button filter-selector filter-selector-left">Auto Filter</button>
-                        <button class="button filter-selector filter-selector-right">Manual</button>
                     </div>
                 </div>
 
@@ -39,35 +32,49 @@
                     </div>
                 </div>
 
+                <div class="row center">
+                    <div class="col center">
+                        <button class="button filter-selector filter-selector-left">Auto Filter</button>
+                        <button class="button filter-selector filter-selector-right">Manual</button>
+                    </div>
+                </div>
+
                  <div class="row filter-row">
                     <div class="col">
                         <div class="center">
                             <img class="img-avatar" ng-src="{{helpImage}}" on-tap="activateHelp()" >
-                            <p>Donors/Surrogates</p>
+                            <p>Angels & Helpers</p>
                         </div>
                     </div>
 
                     <div class="col">
                         <div class="center">
                             <img class="img-avatar" ng-src="{{lookingImage}}" on-tap="activateLooking()" >
-                            <p>Intended Parents</p>
+                            <p>Intended legal Parents</p>
                         </div>
                     </div>
                 </div>-->
 
+                <div class="row filter-row">
+                    <div class="col">
+                        <div class="center">
+                            <h4 style="color:#666">Show me people with...</h3>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="row filter-row">
                     <div class="col">
                         <div class="center">
                             <img class="img-avatar" ng-src="{{spermImage}}" ng-model="profile.LFSperm" on-tap="activateSperm(); ">
-                            <p>Sperm</p>
+                            <p ng-class="profile.LFSperm ? 'id-text-active' :  'id-text-inactive' ">Sperm</p>
                         </div>
                     </div>
 
                     <div class="col">
                         <div class="center">
                             <img class="img-avatar" ng-src="{{eggImage}}" ng-model="profile.LFEggs" on-tap="activateEgg()">
-                            <p>Egg</p>
+                            <p ng-class="profile.LFEggs ? 'id-text-active' :  'id-text-inactive' ">Eggs</p>
                         </div>
                     </div>
                 </div>
@@ -76,14 +83,14 @@
                     <div class="col">
                         <div class="center">
                             <img class="img-avatar" ng-src="{{wombImage}}" ng-model="profile.LFWomb" on-tap="activateWomb()">
-                            <p>Womb</p>
+                            <p ng-class="profile.LFWomb ? 'id-text-active' :  'id-text-inactive' ">Womb</p>
                         </div>
                     </div>
 
                     <div class="col">
                         <div class="center">
                             <img class="img-avatar" ng-src="{{embryoImage}}" ng-model="profile.LFEmbryo" on-tap="activateEmbryo()">
-                            <p>Embryo</p>
+                            <p ng-class="profile.LFEmbryo ? 'id-text-active-embryo' :  'id-text-inactive' ">Embryo</p>
                         </div>
                     </div>
                 </div>
