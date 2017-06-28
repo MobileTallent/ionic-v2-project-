@@ -19,6 +19,13 @@ module app {
 		private linkToBeShared
 		public isLoading
 
+		private spermImage
+		private eggImage
+		private wombImage
+		private embryoImage 
+
+
+
 		private profileModal
 		public profile // The profile being viewed
 		public profileIndex // The index in profiles of the profile viewed
@@ -58,10 +65,17 @@ module app {
 				.finally(() => this.$scope.$broadcast('scroll.refreshComplete'))
 		}
 
+
 		public view(index: number) {
 			this.$log.debug('viewing profile who liked me at index ' + index)
 			this.profile = this.profiles[index]
 			this.profileIndex = index
+
+			this.spermImage = this.profile.personSperm ? 'img/Badges/active-Sperm.svg' : 'img/Badges/inactive-Sperm.svg'
+    	this.eggImage = this.profile.personEgg ? 'img/Badges/active-Egg.svg' : 'img/Badges/inactive-Egg.svg'
+    	this.wombImage = this.profile.personWomb ? 'img/Badges/active-Womb.svg' : 'img/Badges/inactive-Womb.svg'
+    	this.embryoImage = this.profile.personEmbryo ? 'img/Badges/active-Frozen-Embryo.svg' : 'img/Badges/inactive-Frozen-Embryo.svg'
+
 			this.profileModal.show()
 		}
 
@@ -159,6 +173,12 @@ module app {
 			this.$ionicSlideBoxDelegate.slide(0)
 			this.profileIndex = null
 			this.profile = null
+
+			this.spermImage = null
+    	this.eggImage = null
+    	this.wombImage = null
+    	this.embryoImage = null
+
 			this.profileModal.hide()
 		}
 
