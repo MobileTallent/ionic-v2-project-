@@ -25,7 +25,7 @@ var profileFields = [
     'enabled',
     'gender', 'guys', 'girls',
     'ageFrom', 'ageTo',
-    'personCategory', 'personType', 'personSperm', 'personEgg', 'personWomb', 'personEmbryo', 'personHelpLevel', 'hasSelfId',
+    'personCategory', 'personType', 'personSperm', 'personEgg', 'personWomb', 'personEmbryo', 'personParent', 'personHelpLevel', 'hasSelfId',
     'LFSperm', 'LFEggs', 'LFWomb', 'LFEmbryo', 'LFNot', 'LFHelpM', 'LFHelpO', 'thingsIHave', 'LFSelfId'
 ]
 
