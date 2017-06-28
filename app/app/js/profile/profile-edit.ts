@@ -32,6 +32,7 @@ module app {
 		public personEgg: boolean
 		public personWomb: boolean
 		public personEmbryo: boolean
+		public personParent: boolean
 		public personHelpLevel: string
 
 		private $log: ng.ILogService
@@ -91,6 +92,7 @@ module app {
 			this.personWomb = this.profile.personWomb
 			this.personEmbryo = this.profile.personEmbryo
 			this.personHelpLevel = this.profile.personHelpLevel
+			this.personParent = this.profile.personParent
 			this.photos = _.map(this.profile.photos, photo => new ProfilePhoto(photo))
 			this.photosInReview = this.profile.photosInReview
 				? _.map(this.profile.photosInReview, photo => new ProfilePhoto(photo))
@@ -262,6 +264,7 @@ module app {
 				profileUpdate.personEgg = false
 				profileUpdate.personWomb = false
 				profileUpdate.personEmbryo = false
+				profileUpdate.personParent = false
 				profileUpdate.personHelpLevel = '0'
 			} else {
 				profileUpdate.personType = this.personType ? this.personType : '0'
@@ -269,6 +272,7 @@ module app {
 				profileUpdate.personEgg = this.personEgg ? this.personEgg : false
 				profileUpdate.personWomb = this.personWomb ? this.personWomb : false
 				profileUpdate.personEmbryo = this.personEmbryo ? this.personEmbryo : false
+				profileUpdate.personParent = this.personParent ? this.personParent : false
 				profileUpdate.personHelpLevel = this.personHelpLevel ? this.personHelpLevel : '0'
 			}
 			profileUpdate.hasSelfId = profileUpdate.personCategory !== '0' ? true : false

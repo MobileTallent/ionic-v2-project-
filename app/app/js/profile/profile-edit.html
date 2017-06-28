@@ -13,14 +13,16 @@
     <ion-content padding="true">
         <div class="about-you-header"><b class="padding-5">Add Photos</b>
         </div>
+
         <div class="row">
             <div class="col col-33" ng-repeat="photo in vm.photos track by $index">
-                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}" class="profileImg">
+                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}"
+                    class="profileImg">
             </div>
             <div class="col col-33" id="addPhoto" ng-if="vm.canAddPhoto()">
                 <img ng-src="{{vm.NO_IMAGE}}" ng-click="vm.addPhoto()" class="profileImg" />
             </div>
-            <!-- TODO could have some placeholder images in the other empty spots so there isn't odd looking empty space -->
+        <!-- TODO could have some placeholder images in the other empty spots so there isn't odd looking empty space -->
         </div>
 
         <div ng-if="vm.photosInReview.length">
@@ -28,23 +30,28 @@
         </div>
         <div class="row" ng-if="vm.photosInReview.length">
             <div class="col col-33" ng-repeat="photo in vm.photosInReview track by $index">
-                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}" class="profileImg">
+                <img ng-class="photo.selected ? 'profileImageSelected' : 'profileImage'" ng-click="vm.toggleSelected(photo)" ng-src="{{photo.file.url()}}"
+                    class="profileImg">
             </div>
         </div>
 
         <br/>
 
         </br>
-        <!--Badge Container - styles located in ionic.app.scss-->
-        <div class="badge-row" ng-click="vm.onClickBadgeInfo()">
-            <img ng-class="vm.personSperm ? 'id-badge-visible' : 'id-badge-hidden' " src="img/sperm_ic.svg">
-            <img ng-class="vm.personEgg ? 'id-badge-visible' : 'id-badge-hidden' " src="img/egg_ic.svg">
-            <img ng-class="vm.personWomb ? 'id-badge-visible' : 'id-badge-hidden' " src="img/womb_ic.svg">
-            <img ng-class="vm.personEmbryo ? 'id-badge-visible' : 'id-badge-hidden' " src="img/embryo_ic.svg">
+
+<!--Badge Container - styles located in ionic.app.scss-->
+        <div class="badge-row-profile-edit" ng-click="vm.onClickBadgeInfo()">
+            <!--<img ng-class="vm.personParent ? 'id-badge-visible col' : 'id-badge-hidden' " src="img/Badges/active-Looking-For-Help.svg">
+            <img ng-class="vm.personHelpLevel === '2' ? 'id-badge-visible col' : 'id-badge-hidden' " src="img/Badges/active-Help.svg">-->
+            <img ng-class="vm.personSperm ? 'id-badge-visible col' : 'id-badge-hidden' " src="img/Badges/active-Sperm.svg">
+            <img ng-class="vm.personEgg ? 'id-badge-visible col' : 'id-badge-hidden' " src="img/Badges/active-Egg.svg">
+            <img ng-class="vm.personWomb ? 'id-badge-visible col' : 'id-badge-hidden' " src="img/Badges/active-Womb.svg">
+            <img ng-class="vm.personEmbryo ? 'id-badge-visible col' : 'id-badge-hidden' " src="img/Badges/active-Frozen-Embryo.svg">
         </div>
 
 
-        <!--Self definition filter cards. -->
+<!--Self definition filter cards. -->
+
         <div class="about-you-header">
 
             <ion-slides class="filter-container" options="vm.$scope.options">
@@ -103,13 +110,16 @@
                     </div>
                     <div class="nav-button-row-filter-card">
                         <div class="nav-button-container-center">
-                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized large-icon" ng-hide="!vm.personCategory || vm.personCategory == '3'" ng-click="vm.$scope.slider.slideNext()"></a>
+                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized large-icon" ng-hide="!vm.personCategory || vm.personCategory == '3'"
+                                ng-click="vm.$scope.slider.slideNext()"></a>
                         </div>
                         <a ng-show="!vm.personCategory || vm.personCategory == '3'" class="text-colour-energized" style="text-align: center; font-size: 12px;">Please register your interest by emailing info@justababy.com and we will be in touch.</a>
                     </div>
                 </ion-slide-page>
 
-                <!--Tier Two | Curiosity Section-->
+
+<!--Tier Two | Curiosity Section-->
+
                 <ion-slide-page class="filter-page">
                     <div class="padding-10"><b>Where are you at?</b></div>
                     <div class="filter-radio">
@@ -153,13 +163,16 @@
                     </div>
                 </ion-slide-page>
 
-                <!--Tier Three | Sperm, Womb, Etc Section-->
+
+<!--Tier Three | Sperm, Womb, Etc Section-->
+
                 <ion-slide-page>
                     <div class="padding-10"><b>Tell us about you</b></div>
-                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap" ng-model="vm.personSperm" toggle-class="toggle-assertive" ng-change="vm.changeSperm()">
+                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap"
+                        ng-model="vm.personSperm" toggle-class="toggle-assertive" ng-change="vm.changeSperm()">
 
                         <div class="self-id-badge-checkbox">
-                            <img src="img/sperm_ic.svg">
+                            <img src="img/Badges/active-Sperm.svg">
                         </div>
 
                         <span ng-class="!vm.personSperm ? 'toggle-text-active' : 'toggle-text-inactive'">
@@ -168,10 +181,11 @@
                     </ion-checkbox>
 
 
-                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap" ng-model="vm.personEgg" toggle-class="toggle-assertive" ng-change="vm.changeWombEgg()">
+                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap"
+                        ng-model="vm.personEgg" toggle-class="toggle-assertive" ng-change="vm.changeWombEgg()">
 
                         <div class="self-id-badge-checkbox">
-                            <img src="img/egg_ic.svg">
+                            <img src="img/Badges/active-Egg.svg">
                         </div>
 
                         <span ng-class="!vm.personEgg ? 'toggle-text-active' : 'toggle-text-inactive'">
@@ -180,10 +194,11 @@
                     </ion-checkbox>
 
 
-                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap" ng-model="vm.personWomb" toggle-class="toggle-assertive" ng-change="vm.changeWombEgg()">
+                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap"
+                        ng-model="vm.personWomb" toggle-class="toggle-assertive" ng-change="vm.changeWombEgg()">
 
                         <div class="self-id-badge-checkbox">
-                            <img src="img/womb_ic.svg">
+                            <img src="img/Badges/active-Womb.svg">
                         </div>
 
                         <span ng-class="!vm.personWomb ? 'toggle-text-active' : 'toggle-text-inactive'">
@@ -192,46 +207,17 @@
                     </ion-checkbox>
 
 
-                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap" ng-model="vm.personEmbryo" toggle-class="toggle-assertive">
+                    <ion-checkbox style="border-radius: 25px; border-color: rgba(187, 225, 213, 0.69); margin: 5px" class="center item-checkbox-right item-text-wrap"
+                        ng-model="vm.personEmbryo" toggle-class="toggle-assertive">
 
                         <div class="self-id-badge-checkbox">
-                            <img src="img/embryo_ic.svg">
+                            <img src="img/Badges/active-Frozen-Embryo.svg">
                         </div>
 
                         <span ng-class="!vm.personEmbryo ? 'toggle-text-active' : 'toggle-text-inactive'">
                             I have a frozen embryo
                         </span>
                     </ion-checkbox>
-
-
-
-                    <!--<ion-checkbox ng-model="vm.personSperm " color="positive" class="item-checkbox-right">
-                        <ion-label class="row flex-center">
-                            <span class="col-80 padding-10">  I have Sperm</span>
-                        </ion-label>
-                    </ion-checkbox>
-
-                    <ion-checkbox ng-model="vm.personEgg" color="positive" class="item-checkbox-right">
-                        <ion-label class="row flex-center">
-                            <span class="col-80 padding-10"> I have Eggs</span>
-                        </ion-label>
-                    </ion-checkbox>
-
-                    <ion-checkbox ng-model="vm.personWomb" color="positive" class="item-checkbox-right">
-                        <ion-label class="row flex-center">
-                            <span class="col-80 padding-10">  I have a Womb</span>
-                        </ion-label>
-                    </ion-checkbox>
-
-
-                    <ion-checkbox ng-model="vm.personEmbryo" color="positive" class="item-checkbox-right item-text-wrap">
-                        <ion-label class="row flex-center">
-                            <span class="col-80 padding-10">  I have a frozen Embryo</span>
-                        </ion-label>
-                    </ion-checkbox>-->
-
-
-
 
                     <div class="nav-button-row-filter-card">
                         <div class="nav-button-container-left">
@@ -243,9 +229,60 @@
                     </div>
                 </ion-slide-page>
 
-                <!--Tier Four | Helping Level Section -->
+
+<!--Tier four | Parental Status-->
+
                 <ion-slide-page class="filter-page">
-                    <div class="padding-10"><b>Would you help others make a baby?</b></div>
+
+                    <div class="padding-10"><b>Do you intend to be a legal parent?</b></div>
+
+                    <div class="filter-radio">
+                        <div class="row" ng-click="vm.$scope.slider.slideNext()">
+
+                            <input type="radio" name="personParent" ng-model="vm.personParent" ng-value="true" id="intendedPatent" />
+                            <label class="row" for="intendedPatent">
+                                <span class="col-80 center radio-label text-size-18">
+                                    Yes
+                                </span>
+                            
+                                <div class="col-20 center">
+                                    <div class="check"></div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="filter-radio">
+                        <div class="row " ng-click="vm.$scope.slider.slideNext()">
+
+                            <input type="radio" name="personParent" ng-model="vm.personParent" ng-value="false" id="notIntendedParent" />
+                            <label class="row" for="notIntendedParent">
+
+                                <span class="col-80 center radio-label text-size-18">
+                                   No
+                                </span>
+
+                                <div class="col-20 center">
+                                    <div class="check"></div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="nav-button-row-filter-card">
+                        <div class="nav-button-container-left">
+                            <a class="button button-icon icon ion-arrow-left-a text-colour-energized large-icon" ng-click="vm.$scope.slider.slidePrev()"></a>
+                        </div>
+                        <div class="nav-button-container-right">
+                            <a class="button button-icon icon ion-arrow-right-a text-colour-energized large-icon" ng-click="vm.$scope.slider.slideNext()"></a>
+                        </div>
+                    </div>
+                </ion-slide-page>
+
+
+<!--Tier Five | Helping Level Section -->
+                <ion-slide-page class="filter-page">
+                    <div class="padding-10"><b>Would you help people in need make a baby?</b></div>
                     <div class="filter-radio">
                         <div class="row" ng-click="vm.$scope.slider.slideNext()">
 
@@ -274,7 +311,7 @@
                             <label class="row" for="primarilyHelping">
 
                                 <span class="col-80 center radio-label text-size-18">
-                                    Yes
+                                   Yes
                                 </span>
 
                                 <div class="col-20 center">
@@ -310,19 +347,18 @@
                     </div>
                 </ion-slide-page>
 
-                <!--Tier Five | About Section-->
+<!--Tier Six | About Section-->
                 <ion-slide-page class="filter-page">
                     <div class="about-you-container">
                         <h5 class="about-you-info padding-5">{{'ABOUT_YOU' | translate}}</h5>
 
                         <div>
-                            <textarea rows="6" class="wide input-grey text-size-18 padding-15 " style="resize: none; height: 100px; max-height: 130px;" placeholder="Type Here..." id="aboutYou" ng-model="vm.about" ng-keyup="vm.expandText()" ng-keydown="vm.expandText()">
+                            <textarea rows="6" class="wide input-grey text-size-18 padding-15 " style="resize: none; height: 100px; max-height: 130px;"
+                                placeholder="Type Here..." id="aboutYou" ng-model="vm.about" ng-keyup="vm.expandText()" ng-keydown="vm.expandText()">
                             </textarea>
                         </div>
 
-                        <!--<div ng-hide="vm.profile.about != vm.about || vm.about" class="more-information-error">
-                             <p>* You still need to write a little about yourself.</p>
-                        </div>-->
+
                     </div>
                     <div class="nav-button-row-filter-card">
                         <div class="nav-button-container-left">
@@ -336,30 +372,5 @@
 
             </ion-slides>
         </div>
-
-
-
-        <!--<ion-radio name="category" ng-model="vm.personCategory" value="1">Its just me for now.</ion-radio>-->
-        <!--<ion-radio name="category" ng-model="vm.personCategory" value="2">I'm here with my partner.</ion-radio>-->
-        <!--<ion-radio name="category" ng-model="vm.personCategory" value="3">I represent an organization.</ion-radio>-->
-
-        <!--
-        <ion-radio name="personType" ng-model="vm.personType" value="1">I'm not quite ready but I'm certainly curious</ion-radio>-->
-        <!--<ion-radio name="personType" ng-model="vm.personType" value="2">I'm ready now, I'm pretty serious.</ion-radio>-->
-
-
-        <!--<ion-toggle ng-model="vm.personSperm" toggle-class="toggle-assertive">I have plenty of sperm</ion-toggle>
-        <ion-toggle ng-model="vm.personEgg" toggle-class="toggle-assertive">I am good for eggs</ion-toggle>
-        <ion-toggle ng-model="vm.personWomb" toggle-class="toggle-assertive">I have a womb and plan to use it</ion-toggle>
-        <ion-toggle ng-model="vm.personEmbryo" toggle-class="toggle-assertive">I have an embryo in the freezer</ion-toggle>-->
-
-        <!--<ion-radio name="personHelpLevel" ng-model="vm.personHelpLevel" value="1">I'd consider helping someone maybe.</ion-radio>
-        <ion-radio name="personHelpLevel" ng-model="vm.personHelpLevel" value="2">I'm primarily here to help others.</ion-radio>
-        <ion-radio name="personHelpLevel" ng-model="vm.personHelpLevel" value="3">I'm not able to help others at all.</ion-radio>-->
-
-
-        <!--<div class="text-align center padding-25">
-            <button class="button button-positive" ng-click="vm.saveProfile()">Finish</button>
-        </div>-->
     </ion-content>
 </ion-view>
