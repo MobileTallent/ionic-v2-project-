@@ -156,12 +156,14 @@
                                     Read More
                                 </div>
 
-                                <div class="badge-row">
-                                    <img ng-class="profile.personSperm ? 'id-badge' : 'id-no-badge'" src="img/sperm_ic.svg">
-                                    <img ng-class="profile.personWomb ? 'id-badge' : 'id-no-badge'" src="img/womb_ic.svg">
-                                    <img ng-class="profile.personEgg ? 'id-badge' : 'id-no-badge'" src="img/egg_ic.svg">
-                                    <img ng-class="profile.personEmbryo ? 'id-badge' : 'id-no-badge'" src="img/embryo_ic.svg">
-                                </div>
+                            <div class="badge-row-profile-edit">
+                                <!--<img ng-class="vm.personParent ? 'id-badge-visible col' : 'id-badge-hidden' " src="img/Badges/active-Looking-For-Help.svg">
+                                <img ng-class="vm.personHelpLevel === '2' ? 'id-badge-visible col' : 'id-badge-hidden' " src="img/Badges/active-Help.svg">-->
+                                <img ng-class="profile.personSperm ? 'id-badge-visible col' : 'id-badge-hidden' " src="img/Badges/active-Sperm.svg">
+                                <img ng-class="profile.personEgg ? 'id-badge-visible col' : 'id-badge-hidden' " src="img/Badges/active-Egg.svg">
+                                <img ng-class="profile.personWomb ? 'id-badge-visible col' : 'id-badge-hidden' " src="img/Badges/active-Womb.svg">
+                                <img ng-class="profile.personEmbryo ? 'id-badge-visible col' : 'id-badge-hidden' " src="img/Badges/active-Frozen-Embryo.svg">
+                            </div>
 
                             </div>
                     </td-card>
