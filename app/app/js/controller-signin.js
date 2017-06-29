@@ -242,6 +242,8 @@ angular.module('controllers', ['service.app', 'ngAnimate', 'ngCordova', 'ionic.c
 
         // the timeout is to give the drop CSS animation time
         $timeout(() => AppService.goToNextLoginState(), 1000)
+
+
     }
 
 
@@ -324,4 +326,10 @@ angular.module('controllers', ['service.app', 'ngAnimate', 'ngCordova', 'ionic.c
     // Check if we need to wait for the Facebook JS plugin to initialise and then check for doing an auto-login
     ensureFb(autoLogin)
 
+
+    $scope.feedback = function() {
+        intercom.reset();
+        intercom.registerUnidentifiedUser();
+        intercom.displayMessenger();
+    }
 });

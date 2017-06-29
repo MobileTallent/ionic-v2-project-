@@ -163,10 +163,11 @@
               </div>-->
 
 			<div class="row bottom">
-				<div class="col">
-					<div id="login-status">{{status | translate}}</div>
-					<p class="center" style="color:#fff">Just a Baby does not post anything to Facebook</p>
-				</div>
+				<div id="login-status" class="block margin">{{status | translate}}</div>
+				<div class="center block" style="color:#fff;text-align: center;margin: 0 auto;">Just a Baby does not post anything to Facebook</div>
+			</div>
+			<div>		
+				<a class="center block margin" style="color:#fff" ng-click="feedback()">Troubled logging in ? <b>Click here</b></a>
 			</div>
 		</div>
 	</ion-content>

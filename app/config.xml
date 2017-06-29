@@ -1,7 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?xml version='1.0' encoding='utf-8'?>
 <widget android-versionCode="468" id="co.justababy.app" ios-CFBundleVersion="0.4.6" version="0.4.6" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>Just a Baby</name>
-  <description>
+    <name>Just a Baby</name>
+    <description>
     An app for single parents to meet and discover each other.
   </description>
     <author email="admin@justababy.co" href="http://justababy.co/">Just a Baby</author>
@@ -16,30 +16,11 @@
     <preference name="SplashScreen" value="screen" />
     <preference name="SplashScreenDelay" value="3000" />
     <preference name="Orientation" value="portrait" />
-
-
     <preference name="ParseAppId" value="11111111122444" />
     <preference name="ParseServerUrl" value="https://justababy-prod.appspot.com/" />
-
-    <!-- If your parse-server config requires a client key, set this.
-        If not, skip this preference -->
     <preference name="ParseClientKey" value="3333333344888" />
-
-    <!-- required for Android push notification
-        To get your GCM sender ID, enable GCM for your Android project in the Google Developer Console.
-        The sender id is your project number, and should be a large integer like 123427208255.
-        This is the same "senderId" to be used in your parse-server push configuration.
-    -->
     <preference name="ParseGcmSenderId" value="702079786951" />
-
-    <!-- As standard, this plugin only shows the most recent PN in 
-        the android notifications tray along with a count of unopened 
-        PNs. If you would like to override this behaviour and show all 
-        PNs in the tray, then add this preference. 
-        If not, skip this preference -->
     <preference name="ParseMultiNotifications" value="true" />
-
-
     <feature name="StatusBar">
         <param name="ios-package" onload="true" value="CDVStatusBar" />
     </feature>
@@ -103,4 +84,9 @@
         <variable name="APP_NAME" value="Justababy" />
     </plugin>
     <plugin name="cordova-plugin-photokandy-video-thumbnail" spec="~2.1.0" />
+    <plugin name="cordova-plugin-intercom" spec="~3.2.2" />
+    <preference name="intercom-app-id" value="zl19yed8"/>
+    <preference name="intercom-ios-api-key" value="ios_sdk-ebd4ad2159e60cf6e6458c57070ff719ef381a32"/>
+    <preference name="intercom-android-api-key" value="android_sdk-e5b504401b7fd74ad7ff8ab0dbbde05be30f701c"/>
+    <preference name="intercom-android-sender-id" value="702079786951"/>
 </widget>

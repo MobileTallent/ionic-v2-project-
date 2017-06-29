@@ -861,6 +861,23 @@ angular.module('controllers')
             }
         )
     }
+
+    $scope.openIntercom = function() {
+        var profile = AppService.getProfile();
+        var user = {
+             userId: profile.uid,
+             name: profile.name,
+             custom_attributes: {
+                Name: profile.name,
+                user_id: profile.uid
+             }
+        };
+
+        
+        intercom.registerIdentifiedUser(user);
+        intercom.updateUser(user);
+        intercom.displayMessenger();
+    }
 })
 
 .controller('LocationCtrl', function($scope, $translate, AppService, AppUtil, $ionicLoading) {
