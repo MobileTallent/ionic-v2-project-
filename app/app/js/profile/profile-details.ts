@@ -22,35 +22,32 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 			if (!profile.country && profile.location.latitude && profile.location.longitude) {
 				let geocodingAPI = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + profile.location.latitude
 				geocodingAPI = geocodingAPI + ',' + profile.location.longitude + '&sensor=false&language=en';
-				let num = 0
-				let addArray
-				let addComp
 
 				fetch(geocodingAPI)
 					.then(res => res.json())
 					.then((out) => {
-						if (out['results'][0]) {
-							profile.address = out['results'][0].formatted_address;
-							addArray = profile.address.split(',')
-							if (out['results'][8]) num = 8
-							else if (out['results'][7]) num = 7
-							else if (out['results'][6]) num = 6
-							else if (out['results'][5]) num = 5
-							else if (out['results'][4]) num = 4
-							else if (out['results'][3]) num = 3
-							else if (out['results'][2]) num = 2
-							else if (out['results'][1]) num = 1
-							addComp = out['results'][num].address_components
+						console.log('address after fetch', out);
+						profile.address = out['results'][0].formatted_address;
+						for (var i=0; i<out['results'][0].address_components.length; i++) {
+            				for (var b=0;b<out['results'][0].address_components[i].types.length;b++) {
 
-							if (addComp.length === 1) {
-								profile.country = out['results'][num].formatted_address
-							} else {
-								profile.country = addArray.slice(-1).pop().trim()
-								let cntParsingNumber = profile.country.split(' ').pop()
-								if (cntParsingNumber && !isNaN(cntParsingNumber)) {
-									let lastIndex = profile.country.lastIndexOf(" ")
-									profile.country = profile.country.substring(0, lastIndex)
-								}
+									//country
+									if (out['results'][0].address_components[i].types[b] == "country") {
+										profile['country'] = out['results'][0].address_components[i].long_name;
+										break;
+									}
+
+									//state
+									if (out['results'][0].address_components[i].types[b] == "administrative_area_level_1") {
+										profile['state'] = out['results'][0].address_components[i].long_name;
+										break;
+									}
+
+									//locality
+									if (out['results'][0].address_components[i].types[b] == "locality") {
+										profile['city'] = out['results'][0].address_components[i].long_name;
+										break;
+									}
 							}
 						}
 					})

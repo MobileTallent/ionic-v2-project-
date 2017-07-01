@@ -21,7 +21,7 @@ var profileFields = [
     'photos', 'photosInReview',
     'notifyMatch', 'notifyMessage',
     'distance', 'distanceType',
-    'location', 'gps', 'country', 'address',
+    'location', 'gps', 'country', 'address', 'state', 'city',
     'enabled',
     'gender', 'guys', 'girls',
     'ageFrom', 'ageTo',
@@ -832,42 +832,38 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
             //address and flags
             if (profileChanges.location.latitude && profileChanges.location.longitude) {
-                let geocodingAPI = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + profileChanges.location.latitude + "," + profileChanges.location.longitude + "&sensor=false&language=en";
-                let num = 0
-                let addArray
-                let addComp
+                let geocodingAPI = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + profile.location.latitude
+				geocodingAPI = geocodingAPI + ',' + profile.location.longitude + '&sensor=false&language=en';
 
-                fetch(geocodingAPI)
-                    .then(res => res.json())
-                    .then((out) => {
-                        if (out['results'][0]) {
-                            profileChanges.address = out['results'][0].formatted_address
-                            addArray = profileChanges.address.split(',')
+				fetch(geocodingAPI)
+					.then(res => res.json())
+					.then((out) => {
+						console.log('address after fetch', out);
+						profile.address = out['results'][0].formatted_address;
+						for (var i=0; i<out['results'][0].address_components.length; i++) {
+            				for (var b=0;b<out['results'][0].address_components[i].types.length;b++) {
 
-                            if (out['results'][8]) num = 8
-                            else if (out['results'][7]) num = 7
-                            else if (out['results'][6]) num = 6
-                            else if (out['results'][5]) num = 5
-                            else if (out['results'][4]) num = 4
-                            else if (out['results'][3]) num = 3
-                            else if (out['results'][2]) num = 2
-                            else if (out['results'][1]) num = 1
-                            addComp = out['results'][num].address_components
+									//country
+									if (out['results'][0].address_components[i].types[b] == "country") {
+										profile['country'] = out['results'][0].address_components[i].long_name;
+										break;
+									}
 
-                            if (addComp.length == 1)
-                                profileChanges.country = out['results'][num].formatted_address
-                            else {
-                                profileChanges.country = addArray.slice(-1).pop().trim()
-                                let cntParsingNumber = profileChanges.country.split(' ').pop()
-                                if (cntParsingNumber && !isNaN(cntParsingNumber)) {
-                                    let lastIndex = profileChanges.country.lastIndexOf(" ")
-                                    profileChanges.country = profileChanges.country.substring(0, lastIndex)
-                                }
-                            }
-                        }
-                        return profile.save(profileChanges)
-                    })
-                    .catch(err => console.error(err));
+									//state
+									if (out['results'][0].address_components[i].types[b] == "administrative_area_level_1") {
+										profile['state'] = out['results'][0].address_components[i].long_name;
+										break;
+									}
+
+									//locality
+									if (out['results'][0].address_components[i].types[b] == "locality") {
+										profile['city'] = out['results'][0].address_components[i].long_name;
+										break;
+									}
+							}
+						}
+					})
+					.catch(err => console.error(err));
             }
         }
         return profile.save(profileChanges)

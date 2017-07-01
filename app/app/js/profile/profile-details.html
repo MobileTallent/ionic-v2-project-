@@ -25,7 +25,10 @@
         <div class="flag-distance row" ng-init="showCountryName">{{distance}} {{'AWAY' | translate}}
             <img class="flag" ng-show="profile.address" ng-click="showCountryName = true" ng-src="img/flags/{{profile.country}}.png">
             <div ng-show="showCountryName" ng-class="showCountryName ? 'animated fadeInDown' : '' " class="country-popup">
-                {{profile.country}}
+                {{profile.country}}<br>
+                <span ng-show="profile.state">{{profile.state}}</span>
+                <span ng-show="profile.state && profile.city"> / </span>
+                <span ng-show="profile.city">{{profile.city}}</span>
             </div>
         </div>
     </div>
