@@ -658,12 +658,11 @@ function onNotificationOpen(pnObj) {
                     return
                 }
 
-                // Jojo - Remove Startup Instructions - JUS 797
-                // if (isAcntNew) {
-                //     isAcntNew = false
-                //     go('walkthru')
-                //     return
-                // }
+                if (isAcntNew) {
+                    isAcntNew = false
+                    go('walkthru')
+                    return
+                }
 
                 if (!$localStorage.termsOfUseAgreed) {
                     go('termsOfUse')
