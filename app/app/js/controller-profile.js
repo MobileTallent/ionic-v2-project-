@@ -893,73 +893,29 @@ angular.module('controllers')
 
     //  //  //  //  //  SEARCH FILTERS  \\  \\  \\  \\  \\
 
-    $scope.individualImage = 'img/Badges/inactive-Individual.svg';
-    $scope.toggleIndividual = false;
-
-    $scope.activateIndividual = function() {
-
-        if ($scope.toggleIndividual === false) {
-            $scope.individualImage = 'img/Badges/active-Individual.svg';
-            $scope.toggleIndividual = true;
-            return;
+    $scope.changeIndividual = () => {
+        if ($scope.profile.LFIndividual === false && $scope.profile.LFCouple === false) {
+            $scope.profile.LFCouple = true;
         }
-        if ($scope.toggleIndividual === true) {
-            $scope.individualImage = 'img/Badges/inactive-Individual.svg';
-            $scope.toggleIndividual = false;
-            return;
+    }
+
+    $scope.changeCouple = () => {
+        if ($scope.profile.LFCouple === false && $scope.profile.LFIndividual === false) {
+            $scope.profile.LFIndividual = true;
         }
-    };
+    }
 
-    $scope.coupleImage = 'img/Badges/inactive-Couple.svg'
-    $scope.toggleCouple = false
-
-    $scope.activateCouple = function() {
-
-        if ($scope.toggleCouple === false) {
-            $scope.coupleImage = 'img/Badges/active-Couple.svg';
-            $scope.toggleCouple = true;
-            return;
+        $scope.changeHelp = () => {
+        if ($scope.profile.LFHelp === false && $scope.profile.LFParent === false) {
+            $scope.profile.LFParent = true;
         }
-        if ($scope.toggleCouple === true) {
-            $scope.coupleImage = 'img/Badges/inactive-Couple.svg';
-            $scope.toggleCouple = false;
-            return;
+    }
+
+    $scope.changeParent = () => {
+        if ($scope.profile.LFParent === false && $scope.profile.LFHelp === false) {
+            $scope.profile.LFHelp = true;
         }
-    };
-
-    $scope.helpImage = 'img/Badges/inactive-Help.svg'
-    $scope.toggleHelp = false
-
-    $scope.activateHelp = function() {
-
-        if ($scope.toggleHelp === false) {
-            $scope.helpImage = 'img/Badges/active-Help.svg'
-            $scope.toggleHelp = true
-            return;
-        }
-        if ($scope.toggleHelp === true) {
-            $scope.helpImage = 'img/Badges/inactive-Help.svg'
-            $scope.toggleHelp = false
-            return;
-        }
-    };
-
-    $scope.lookingImage = 'img/Badges/inactive-Looking-For-Help.svg'
-    $scope.toggleLooking = false;
-
-    $scope.activateLooking = function() {
-
-        if ($scope.toggleLooking === false) {
-            $scope.lookingImage = 'img/Badges/active-Looking-For-Help.svg';
-            $scope.toggleLooking = true;
-            return;
-        }
-        if ($scope.toggleLooking === true) {
-            $scope.lookingImage = 'img/Badges/inactive-Looking-For-Help.svg';
-            $scope.toggleLooking = false;
-            return;
-        }
-    };
+    }
 
     $scope.spermImage = $scope.profile.LFSperm ? 'img/Badges/active-Sperm.svg' : 'img/Badges/inactive-Sperm.svg'
 
@@ -1011,7 +967,78 @@ angular.module('controllers')
             $scope.profile.LFEmbryo = true
         }
     }
+
+    // $scope.individualImage = 'img/Badges/inactive-Individual.svg';
+    // $scope.toggleIndividual = false;
+
+    // $scope.activateIndividual = function() {
+
+    //     if ($scope.toggleIndividual === false) {
+    //         $scope.individualImage = 'img/Badges/active-Individual.svg';
+    //         $scope.toggleIndividual = true;
+    //         return;
+    //     }
+    //     if ($scope.toggleIndividual === true) {
+    //         $scope.individualImage = 'img/Badges/inactive-Individual.svg';
+    //         $scope.toggleIndividual = false;
+    //         return;
+    //     }
+    // };
+
+        // $scope.coupleImage = 'img/Badges/inactive-Couple.svg'
+    // $scope.toggleCouple = false
+
+    // $scope.activateCouple = function() {
+
+    //     if ($scope.toggleCouple === false) {
+    //         $scope.coupleImage = 'img/Badges/active-Couple.svg';
+    //         $scope.toggleCouple = true;
+    //         return;
+    //     }
+    //     if ($scope.toggleCouple === true) {
+    //         $scope.coupleImage = 'img/Badges/inactive-Couple.svg';
+    //         $scope.toggleCouple = false;
+    //         return;
+    //     }
+    // };
+
+    // $scope.helpImage = 'img/Badges/inactive-Help.svg'
+    // $scope.toggleHelp = false
+
+    // $scope.activateHelp = function() {
+
+    //     if ($scope.toggleHelp === false) {
+    //         $scope.helpImage = 'img/Badges/active-Help.svg'
+    //         $scope.toggleHelp = true
+    //         return;
+    //     }
+    //     if ($scope.toggleHelp === true) {
+    //         $scope.helpImage = 'img/Badges/inactive-Help.svg'
+    //         $scope.toggleHelp = false
+    //         return;
+    //     }
+    // };
+
+    // $scope.parentImage = 'img/Badges/inactive-Looking-For-Help.svg'
+    // $scope.toggleParent = false;
+
+    // $scope.activateParent = function() {
+
+    //     if ($scope.toggleParent === false) {
+    //         $scope.parentImage = 'img/Badges/active-Looking-For-Help.svg';
+    //         $scope.toggleParent = true;
+    //         return;
+    //     }
+    //     if ($scope.toggleParent === true) {
+    //         $scope.parentImage = 'img/Badges/inactive-Looking-For-Help.svg';
+    //         $scope.toggleParent = false;
+    //         return;
+    //     }
+    // };
+
 })
+
+
 
 .controller('ContactCtrl', function($scope, AppService, AppUtil, $translate) {
 
