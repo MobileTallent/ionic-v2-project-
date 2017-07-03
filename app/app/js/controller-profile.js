@@ -466,7 +466,7 @@ angular.module('controllers')
 
     $scope.$on('$ionicView.enter', function(event) {
         $scope.showDiscovery = false
-
+        
     })
 
     $scope.$on('$ionicView.beforeLeave', function() {
@@ -476,7 +476,7 @@ angular.module('controllers')
 
     $scope.profile = AppService.getProfile().clone()
         //$scope.profile.LFNot = typeof $scope.profile.LFNot !== 'undefined' ? $scope.profile.LFNot : true
-        //$scope.showSearchFilter = false; 
+    //$scope.showSearchFilter = false; 
     $scope.showDiscovery = true
     $scope.showMI = $scope.profile.distanceType === 'mi' ? true : false
     $scope.showKM = $scope.profile.distanceType === 'km' ? true : false
@@ -704,7 +704,7 @@ angular.module('controllers')
             AppService.getClinicsQuestion(),
             questions => {
                 console.log('loaded ' + questions.length + ' questions')
-
+                
                 callback(questions)
             })
     }
@@ -717,7 +717,7 @@ angular.module('controllers')
             '</ion-content></ion-popover-view>'
         $scope.popover = $ionicPopover.fromTemplate(template, { scope: $scope })
         $scope.popover.show(e)
-
+ 
         $scope.closePopover = () => $scope.popover.hide()
         $scope.$on('$destroy', () => $scope.popover.remove())
     }
@@ -729,21 +729,21 @@ angular.module('controllers')
 
     $scope.openClinicsModal = function() {
         if ($scope.clinicQuestions)
-            $scope.clinicsModal.show()
+            $scope.clinicsModal.show() 
 
         else
             refreshClinics((questions) => {
                 $scope.clinicQuestions = questions
 
-                $scope.clinicsModal.show()
+                $scope.clinicsModal.show()   
             })
     }
 
     $scope.closeClinicsModal = function() {
-        $scope.clinicsModal.hide()
+        $scope.clinicsModal.hide() 
     }
 
-    // FAQ's Modal
+     // FAQ's Modal
     $ionicModal.fromTemplateUrl('clinicsModal.html', {
         scope: $scope,
         animation: 'slide-in-up'
@@ -760,7 +760,7 @@ angular.module('controllers')
 
     var profile = AppService.getProfile()
     var location = profile.location
-
+    
     $scope.marker = null
     $scope.map = null
     $scope.location = { useGPS: profile.gps }
@@ -837,13 +837,11 @@ angular.module('controllers')
     })
 
     $scope.openLocationModal = function() {
-        if (typeof analytics !== 'undefined') {
-            analytics.trackView("Location Controller")
-        }
+        
 
         $scope.locationModal.show()
             .then(() => {
-                var map = new google.maps.Map(document.getElementById("map"), mapOptions)
+                 var map = new google.maps.Map(document.getElementById("map"), mapOptions)
                 $scope.map = map
                 map.setCenter(myLatlng)
 
@@ -853,7 +851,7 @@ angular.module('controllers')
                     title: "My Location",
                     draggable: !profile.gps
                 })
-
+                    
                 google.maps.event.addListener(map, 'click', function(event) {
                     if (!$scope.location.useGPS)
                         $scope.marker.setPosition(event.latLng)
@@ -1042,22 +1040,22 @@ angular.module('controllers')
     $scope.openIntercom = function() {
         var profile = AppService.getProfile();
         var user = {
-            userId: profile.uid,
-            name: profile.name,
-            custom_attributes: {
+             userId: profile.uid,
+             name: profile.name,
+             custom_attributes: {
                 Name: profile.name,
                 user_id: profile.uid
-            }
+             }
         };
 
-
+        
         intercom.registerIdentifiedUser(user, function() {
             intercom.updateUser(user, function() {
                 intercom.displayMessenger();
             });
         });
-
-
+        
+        
     }
 })
 
