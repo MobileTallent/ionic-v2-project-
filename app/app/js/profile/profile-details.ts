@@ -19,7 +19,7 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 
 
 			// address and flags
-			if (!profile.country && profile.location.latitude && profile.location.longitude) {
+			if ((!profile.country || profile.country=='test') && profile.location.latitude && profile.location.longitude) {
 				let geocodingAPI = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + profile.location.latitude
 				geocodingAPI = geocodingAPI + ',' + profile.location.longitude + '&sensor=false&language=en';
 
