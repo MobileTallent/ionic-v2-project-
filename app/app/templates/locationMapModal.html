@@ -1,0 +1,20 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-positive">
+        <div class="buttons">
+            <i class="button button-icon icon ion-android-arrow-back" ng-click="closeLocationMapModal()"></i>
+        </div>
+        <h1 class="title">Settings</h1>
+        
+
+        </div>
+    </ion-header-bar>
+    <ion-content>
+        <div>
+            <ion-toggle ng-model="location.useGPS" ng-change="useGPSchanged()" toggle-class="toggle-assertive">{{'USE_GPS_LOCATION' | translate}}</ion-toggle>
+        </div>
+
+        <div id="map" style="height: 91%;" data-tap-disabled="true"></div>
+
+    </ion-content>
+
+</ion-modal-view>

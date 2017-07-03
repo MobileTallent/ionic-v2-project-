@@ -23,7 +23,7 @@
         <ion-content>
             <ul class="list menu-list">
                 <!-- Note each link has the 'menu-close' attribute so the menu auto closes when clicking on one of these links -->
-                <a ng-controller="ShareController as shareCtrl" ng-click="shareCtrl.share()" class="item energized" menu-close><i class="icon ion-android-share-alt"></i> {{'MENU_SHARE' | translate}}</a>
+                <!-- <a ng-controller="ShareController as shareCtrl" ng-click="shareCtrl.share()" class="item energized" menu-close><i class="icon ion-android-share-alt"></i> {{'MENU_SHARE' | translate}}</a> -->
                 <a ui-sref="menu.home" class="item positive" menu-close><i class="icon ion-ios-people-outline"></i> {{'MENU_MATCHES' | translate}}</a>
                 <a ui-sref="menu.chats" class="item positive" menu-close><i class="icon ion-ios-chatbubble-outline"></i> {{'MENU_CHAT' | translate}} <unread-chats-badge class="unread-chats-menu-badge"/></a>
                 <a ui-sref="menu.profile" class="item positive" menu-close><i class="icon ion-ios-person-outline"></i> {{'MENU_PROFILE' | translate}}</a>
@@ -31,7 +31,7 @@
                 <!--<a ui-sref="menu.relationship" class="item energized" menu-close><i class="icon ion-ios-heart-outline"></i> My Co-Parent Shortlist</a>-->
                 <!-- <a ui-sref="menu.clinics" class="item positive" menu-close><i class="icon ion-ios-rose-outline"></i> {{'FAQ' | translate}}</a> -->
                 <!--<a ui-sref="menu.discovery" class="item energized" menu-close><i class="icon ion-ios-search-strong"></i> {{'MENU_DISCOVERY' | translate}}</a>-->
-                <a ui-sref="menu.location" class="item positive" menu-close><i class="icon ion-ios-location-outline"></i> {{'LOCATION' | translate}}</a>
+               <!--  <a ui-sref="menu.location" class="item positive" menu-close><i class="icon ion-ios-location-outline"></i> {{'LOCATION' | translate}}</a> -->
                 <a ui-sref="menu.settings" class="item positive" menu-close><i class="icon ion-ios-cog-outline"></i> {{'MENU_SETTINGS' | translate}}</a>
                 <a ng-controller="ContactCtrl as contactCtrl" ng-click="openIntercom()" class="item positive" menu-close><i class="icon ion-ios-email-outline"></i> {{'MENU_CONTACT' | translate}}</a>
                 <a ui-sref="menu.about" class="item positive" menu-close><i class="icon ion-ios-information-outline"></i> {{'ABOUT_JUST_A_BABY' | translate}}</a>

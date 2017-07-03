@@ -57,7 +57,7 @@ var TRANSLATION_EN = {
     'MENU_LIKED_ME': 'People Who Liked Me',
     'MENU_DISCOVERY': 'Discovery Preferences',
     'MENU_SETTINGS': 'Settings',
-    'MENU_CONTACT': 'Send Your Feedback',
+    'MENU_CONTACT': 'Give Feedback & Suggestions',
     'MENU_SHARE': 'Invite My Friends',
     'MENU_CO_PARENTS': 'My Co-Parents Shortlist',
     'ABOUT_JUST_A_BABY': 'About Just a Baby',
@@ -161,5 +161,6 @@ var TRANSLATION_EN = {
     'DELETE_ACCOUNT': 'Delete your account',
 
     '': '',
-    'SEARCH_FILTERS' : 'Back'
+    'SEARCH_FILTERS' : 'Back',
+    'MY_LOCATION': 'My Location',
 }

@@ -20,10 +20,40 @@
                         <i class="icon" ng-class="showItem{{item.id}} ? 'ion-minus' : 'ion-plus'"></i> &nbsp; <b>{{item.question}}</b>
                     </ion-item>
                     <ion-item class="item-accordion" style="white-space: pre-wrap; font-size: 14px;" ng-show="showItem{{item.id}}" ng-class="showItem{{item.id}} ? 'animated slideInUp' : ''">
-                        <!--<div class="video-container" ng-class="item.video ? '' : 'hidden'">
-                            <iframe width="560" height="315" ng-src="{{trustSrcurl(item.video)}}" frameborder="0" allowfullscreen></iframe>
-                        </div>-->
+                        
                         {{item.answer}}
+                    </ion-item>
+                </div>
+            </div>
+            <div class="clinic-container" ng-show="showcase == 'Badges' || showcase == 'General'" >
+                <div ng-click="showItemBadges = !showItemBadges">
+                    <ion-item style="text-align: center; color: rgb(43, 172, 143);" class="item-calm wrap-space" ng-class="{active: 'Badges'}">
+                        <i class="icon" ng-class="showItemBadges ? 'ion-minus' : 'ion-plus'"></i> &nbsp; <b>Bio-ID</b>
+                    </ion-item>
+                    <ion-item class="item-accordion" style="white-space: pre-wrap; font-size: 14px;" ng-show="showItemBadges" ng-class="showItemBadges ? 'animated slideInUp' : ''">
+                        <div class="list">
+                            <a class="item item-avatar item-borderless " href="#">
+                              <img src="img/Badges/active-Sperm.svg">
+                              <h2 class="no-margin">People with this symbol have sperm</h2>
+                              <!-- <p>Back off, man. I'm a scientist.</p> -->
+                            </a>
+                            <a class="item item-avatar item-borderless " href="#">
+                              <img src="img/Badges/active-Egg.svg">
+                              <h2 class="no-margin">People with this symbol have eggs</h2>
+                              <!-- <p>Back off, man. I'm a scientist.</p> -->
+                            </a>
+                            <a class="item item-avatar item-borderless " href="#">
+                              <img src="img/Badges/active-Womb.svg">
+                              <h2 class="no-margin">People with this symbol have a womb</h2>
+                              <!-- <p>Back off, man. I'm a scientist.</p> -->
+                            </a>
+                            <a class="item item-avatar item-borderless " href="#">
+                              <img src="img/Badges/active-Frozen-Embryo.svg">
+                              <h2 class="no-margin">People with this symbol have a frozen embryo</h2>
+                              <!-- <p>Back off, man. I'm a scientist.</p> -->
+                            </a>
+                           
+                        </div>
                     </ion-item>
                 </div>
             </div>

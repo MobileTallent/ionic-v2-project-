@@ -449,7 +449,7 @@ angular.module('controllers')
 //     $scope.cancel = () => $scope.profile = AppService.getProfile($scope).clone()
 // })
 
-.controller('SettingsCtrl', function($scope, $state, $stateParams, $ionicModal, $ionicPopup, AppService, AppUtil, $log, $rootScope, $translate, $ionicHistory, $ionicActionSheet, env, $localStorage, $sce, $ionicPopover) {
+.controller('SettingsCtrl', function($scope, $state, $stateParams, $ionicModal, $ionicPopup, AppService, AppUtil, $log, $rootScope, $translate, $ionicHistory, $ionicActionSheet, env, $localStorage, $sce, $ionicPopover, $ionicLoading) {
 
     // The Profile fields on the discover page to save
     var fields = ['enabled', 'guys', 'girls', 'ageFrom', 'ageTo', 'notifyMatch', 'notifyMessage', 'distanceType', 'distance', 'LFSperm', 'LFEggs', 'LFWomb', 'LFEmbryo', 'LFNot', 'LFHelpM', 'LFHelpO', 'LFSelfId']
@@ -750,6 +750,118 @@ angular.module('controllers')
     }).then(function(clinicsModal) {
         $scope.clinicsModal = clinicsModal;
     })
+
+
+    // TODO load the google map script async here when required instead of index.html
+    var translations
+    $translate(['GPS_ERROR']).then(function(translationsResult) {
+        translations = translationsResult
+    })
+
+    var profile = AppService.getProfile()
+    var location = profile.location
+    
+    $scope.marker = null
+    $scope.map = null
+    $scope.location = { useGPS: profile.gps }
+
+    var myLatlng = new google.maps.LatLng(location.latitude, location.longitude)
+
+    var mapOptions = {
+        center: myLatlng,
+        zoom: 11,
+        zoomControlOptions: {
+            position: google.maps.ControlPosition.RIGHT_TOP
+        },
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        mapTypeControl: false,
+        streetViewControl: false,
+        disableDoubleClickZoom: true
+    }
+
+    $scope.useGPSchanged = function() {
+        $scope.marker.setDraggable(!$scope.location.useGPS)
+        if ($scope.location.useGPS) {
+            AppService.clearProfileSearchResults()
+            $ionicLoading.show({ templateUrl: 'loading.html' })
+            AppService.getCurrentPosition().then(function(gpsLocation) {
+                return AppService.saveProfile({ gps: true, location: gpsLocation })
+            }).then(
+                function(profile) {
+                    var gpsLatLng = new google.maps.LatLng(profile.location.latitude, profile.location.longitude)
+                    $scope.marker.setPosition(gpsLatLng)
+                    $scope.map.setCenter(gpsLatLng)
+                    $ionicLoading.hide()
+                }, error => {
+                    $ionicLoading.hide()
+                    if (error === 'GPS_ERROR')
+                        AppUtil.toastSimple(translations.GPS_ERROR)
+                    else
+                        AppUtil.toastSimple(translations.SETTINGS_SAVE_ERROR)
+                    $scope.location.useGPS = false
+                    $scope.marker.setDraggable(true)
+                }
+            )
+        }
+    }
+
+    $scope.$on('modal.hidden', function(modal) {
+        console.log("MODAL HIDEEN")
+        console.dir(modal)
+        if (!$scope.location.useGPS) {
+            setLocation()
+        }
+    })
+
+    function setLocation() {
+        AppService.clearProfileSearchResults()
+        var pos = $scope.marker.getPosition()
+        AppUtil.blockingCall(
+            AppService.saveProfile({ gps: false, location: { latitude: pos.lat(), longitude: pos.lng() } }),
+            () => {
+
+            },
+            'SETTINGS_SAVE_ERROR'
+        )
+    }
+
+
+    // Location's Modal
+    $ionicModal.fromTemplateUrl('locationMapModal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(locationModal) {
+        $scope.locationModal = locationModal;
+
+
+    })
+
+    $scope.openLocationModal = function() {
+        
+
+        $scope.locationModal.show()
+            .then(() => {
+                 var map = new google.maps.Map(document.getElementById("map"), mapOptions)
+                $scope.map = map
+                map.setCenter(myLatlng)
+
+                $scope.marker = new google.maps.Marker({
+                    position: myLatlng,
+                    map: map,
+                    title: "My Location",
+                    draggable: !profile.gps
+                })
+                    
+                google.maps.event.addListener(map, 'click', function(event) {
+                    if (!$scope.location.useGPS)
+                        $scope.marker.setPosition(event.latLng)
+                })
+            })
+    }
+
+    $scope.closeLocationMapModal = function() {
+        $scope.locationModal.hide()
+    }
 
     $scope.debug = () => {
         console.log('debug...')
