@@ -22,7 +22,7 @@ module app {
 		private spermImage
 		private eggImage
 		private wombImage
-		private embryoImage 
+		private embryoImage
 
 
 
@@ -50,7 +50,14 @@ module app {
 			}).then(modal => this.profileModal = modal)
 			// Cleanup the modal when we're done with it
 			this.$scope.$on('$destroy', () => this.profileModal.remove())
+			this.$scope.$on('$ionicView.enter', () => this.ionViewWillEnter())
 			this.refresh()
+		}
+
+		ionViewWillEnter() {
+			if (typeof analytics !== 'undefined') {
+				analytics.trackView("People Who Like Me Controller")
+			}
 		}
 
 		private refresh() {
@@ -72,9 +79,9 @@ module app {
 			this.profileIndex = index
 
 			this.spermImage = this.profile.personSperm ? 'img/Badges/active-Sperm.svg' : 'img/Badges/inactive-Sperm.svg'
-    	this.eggImage = this.profile.personEgg ? 'img/Badges/active-Egg.svg' : 'img/Badges/inactive-Egg.svg'
-    	this.wombImage = this.profile.personWomb ? 'img/Badges/active-Womb.svg' : 'img/Badges/inactive-Womb.svg'
-    	this.embryoImage = this.profile.personEmbryo ? 'img/Badges/active-Frozen-Embryo.svg' : 'img/Badges/inactive-Frozen-Embryo.svg'
+			this.eggImage = this.profile.personEgg ? 'img/Badges/active-Egg.svg' : 'img/Badges/inactive-Egg.svg'
+			this.wombImage = this.profile.personWomb ? 'img/Badges/active-Womb.svg' : 'img/Badges/inactive-Womb.svg'
+			this.embryoImage = this.profile.personEmbryo ? 'img/Badges/active-Frozen-Embryo.svg' : 'img/Badges/inactive-Frozen-Embryo.svg'
 
 			this.profileModal.show()
 		}
@@ -125,7 +132,7 @@ module app {
 							var profileShare = "This person wants to have or help others make a baby: "
 							profileShare = profileShare + "\n\n\"" + this.profile.about.toString() + "\"\n\nThought they could be a good match for you? \n\n"
 							this.isLoading = false
-							 
+
 							this.$cordovaSocialSharing.share(profileShare, null, null, this.linkToBeShared) // Share via native share sheet
 								.then(() => {
 									if (typeof analytics !== 'undefined') {
@@ -175,9 +182,9 @@ module app {
 			this.profile = null
 
 			this.spermImage = null
-    	this.eggImage = null
-    	this.wombImage = null
-    	this.embryoImage = null
+			this.eggImage = null
+			this.wombImage = null
+			this.embryoImage = null
 
 			this.profileModal.hide()
 		}
