@@ -329,7 +329,9 @@ angular.module('controllers', ['service.app', 'ngAnimate', 'ngCordova', 'ionic.c
 
     $scope.feedback = function() {
         intercom.reset();
-        intercom.registerUnidentifiedUser();
-        intercom.displayMessenger();
+        intercom.registerUnidentifiedUser(function(){
+            intercom.displayMessenger();
+        });
+        
     }
 });

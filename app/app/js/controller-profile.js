@@ -937,9 +937,13 @@ angular.module('controllers')
         };
 
         
-        intercom.registerIdentifiedUser(user);
-        intercom.updateUser(user);
-        intercom.displayMessenger();
+        intercom.registerIdentifiedUser(user, function() {
+            intercom.updateUser(user, function() {
+                intercom.displayMessenger();
+            });
+        });
+        
+        
     }
 })
 
