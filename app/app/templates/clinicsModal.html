@@ -1,0 +1,32 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-positive">
+        <div class="buttons">
+            <i class="button button-icon icon ion-android-arrow-back" ng-click="closeClinicsModal()"></i>
+        </div>
+        <h1 class="title">FAQ's</h1>
+        <div class="buttons button-right">
+            <button class="button button-icon" ng-click="clinicSettings($event)">
+                <i class="icon ion-gear-a" ></i>
+            </button>
+        </div>
+
+        </div>
+    </ion-header-bar>
+    <ion-content >
+        <ion-list>
+            <div ng-repeat="item in clinicQuestions" class="clinic-container" ng-show="showcase == item.type || showcase == 'General'">
+                <div ng-click="showItem{{item.id}} = !showItem{{item.id}}">
+                    <ion-item style="text-align: center; color: rgb(43, 172, 143);" class="item-calm wrap-space" ng-class="{active: showItem{{item.id}}}">
+                        <i class="icon" ng-class="showItem{{item.id}} ? 'ion-minus' : 'ion-plus'"></i> &nbsp; <b>{{item.question}}</b>
+                    </ion-item>
+                    <ion-item class="item-accordion" style="white-space: pre-wrap; font-size: 14px;" ng-show="showItem{{item.id}}" ng-class="showItem{{item.id}} ? 'animated slideInUp' : ''">
+                        <!--<div class="video-container" ng-class="item.video ? '' : 'hidden'">
+                            <iframe width="560" height="315" ng-src="{{trustSrcurl(item.video)}}" frameborder="0" allowfullscreen></iframe>
+                        </div>-->
+                        {{item.answer}}
+                    </ion-item>
+                </div>
+            </div>
+        </ion-list>
+    </ion-content>
+</ion-modal-view>

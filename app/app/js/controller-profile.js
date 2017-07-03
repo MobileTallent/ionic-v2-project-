@@ -449,7 +449,7 @@ angular.module('controllers')
 //     $scope.cancel = () => $scope.profile = AppService.getProfile($scope).clone()
 // })
 
-.controller('SettingsCtrl', function($scope, $state, $stateParams, $ionicModal, $ionicPopup, AppService, AppUtil, $log, $rootScope, $translate, $ionicHistory, $ionicActionSheet, env) {
+.controller('SettingsCtrl', function($scope, $state, $stateParams, $ionicModal, $ionicPopup, AppService, AppUtil, $log, $rootScope, $translate, $ionicHistory, $ionicActionSheet, env, $localStorage, $sce, $ionicPopover) {
 
     // The Profile fields on the discover page to save
     var fields = ['enabled', 'guys', 'girls', 'ageFrom', 'ageTo', 'notifyMatch', 'notifyMessage', 'distanceType', 'distance', 'LFSperm', 'LFEggs', 'LFWomb', 'LFEmbryo', 'LFNot', 'LFHelpM', 'LFHelpO', 'LFSelfId']
@@ -686,7 +686,70 @@ angular.module('controllers')
         })
     }
 
+    $scope.clinicQuestions = null
+    $scope.showcase = "General"
 
+    $scope.$on('clinicsUpdated', () => {
+        update()
+    })
+
+    function update() {
+        $scope.showcase = $localStorage.clinicSettings
+        console.log('ClinicsCtrl update()' + $scope.showcase)
+    }
+
+    function refreshClinics(callback) {
+        $localStorage.clinicSettings = "General"
+        AppUtil.blockingCall(
+            AppService.getClinicsQuestion(),
+            questions => {
+                console.log('loaded ' + questions.length + ' questions')
+                
+                callback(questions)
+            })
+    }
+
+    // Show the clinic settings dialog
+    $scope.clinicSettings = (e) => {
+
+        var template = '<ion-popover-view style="height: 250px;"><ion-header-bar><h1 class="title">FAQ Settings</h1></ion-header-bar><ion-content>' +
+            '<clinic-settings/>' +
+            '</ion-content></ion-popover-view>'
+        $scope.popover = $ionicPopover.fromTemplate(template, { scope: $scope })
+        $scope.popover.show(e)
+ 
+        $scope.closePopover = () => $scope.popover.hide()
+        $scope.$on('$destroy', () => $scope.popover.remove())
+    }
+
+    $scope.trustSrcurl = function(data) {
+        if (data)
+            return $sce.trustAsResourceUrl('https://www.youtube.com/embed/' + data)
+    }
+
+    $scope.openClinicsModal = function() {
+        if ($scope.clinicQuestions)
+            $scope.clinicsModal.show() 
+
+        else
+            refreshClinics((questions) => {
+                $scope.clinicQuestions = questions
+
+                $scope.clinicsModal.show()   
+            })
+    }
+
+    $scope.closeClinicsModal = function() {
+        $scope.clinicsModal.hide() 
+    }
+
+     // FAQ's Modal
+    $ionicModal.fromTemplateUrl('clinicsModal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(clinicsModal) {
+        $scope.clinicsModal = clinicsModal;
+    })
 
     $scope.debug = () => {
         console.log('debug...')
