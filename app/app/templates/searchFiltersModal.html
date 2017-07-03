@@ -1,0 +1,82 @@
+<ion-modal-view>
+    <ion-header-bar class="bar-positive">
+        <div class="buttons">
+            <button class="button-icon"  ng-click="hideSearchFilters()" >
+                <img src="img/search-back-btn.png" style="height:32px;">
+            </button>
+            
+        </div>
+        <h1 class="title">Back</h1>
+ 
+        </div>
+    </ion-header-bar>
+    <ion-content >
+        <div class="card">
+            <div class="settings-header">
+                Search Filters
+            </div>
+
+            <div class="settings-dropdown">
+                <div class="row filter-row">
+                    <div class="col">
+                        <div class="center">
+                            <h4 style="color:#666">Show me people with...</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row filter-row">
+                    <div class="col">
+                        <div class="center">
+                            <img class="img-avatar" ng-src="{{spermImage}}" ng-model="iiprofile.LFSperm" on-tap="activateSperm(); " ng-click="activateSperm()">
+                            <p ng-class="iprofile.LFSperm ? 'id-text-active' :  'id-text-inactive' ">Sperm</p>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="center">
+                            <img class="img-avatar" ng-src="{{eggImage}}" ng-model="iprofile.LFEggs" on-tap="activateEgg()" ng-click="activateEgg()">
+                            <p ng-class="iprofile.LFEggs ? 'id-text-active' :  'id-text-inactive' ">Eggs</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row filter-row">
+                    <div class="col">
+                        <div class="center">
+                            <img class="img-avatar" ng-src="{{wombImage}}" ng-model="iprofile.LFWomb" on-tap="activateWomb()" ng-click="activateWomb()">
+                            <p ng-class="iprofile.LFWomb ? 'id-text-active' :  'id-text-inactive' ">Womb</p>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="center">
+                            <img class="img-avatar" ng-src="{{embryoImage}}" ng-model="iprofile.LFEmbryo" on-tap="activateEmbryo()" ng-click="activateEmbryo()">
+                            <p ng-class="iprofile.LFEmbryo ? 'id-text-active-embryo' :  'id-text-inactive' ">Embryo</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row filter-row">
+                    <div class="col">
+                         <ul class="list">
+
+
+                            <li class="item item-divider" style="background-color: #fff;">
+                                {{'SEARCH_DISTANCE' | translate}}: {{iprofile.distance}}{{iprofile.distanceType}}
+                            </li>
+
+                            <li class="item custom-slider" style="height: 60px" ng-class="showMI ? '' : 'hidden'">
+                                <slider floor="1" ceiling="12427" ng-model-low="1" ng-model-high="iprofile.distance"></slider>
+                            </li>
+
+                            <li class="item custom-slider" style="height: 60px" ng-class="showKM ? '' : 'hidden'">
+                                <slider floor="1" ceiling="20000" ng-model-low="1" ng-model-high="iprofile.distance"></slider>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-modal-view>

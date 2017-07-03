@@ -1,7 +1,7 @@
 angular.module('controllers')
 
 .controller('ProfileSearch', function($rootScope, $log, $scope, $state, $timeout, $translate, $ionicSideMenuDelegate,
-    TDCardDelegate, AppService, AppUtil, $ionicModal, $ionicPopup) {
+    TDCardDelegate, AppService, AppUtil, $ionicModal, $ionicPopup, $ionicLoading) {
 
     var translations
     $translate(['MATCHES_LOAD_ERROR']).then(function(translationsResult) {
@@ -16,6 +16,202 @@ angular.module('controllers')
     var profile = $scope.profile = AppService.getProfile()
     $scope.profilePhoto = profile.photoUrl
 
+    //$scope.cloned_profile = profile.clone()
+
+/**----------------------------------------------
+    SEARCH FILTERS
+  -----------------------------------------------  
+*/
+
+    $scope.iprofile = profile.clone();
+    $scope.showMI = $scope.profile.distanceType === 'mi' ? true : false
+    $scope.showKM = $scope.profile.distanceType === 'km' ? true : false
+    var dType = $scope.profile.distanceType
+     var fields = ['enabled', 'guys', 'girls', 'ageFrom', 'ageTo', 'notifyMatch', 'notifyMessage', 'distanceType', 'distance', 'LFSperm', 'LFEggs', 'LFWomb', 'LFEmbryo', 'LFNot', 'LFHelpM', 'LFHelpO', 'LFSelfId']
+
+    if (!$scope.profile.LFSelfId) {
+        $scope.profile.LFSperm = $scope.profile.LFEggs = $scope.profile.LFWomb = $scope.profile.LFEmbryo = true
+    }
+
+    $scope.setLanguage = (key) => {
+        $log.log('setting language to ' + key)
+        $translate.use(key)
+    }
+
+    $scope.save = () => {
+        $ionicLoading.show({ templateUrl: 'loading.html' })
+        AppService.clearProfileSearchResults()
+        $scope.iprofile.LFSelfId = true
+        if (dType != $scope.profile.distanceType && $scope.iprofile.distanceType == 'mi') {
+            $scope.iprofile.distance *= 0.621371
+            $scope.iprofile.distance = Math.floor($scope.iprofile.distance)
+        } else if (dType != $scope.iprofile.distanceType && $scope.iprofile.distanceType == 'km') {
+            $scope.iprofile.distance *= 1.609344
+            $scope.iprofile.distance = Math.ceil($scope.iprofile.distance)
+        }
+
+        dType = $scope.iprofile.distanceType
+
+        if (!$scope.iprofile.LFSperm && !$scope.iprofile.LFEggs && !$scope.iprofile.LFWomb && !$scope.iprofile.LFEmbryo)
+            $scope.iprofile.LFNot = true
+        else
+            $scope.iprofile.LFNot = false
+
+        AppUtil.blockingCall(
+            AppService.saveProfile(_.pick($scope.iprofile, fields)),
+            () => {
+                
+                $ionicLoading.hide()
+                $state.go($state.current, {}, {reload: true});
+                
+            }, 'SETTINGS_SAVE_ERROR'
+        )
+    }
+
+    $scope.$on('modal.hidden', function(modal) {
+        console.dir(modal)
+        $scope.save()
+    })
+
+    //  //  //  //  //  SEARCH FILTERS  \\  \\  \\  \\  \\
+
+    $scope.individualImage = 'img/Badges/inactive-Individual.svg';
+    $scope.toggleIndividual = false;
+
+    $scope.activateIndividual = function() {
+
+        if ($scope.toggleIndividual === false) {
+            $scope.individualImage = 'img/Badges/active-Individual.svg';
+            $scope.toggleIndividual = true;
+            return;
+        }
+        if ($scope.toggleIndividual === true) {
+            $scope.individualImage = 'img/Badges/inactive-Individual.svg';
+            $scope.toggleIndividual = false;
+            return;
+        }
+    };
+
+    $scope.coupleImage = 'img/Badges/inactive-Couple.svg'
+    $scope.toggleCouple = false
+
+    $scope.activateCouple = function() {
+
+        if ($scope.toggleCouple === false) {
+            $scope.coupleImage = 'img/Badges/active-Couple.svg';
+            $scope.toggleCouple = true;
+            return;
+        }
+        if ($scope.toggleCouple === true) {
+            $scope.coupleImage = 'img/Badges/inactive-Couple.svg';
+            $scope.toggleCouple = false;
+            return;
+        }
+    };
+
+    $scope.helpImage = 'img/Badges/inactive-Help.svg'
+    $scope.toggleHelp = false
+
+    $scope.activateHelp = function() {
+
+        if ($scope.toggleHelp === false) {
+            $scope.helpImage = 'img/Badges/active-Help.svg'
+            $scope.toggleHelp = true
+            return;
+        }
+        if ($scope.toggleHelp === true) {
+            $scope.helpImage = 'img/Badges/inactive-Help.svg'
+            $scope.toggleHelp = false
+            return;
+        }
+    };
+
+    $scope.lookingImage = 'img/Badges/inactive-Looking-For-Help.svg'
+    $scope.toggleLooking = false;
+
+    $scope.activateLooking = function() {
+
+        if ($scope.toggleLooking === false) {
+            $scope.lookingImage = 'img/Badges/active-Looking-For-Help.svg';
+            $scope.toggleLooking = true;
+            return;
+        }
+        if ($scope.toggleLooking === true) {
+            $scope.lookingImage = 'img/Badges/inactive-Looking-For-Help.svg';
+            $scope.toggleLooking = false;
+            return;
+        }
+    };
+
+    $scope.spermImage = $scope.profile.LFSperm ? 'img/Badges/active-Sperm.svg' : 'img/Badges/inactive-Sperm.svg'
+
+    $scope.activateSperm = function() {
+
+        if ($scope.iprofile.LFSperm === true) {
+            $scope.spermImage = 'img/Badges/inactive-Sperm.svg'
+            $scope.iprofile.LFSperm = false
+        } else {
+            $scope.spermImage = 'img/Badges/active-Sperm.svg'
+            $scope.iprofile.LFSperm = true
+        }
+    }
+
+    $scope.eggImage = $scope.iprofile.LFEggs ? 'img/Badges/active-Egg.svg' : 'img/Badges/inactive-Egg.svg'
+
+    $scope.activateEgg = function() {
+        if ($scope.iprofile.LFEggs === true) {
+            $scope.eggImage = 'img/Badges/inactive-Egg.svg'
+            $scope.iprofile.LFEggs = false
+        } else {
+            $scope.eggImage = 'img/Badges/active-Egg.svg'
+            $scope.iprofile.LFEggs = true
+        }
+
+    };
+
+    $scope.wombImage = $scope.iprofile.LFWomb ? 'img/Badges/active-Womb.svg' : 'img/Badges/inactive-Womb.svg'
+
+    $scope.activateWomb = function() {
+        if ($scope.iprofile.LFWomb === true) {
+            $scope.wombImage = 'img/Badges/inactive-Womb.svg'
+            $scope.iprofile.LFWomb = false
+        } else {
+            $scope.wombImage = 'img/Badges/active-Womb.svg'
+            $scope.iprofile.LFWomb = true
+        }
+
+    };
+
+    $scope.embryoImage = $scope.iprofile.LFEmbryo ? 'img/Badges/active-Frozen-Embryo.svg' : 'img/Badges/inactive-Frozen-Embryo.svg'
+
+    $scope.activateEmbryo = function() {
+        if ($scope.iprofile.LFEmbryo === true) {
+            $scope.embryoImage = 'img/Badges/inactive-Frozen-Embryo.svg'
+            $scope.iprofile.LFEmbryo = false
+        } else {
+            $scope.embryoImage = 'img/Badges/active-Frozen-Embryo.svg'
+            $scope.iprofile.LFEmbryo = true
+        }
+    }
+
+    $scope.openSearchFilters = function() {
+        $scope.searchFiltersModal.show();
+    }
+
+    $scope.hideSearchFilters = function() {
+        $scope.searchFiltersModal.hide();
+    }
+
+    $ionicModal.fromTemplateUrl('searchFiltersModal.html', {
+            scope: $scope,
+            animation: 'slide-in-up',
+            id: 1,
+        }).then(searchFiltersModal => $scope.searchFiltersModal = searchFiltersModal)
+
+/**----------------------------------------------
+    END OF SEARCH FILTERS
+  -----------------------------------------------  
+*/
     $scope.deleteUnmatchedSwipes = () => AppUtil.blockingCall(
         AppService.deleteUnmatched(),
         success => $log.log(success),

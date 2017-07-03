@@ -1,6 +1,6 @@
 <ion-view view-title="{{::appName}}" class="title background-calm">
     <ion-nav-buttons side="right">
-        <button class="button button-icon" ui-sref="menu.settings({showFilters: 1})" >
+        <button class="button button-icon" ng-click="openSearchFilters()" iui-sref="menu.settings({showFilters: 1})" >
             <img src="img/search-filter.png" style="width:35px;height:35px;">
         </button>
         <i class="button button-icon icon ion-ios-chatbubble-outline" ui-sref="menu.chats">
