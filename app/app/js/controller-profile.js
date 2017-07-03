@@ -596,47 +596,46 @@ angular.module('controllers')
             AppService.getProfilesNoCountry(),
             results => {
                 console.log('Results found: ' + results.length)
+                console.log(results)
                 _.forEach(results, function(profile) {
                     //address and flags
-                    if (!ionic.Platform.isIOS() && profile.location.latitude && profile.location.longitude) {
-                        let geocodingAPI = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + profile.location.latitude + "," + profile.location.longitude + "&sensor=false&language=en";
-                        let num = 0
-                        let addArray
-                        let addComp
-
+                    if (profile.location && profile.location.latitude && profile.location.longitude) {
+                        let geocodingAPI = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCWEZ9eSX37ePBTrt3RoL7zQxUjolypzEA&latlng=" + profile.location.latitude + "," + profile.location.longitude + "&sensor=false&language=en";
+                        
                         fetch(geocodingAPI)
-                            .then(res => res.json())
-                            .then((out) => {
+                        .then(res => res.json())
+                        .then((out) => {
+
+                            if (out['results'].length >0 ) {
                                 var profileUpdate = {}
-                                if (out['results'][0]) {
-                                    profileUpdate.address = out['results'][0].formatted_address
-                                    addArray = profileUpdate.address.split(',')
+                                console.log('Address after fetch', out);
+                                profileUpdate.address = out['results'][0].formatted_address;
+                                for (var i=0; i<out['results'][0].address_components.length; i++) {
+                                    for (var b=0;b<out['results'][0].address_components[i].types.length;b++) {
 
-                                    if (out['results'][8]) num = 8
-                                    else if (out['results'][7]) num = 7
-                                    else if (out['results'][6]) num = 6
-                                    else if (out['results'][5]) num = 5
-                                    else if (out['results'][4]) num = 4
-                                    else if (out['results'][3]) num = 3
-                                    else if (out['results'][2]) num = 2
-                                    else if (out['results'][1]) num = 1
-                                    addComp = out['results'][num].address_components
+                                            //country
+                                            if (out['results'][0].address_components[i].types[b] == "country") {
+                                                profileUpdate['country'] = out['results'][0].address_components[i].long_name;
+                                                break;
+                                            }
 
-                                    if (addComp.length == 1)
-                                        profileUpdate.country = out['results'][num].formatted_address
-                                    else {
-                                        profileUpdate.country = addArray.slice(-1).pop().trim()
-                                        let cntParsingNumber = profileUpdate.country.split(' ').pop()
-                                        if (cntParsingNumber && !isNaN(cntParsingNumber)) {
-                                            let lastIndex = profileUpdate.country.lastIndexOf(" ")
-                                            profileUpdate.country = profileUpdate.country.substring(0, lastIndex)
-                                        }
+                                            //state
+                                            if (out['results'][0].address_components[i].types[b] == "administrative_area_level_1") {
+                                                profileUpdate['state'] = out['results'][0].address_components[i].long_name;
+                                                break;
+                                            }
+
+                                            //locality
+                                            if (out['results'][0].address_components[i].types[b] == "locality") {
+                                                profileUpdate['city'] = out['results'][0].address_components[i].long_name;
+                                                break;
+                                            }
                                     }
-
-                                    AppService.saveProfileForSomeReason(profile, profileUpdate)
                                 }
-                            })
-                            .catch(err => console.error(err))
+                            AppService.saveProfileForSomeReason(profile, profileUpdate)
+                            }
+                        })
+                        .catch(err => console.error(err));
                     }
                 })
             })

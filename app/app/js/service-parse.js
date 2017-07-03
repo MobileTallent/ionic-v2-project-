@@ -832,7 +832,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
             //address and flags
             if (profileChanges.location.latitude && profileChanges.location.longitude) {
-                let geocodingAPI = 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + profile.location.latitude
+                let geocodingAPI = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCWEZ9eSX37ePBTrt3RoL7zQxUjolypzEA&latlng=' + profile.location.latitude
 				geocodingAPI = geocodingAPI + ',' + profile.location.longitude + '&sensor=false&language=en';
 
 				fetch(geocodingAPI)
