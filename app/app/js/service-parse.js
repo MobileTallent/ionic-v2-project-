@@ -838,26 +838,26 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 				fetch(geocodingAPI)
 					.then(res => res.json())
 					.then((out) => {
-						console.log('address after fetch', out);
-						profile.address = out['results'][0].formatted_address;
+						console.log('Address after fetch', out);
+						profileChanges.address = out['results'][0].formatted_address;
 						for (var i=0; i<out['results'][0].address_components.length; i++) {
             				for (var b=0;b<out['results'][0].address_components[i].types.length;b++) {
 
 									//country
 									if (out['results'][0].address_components[i].types[b] == "country") {
-										profile['country'] = out['results'][0].address_components[i].long_name;
+										profileChanges['country'] = out['results'][0].address_components[i].long_name;
 										break;
 									}
 
 									//state
 									if (out['results'][0].address_components[i].types[b] == "administrative_area_level_1") {
-										profile['state'] = out['results'][0].address_components[i].long_name;
+										profileChanges['state'] = out['results'][0].address_components[i].long_name;
 										break;
 									}
 
 									//locality
 									if (out['results'][0].address_components[i].types[b] == "locality") {
-										profile['city'] = out['results'][0].address_components[i].long_name;
+										profileChanges['city'] = out['results'][0].address_components[i].long_name;
 										break;
 									}
 							}
