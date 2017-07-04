@@ -601,17 +601,17 @@ angular.module('controllers')
                     //address and flags
                     if (profile.location && profile.location.latitude && profile.location.longitude) {
                         let geocodingAPI = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCWEZ9eSX37ePBTrt3RoL7zQxUjolypzEA&latlng=" + profile.location.latitude + "," + profile.location.longitude + "&sensor=false&language=en";
-                        
-                        fetch(geocodingAPI)
-                        .then(res => res.json())
-                        .then((out) => {
 
-                            if (out['results'].length >0 ) {
-                                var profileUpdate = {}
-                                console.log('Address after fetch', out);
-                                profileUpdate.address = out['results'][0].formatted_address;
-                                for (var i=0; i<out['results'][0].address_components.length; i++) {
-                                    for (var b=0;b<out['results'][0].address_components[i].types.length;b++) {
+                        fetch(geocodingAPI)
+                            .then(res => res.json())
+                            .then((out) => {
+
+                                if (out['results'].length > 0) {
+                                    var profileUpdate = {}
+                                    console.log('Address after fetch', out);
+                                    profileUpdate.address = out['results'][0].formatted_address;
+                                    for (var i = 0; i < out['results'][0].address_components.length; i++) {
+                                        for (var b = 0; b < out['results'][0].address_components[i].types.length; b++) {
 
                                             //country
                                             if (out['results'][0].address_components[i].types[b] == "country") {
@@ -630,18 +630,21 @@ angular.module('controllers')
                                                 profileUpdate['city'] = out['results'][0].address_components[i].long_name;
                                                 break;
                                             }
+                                        }
                                     }
+                                    AppService.saveProfileForSomeReason(profile, profileUpdate)
                                 }
-                            AppService.saveProfileForSomeReason(profile, profileUpdate)
-                            }
-                        })
-                        .catch(err => console.error(err));
+                            })
+                            .catch(err => console.error(err));
                     }
                 })
             })
     }
 
     function doDelete() {
+        if (typeof analytics !== 'undefined') {
+            analytics.trackView("Delete User Controller")
+        }
         AppUtil.blockingCall(
             AppService.deleteAccount()
         )
@@ -845,15 +848,13 @@ angular.module('controllers')
     })
 
     //Set $scope.map to null
-    $scope.$on('modal.hidden', function () {
-        
+    $scope.$on('modal.hidden', function() {
+
         if (!$scope.location.useGPS) {
-           setLocation(() => {
+            setLocation(() => {
                 $scope.isMapOpened = false
-           })
-        }
-        else
-        {
+            })
+        } else {
             $scope.isMapOpened = false
         }
     });
@@ -863,7 +864,7 @@ angular.module('controllers')
 
         AppService.clearProfileSearchResults()
 
-        
+
         AppUtil.blockingCall(
             AppService.saveProfile({ gps: false, location: { latitude: $scope.myLatlng.lat(), longitude: $scope.myLatlng.lng() } }),
 
@@ -899,43 +900,42 @@ angular.module('controllers')
 
         $scope.locationModal.show()
 
-            .then(() => {
-                
-                if (!$scope.map) {
-                    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions)
-                    $scope.marker = new google.maps.Marker({
+        .then(() => {
 
-                        position: $scope.myLatlng,
+            if (!$scope.map) {
+                $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions)
+                $scope.marker = new google.maps.Marker({
 
-                        map: $scope.map,
+                    position: $scope.myLatlng,
 
-                        title: "My Location",
+                    map: $scope.map,
 
-                        draggable: !profile.gps
+                    title: "My Location",
 
-                    })
-                }
-                else
-                    google.maps.event.trigger($scope.map, 'resize');
-
-                $scope.isMapOpened = true
-                $scope.map.setCenter($scope.myLatlng)
-                
-                
-
-
-
-                google.maps.event.addListener($scope.map, 'click', function(event) {
-
-                    if (!$scope.location.useGPS) {
-
-                        $scope.marker.setPosition(event.latLng)
-                        $scope.myLatlng = event.latLng
-                    }
+                    draggable: !profile.gps
 
                 })
+            } else
+                google.maps.event.trigger($scope.map, 'resize');
+
+            $scope.isMapOpened = true
+            $scope.map.setCenter($scope.myLatlng)
+
+
+
+
+
+            google.maps.event.addListener($scope.map, 'click', function(event) {
+
+                if (!$scope.location.useGPS) {
+
+                    $scope.marker.setPosition(event.latLng)
+                    $scope.myLatlng = event.latLng
+                }
 
             })
+
+        })
 
     }
 
@@ -984,7 +984,7 @@ angular.module('controllers')
         }
     }
 
-        $scope.changeHelp = () => {
+    $scope.changeHelp = () => {
         if ($scope.profile.LFHelp === false && $scope.profile.LFParent === false) {
             $scope.profile.LFParent = true;
         }
@@ -1064,7 +1064,7 @@ angular.module('controllers')
     //     }
     // };
 
-        // $scope.coupleImage = 'img/Badges/inactive-Couple.svg'
+    // $scope.coupleImage = 'img/Badges/inactive-Couple.svg'
     // $scope.toggleCouple = false
 
     // $scope.activateCouple = function() {
@@ -1158,7 +1158,7 @@ angular.module('controllers')
         intercom.updateUser(user, function() {
             intercom.displayMessenger();
         });
-       
+
     }
 })
 
