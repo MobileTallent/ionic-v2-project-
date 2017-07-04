@@ -16,6 +16,71 @@
             </div>
 
             <div class="settings-dropdown">
+
+                <div class="row filter-row">
+                    <div class="col">
+                        <div class="center">
+                            <h4 style="color:#666">Show...</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <ion-checkbox style="border-color: white; margin-left: 5%; margin-right: 5%; padding: 10px;" class="item-checkbox-right item-text-wrap"
+                    ng-model="profile.LFIndividual" toggle-class="toggle-assertive" ng-change="changeIndividual()">
+
+                    <!--<div class="self-id-badge-checkbox">
+                        <img src="img/Badges/active-Individual.svg">
+                    </div>-->
+
+                    <span ng-class="profile.LFIndividual ? 'toggle-text-active' : 'toggle-text-deactivated'">
+                        Singles
+                    </span>
+                </ion-checkbox>
+
+                <ion-checkbox style="border-color: white; margin-left: 5%; margin-right: 5%; padding: 10px;" class="item-checkbox-right item-text-wrap"
+                    ng-model="profile.LFCouple" toggle-class="toggle-assertive" ng-change="changeCouple()">
+
+                    <!--<div class="self-id-badge-checkbox">
+                        <img src="img/Badges/active-Couple.svg">
+                    </div>-->
+
+                    <span ng-class="profile.LFCouple ? 'toggle-text-active' : 'toggle-text-deactivated'">
+                        People with partners
+                    </span>
+                </ion-checkbox>
+
+                <br/>
+
+                <ion-checkbox style="border-color: white; margin-left: 5%; margin-right: 5%; padding: 10px;" class="item-checkbox-right item-text-wrap"
+                    ng-model="profile.LFHelp" toggle-class="toggle-assertive" ng-change="changeHelp()">
+
+                    <!--<div class="self-id-badge-checkbox">
+                        <img src="img/Badges/active-Help.svg">
+                    </div>-->
+
+                    <span ng-class="profile.LFHelp ? 'toggle-text-active' : 'toggle-text-deactivated'">
+                        Angles/Helpers
+                    </span>
+                </ion-checkbox>
+
+
+
+                <ion-checkbox style="border-color: white; margin-left: 5%; margin-right: 5%; padding: 10px;" class="item-checkbox-right item-text-wrap"
+                    ng-model="profile.LFParent" toggle-class="toggle-assertive" ng-change="changeParent()">
+
+                    <!--<div class="self-id-badge-checkbox">
+                        <img src="img/Badges/active-Looking-For-Help.svg">
+                    </div>-->
+
+                    <span ng-class="profile.LFParent ? 'toggle-text-active' : 'toggle-text-deactivated'">
+                        Hopeful Parents & Co-parents
+                    </span>
+                </ion-checkbox>
+
+
+
+
+
                 <div class="row filter-row">
                     <div class="col">
                         <div class="center">

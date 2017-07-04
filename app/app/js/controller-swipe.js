@@ -77,56 +77,30 @@ angular.module('controllers')
 
     //  //  //  //  //  SEARCH FILTERS  \\  \\  \\  \\  \\
 
-    $scope.individualImage = 'img/Badges/inactive-Individual.svg';
-    $scope.toggleIndividual = false;
 
-    $scope.activateIndividual = function() {
-
-        if ($scope.toggleIndividual === false) {
-            $scope.individualImage = 'img/Badges/active-Individual.svg';
-            $scope.toggleIndividual = true;
-            return;
+        $scope.changeIndividual = () => {
+        if ($scope.profile.LFIndividual === false && $scope.profile.LFCouple === false) {
+            $scope.profile.LFCouple = true;
         }
-        if ($scope.toggleIndividual === true) {
-            $scope.individualImage = 'img/Badges/inactive-Individual.svg';
-            $scope.toggleIndividual = false;
-            return;
+    }
+
+    $scope.changeCouple = () => {
+        if ($scope.profile.LFCouple === false && $scope.profile.LFIndividual === false) {
+            $scope.profile.LFIndividual = true;
         }
-    };
+    }
 
-    $scope.coupleImage = 'img/Badges/inactive-Couple.svg'
-    $scope.toggleCouple = false
-
-    $scope.activateCouple = function() {
-
-        if ($scope.toggleCouple === false) {
-            $scope.coupleImage = 'img/Badges/active-Couple.svg';
-            $scope.toggleCouple = true;
-            return;
+    $scope.changeHelp = () => {
+        if ($scope.profile.LFHelp === false && $scope.profile.LFParent === false) {
+            $scope.profile.LFParent = true;
         }
-        if ($scope.toggleCouple === true) {
-            $scope.coupleImage = 'img/Badges/inactive-Couple.svg';
-            $scope.toggleCouple = false;
-            return;
-        }
-    };
+    }
 
-    $scope.helpImage = 'img/Badges/inactive-Help.svg'
-    $scope.toggleHelp = false
-
-    $scope.activateHelp = function() {
-
-        if ($scope.toggleHelp === false) {
-            $scope.helpImage = 'img/Badges/active-Help.svg'
-            $scope.toggleHelp = true
-            return;
+    $scope.changeParent = () => {
+        if ($scope.profile.LFParent === false && $scope.profile.LFHelp === false) {
+            $scope.profile.LFHelp = true;
         }
-        if ($scope.toggleHelp === true) {
-            $scope.helpImage = 'img/Badges/inactive-Help.svg'
-            $scope.toggleHelp = false
-            return;
-        }
-    };
+    }
 
     $scope.lookingImage = 'img/Badges/inactive-Looking-For-Help.svg'
     $scope.toggleLooking = false;
