@@ -22,7 +22,7 @@ angular.module('controllers')
         SEARCH FILTERS
       -----------------------------------------------  
     */
-
+    $scope.isFiltersOpened = false
     $scope.iprofile = profile.clone();
     $scope.showMI = $scope.profile.distanceType === 'mi' ? true : false
     $scope.showKM = $scope.profile.distanceType === 'km' ? true : false
@@ -70,7 +70,8 @@ angular.module('controllers')
 
     $scope.$on('modal.hidden', function(modal) {
         setTimeout(() => {
-            $scope.save()
+            if ($scope.searchFiltersModal && $scope.isFiltersOpened)
+                $scope.save()
         }, 200);
 
     })
@@ -174,11 +175,13 @@ angular.module('controllers')
         if (typeof analytics !== 'undefined') {
             analytics.trackView("Search Filters Controller")
         }
-        $scope.searchFiltersModal.show();
+        $scope.searchFiltersModal.show()
+            .then(() => $scope.isFiltersOpened = true )
     }
 
     $scope.hideSearchFilters = function() {
-        $scope.searchFiltersModal.hide();
+        $scope.searchFiltersModal.hide()
+            .then(() => $scope.isFiltersOpened = false )
     }
 
     $ionicModal.fromTemplateUrl('searchFiltersModal.html', {
@@ -322,6 +325,7 @@ angular.module('controllers')
     }
 
     $scope.closeModal = function(index) {
+        if (!AppService.getProfile() || !$scope.modalNewMatch) return
         if (index == 1) $scope.modalNewMatch.hide()
         else {
             $scope.modalLikeLimit.hide()
