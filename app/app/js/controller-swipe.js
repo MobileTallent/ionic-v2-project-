@@ -69,8 +69,10 @@ angular.module('controllers')
     }
 
     $scope.$on('modal.hidden', function(modal) {
-        console.dir(modal)
-        $scope.save()
+        setTimeout(() => {
+            $scope.save()
+        }, 200);
+        
     })
 
     //  //  //  //  //  SEARCH FILTERS  \\  \\  \\  \\  \\
@@ -204,8 +206,7 @@ angular.module('controllers')
 
     $ionicModal.fromTemplateUrl('searchFiltersModal.html', {
             scope: $scope,
-            animation: 'slide-in-up',
-            id: 1,
+            animation: 'slide-in-up'
         }).then(searchFiltersModal => $scope.searchFiltersModal = searchFiltersModal)
 
 /**----------------------------------------------
