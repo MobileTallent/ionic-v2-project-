@@ -628,6 +628,7 @@ Parse.Cloud.define("GetMatches", function(request, response) {
     // profileQuery.lessThan("birthdate", birthdateTo)
     // if (profile.ageTo !== MAX_AGE_PLUS)
     //     profileQuery.greaterThan("birthdate", birthdateFrom)
+    profileQuery.equalTo("enabled", true)
 
     if (profile.LFSelfId) {
         var regExString = "["
@@ -657,8 +658,6 @@ Parse.Cloud.define("GetMatches", function(request, response) {
         if (profile.girls)
             gender.push('F')
         profileQuery.containedIn("gender", gender)
-
-        profileQuery.equalTo("enabled", true)
     }
 
     //Info cards query 
