@@ -212,7 +212,7 @@ module app {
 		/** Looking for People with Embryo */
 		LFEmbryo: boolean
 
-		/** Looking for People w/o any of the above */
+		/** Looking for People w/o any of the above - not being used */
 		LFNot: boolean
 
 		/** Looking for People who wants to help me */
@@ -220,6 +220,12 @@ module app {
 
 		/** Looking for People whom I can help */
 		LFHelpO: boolean
+
+		/** Looking for People who are Single/Individual */
+		LFIndividual: boolean
+
+		/** Looking for People who are with a Partner/Couple */
+		LFCouple: boolean
 
 		thingsIHave: string
 

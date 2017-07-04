@@ -33,6 +33,10 @@ angular.module('controllers')
         $scope.profile.LFSperm = $scope.profile.LFEggs = $scope.profile.LFWomb = $scope.profile.LFEmbryo = true
     }
 
+    if (!$scope.profile.LFIndividual && !$scope.profile.LFCouple) {
+        $scope.profile.LFIndividual = $scope.profile.LFCouple = true
+    }
+
     $scope.setLanguage = (key) => {
         $log.log('setting language to ' + key)
         $translate.use(key)
@@ -176,12 +180,12 @@ angular.module('controllers')
             analytics.trackView("Search Filters Controller")
         }
         $scope.searchFiltersModal.show()
-            .then(() => $scope.isFiltersOpened = true )
+            .then(() => $scope.isFiltersOpened = true)
     }
 
     $scope.hideSearchFilters = function() {
         $scope.searchFiltersModal.hide()
-            .then(() => $scope.isFiltersOpened = false )
+            .then(() => $scope.isFiltersOpened = false)
     }
 
     $ionicModal.fromTemplateUrl('searchFiltersModal.html', {

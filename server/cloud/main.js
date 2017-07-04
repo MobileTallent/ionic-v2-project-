@@ -660,6 +660,14 @@ Parse.Cloud.define("GetMatches", function(request, response) {
         profileQuery.containedIn("gender", gender)
     }
 
+    // Query for Single / Couple
+    var pCategory = []
+    if (profile.LFIndividual)
+        pCategory.push('1')
+    if (profile.LFCouple)
+        pCategory.push('2')
+    profileQuery.containedIn("personCategory", pCategory)
+
     //Info cards query 
     var infoCardsQuery = new Parse.Query("InfoCard")
 
