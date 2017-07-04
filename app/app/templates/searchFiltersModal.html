@@ -1,12 +1,12 @@
 <ion-modal-view>
     <ion-header-bar class="bar-positive">
         <div class="buttons">
-            <button class="button-icon"  ng-click="hideSearchFilters()" >
+            <button class="button-icon"  ing-click="hideSearchFilters()" >
                 <img src="img/search-back-btn.png" style="height:32px;">
             </button>
             
         </div>
-        <h1 class="title">Back</h1>
+        <!-- <h1 class="title">Back</h1> -->
  
         </div>
     </ion-header-bar>
@@ -28,14 +28,14 @@
                 <div class="row filter-row">
                     <div class="col">
                         <div class="center">
-                            <img class="img-avatar" ng-src="{{spermImage}}" ng-model="iiprofile.LFSperm" on-tap="activateSperm(); " ng-click="activateSperm()">
+                            <img class="img-avatar" ng-src="{{spermImage}}" ng-model="iiprofile.LFSperm" on-tap="activateSperm(); " ing-click="activateSperm()">
                             <p ng-class="iprofile.LFSperm ? 'id-text-active' :  'id-text-inactive' ">Sperm</p>
                         </div>
                     </div>
 
                     <div class="col">
                         <div class="center">
-                            <img class="img-avatar" ng-src="{{eggImage}}" ng-model="iprofile.LFEggs" on-tap="activateEgg()" ng-click="activateEgg()">
+                            <img class="img-avatar" ng-src="{{eggImage}}" ng-model="iprofile.LFEggs" on-tap="activateEgg()" ing-click="activateEgg()">
                             <p ng-class="iprofile.LFEggs ? 'id-text-active' :  'id-text-inactive' ">Eggs</p>
                         </div>
                     </div>
@@ -44,14 +44,14 @@
                 <div class="row filter-row">
                     <div class="col">
                         <div class="center">
-                            <img class="img-avatar" ng-src="{{wombImage}}" ng-model="iprofile.LFWomb" on-tap="activateWomb()" ng-click="activateWomb()">
+                            <img class="img-avatar" ng-src="{{wombImage}}" ng-model="iprofile.LFWomb" on-tap="activateWomb()" ing-click="activateWomb()">
                             <p ng-class="iprofile.LFWomb ? 'id-text-active' :  'id-text-inactive' ">Womb</p>
                         </div>
                     </div>
 
                     <div class="col">
                         <div class="center">
-                            <img class="img-avatar" ng-src="{{embryoImage}}" ng-model="iprofile.LFEmbryo" on-tap="activateEmbryo()" ng-click="activateEmbryo()">
+                            <img class="img-avatar" ng-src="{{embryoImage}}" ng-model="iprofile.LFEmbryo" on-tap="activateEmbryo()" ing-click="activateEmbryo()">
                             <p ng-class="iprofile.LFEmbryo ? 'id-text-active-embryo' :  'id-text-inactive' ">Embryo</p>
                         </div>
                     </div>
