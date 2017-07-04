@@ -833,9 +833,9 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
             //address and flags
             if (profileChanges.location.latitude && profileChanges.location.longitude) {
-                let geocodingAPI = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCWEZ9eSX37ePBTrt3RoL7zQxUjolypzEA&latlng=' + profile.location.latitude
-				geocodingAPI = geocodingAPI + ',' + profile.location.longitude + '&sensor=false&language=en';
-
+                let geocodingAPI = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCWEZ9eSX37ePBTrt3RoL7zQxUjolypzEA&latlng=' + profileChanges.location.latitude
+				geocodingAPI = geocodingAPI + ',' + profileChanges.location.longitude + '&sensor=false&language=en';
+                
 				fetch(geocodingAPI, {cache: 'no-cache'})
 					.then(res => res.json())
 					.then((out) => {
@@ -863,6 +863,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 									}
 							}
 						}
+                        return profile.save(profileChanges)
 					})
 					.catch(err => console.error(err));
             }
