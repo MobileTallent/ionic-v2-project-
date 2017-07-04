@@ -620,13 +620,14 @@ Parse.Cloud.define("GetMatches", function(request, response) {
         profileQuery.withinMiles("location", point, profile.distance)
 
     // the birthdate from is the oldest of the age range
-    var birthdateFrom = new Date()
-    birthdateFrom.setFullYear(birthdateFrom.getFullYear() - profile.ageTo)
-    var birthdateTo = new Date()
-    birthdateTo.setFullYear(birthdateTo.getFullYear() - profile.ageFrom)
-    profileQuery.lessThan("birthdate", birthdateTo)
-    if (profile.ageTo !== MAX_AGE_PLUS)
-        profileQuery.greaterThan("birthdate", birthdateFrom)
+    // JUS 818 - Remove Age Filter - set to Max
+    // var birthdateFrom = new Date()
+    // birthdateFrom.setFullYear(birthdateFrom.getFullYear() - profile.ageTo)
+    // var birthdateTo = new Date()
+    // birthdateTo.setFullYear(birthdateTo.getFullYear() - profile.ageFrom)
+    // profileQuery.lessThan("birthdate", birthdateTo)
+    // if (profile.ageTo !== MAX_AGE_PLUS)
+    //     profileQuery.greaterThan("birthdate", birthdateFrom)
 
     if (profile.LFSelfId) {
         var regExString = "["
