@@ -1156,14 +1156,10 @@ angular.module('controllers')
             }
         };
 
-
-        intercom.registerIdentifiedUser(user, function() {
-            intercom.updateUser(user, function() {
-                intercom.displayMessenger();
-            });
+        intercom.updateUser(user, function() {
+            intercom.displayMessenger();
         });
-
-
+       
     }
 })
 

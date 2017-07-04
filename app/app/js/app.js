@@ -92,7 +92,7 @@ var app = angular.module('ionicApp', ['constants', 'ionic', 'AppUtil', 'ImagesUt
             intercom.setInAppMessageVisibility('VISIBLE');
             // intercom.setLauncherVisibility('VISIBLE');
             intercom.registerForPush();
-
+            intercom.registerUnidentifiedUser();
         })
     })
 
