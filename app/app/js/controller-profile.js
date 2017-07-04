@@ -466,7 +466,9 @@ angular.module('controllers')
 
     $scope.$on('$ionicView.enter', function(event) {
         $scope.showDiscovery = false
-
+        if (typeof analytics !== 'undefined') {
+            analytics.trackView("Settings Controller")
+        }
     })
 
     $scope.$on('$ionicView.beforeLeave', function() {
@@ -641,6 +643,24 @@ angular.module('controllers')
             })
     }
 
+    $scope.changeDiscovery = () => {
+        if (typeof analytics !== 'undefined') {
+            analytics.trackView("Settings - Public Profile")
+        }
+    }
+
+    $scope.changeSound = () => {
+        if (typeof analytics !== 'undefined') {
+            analytics.trackView("Settings - Sound Check")
+        }
+    }
+
+    $scope.changeHelp = () => {
+        if (typeof analytics !== 'undefined') {
+            analytics.trackView("Settings - Help")
+        }
+    }
+
     function doDelete() {
         if (typeof analytics !== 'undefined') {
             analytics.trackView("Delete User Controller")
@@ -658,6 +678,9 @@ angular.module('controllers')
     })
 
     $scope.openIntroModal = () => {
+        if (typeof analytics !== 'undefined') {
+            analytics.trackView("Settings - Help - Introduction")
+        }
         $scope.introModal.show()
     };
     $scope.closeIntroModal = () => {
@@ -671,6 +694,9 @@ angular.module('controllers')
         $scope.tosModal = tosModal;
     })
     $scope.openTosModal = () => {
+        if (typeof analytics !== 'undefined') {
+            analytics.trackView("Settings - Help - TOS")
+        }
         $scope.tosModal.show()
     };
     $scope.closeTosModal = () => {
@@ -730,6 +756,9 @@ angular.module('controllers')
     }
 
     $scope.openClinicsModal = function() {
+        if (typeof analytics !== 'undefined') {
+            analytics.trackView("Settings - Help - FAQ")
+        }
         if ($scope.clinicQuestions)
             $scope.clinicsModal.show()
 

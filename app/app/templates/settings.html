@@ -1,10 +1,10 @@
-<ion-view view-title="{{ viewTitle | translate}}" class="title" cache-view="false" >
+<ion-view view-title="{{ viewTitle | translate}}" class="title" cache-view="false">
     <ion-nav-bar class="bar-positive">
-         <ion-nav-back-button style="display:none">
-            </ion-nav-back-button>
-        <ion-nav-buttons side="left" >
-       
-            <button class="button-icon" ui-sref="menu.home" ng-if="showSearchFilter" >
+        <ion-nav-back-button style="display:none">
+        </ion-nav-back-button>
+        <ion-nav-buttons side="left">
+
+            <button class="button-icon" ui-sref="menu.home" ng-if="showSearchFilter">
                 <img src="img/search-back-btn.png" style="height:32px;">
             </button>
             <button class="button button-icon button-clear ion-navicon" ng-if="!showSearchFilter" menu-toggle="left"></button>
@@ -78,8 +78,7 @@
 
                 <!--Not sure of the LF variables so I made up my own-->
 
-                <ion-checkbox style="border-color: white; margin-left: 5%; margin-right: 5%; padding: 10px;" class="item-checkbox-right item-text-wrap"
-                    ng-model="profile.LFIndividual" toggle-class="toggle-assertive" ng-change="changeIndividual()">
+                <ion-checkbox style="border-color: white; margin-left: 5%; margin-right: 5%; padding: 10px;" class="item-checkbox-right item-text-wrap" ng-model="profile.LFIndividual" toggle-class="toggle-assertive" ng-change="changeIndividual()">
 
                     <!--<div class="self-id-badge-checkbox">
                         <img src="img/Badges/active-Individual.svg">
@@ -90,8 +89,7 @@
                     </span>
                 </ion-checkbox>
 
-                <ion-checkbox style="border-color: white; margin-left: 5%; margin-right: 5%; padding: 10px;" class="item-checkbox-right item-text-wrap"
-                    ng-model="profile.LFCouple" toggle-class="toggle-assertive" ng-change="changeCouple()">
+                <ion-checkbox style="border-color: white; margin-left: 5%; margin-right: 5%; padding: 10px;" class="item-checkbox-right item-text-wrap" ng-model="profile.LFCouple" toggle-class="toggle-assertive" ng-change="changeCouple()">
 
                     <!--<div class="self-id-badge-checkbox">
                         <img src="img/Badges/active-Couple.svg">
@@ -104,8 +102,7 @@
 
                 <br/>
 
-                <ion-checkbox style="border-color: white; margin-left: 5%; margin-right: 5%; padding: 10px;" class="item-checkbox-right item-text-wrap"
-                    ng-model="profile.LFHelp" toggle-class="toggle-assertive" ng-change="changeHelp()">
+                <ion-checkbox style="border-color: white; margin-left: 5%; margin-right: 5%; padding: 10px;" class="item-checkbox-right item-text-wrap" ng-model="profile.LFHelp" toggle-class="toggle-assertive" ng-change="changeHelp()">
 
                     <!--<div class="self-id-badge-checkbox">
                         <img src="img/Badges/active-Help.svg">
@@ -118,8 +115,7 @@
 
 
 
-                <ion-checkbox style="border-color: white; margin-left: 5%; margin-right: 5%; padding: 10px;" class="item-checkbox-right item-text-wrap"
-                    ng-model="profile.LFParent" toggle-class="toggle-assertive" ng-change="changeParent()">
+                <ion-checkbox style="border-color: white; margin-left: 5%; margin-right: 5%; padding: 10px;" class="item-checkbox-right item-text-wrap" ng-model="profile.LFParent" toggle-class="toggle-assertive" ng-change="changeParent()">
 
                     <!--<div class="self-id-badge-checkbox">
                         <img src="img/Badges/active-Looking-For-Help.svg">
@@ -176,8 +172,8 @@
 
                 <div class="row filter-row">
                     <div class="col">
-                         <ul class="list">
-        
+                        <ul class="list">
+
 
                             <li class="item item-divider" style="background-color: #fff;">
                                 {{'SEARCH_DISTANCE' | translate}}: {{profile.distance}}{{profile.distanceType}}
@@ -278,8 +274,8 @@
             </div>
         </div>-->
 
-        <div class="card" ng-show="!showFiltersOnly" >
-            <div class="settings-header" ng-click="publicProfile = !publicProfile; showSearchFilter = false; showAppSettings = false; showHelp = false; showDiscovery = false">
+        <div class="card" ng-show="!showFiltersOnly">
+            <div class="settings-header" ng-click="publicProfile = !publicProfile; showSearchFilter = false; showAppSettings = false; showHelp = false; showDiscovery = false; changeDiscovery();">
                 Public Profile
             </div>
             <div class="settings-dropdown" ng-show="publicProfile" ng-class="publicProfile ? 'animated slideInDown' : '' ">
@@ -287,11 +283,11 @@
                     <li>
                         <ion-toggle ng-model="profile.enabled" toggle-class="toggle-assertive">Public Profile</ion-toggle>
                     </li>
-                    
+
                     <div class="text" style="padding: 5px">
                         Toggling this off hides you from everyone except those you've already matched with.
                     </div>
-                  
+
                 </ul>
             </div>
         </div>
@@ -301,7 +297,7 @@
             </div>
             <div class="settings-dropdown" ng-show="showDiscovery" ng-class="showDiscovery ? 'animated slideInDown' : '' ">
                 <ul class="list custom">
-                    
+
                     <div class="item item-divider">
                         {{'SHOW_DISTANCES_IN' | translate}}:
                     </div>
@@ -310,14 +306,14 @@
 
                     <ion-radio ng-model="profile.distanceType" name="distanceType" ng-value="'mi'">Miles</ion-radio>
 
-                  
+
                 </ul>
             </div>
         </div>
 
 
         <div class="card" ng-init="showAppSettings = false" ng-show="!showFiltersOnly">
-            <div class="settings-header" ng-click="showAppSettings = !showAppSettings; showSearchFilter = false; showDiscovery = false; showHelp = false; ">
+            <div class="settings-header" ng-click="showAppSettings = !showAppSettings; showSearchFilter = false; showDiscovery = false; showHelp = false; changeSound();">
                 Sound Settings
             </div>
             <div class="list settings-dropdown" ng-show="showAppSettings" ng-class="showAppSettings ? 'animated slideInDown' : '' ">
@@ -342,7 +338,7 @@
 
         </div>
         <div class="card" ng-init="showHelp = false" ng-show="!showFiltersOnly">
-            <div class="settings-header" ng-click="showHelp = !showHelp; showSearchFilter = false; showDiscovery = false; showAppSettings = false; ">
+            <div class="settings-header" ng-click="showHelp = !showHelp; showSearchFilter = false; showDiscovery = false; showAppSettings = false; changeHelp();">
                 Help
             </div>
             <div class="list settings-dropdown padding-10" ng-show="showHelp" ng-class="showHelp ? 'animated slideInDown' : '' ">
@@ -350,7 +346,7 @@
                 <!-- <button class="button button-block help-button" ng-click="showHelp = true; openBadgeInfo()">Badges</button> -->
                 <button class="button button-block help-button" ng-click="showHelp = true; openTosModal()">Terms of Use</button>
                 <button class="button button-block help-button" ng-click="showHelp = true; openClinicsModal()"><i class="icon ion-ios-rose-outline"></i> {{'FAQ' | translate}}</button>
-                
+
             </div>
 
         </div>
