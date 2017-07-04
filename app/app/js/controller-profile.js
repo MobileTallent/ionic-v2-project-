@@ -863,13 +863,11 @@ angular.module('controllers')
 
         AppService.clearProfileSearchResults()
 
-        var pos = $scope.marker.getPosition()
-
+        
         AppUtil.blockingCall(
-            AppService.saveProfile({ gps: false, location: { latitude: pos.lat(), longitude: pos.lng() } }),
+            AppService.saveProfile({ gps: false, location: { latitude: $scope.myLatlng.lat(), longitude: $scope.myLatlng.lng() } }),
 
             () => {
-                $scope.myLatlng = new google.maps.LatLng( pos.lat(), pos.lng())
                 callback()
             },
 
@@ -878,7 +876,6 @@ angular.module('controllers')
         )
 
     }
-
 
     // Location's Modal
 
@@ -930,9 +927,11 @@ angular.module('controllers')
 
                 google.maps.event.addListener($scope.map, 'click', function(event) {
 
-                    if (!$scope.location.useGPS)
+                    if (!$scope.location.useGPS) {
 
                         $scope.marker.setPosition(event.latLng)
+                        $scope.myLatlng = event.latLng
+                    }
 
                 })
 
