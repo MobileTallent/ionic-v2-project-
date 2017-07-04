@@ -816,65 +816,59 @@ angular.module('service.parse', ['constants', 'parse-angular'])
         // Workaround for re-saving file objects. Is this still required?
         // See http://stackoverflow.com/questions/25297590/saving-javascript-object-that-has-an-array-of-parse-files-causes-converting-cir
         
-        return $q((resolve, reject) => {
+        if (profileChanges && profileChanges.photos) {
+            profileChanges.photos = _.map(profileChanges.photos, file => {
+                return { name: file.name, url: file.url(), __type: 'File' }
+            })
+        }
+        if (profileChanges && profileChanges.photosInReview) {
+            profileChanges.photosInReview = _.map(profileChanges.photosInReview, file => {
+                return { name: file.name, url: file.url(), __type: 'File' }
+            })
+        }
 
-            if (profileChanges && profileChanges.photos) {
-                profileChanges.photos = _.map(profileChanges.photos, file => {
-                    return resolve({ name: file.name, url: file.url(), __type: 'File' })
-                })
+        if (profileChanges && profileChanges.location) {
+            // Convert to the Parse GeoPoint type
+            profileChanges.location = convertLocation(profileChanges.location.latitude, profileChanges.location.longitude)
+
+            //address and flags
+            if (profileChanges.location.latitude && profileChanges.location.longitude) {
+                let geocodingAPI = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCWEZ9eSX37ePBTrt3RoL7zQxUjolypzEA&latlng=' + profile.location.latitude
+				geocodingAPI = geocodingAPI + ',' + profile.location.longitude + '&sensor=false&language=en';
+
+				fetch(geocodingAPI, {cache: 'no-cache'})
+					.then(res => res.json())
+					.then((out) => {
+						console.log('Address after fetch', out);
+						profileChanges.address = out['results'][0].formatted_address;
+						for (var i=0; i<out['results'][0].address_components.length; i++) {
+            				for (var b=0;b<out['results'][0].address_components[i].types.length;b++) {
+                                    console.dir(out['results'][0].address_components[i])
+									//country
+									if (out['results'][0].address_components[i].types[b] == "country") {
+										profileChanges['country'] = out['results'][0].address_components[i].long_name;
+										break;
+									}
+
+									//state
+									if (out['results'][0].address_components[i].types[b] == "administrative_area_level_1") {
+										profileChanges['state'] = out['results'][0].address_components[i].long_name;
+										break;
+									}
+
+									//locality
+									if (out['results'][0].address_components[i].types[b] == "locality") {
+										profileChanges['city'] = out['results'][0].address_components[i].long_name;
+										break;
+									}
+							}
+						}
+					})
+					.catch(err => console.error(err));
             }
-            if (profileChanges && profileChanges.photosInReview) {
-                profileChanges.photosInReview = _.map(profileChanges.photosInReview, file => {
-                    return resolve({ name: file.name, url: file.url(), __type: 'File' })
-                })
-            }
-
-            if (profileChanges && profileChanges.location) {
-                // Convert to the Parse GeoPoint type
-                profileChanges.location = convertLocation(profileChanges.location.latitude, profileChanges.location.longitude)
-
-                //address and flags
-                if (profileChanges.location.latitude && profileChanges.location.longitude) {
-                    let geocodingAPI = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCWEZ9eSX37ePBTrt3RoL7zQxUjolypzEA&latlng=' + profileChanges.location.latitude
-    				geocodingAPI = geocodingAPI + ',' + profileChanges.location.longitude + '&sensor=false&language=en';
-
-    				fetch(geocodingAPI, {cache: 'no-cache'})
-    					.then(res => res.json())
-    					.then((out) => {
-    						console.log('Address after fetch', out);
-    						profileChanges.address = out['results'][0].formatted_address;
-    						for (var i=0; i<out['results'][0].address_components.length; i++) {
-                				for (var b=0;b<out['results'][0].address_components[i].types.length;b++) {
-                                        console.dir(out['results'][0].address_components[i])
-    									//country
-    									if (out['results'][0].address_components[i].types[b] == "country") {
-    										profileChanges['country'] = out['results'][0].address_components[i].long_name;
-    										break;
-    									}
-
-    									//state
-    									if (out['results'][0].address_components[i].types[b] == "administrative_area_level_1") {
-    										profileChanges['state'] = out['results'][0].address_components[i].long_name;
-    										break;
-    									}
-
-    									//locality
-    									if (out['results'][0].address_components[i].types[b] == "locality") {
-    										profileChanges['city'] = out['results'][0].address_components[i].long_name;
-    										break;
-    									}
-    							}
-    						}
-
-                            return resolve(profile.save(profileChanges))
-    					})
-    					.catch(err => reject(err));
-                }
-            }
-            
-            else return resolve(profile.save(profileChanges))
-
-        });
+        }
+        
+        return profile.save(profileChanges) 
     }
 
     function saveProfileForSomeReason(profile, profileChanges) {
