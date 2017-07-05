@@ -4,7 +4,7 @@ import IAppService = app.IAppService
 /**
  * A directive to display the main details of a profile
  */
-angular.module('ionicApp').directive('profileDetails', function (AppService: IAppService, $ionicPopup, $state, $ionicModal, $cordovaSocialSharing) {
+angular.module('ionicApp').directive('profileDetails', function (AppService: IAppService, $ionicPopup, $state, $ionicModal, $cordovaSocialSharing, $localStorage) {
 	return {
 		restrict: 'E',
 		scope: {
@@ -63,7 +63,7 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 				let distanceString = distance.toFixed(0)
 				// Show 1km/1m as a minimum‰
 				$scope.distance = (distanceString === '0' ? 1 : distanceString) + currentUserProfile.distanceType
-			}
+			}			
 			
 			$scope.isCurrentUser = false
 			$scope.onClickBadgeInfo = () => {
@@ -88,6 +88,10 @@ angular.module('ionicApp').directive('profileDetails', function (AppService: IAp
 				})
 			}
 
+			if (!$localStorage.showBioId && !profile.id){
+					$localStorage.showBioId = true
+					$scope.onClickBadgeInfo()
+			}
 
 		// // // Self Id Badges \\ \\ \\
 

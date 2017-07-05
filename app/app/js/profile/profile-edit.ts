@@ -334,7 +334,7 @@ module app {
 
 		public onRedirectToEditProfile(forceShow) {
 			var alertPopup
-			if (!this.profile.about || forceShow) {
+			if ((!this.profile.about || forceShow) && this.profile.hasSelfId)   {
 				var templateText = 'Your "About Me" section is empty.</br> Everyone is looking for someone'
 				templateText = templateText + ' with a compatible vision. A deep description adds value to the community, tell us about you.'
 				alertPopup = this.$ionicPopup.alert({

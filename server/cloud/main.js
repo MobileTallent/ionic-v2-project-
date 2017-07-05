@@ -619,18 +619,29 @@ Parse.Cloud.define("GetMatches", function(request, response) {
     else
         profileQuery.withinMiles("location", point, profile.distance)
 
+    if (profile.newFilter) {
+        // Query for Single / Couple
+        var pCategory = []
+        if (profile.LFIndividual)
+            pCategory.push('1')
+        if (profile.LFCouple)
+            pCategory.push('2')
+        profileQuery.containedIn("personCategory", pCategory)
+    } else {
+        // the birthdate from is the oldest of the age range
+        // JUS 818 - Remove Age Filter - set to Max
+        var birthdateFrom = new Date()
+        birthdateFrom.setFullYear(birthdateFrom.getFullYear() - profile.ageTo)
+        var birthdateTo = new Date()
+        birthdateTo.setFullYear(birthdateTo.getFullYear() - profile.ageFrom)
+        profileQuery.lessThan("birthdate", birthdateTo)
+        if (profile.ageTo !== MAX_AGE_PLUS)
+            profileQuery.greaterThan("birthdate", birthdateFrom)
+    }
+
     if (profile.personRegions && profile.personRegions.length)
        profileQuery.containedIn('continent', profile.personRegions)
 
-    // the birthdate from is the oldest of the age range
-    // JUS 818 - Remove Age Filter - set to Max
-    // var birthdateFrom = new Date()
-    // birthdateFrom.setFullYear(birthdateFrom.getFullYear() - profile.ageTo)
-    // var birthdateTo = new Date()
-    // birthdateTo.setFullYear(birthdateTo.getFullYear() - profile.ageFrom)
-    // profileQuery.lessThan("birthdate", birthdateTo)
-    // if (profile.ageTo !== MAX_AGE_PLUS)
-    //     profileQuery.greaterThan("birthdate", birthdateFrom)
     profileQuery.equalTo("enabled", true)
 
     if (profile.LFSelfId) {
@@ -662,14 +673,6 @@ Parse.Cloud.define("GetMatches", function(request, response) {
             gender.push('F')
         profileQuery.containedIn("gender", gender)
     }
-
-    // Query for Single / Couple
-    var pCategory = []
-    if (profile.LFIndividual)
-        pCategory.push('1')
-    if (profile.LFCouple)
-        pCategory.push('2')
-    profileQuery.containedIn("personCategory", pCategory)
 
     //Info cards query 
     var infoCardsQuery = new Parse.Query("InfoCard")
@@ -1913,6 +1916,27 @@ Parse.Cloud.define('GetProfilesWhoAreCurious', function(request, response) {
         response.success(result.length)
     }, function(error) {
         console.log("Error in getting result - GetProfilesWhoAreCurious: " + JSON.stringify(error))
+        response.error(error)
+    })
+})
+
+/* Get Profiles Length that are helping - NOT - or maybe helping */
+Parse.Cloud.define('GetProfilesHelpingLevel', function(request, response) {
+    var profileType = request.params.type
+    console.log('GetProfilesHelpingLevel - ' + profileType)
+
+    var profileQuery = new Parse.Query(Profile)
+
+    if (profileType === "5")
+        profileQuery.doesNotExist("personHelpLevel")
+    else
+        profileQuery.equalTo('personHelpLevel', profileType)
+
+    profileQuery.limit(10000).find().then(function(result) {
+        console.log("Successs - GetProfilesHelpingLevel - " + result.length)
+        response.success(result.length)
+    }, function(error) {
+        console.log("Error in getting result - GetProfilesHelpingLevel: " + JSON.stringify(error))
         response.error(error)
     })
 })

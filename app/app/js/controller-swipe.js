@@ -1,7 +1,7 @@
 angular.module('controllers')
 
 .controller('ProfileSearch', function($rootScope, $log, $scope, $state, $timeout, $translate, $ionicSideMenuDelegate,
-    TDCardDelegate, AppService, AppUtil, $ionicModal, $ionicPopup, $ionicLoading) {
+    TDCardDelegate, AppService, AppUtil, $ionicModal, $ionicPopup, $ionicLoading, $interval) {
 
     var translations
     $translate(['MATCHES_LOAD_ERROR']).then(function(translationsResult) {
@@ -219,6 +219,7 @@ angular.module('controllers')
 
     }
 
+
     $scope.hideSearchFilters = function() {
         $scope.searchFiltersModal.hide()
             .then(() => $scope.isFiltersOpened = false)
@@ -272,6 +273,9 @@ angular.module('controllers')
             minutes = parseInt((duration / (1000 * 60)) % 60),
             hours = parseInt((duration / (1000 * 60 * 60)) % 24);
 
+        if (!hours && !minutes && !seconds)
+            $scope.timeLimitDatetime = null
+
         hours = (hours < 10) ? "0" + hours : hours;
         minutes = (minutes < 10) ? "0" + minutes : minutes;
         seconds = (seconds < 10) ? "0" + seconds : seconds;
@@ -281,18 +285,26 @@ angular.module('controllers')
 
     function checkQuotaTime() {
         var quotaNotReached = false
+
         if (profile.quotaSearchedDate) {
-            var twelveHrsAgo = 43200000 // 43200000-12hrs  Formula: hrs*mins*sec*1000ms  12*60*60*1000
+
+            var twelveHrsAgo = 3600000 // 43200000-12hrs  Formula: hrs*mins*sec*1000ms  12*60*60*1000
             var now = new Date()
             var now_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds())
             var diff = now_utc - profile.quotaSearchedDate
-            var timeRemaining = parseTimeRemaining(twelveHrsAgo - diff)
+            var timeLimitDatetime = twelveHrsAgo - diff
+            var timeRemaining = parseTimeRemaining(timeLimitDatetime)
+
             if (diff < twelveHrsAgo) {
+
                 $scope.timeRemaining = timeRemaining
+                $scope.timeLimitDatetime = new Date(timeLimitDatetime)
+
                 $scope.$broadcast('likeLimitReached')
                 quotaNotReached = true
             }
         }
+
         return quotaNotReached
     }
 
@@ -329,6 +341,14 @@ angular.module('controllers')
 
 
     //Multiple Modal methods
+    $scope.timeLimitCounter = null
+    $scope.timeLimitDatetime = null
+    $scope.timeRemaining = " 00 hrs : 00 mins : 00 secs"
+
+    $scope.$on('modal.hidden', () => {
+        if ($scope.timeLimitCounter)
+            $interval.cancel($scope.timeLimitCounter)
+    })
 
     // Initialise the new match modal
     $ionicModal.fromTemplateUrl('newMatch.html', {
@@ -353,10 +373,26 @@ angular.module('controllers')
             id: 2,
         }).then(modal => $scope.modalLikeLimit = modal)
         // Cleanup the modal when we're done with it!
-    $scope.$on('$destroy', () => $scope.closeModal(2))
+    $scope.$on('$destroy', () => {
+        $scope.closeModal(2)
+        if ($scope.timeLimitCounter)
+            $interval.cancel($scope.timeLimitCounter);
+    })
 
     $scope.$on('likeLimitReached', (timeRemaining) => {
         $scope.openModal(2)
+
+        $scope.timeLimitCounter = $interval(() => {
+
+            if ($scope.timeLimitDatetime) {
+                $scope.timeLimitDatetime.setSeconds($scope.timeLimitDatetime.getSeconds() - 1)
+                $scope.timeRemaining = parseTimeRemaining($scope.timeLimitDatetime.getTime())
+            } else {
+                $state.go($state.current, {}, { reload: true });
+            }
+
+        }, 1000)
+
     })
 
     $scope.openModal = function(index) {

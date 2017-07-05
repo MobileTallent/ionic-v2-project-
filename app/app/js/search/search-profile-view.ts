@@ -21,17 +21,18 @@ module app {
 			})
 			$scope.$on('$ionicView.beforeEnter', (event, data) => this.ionViewWillEnter())
 			$scope.$on('$ionicView.beforeLeave', (event, data) => this.ionViewWillLeave())
+
+			this.profile = this.$stateParams['profile']
+			this.$scope['profile'] = this.profile
 		}
 
 		ionViewWillEnter() {
-			this.profile = this.$stateParams['profile']
-			this.$scope['profile'] = this.profile
 			this.isSameUser = this.profile.objectId === this.AppService.getProfile().id
 			if (this.AppService.branchProfileId) {
 				this.branchProfileId = this.AppService.branchProfileId
 			}
 			this.AppService.getProfileOfSelectedUser(this.profile.objectId).then(profilePointer => {
-				this.profilePointer = profilePointer
+				this.profilePointer = profilePointer				
 			})
 		}
 

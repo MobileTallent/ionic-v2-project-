@@ -363,6 +363,11 @@
                 <button class="button button-block button-stable" ng-click="logout()" translate="LOGOUT"></button>
                 <button class="button button-block button-positive hidden" ng-click="getProfilesNew()">Set Default Values</button>
                 <button class="button button-block button-positive hidden" ng-click="setCountry()">Set Country Values</button>
+                <button class="button button-block button-positive hidden" ng-click="getProfilesHelpingLevel('1')">getProfilesWhoMaybeHelp</button>
+                <button class="button button-block button-positive hidden" ng-click="getProfilesHelpingLevel('2')">getProfilesWhoCanHelp</button>
+                <button class="button button-block button-positive hidden" ng-click="getProfilesHelpingLevel('3')">getProfilesWhoCanNOTHelp</button>
+                <button class="button button-block button-positive hidden" ng-click="getProfilesHelpingLevel('0')">GetProfilesWhoAreDunnoHelp</button>
+                <button class="button button-block button-positive hidden" ng-click="getProfilesHelpingLevel('5')">GetProfilesWhoAreUndefinedHelp</button>
             </div>
             <div class="wide center padding-10 red-text" ng-click="deleteAccount()">
                 {{'DELETE_ACCOUNT' | translate}}

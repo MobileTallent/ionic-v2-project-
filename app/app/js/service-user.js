@@ -149,6 +149,7 @@ function onNotificationOpen(pnObj) {
 
                 testPushNotification: testPushNotification,
                 getProfilesWhoAreCurious: getProfilesWhoAreCurious,
+                getProfilesHelpingLevel: getProfilesHelpingLevel,
                 getProfilesNoCountry: getProfilesNoCountry,
 
                 // Admin functions
@@ -960,7 +961,7 @@ function onNotificationOpen(pnObj) {
                     service.numberOfLikes++
                 }
                 // reset and save the quota date - 
-                if (service.numberOfLikes >= 100) {
+                if (service.numberOfLikes >= 10) {
                     service.numberOfLikes = 0
                     var now = new Date()
                     var now_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds())
@@ -1519,6 +1520,10 @@ function onNotificationOpen(pnObj) {
 
             function getProfilesWhoAreCurious(type) {
                 return server.getProfilesWhoAreCurious(type)
+            }
+
+            function getProfilesHelpingLevel(type) {
+                return server.getProfilesHelpingLevel(type)
             }
 
             function getProfilesNoCountry() {

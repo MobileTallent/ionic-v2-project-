@@ -456,7 +456,7 @@ angular.module('controllers')
     var translations
     var isLogout = false
 
-    $translate(['SETTINGS_SAVE_ERROR', 'DELETE', 'DELETE_ACCOUNT', 'CANCEL']).then(function(translationsResult) {
+    $translate(['SETTINGS_SAVE_ERROR', 'DELETE', 'DELETE_ACCOUNT', 'CANCEL', 'GPS_ERROR']).then(function(translationsResult) {
         translations = translationsResult
     })
 
@@ -477,9 +477,7 @@ angular.module('controllers')
     })
 
     $scope.profile = AppService.getProfile().clone()
-        //$scope.profile.LFNot = typeof $scope.profile.LFNot !== 'undefined' ? $scope.profile.LFNot : true
-        //$scope.showSearchFilter = false; 
-    $scope.showDiscovery = true
+    $scope.showDiscovery = false
     $scope.showMI = $scope.profile.distanceType === 'mi' ? true : false
     $scope.showKM = $scope.profile.distanceType === 'km' ? true : false
     var dType = $scope.profile.distanceType
@@ -542,10 +540,14 @@ angular.module('controllers')
     )
 
     $scope.getProfilesWhoAreCurious = (type) => AppService.getProfilesWhoAreCurious(type).then(
-        length => console.log("Number of profiles " + length + " Type: " + type),
+        length => AppUtil.toastSimple("Number of profiles - curiousity - " + length + " Type: " + type),
         error => AppUtil.toastSimple(JSON.stringify(error))
     )
 
+    $scope.getProfilesHelpingLevel = (type) => AppService.getProfilesHelpingLevel(type).then(
+        length => AppUtil.toastSimple("Number of profiles - helping level - " + type + " = " + length),
+        error => AppUtil.toastSimple(JSON.stringify(error))
+    )
 
     $scope.deleteUnmatchedSwipes = () => AppUtil.blockingCall(
         AppService.deleteUnmatched(),
@@ -797,13 +799,6 @@ angular.module('controllers')
         $scope.clinicsModal = clinicsModal;
     })
 
-
-    // TODO load the google map script async here when required instead of index.html
-    var translations
-    $translate(['GPS_ERROR']).then(function(translationsResult) {
-        translations = translationsResult
-    })
-
     var profile = AppService.getProfile()
     var location = profile.location
 
@@ -985,20 +980,6 @@ angular.module('controllers')
 
     $scope.closeLocationMapModal = function() {
         $scope.locationModal.hide()
-    }
-
-    $scope.debug = () => {
-        console.log('debug...')
-        $ionicActionSheet.show({
-            destructiveText: 'Send Debug Logs',
-            titleText: 'UID: ' + AppService.getProfile().uid + ' Env: ' + env,
-            cancelText: translations.CANCEL,
-            cancel: function() {},
-            destructiveButtonClicked: function(index) {
-                $log.error('debug log')
-                return true
-            }
-        })
     }
 
     $scope.filterInfoPopup = () => {

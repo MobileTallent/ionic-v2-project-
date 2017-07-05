@@ -488,6 +488,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
         testPushNotification: testPushNotification,
         getProfilesWhoAreCurious: getProfilesWhoAreCurious,
+        getProfilesHelpingLevel: getProfilesHelpingLevel,
         getProfilesNoCountry: getProfilesNoCountry,
 
         // admin functions
@@ -940,6 +941,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             $log.error('search parameters were not provided')
             // Can't use a Parse object as a param, so copy the fields. Could copy only the required search fields.
         var searchParams = {};
+        searchParams.newFilter = true
         for (var i = 0; i < profileFields.length; i++)
             searchParams[profileFields[i]] = searchParameters[profileFields[i]]
         return Parse.Cloud.run('GetMatches', searchParams).catch(_unwrapError)
@@ -1163,6 +1165,10 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
     function getProfilesWhoAreCurious(type) {
         return Parse.Cloud.run('GetProfilesWhoAreCurious', { type: type }).catch(_unwrapError)
+    }
+
+    function getProfilesHelpingLevel(type) {
+        return Parse.Cloud.run('GetProfilesHelpingLevel', { type: type }).catch(_unwrapError)
     }
 
     function getProfilesNoCountry() {

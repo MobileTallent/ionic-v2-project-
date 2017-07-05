@@ -22,7 +22,7 @@
             <div class="col col-33" id="addPhoto" ng-if="vm.canAddPhoto()">
                 <img ng-src="{{vm.NO_IMAGE}}" ng-click="vm.addPhoto()" class="profileImg" />
             </div>
-        <!-- TODO could have some placeholder images in the other empty spots so there isn't odd looking empty space -->
+            <!--TODO could have some placeholder images in the other empty spots so there isn't odd looking empty space -->
         </div>
 
         <div ng-if="vm.photosInReview.length">
@@ -39,7 +39,7 @@
 
         </br>
 
-<!--Badge Container - styles located in ionic.app.scss-->
+        <!--Badge Container - styles located in ionic.app.scss-->
         <div class="badge-row-profile-edit" ng-click="vm.onClickBadgeInfo()">
             <!--<img ng-class="vm.personParent ? 'id-badge-visible col' : 'id-badge-hidden' " src="img/Badges/active-Looking-For-Help.svg">
             <img ng-class="vm.personHelpLevel === '2' ? 'id-badge-visible col' : 'id-badge-hidden' " src="img/Badges/active-Help.svg">-->
@@ -50,7 +50,7 @@
         </div>
 
 
-<!--Self definition filter cards. -->
+        <!--Self definition filter cards. -->
 
         <div class="about-you-header">
 
@@ -118,7 +118,7 @@
                 </ion-slide-page>
 
 
-<!--Tier Two | Curiosity Section-->
+                <!--Tier Two | Curiosity Section-->
 
                 <ion-slide-page class="filter-page">
                     <div class="padding-10"><b>Where are you at?</b></div>
@@ -127,30 +127,52 @@
 
                             <input type="radio" name="personType" ng-model="vm.personType" value="1" id="curious" />
 
-                            <label class="row" for="curious">
-                                <span class="col-80 center radio-label">
+                            <label ng-if="vm.personCategory === ('1' || '3' )" class="row" for="curious">
+                                <span  class="col-80 center radio-label">
                                     I'm not ready for a baby, but I'm curious
-                                </span>                      
+                                </span>     
+                                <div class="col-20 center">
+                                    <div class="check"></div>
+                                </div>
+                            </label>
+
+                            <label ng-if="vm.personCategory === '2'" class="row" for="curious">  
+                                <span class="col-80 center radio-label">
+                                    We're not ready for a baby, but we're curious
+                                </span>  
 
                                 <div class="col-20 center">
                                     <div class="check"></div>
                                 </div>
                             </label>
+
                         </div>
                     </div>
                     <div class="filter-radio">
                         <div class="row" ng-click="vm.$scope.slider.slideNext()">
                             <input type="radio" name="personType" ng-model="vm.personType" value="2" id="serious" />
 
-                            <label class="row" for="serious">
-                                <span class="col-80 center radio-label">
+                            <label ng-if="vm.personCategory === ('1' || '3' )" class="row" for="serious">
+                                <span  class="col-80 center radio-label">
                                     I'm ready now, I'm pretty serious
-                                </span>
-                            
+                                </span>  
+
                                 <div class="col-20 center">
                                     <div class="check"></div>
                                 </div>
                             </label>
+
+                            <label ng-if="vm.personCategory === '2'" class="row" for="serious">
+                                
+                                <span  class="col-80 center radio-label">
+                                    We're ready now, we're pretty serious
+                                </span>     
+
+                                <div class="col-20 center">
+                                    <div class="check"></div>
+                                </div>
+                            </label>
+
                         </div>
                     </div>
                     <div class="nav-button-row-filter-card">
@@ -164,7 +186,7 @@
                 </ion-slide-page>
 
 
-<!--Tier Three | Sperm, Womb, Etc Section-->
+                <!--Tier Three | Sperm, Womb, Etc Section-->
 
                 <ion-slide-page>
                     <div class="padding-10"><b>Tell us about you</b></div>
@@ -175,9 +197,14 @@
                             <img src="img/Badges/active-Sperm.svg">
                         </div>
 
-                        <span ng-class="!vm.personSperm ? 'toggle-text-active' : 'toggle-text-inactive'">
+                        <span ng-if="vm.personCategory === ('1' || '3' )" ng-class="!vm.personSperm ? 'toggle-text-active' : 'toggle-text-inactive'">
                             I have sperm
                         </span>
+
+                        <span ng-if="vm.personCategory === '2'" ng-class="!vm.personSperm ? 'toggle-text-active' : 'toggle-text-inactive'">
+                            We have sperm
+                        </span>
+
                     </ion-checkbox>
 
 
@@ -188,8 +215,12 @@
                             <img src="img/Badges/active-Egg.svg">
                         </div>
 
-                        <span ng-class="!vm.personEgg ? 'toggle-text-active' : 'toggle-text-inactive'">
+                        <span ng-if="vm.personCategory === ('1' || '3' )" ng-class="!vm.personEgg ? 'toggle-text-active' : 'toggle-text-inactive'">
                             I have eggs
+                        </span>
+
+                        <span ng-if="vm.personCategory === '2'" ng-class="!vm.personEgg ? 'toggle-text-active' : 'toggle-text-inactive'">
+                            We have eggs
                         </span>
                     </ion-checkbox>
 
@@ -201,8 +232,12 @@
                             <img src="img/Badges/active-Womb.svg">
                         </div>
 
-                        <span ng-class="!vm.personWomb ? 'toggle-text-active' : 'toggle-text-inactive'">
+                        <span ng-if="vm.personCategory === ('1' || '3' )" ng-class="!vm.personWomb ? 'toggle-text-active' : 'toggle-text-inactive'">
                             I have a womb
+                        </span>
+
+                        <span ng-if="vm.personCategory === '2'" ng-class="!vm.personWomb ? 'toggle-text-active' : 'toggle-text-inactive'">
+                            We have a womb
                         </span>
                     </ion-checkbox>
 
@@ -214,10 +249,31 @@
                             <img src="img/Badges/active-Frozen-Embryo.svg">
                         </div>
 
-                        <span ng-class="!vm.personEmbryo ? 'toggle-text-active' : 'toggle-text-inactive'">
+                        <span ng-if="vm.personCategory === ('1' || '3' )" ng-class="!vm.personEmbryo ? 'toggle-text-active' : 'toggle-text-inactive'">
                             I have a frozen embryo
                         </span>
+
+                        <span ng-if="vm.personCategory === '2'" ng-class="!vm.personEmbryo ? 'toggle-text-active' : 'toggle-text-inactive'">
+                            We have a frozen embryo
+                        </span>
                     </ion-checkbox>
+
+                    <!--Guidence message-->
+                    <!--<div class="guidence-message guidence-border">
+                        <h5 class=" guidence-message row selector-guidence">
+                            Egg + Womb + Sperm (and love) make a baby
+                        </h5>
+
+                        <p class="row selector-guidence">
+                            If you are healthy with a regular period, you typically have eggs + womb. This doesnt mean that you have to share anything.
+                            It just helps match you with the right people. Select eggs whether they are frozen or inside
+                            you.
+                        </p>
+                        <div class="row centered selector-guidence">
+                            <button class="button filter-selector filter-selector-left button-outline"> I have {{x}}</button>
+                            <button class="button filter-selector filter-selector-right button-outline"> I have both</button>
+                        </div>
+                    </div>-->
 
                     <div class="nav-button-row-filter-card">
                         <div class="nav-button-container-left">
@@ -227,10 +283,11 @@
                             <a class="button button-icon icon ion-arrow-right-a text-colour-energized large-icon" ng-click="vm.$scope.slider.slideNext()"></a>
                         </div>
                     </div>
+
                 </ion-slide-page>
 
 
-<!--Tier four | Parental Status-->
+                <!--Tier four | Parental Status-->
 
                 <ion-slide-page class="filter-page">
 
@@ -280,7 +337,7 @@
                 </ion-slide-page>
 
 
-<!--Tier Five | Helping Level Section -->
+                <!--Tier Five | Helping Level Section -->
                 <ion-slide-page class="filter-page">
                     <div class="padding-10"><b>Would you help people in need make a baby?</b></div>
                     <div class="filter-radio">
@@ -288,11 +345,20 @@
 
                             <input type="radio" name="personHelpLevel" ng-model="vm.personHelpLevel" value="1" id="considerHelping" />
 
-                            <label class="row" for="considerHelping">
+                            <label ng-if="vm.personCategory === ('1' || '3' )" class="row" for="considerHelping">
                                 <span class="col-80 center radio-label text-size-18">
-                                    Maybe
+                                     I may consider helping others
                                 </span>
                             
+                                <div class="col-20 center">
+                                    <div class="check"></div>
+                                </div>
+                            </label>
+
+                            <label ng-if="vm.personCategory === '2'" class="row" for="considerHelping">
+                                <span class="col-80 center radio-label text-size-18">
+                                     We may consider helping others
+                                </span>
 
                                 <div class="col-20 center">
                                     <div class="check"></div>
@@ -308,16 +374,26 @@
 
                             <input type="radio" name="personHelpLevel" ng-model="vm.personHelpLevel" value="2" id="primarilyHelping" />
 
-                            <label class="row" for="primarilyHelping">
-
+                            <label ng-if="vm.personCategory === ('1' || '3' )" class="row" for="primarilyHelping">
                                 <span class="col-80 center radio-label text-size-18">
-                                   Yes
+                                   I am unable to help others
                                 </span>
 
                                 <div class="col-20 center">
                                     <div class="check"></div>
                                 </div>
                             </label>
+
+                            <label ng-if="vm.personCategory === '2'" class="row" for="primarilyHelping">
+                                <span class="col-80 center radio-label text-size-18">
+                                   We're unable to help others
+                                </span>
+
+                                <div class="col-20 center">
+                                    <div class="check"></div>
+                                </div>
+                            </label>
+
                         </div>
                     </div>
                     <div class="filter-radio">
@@ -325,15 +401,26 @@
 
                             <input type="radio" name="personHelpLevel" ng-model="vm.personHelpLevel" value="3" id="notHelping" />
 
-                            <label class="row" for="notHelping">
+                            <label ng-if="vm.personCategory === ('1' || '3' )" class="row" for="notHelping">
                                 <span class="col-80 center radio-label text-size-18" >
-                                    No
+                                    I'm purely here to help others 
                                 </span>
                             
                                 <div class="col-20 center">
                                     <div class="check"></div>
                                 </div>
                             </label>
+
+                            <label ng-if="vm.personCategory === '2'" class="row" for="notHelping">
+                                <span class="col-80 center radio-label text-size-18" >
+                                    We're purely here to help others 
+                                </span>
+                            
+                                <div class="col-20 center">
+                                    <div class="check"></div>
+                                </div>
+                            </label>
+
                         </div>
                     </div>
 
@@ -347,7 +434,7 @@
                     </div>
                 </ion-slide-page>
 
-<!--Tier Six | About Section-->
+                <!--Tier Six | About Section-->
                 <ion-slide-page class="filter-page">
                     <div class="about-you-container">
                         <h5 class="about-you-info padding-5">{{'ABOUT_YOU' | translate}}</h5>
@@ -368,6 +455,7 @@
                             <button class="button button-assertive" ng-click="vm.saveProfile()">Finish</button>
                         </div>
                     </div>
+
                 </ion-slide-page>
 
             </ion-slides>
