@@ -479,7 +479,7 @@ angular.module('controllers')
     $scope.profile = AppService.getProfile().clone()
         //$scope.profile.LFNot = typeof $scope.profile.LFNot !== 'undefined' ? $scope.profile.LFNot : true
         //$scope.showSearchFilter = false; 
-    $scope.showDiscovery = true
+    $scope.showDiscovery = false
     $scope.showMI = $scope.profile.distanceType === 'mi' ? true : false
     $scope.showKM = $scope.profile.distanceType === 'km' ? true : false
     var dType = $scope.profile.distanceType

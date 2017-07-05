@@ -929,6 +929,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
             $log.error('search parameters were not provided')
             // Can't use a Parse object as a param, so copy the fields. Could copy only the required search fields.
         var searchParams = {};
+        searchParams.newFilter = true
         for (var i = 0; i < profileFields.length; i++)
             searchParams[profileFields[i]] = searchParameters[profileFields[i]]
         return Parse.Cloud.run('GetMatches', searchParams).catch(_unwrapError)
