@@ -599,6 +599,14 @@ angular.module('controllers')
             results => {
                 console.log('Results found: ' + results.length)
                 console.log(results)
+
+                //take a continents
+                var continents = []
+                fetch('/continents.json').then(res => res.json())
+                .then((out) => {
+                    continents = out
+                }).catch(err => console.error(err));
+
                 _.forEach(results, function(profile) {
                     //address and flags
                     if (profile.location && profile.location.latitude && profile.location.longitude) {
@@ -618,8 +626,15 @@ angular.module('controllers')
                                             //country
                                             if (out['results'][0].address_components[i].types[b] == "country") {
                                                 profileUpdate['country'] = out['results'][0].address_components[i].long_name;
+
+                                                _.forEach(continents, function(item,key){
+                                                    if (out['results'][0].address_components[i].short_name==key)
+                                                        profileUpdate['continent'] = item
+                                                })
+
                                                 break;
                                             }
+                                            
 
                                             //state
                                             if (out['results'][0].address_components[i].types[b] == "administrative_area_level_1") {

@@ -21,11 +21,11 @@ var profileFields = [
     'photos', 'photosInReview',
     'notifyMatch', 'notifyMessage',
     'distance', 'distanceType',
-    'location', 'gps', 'country', 'address', 'state', 'city',
+    'location', 'gps', 'country', 'address', 'state', 'city', 'continent',
     'enabled',
     'gender', 'guys', 'girls',
     'ageFrom', 'ageTo',
-    'personCategory', 'personType', 'personSperm', 'personEgg', 'personWomb', 'personEmbryo', 'personParent', 'personHelpLevel', 'hasSelfId',
+    'personCategory', 'personType', 'personSperm', 'personEgg', 'personWomb', 'personEmbryo', 'personParent', 'personHelpLevel', 'personRegions', 'hasSelfId',
     'LFSperm', 'LFEggs', 'LFWomb', 'LFEmbryo', 'LFNot', 'LFHelpM', 'LFHelpO', 'thingsIHave', 'LFSelfId', 'LFIndividual', 'LFCouple'
 ]
 
@@ -836,6 +836,13 @@ angular.module('service.parse', ['constants', 'parse-angular'])
                 let geocodingAPI = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCWEZ9eSX37ePBTrt3RoL7zQxUjolypzEA&latlng=' + profileChanges.location.latitude
                 geocodingAPI = geocodingAPI + ',' + profileChanges.location.longitude + '&sensor=false&language=en';
 
+                //take a continents
+                var continents = []
+                fetch('/continents.json').then(res => res.json())
+                .then((out) => {
+                    continents = out
+                }).catch(err => console.error(err));
+
                 fetch(geocodingAPI, { cache: 'no-cache' })
                     .then(res => res.json())
                     .then((out) => {
@@ -843,10 +850,14 @@ angular.module('service.parse', ['constants', 'parse-angular'])
                         profileChanges.address = out['results'][0].formatted_address;
                         for (var i = 0; i < out['results'][0].address_components.length; i++) {
                             for (var b = 0; b < out['results'][0].address_components[i].types.length; b++) {
-                                console.dir(out['results'][0].address_components[i])
+                                //console.dir(out['results'][0].address_components[i])
                                     //country
                                 if (out['results'][0].address_components[i].types[b] == "country") {
                                     profileChanges['country'] = out['results'][0].address_components[i].long_name;
+                                    _.forEach(continents, function(item,key){
+                                        if (out['results'][0].address_components[i].short_name==key)
+                                            profileChanges['continent'] = item
+                                    })
                                     break;
                                 }
 

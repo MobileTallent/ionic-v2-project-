@@ -619,6 +619,9 @@ Parse.Cloud.define("GetMatches", function(request, response) {
     else
         profileQuery.withinMiles("location", point, profile.distance)
 
+    if (profile.personRegions && profile.personRegions.length)
+       profileQuery.containedIn('continent', profile.personRegions)
+
     // the birthdate from is the oldest of the age range
     // JUS 818 - Remove Age Filter - set to Max
     // var birthdateFrom = new Date()

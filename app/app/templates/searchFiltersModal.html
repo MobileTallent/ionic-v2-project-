@@ -136,6 +136,27 @@
                         </ul>
                     </div>
                 </div>
+                <!-- Regions filters -->
+                <div class="row filter-row">
+                    <div class="col">
+                         <ul class="list">
+                             <li class="item item-divider" style="background-color: #fff;">
+                                 Regions
+                             </li>
+                             <li class="item continents-container">
+                                <div class="badge-continent" 
+                                     ng-repeat="continent in continents | orderBy:'active':true track by $index"
+                                     ng-class="{'active':continent.active}"
+                                     ng-click="continent.active=!continent.active"
+                                />
+                                     {{continent.name}} 
+                                     <i class="icon"
+                                     ng-class="{'ion-checkmark-round':continent.active, 'ion-plus-round':!continent.active}"></i>
+                                </div>
+                             </li>
+                         </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </ion-content>

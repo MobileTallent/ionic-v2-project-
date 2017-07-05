@@ -27,7 +27,7 @@ angular.module('controllers')
     $scope.showMI = $scope.profile.distanceType === 'mi' ? true : false
     $scope.showKM = $scope.profile.distanceType === 'km' ? true : false
     var dType = $scope.profile.distanceType
-    var fields = ['enabled', 'guys', 'girls', 'ageFrom', 'ageTo', 'notifyMatch', 'notifyMessage', 'distanceType', 'distance', 'LFSperm', 'LFEggs', 'LFWomb', 'LFEmbryo', 'LFNot', 'LFHelpM', 'LFHelpO', 'LFSelfId']
+    var fields = ['enabled', 'guys', 'girls', 'ageFrom', 'ageTo', 'notifyMatch', 'notifyMessage', 'distanceType', 'distance', 'LFSperm', 'LFEggs', 'LFWomb', 'LFEmbryo', 'LFNot', 'LFHelpM', 'LFHelpO', 'LFSelfId', 'personRegions']
 
     if (!$scope.profile.LFSelfId) {
         $scope.profile.LFSperm = $scope.profile.LFEggs = $scope.profile.LFWomb = $scope.profile.LFEmbryo = true
@@ -60,6 +60,13 @@ angular.module('controllers')
             $scope.iprofile.LFNot = true
         else
             $scope.iprofile.LFNot = false
+        
+        $scope.iprofile.personRegions = []
+        _.forEach($scope.continents, function(item,key) {
+                    if (item.active) 
+                        $scope.iprofile.personRegions.push(item.name)
+        })
+        
 
         AppUtil.blockingCall(
             AppService.saveProfile(_.pick($scope.iprofile, fields)),
@@ -81,7 +88,6 @@ angular.module('controllers')
     })
 
     //  //  //  //  //  SEARCH FILTERS  \\  \\  \\  \\  \\
-
 
     $scope.changeIndividual = () => {
         if ($scope.profile.LFIndividual === false && $scope.profile.LFCouple === false) {
@@ -181,6 +187,36 @@ angular.module('controllers')
         }
         $scope.searchFiltersModal.show()
             .then(() => $scope.isFiltersOpened = true)
+        
+        //filter by regions
+        fetch('/continents.json').then(res => res.json())
+        .then((out) => {
+            $scope.continents = []
+            _.forEach(out, (item,key) => {
+              $scope.continents.push(out[key])
+            })
+            //remove dublicates
+            $scope.continents = $scope.continents.filter(function(elem, index, self) {
+                return index == self.indexOf(elem);
+            })
+            //make array with user depediences
+            $scope.continents = $scope.continents.map(function(item) {
+                    if (!$scope.iprofile.personRegions) {
+                        return {"name":item,"active":true}
+                    } else  {
+                        var val = false
+                        for (var i = 0; i < $scope.iprofile.personRegions.length; i++) {
+                            if ($scope.iprofile.personRegions[i]==item)
+                               val = true
+                        }
+                        return {"name":item,"active":val}
+                    }
+                        
+            }) 
+            
+            
+        }).catch(err => console.error(err));
+
     }
 
     $scope.hideSearchFilters = function() {
