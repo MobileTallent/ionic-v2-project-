@@ -1,7 +1,7 @@
 angular.module('controllers')
 
 .controller('ProfileSearch', function($rootScope, $log, $scope, $state, $timeout, $translate, $ionicSideMenuDelegate,
-    TDCardDelegate, AppService, AppUtil, $ionicModal, $ionicPopup, $ionicLoading) {
+    TDCardDelegate, AppService, AppUtil, $ionicModal, $ionicPopup, $ionicLoading, $interval) {
 
     var translations
     $translate(['MATCHES_LOAD_ERROR']).then(function(translationsResult) {
@@ -18,23 +18,19 @@ angular.module('controllers')
 
     //$scope.cloned_profile = profile.clone()
 
-    /**----------------------------------------------
-        SEARCH FILTERS
-      -----------------------------------------------  
-    */
+/**----------------------------------------------
+    SEARCH FILTERS
+  -----------------------------------------------  
+*/
     $scope.isFiltersOpened = false
     $scope.iprofile = profile.clone();
     $scope.showMI = $scope.profile.distanceType === 'mi' ? true : false
     $scope.showKM = $scope.profile.distanceType === 'km' ? true : false
     var dType = $scope.profile.distanceType
-    var fields = ['enabled', 'guys', 'girls', 'ageFrom', 'ageTo', 'notifyMatch', 'notifyMessage', 'distanceType', 'distance', 'LFSperm', 'LFEggs', 'LFWomb', 'LFEmbryo', 'LFNot', 'LFHelpM', 'LFHelpO', 'LFSelfId']
+     var fields = ['enabled', 'guys', 'girls', 'ageFrom', 'ageTo', 'notifyMatch', 'notifyMessage', 'distanceType', 'distance', 'LFSperm', 'LFEggs', 'LFWomb', 'LFEmbryo', 'LFNot', 'LFHelpM', 'LFHelpO', 'LFSelfId']
 
     if (!$scope.profile.LFSelfId) {
         $scope.profile.LFSperm = $scope.profile.LFEggs = $scope.profile.LFWomb = $scope.profile.LFEmbryo = true
-    }
-
-    if (!$scope.profile.LFIndividual && !$scope.profile.LFCouple) {
-        $scope.profile.LFIndividual = $scope.profile.LFCouple = true
     }
 
     $scope.setLanguage = (key) => {
@@ -64,10 +60,10 @@ angular.module('controllers')
         AppUtil.blockingCall(
             AppService.saveProfile(_.pick($scope.iprofile, fields)),
             () => {
-
+                
                 $ionicLoading.hide()
-                $state.go($state.current, {}, { reload: true });
-
+                $state.go($state.current, {}, {reload: true});
+                
             }, 'SETTINGS_SAVE_ERROR'
         )
     }
@@ -77,13 +73,13 @@ angular.module('controllers')
             if ($scope.searchFiltersModal && $scope.isFiltersOpened)
                 $scope.save()
         }, 200);
-
+        
     })
-
+    
     //  //  //  //  //  SEARCH FILTERS  \\  \\  \\  \\  \\
 
 
-    $scope.changeIndividual = () => {
+        $scope.changeIndividual = () => {
         if ($scope.profile.LFIndividual === false && $scope.profile.LFCouple === false) {
             $scope.profile.LFCouple = true;
         }
@@ -176,27 +172,24 @@ angular.module('controllers')
     }
 
     $scope.openSearchFilters = function() {
-        if (typeof analytics !== 'undefined') {
-            analytics.trackView("Search Filters Controller")
-        }
         $scope.searchFiltersModal.show()
-            .then(() => $scope.isFiltersOpened = true)
+            .then(() => $scope.isFiltersOpened = true )
     }
 
     $scope.hideSearchFilters = function() {
         $scope.searchFiltersModal.hide()
-            .then(() => $scope.isFiltersOpened = false)
+            .then(() => $scope.isFiltersOpened = false )
     }
 
     $ionicModal.fromTemplateUrl('searchFiltersModal.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-    }).then(searchFiltersModal => $scope.searchFiltersModal = searchFiltersModal)
+            scope: $scope,
+            animation: 'slide-in-up'
+        }).then(searchFiltersModal => $scope.searchFiltersModal = searchFiltersModal)
 
-    /**----------------------------------------------
-        END OF SEARCH FILTERS
-      -----------------------------------------------  
-    */
+/**----------------------------------------------
+    END OF SEARCH FILTERS
+  -----------------------------------------------  
+*/
     $scope.deleteUnmatchedSwipes = () => AppUtil.blockingCall(
         AppService.deleteUnmatched(),
         success => $log.log(success),
@@ -236,6 +229,9 @@ angular.module('controllers')
             minutes = parseInt((duration / (1000 * 60)) % 60),
             hours = parseInt((duration / (1000 * 60 * 60)) % 24);
 
+        if (!hours && !minutes && !seconds)
+            $scope.timeLimitDatetime = null
+
         hours = (hours < 10) ? "0" + hours : hours;
         minutes = (minutes < 10) ? "0" + minutes : minutes;
         seconds = (seconds < 10) ? "0" + seconds : seconds;
@@ -245,18 +241,26 @@ angular.module('controllers')
 
     function checkQuotaTime() {
         var quotaNotReached = false
+        
         if (profile.quotaSearchedDate) {
+            
             var twelveHrsAgo = 43200000 // 43200000-12hrs  Formula: hrs*mins*sec*1000ms  12*60*60*1000
             var now = new Date()
             var now_utc = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(), now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds())
             var diff = now_utc - profile.quotaSearchedDate
-            var timeRemaining = parseTimeRemaining(twelveHrsAgo - diff)
+            var timeLimitDatetime = twelveHrsAgo - diff
+            var timeRemaining = parseTimeRemaining(timeLimitDatetime)
+            
             if (diff < twelveHrsAgo) {
+
                 $scope.timeRemaining = timeRemaining
+                $scope.timeLimitDatetime = new Date(timeLimitDatetime)
+                
                 $scope.$broadcast('likeLimitReached')
                 quotaNotReached = true
             }
         }
+
         return quotaNotReached
     }
 
@@ -293,6 +297,14 @@ angular.module('controllers')
 
 
     //Multiple Modal methods
+    $scope.timeLimitCounter = null
+    $scope.timeLimitDatetime = null
+    $scope.timeRemaining = " 00 hrs : 00 mins : 00 secs"
+
+    $scope.$on('modal.hidden', () => {
+        if ($scope.timeLimitCounter)
+            $interval.cancel($scope.timeLimitCounter)
+    })
 
     // Initialise the new match modal
     $ionicModal.fromTemplateUrl('newMatch.html', {
@@ -317,10 +329,27 @@ angular.module('controllers')
             id: 2,
         }).then(modal => $scope.modalLikeLimit = modal)
         // Cleanup the modal when we're done with it!
-    $scope.$on('$destroy', () => $scope.closeModal(2))
+    $scope.$on('$destroy', () => {
+        $scope.closeModal(2)
+        if ($scope.timeLimitCounter)
+            $interval.cancel($scope.timeLimitCounter);
+    })
 
     $scope.$on('likeLimitReached', (timeRemaining) => {
         $scope.openModal(2)
+
+        $scope.timeLimitCounter = $interval(() => {
+            
+            if ($scope.timeLimitDatetime) {
+                $scope.timeLimitDatetime.setSeconds($scope.timeLimitDatetime.getSeconds() - 1)
+                $scope.timeRemaining = parseTimeRemaining($scope.timeLimitDatetime.getTime())
+            }
+            else {
+                $state.go($state.current, {}, {reload: true});
+            }
+            
+        }, 1000)
+
     })
 
     $scope.openModal = function(index) {
