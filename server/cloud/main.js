@@ -1918,6 +1918,27 @@ Parse.Cloud.define('GetProfilesWhoAreCurious', function(request, response) {
     })
 })
 
+/* Get Profiles Length that are helping - NOT - or maybe helping */
+Parse.Cloud.define('GetProfilesHelpingLevel', function(request, response) {
+    var profileType = request.params.type
+    console.log('GetProfilesHelpingLevel - ' + profileType)
+
+    var profileQuery = new Parse.Query(Profile)
+
+    if (profileType === "5")
+        profileQuery.doesNotExist("personHelpLevel")
+    else
+        profileQuery.equalTo('personHelpLevel', profileType)
+
+    profileQuery.limit(10000).find().then(function(result) {
+        console.log("Successs - GetProfilesHelpingLevel - " + result.length)
+        response.success(result.length)
+    }, function(error) {
+        console.log("Error in getting result - GetProfilesHelpingLevel: " + JSON.stringify(error))
+        response.error(error)
+    })
+})
+
 /* Get the Number of Matches based on day*/
 Parse.Cloud.define('GetMatchesReport', function(request, response) {
     console.log('GetMatchesReport')

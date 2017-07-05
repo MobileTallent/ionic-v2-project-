@@ -540,10 +540,14 @@ angular.module('controllers')
     )
 
     $scope.getProfilesWhoAreCurious = (type) => AppService.getProfilesWhoAreCurious(type).then(
-        length => console.log("Number of profiles " + length + " Type: " + type),
+        length => AppUtil.toastSimple("Number of profiles - curiousity - " + length + " Type: " + type),
         error => AppUtil.toastSimple(JSON.stringify(error))
     )
 
+    $scope.getProfilesHelpingLevel = (type) => AppService.getProfilesHelpingLevel(type).then(
+        length => AppUtil.toastSimple("Number of profiles - helping level - " + type + " = " + length),
+        error => AppUtil.toastSimple(JSON.stringify(error))
+    )
 
     $scope.deleteUnmatchedSwipes = () => AppUtil.blockingCall(
         AppService.deleteUnmatched(),

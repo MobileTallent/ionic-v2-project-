@@ -149,6 +149,7 @@ function onNotificationOpen(pnObj) {
 
                 testPushNotification: testPushNotification,
                 getProfilesWhoAreCurious: getProfilesWhoAreCurious,
+                getProfilesHelpingLevel: getProfilesHelpingLevel,
                 getProfilesNoCountry: getProfilesNoCountry,
 
                 // Admin functions
@@ -1519,6 +1520,10 @@ function onNotificationOpen(pnObj) {
 
             function getProfilesWhoAreCurious(type) {
                 return server.getProfilesWhoAreCurious(type)
+            }
+
+            function getProfilesHelpingLevel(type) {
+                return server.getProfilesHelpingLevel(type)
             }
 
             function getProfilesNoCountry() {

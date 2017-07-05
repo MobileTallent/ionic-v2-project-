@@ -488,6 +488,7 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
         testPushNotification: testPushNotification,
         getProfilesWhoAreCurious: getProfilesWhoAreCurious,
+        getProfilesHelpingLevel: getProfilesHelpingLevel,
         getProfilesNoCountry: getProfilesNoCountry,
 
         // admin functions
@@ -1153,6 +1154,10 @@ angular.module('service.parse', ['constants', 'parse-angular'])
 
     function getProfilesWhoAreCurious(type) {
         return Parse.Cloud.run('GetProfilesWhoAreCurious', { type: type }).catch(_unwrapError)
+    }
+
+    function getProfilesHelpingLevel(type) {
+        return Parse.Cloud.run('GetProfilesHelpingLevel', { type: type }).catch(_unwrapError)
     }
 
     function getProfilesNoCountry() {
