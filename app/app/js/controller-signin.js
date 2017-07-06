@@ -243,7 +243,19 @@ angular.module('controllers', ['service.app', 'ngAnimate', 'ngCordova', 'ionic.c
         // the timeout is to give the drop CSS animation time
         $timeout(() => AppService.goToNextLoginState(), 1000)
 
+        var profile = AppService.getProfile();
+        var user = {
+            userId: profile.uid,
+            name: profile.name,
+            custom_attributes: {
+                Name: profile.name,
+                user_id: profile.uid
+            }
+        };
 
+        intercom.updateUser(user, function() {
+            intercom.displayMessenger();
+        });
     }
 
 
